@@ -1,4 +1,3 @@
-
 export interface Company {
   id: string;
   name: string;
@@ -25,6 +24,40 @@ export interface Company {
     trendData: Array<{ year: string; emissions: number }>;
     sourceData: Array<{ source: string; emissions: number }>;
     locationData: Array<{ location: string; emissions: number; percentage: string }>;
+  };
+  sbtiTargets: {
+    nearTerm2030: {
+      scope1And2Reduction: number; // percentage
+      scope3Reduction: number; // percentage
+      baselineYear: string;
+      targetYear: string;
+    };
+    longTerm2050: {
+      netZeroTarget: boolean;
+      totalReduction: number; // percentage
+      targetYear: string;
+    };
+    currentProgress: {
+      scope1And2Achieved: number; // percentage achieved so far
+      scope3Achieved: number; // percentage achieved so far
+      onTrack: boolean;
+    };
+  };
+  decarbonizationStrategy: {
+    carbonLevers: Array<{
+      lever: string;
+      category: 'scope1and2' | 'scope3';
+      reduction: number; // tCO2e
+      percentage: number; // percentage of total reduction
+      implementation: string;
+      status: 'completed' | 'in-progress' | 'planned';
+    }>;
+    achievements: Array<{
+      initiative: string;
+      year: string;
+      reduction: number;
+      description: string;
+    }>;
   };
 }
 
@@ -82,6 +115,38 @@ export const companies: Company[] = [
         { location: 'New York Office', emissions: 120, percentage: '20.0%' },
         { location: 'Remote Facilities', emissions: 50, percentage: '8.3%' }
       ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 50,
+        scope3Reduction: 30,
+        baselineYear: '2020',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 90,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 35,
+        scope3Achieved: 22,
+        onTrack: true
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 400, percentage: 25, implementation: '100% renewable electricity procurement', status: 'completed' },
+        { lever: 'Energy Efficiency', category: 'scope1and2', reduction: 200, percentage: 12, implementation: 'Smart building management systems', status: 'in-progress' },
+        { lever: 'Sustainable Procurement', category: 'scope3', reduction: 600, percentage: 38, implementation: 'Green supplier requirements', status: 'in-progress' },
+        { lever: 'Remote Work', category: 'scope3', reduction: 250, percentage: 15, implementation: 'Hybrid work model reducing commuting', status: 'completed' },
+        { lever: 'Cloud Optimization', category: 'scope3', reduction: 150, percentage: 10, implementation: 'Efficient cloud infrastructure', status: 'planned' }
+      ],
+      achievements: [
+        { initiative: '100% Renewable Energy', year: '2022', reduction: 400, description: 'Switched all facilities to renewable energy sources' },
+        { initiative: 'Remote Work Policy', year: '2021', reduction: 250, description: 'Implemented permanent hybrid work reducing office emissions' },
+        { initiative: 'Green Data Centers', year: '2023', reduction: 180, description: 'Migrated to carbon-neutral cloud providers' }
+      ]
     }
   },
   {
@@ -136,6 +201,38 @@ export const companies: Company[] = [
         { location: 'Detroit Facility', emissions: 300, percentage: '30.0%' },
         { location: 'Milwaukee Site', emissions: 200, percentage: '20.0%' },
         { location: 'Other Locations', emissions: 100, percentage: '10.0%' }
+      ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 42,
+        scope3Reduction: 25,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 85,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 28,
+        scope3Achieved: 18,
+        onTrack: true
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Process Electrification', category: 'scope1and2', reduction: 800, percentage: 35, implementation: 'Electric heating systems replacing gas', status: 'in-progress' },
+        { lever: 'Energy Efficiency', category: 'scope1and2', reduction: 400, percentage: 18, implementation: 'Equipment upgrades and optimization', status: 'completed' },
+        { lever: 'Sustainable Materials', category: 'scope3', reduction: 600, percentage: 26, implementation: 'Low-carbon steel and recycled materials', status: 'in-progress' },
+        { lever: 'Logistics Optimization', category: 'scope3', reduction: 300, percentage: 13, implementation: 'Electric vehicle fleet and route optimization', status: 'planned' },
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 200, percentage: 8, implementation: 'On-site solar installation', status: 'completed' }
+      ],
+      achievements: [
+        { initiative: 'Solar Installation', year: '2022', reduction: 200, description: 'Installed 2MW solar capacity at main facility' },
+        { initiative: 'Equipment Modernization', year: '2021', reduction: 400, description: 'Upgraded to energy-efficient manufacturing equipment' },
+        { initiative: 'Waste Heat Recovery', year: '2023', reduction: 150, description: 'Implemented waste heat recovery systems' }
       ]
     }
   },
@@ -192,6 +289,37 @@ export const companies: Company[] = [
         { location: 'Vancouver Office', emissions: 45, percentage: '15.0%' },
         { location: 'Remote Sites', emissions: 30, percentage: '10.0%' }
       ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 60,
+        scope3Reduction: 40,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 95,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 45,
+        scope3Achieved: 30,
+        onTrack: true
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Carbon-Free Energy', category: 'scope1and2', reduction: 350, percentage: 45, implementation: '24/7 carbon-free energy matching', status: 'completed' },
+        { lever: 'Green Buildings', category: 'scope1and2', reduction: 150, percentage: 19, implementation: 'LEED Platinum certified facilities', status: 'completed' },
+        { lever: 'Sustainable R&D', category: 'scope3', reduction: 200, percentage: 26, implementation: 'Low-carbon technology development', status: 'in-progress' },
+        { lever: 'Green Finance', category: 'scope3', reduction: 80, percentage: 10, implementation: 'Sustainable investment portfolio', status: 'planned' }
+      ],
+      achievements: [
+        { initiative: 'Carbon-Free Energy', year: '2021', reduction: 350, description: 'Achieved 100% carbon-free energy across all operations' },
+        { initiative: 'Green Building Certification', year: '2020', reduction: 150, description: 'All facilities certified LEED Platinum' },
+        { initiative: 'Carbon Negative Products', year: '2023', reduction: 200, description: 'Launched carbon-negative technology solutions' }
+      ]
     }
   },
   {
@@ -246,6 +374,37 @@ export const companies: Company[] = [
         { location: 'Retail Stores', emissions: 270, percentage: '30.0%' },
         { location: 'Corporate Offices', emissions: 135, percentage: '15.0%' },
         { location: 'Warehouses', emissions: 45, percentage: '5.0%' }
+      ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 46,
+        scope3Reduction: 28,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 90,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 32,
+        scope3Achieved: 20,
+        onTrack: false
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Store Electrification', category: 'scope1and2', reduction: 400, percentage: 30, implementation: 'Electric heating and cooling systems', status: 'in-progress' },
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 300, percentage: 22, implementation: 'Solar panels on stores and warehouses', status: 'in-progress' },
+        { lever: 'Sustainable Products', category: 'scope3', reduction: 500, percentage: 37, implementation: 'Low-carbon product sourcing', status: 'planned' },
+        { lever: 'Green Logistics', category: 'scope3', reduction: 150, percentage: 11, implementation: 'Electric delivery vehicles', status: 'in-progress' }
+      ],
+      achievements: [
+        { initiative: 'LED Lighting Retrofit', year: '2021', reduction: 180, description: 'Converted all stores to LED lighting systems' },
+        { initiative: 'Solar Installation Program', year: '2022', reduction: 220, description: 'Installed solar panels on 200+ locations' },
+        { initiative: 'Electric Vehicle Fleet', year: '2023', reduction: 120, description: 'Deployed electric delivery vehicles in urban areas' }
       ]
     }
   },
@@ -302,6 +461,38 @@ export const companies: Company[] = [
         { location: 'Parts Facility', emissions: 210, percentage: '15.0%' },
         { location: 'R&D Centers', emissions: 140, percentage: '10.0%' }
       ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 50,
+        scope3Reduction: 35,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 95,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 26,
+        scope3Achieved: 15,
+        onTrack: false
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Electric Vehicle Production', category: 'scope3', reduction: 2800, percentage: 48, implementation: 'Transition to 80% EV production by 2030', status: 'in-progress' },
+        { lever: 'Manufacturing Electrification', category: 'scope1and2', reduction: 1200, percentage: 21, implementation: 'Electric furnaces and heat pumps', status: 'in-progress' },
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 800, percentage: 14, implementation: 'Wind and solar power purchase agreements', status: 'completed' },
+        { lever: 'Sustainable Materials', category: 'scope3', reduction: 600, percentage: 10, implementation: 'Recycled steel and aluminum usage', status: 'planned' },
+        { lever: 'Supplier Engagement', category: 'scope3', reduction: 400, percentage: 7, implementation: 'Carbon reduction requirements for suppliers', status: 'in-progress' }
+      ],
+      achievements: [
+        { initiative: 'Renewable Energy Contracts', year: '2021', reduction: 800, description: 'Signed long-term wind and solar PPAs for all facilities' },
+        { initiative: 'Electric Platform Launch', year: '2022', reduction: 1500, description: 'Launched dedicated electric vehicle manufacturing platform' },
+        { initiative: 'Heat Pump Installation', year: '2023', reduction: 400, description: 'Replaced gas heating with industrial heat pumps' }
+      ]
     }
   },
   {
@@ -356,6 +547,38 @@ export const companies: Company[] = [
         { location: 'Manufacturing Plant', emissions: 175, percentage: '35.0%' },
         { location: 'Corporate HQ', emissions: 75, percentage: '15.0%' },
         { location: 'Distribution Centers', emissions: 50, percentage: '10.0%' }
+      ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 42,
+        scope3Reduction: 25,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 90,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 33,
+        scope3Achieved: 18,
+        onTrack: true
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Green Chemistry', category: 'scope1and2', reduction: 300, percentage: 35, implementation: 'Low-carbon manufacturing processes', status: 'in-progress' },
+        { lever: 'Energy Efficiency', category: 'scope1and2', reduction: 200, percentage: 24, implementation: 'Advanced HVAC and lab equipment', status: 'completed' },
+        { lever: 'Sustainable Packaging', category: 'scope3', reduction: 180, percentage: 21, implementation: 'Biodegradable and recycled packaging', status: 'in-progress' },
+        { lever: 'Digital Health Solutions', category: 'scope3', reduction: 120, percentage: 14, implementation: 'Reduced physical product needs', status: 'planned' },
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 50, percentage: 6, implementation: 'On-site solar and wind', status: 'completed' }
+      ],
+      achievements: [
+        { initiative: 'Lab Equipment Upgrade', year: '2021', reduction: 200, description: 'Installed energy-efficient laboratory equipment' },
+        { initiative: 'Green Chemistry Initiative', year: '2022', reduction: 150, description: 'Implemented low-carbon synthesis pathways' },
+        { initiative: 'Sustainable Packaging', year: '2023', reduction: 100, description: 'Launched biodegradable packaging for key products' }
       ]
     }
   },
@@ -412,6 +635,37 @@ export const companies: Company[] = [
         { location: 'Branch Network', emissions: 60, percentage: '20.0%' },
         { location: 'Data Centers', emissions: 30, percentage: '10.0%' }
       ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 55,
+        scope3Reduction: 35,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 95,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 48,
+        scope3Achieved: 25,
+        onTrack: true
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Green Finance', category: 'scope3', reduction: 400, percentage: 50, implementation: 'Sustainable investment portfolio', status: 'in-progress' },
+        { lever: 'Digital Banking', category: 'scope3', reduction: 200, percentage: 25, implementation: 'Paperless operations and mobile banking', status: 'completed' },
+        { lever: 'Green Buildings', category: 'scope1and2', reduction: 120, percentage: 15, implementation: 'LEED certified branches', status: 'in-progress' },
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 80, percentage: 10, implementation: '100% renewable electricity', status: 'completed' }
+      ],
+      achievements: [
+        { initiative: 'Digital Transformation', year: '2021', reduction: 200, description: 'Eliminated 90% of paper-based processes' },
+        { initiative: 'Renewable Energy Procurement', year: '2022', reduction: 80, description: 'Switched to 100% renewable electricity' },
+        { initiative: 'Green Bond Issuance', year: '2023', reduction: 150, description: 'Launched $500M green bond for sustainable projects' }
+      ]
     }
   },
   {
@@ -466,6 +720,38 @@ export const companies: Company[] = [
         { location: 'Power Plant 2', emissions: 120, percentage: '30.0%' },
         { location: 'Corporate Office', emissions: 50, percentage: '12.5%' },
         { location: 'Service Centers', emissions: 30, percentage: '7.5%' }
+      ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 65,
+        scope3Reduction: 30,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 95,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 22,
+        scope3Achieved: 12,
+        onTrack: false
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Renewable Generation', category: 'scope1and2', reduction: 4000, percentage: 58, implementation: 'Wind and solar farm development', status: 'in-progress' },
+        { lever: 'Coal Plant Retirement', category: 'scope1and2', reduction: 2000, percentage: 29, implementation: 'Phased closure of coal facilities', status: 'planned' },
+        { lever: 'Grid Modernization', category: 'scope3', reduction: 500, percentage: 7, implementation: 'Smart grid and energy storage', status: 'in-progress' },
+        { lever: 'Energy Efficiency Programs', category: 'scope3', reduction: 300, percentage: 4, implementation: 'Customer efficiency incentives', status: 'completed' },
+        { lever: 'Carbon Capture', category: 'scope1and2', reduction: 100, percentage: 2, implementation: 'CCUS pilot projects', status: 'planned' }
+      ],
+      achievements: [
+        { initiative: 'Wind Farm Development', year: '2022', reduction: 1500, description: 'Commissioned 500MW wind generation capacity' },
+        { initiative: 'Solar Installation', year: '2021', reduction: 800, description: 'Added 300MW solar generation' },
+        { initiative: 'Natural Gas Efficiency', year: '2023', reduction: 500, description: 'Upgraded gas turbine efficiency by 15%' }
       ]
     }
   },
@@ -522,6 +808,38 @@ export const companies: Company[] = [
         { location: 'Distribution Centers', emissions: 120, percentage: '20.0%' },
         { location: 'Administrative Offices', emissions: 60, percentage: '10.0%' }
       ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 50,
+        scope3Reduction: 30,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 90,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 36,
+        scope3Achieved: 22,
+        onTrack: true
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Sustainable Agriculture', category: 'scope3', reduction: 900, percentage: 45, implementation: 'Regenerative farming partnerships', status: 'in-progress' },
+        { lever: 'Process Electrification', category: 'scope1and2', reduction: 450, percentage: 22, implementation: 'Electric heating and refrigeration', status: 'in-progress' },
+        { lever: 'Packaging Innovation', category: 'scope3', reduction: 300, percentage: 15, implementation: 'Plant-based and recyclable packaging', status: 'completed' },
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 250, percentage: 12, implementation: 'Solar and biogas systems', status: 'completed' },
+        { lever: 'Cold Chain Optimization', category: 'scope3', reduction: 120, percentage: 6, implementation: 'Efficient refrigeration logistics', status: 'planned' }
+      ],
+      achievements: [
+        { initiative: 'Renewable Energy Systems', year: '2021', reduction: 250, description: 'Installed solar panels and biogas digesters' },
+        { initiative: 'Sustainable Packaging', year: '2022', reduction: 300, description: 'Switched to 80% recyclable packaging materials' },
+        { initiative: 'Electric Fleet', year: '2023', reduction: 180, description: 'Electrified 60% of delivery vehicle fleet' }
+      ]
     }
   },
   {
@@ -577,10 +895,62 @@ export const companies: Company[] = [
         { location: 'Engineering Centers', emissions: 165, percentage: '15.0%' },
         { location: 'Support Facilities', emissions: 110, percentage: '10.0%' }
       ]
+    },
+    sbtiTargets: {
+      nearTerm2030: {
+        scope1And2Reduction: 42,
+        scope3Reduction: 25,
+        baselineYear: '2019',
+        targetYear: '2030'
+      },
+      longTerm2050: {
+        netZeroTarget: true,
+        totalReduction: 85,
+        targetYear: '2050'
+      },
+      currentProgress: {
+        scope1And2Achieved: 28,
+        scope3Achieved: 15,
+        onTrack: false
+      }
+    },
+    decarbonizationStrategy: {
+      carbonLevers: [
+        { lever: 'Sustainable Aviation Fuels', category: 'scope3', reduction: 1800, percentage: 42, implementation: 'SAF development and adoption', status: 'in-progress' },
+        { lever: 'Advanced Materials', category: 'scope3', reduction: 800, percentage: 19, implementation: 'Lightweight composite materials', status: 'in-progress' },
+        { lever: 'Manufacturing Efficiency', category: 'scope1and2', reduction: 600, percentage: 14, implementation: 'Additive manufacturing and automation', status: 'completed' },
+        { lever: 'Renewable Energy', category: 'scope1and2', reduction: 500, percentage: 12, implementation: 'On-site renewable generation', status: 'in-progress' },
+        { lever: 'Electric Ground Support', category: 'scope1and2', reduction: 300, percentage: 7, implementation: 'Electric test and ground equipment', status: 'planned' },
+        { lever: 'Supply Chain Optimization', category: 'scope3', reduction: 300, percentage: 6, implementation: 'Supplier carbon requirements', status: 'planned' }
+      ],
+      achievements: [
+        { initiative: 'Advanced Manufacturing', year: '2021', reduction: 600, description: 'Implemented 3D printing and automated systems' },
+        { initiative: 'SAF Partnership', year: '2022', reduction: 800, description: 'Partnered with airlines for sustainable aviation fuel development' },
+        { initiative: 'Renewable Energy Installation', year: '2023', reduction: 400, description: 'Installed wind and solar at manufacturing facilities' }
+      ]
     }
   }
 ];
 
 export const getCompanyById = (id: string): Company | undefined => {
   return companies.find(company => company.id === id);
+};
+
+// Calculate company rankings based on reduction performance
+export const getCompanyRankings = () => {
+  return companies.map(company => {
+    const scope1And2Progress = company.sbtiTargets.currentProgress.scope1And2Achieved;
+    const scope3Progress = company.sbtiTargets.currentProgress.scope3Achieved;
+    const overallProgress = (scope1And2Progress + scope3Progress) / 2;
+    
+    return {
+      id: company.id,
+      name: company.name,
+      sector: company.sector,
+      scope1And2Progress,
+      scope3Progress,
+      overallProgress,
+      onTrack: company.sbtiTargets.currentProgress.onTrack
+    };
+  }).sort((a, b) => b.overallProgress - a.overallProgress);
 };

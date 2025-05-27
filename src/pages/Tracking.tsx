@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import MetricCard from '@/components/MetricCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Factory, Zap, Truck } from 'lucide-react';
+import { ArrowRight, Factory, Zap, Truck, Target } from 'lucide-react';
 import { companies, getCompanyById } from '@/data/mockData';
 
 const Tracking = () => {
@@ -124,6 +124,56 @@ const Tracking = () => {
               </Link>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* SBTI Targets Overview */}
+      <div className="mb-8">
+        <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border border-teal-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <Target className="h-8 w-8 text-teal-600" />
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">Science Based Targets (SBTi)</h2>
+                <p className="text-gray-600">Track progress towards validated emission reduction targets</p>
+              </div>
+            </div>
+            <Link to="/decarbonization">
+              <Button className="bg-teal-600 hover:bg-teal-700">
+                View Decarbonization Strategy
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            </Link>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6 mt-6">
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">Near-term Targets (2030)</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Scope 1 & 2 Reduction:</span>
+                  <span className="font-medium">{company.sbtiTargets.nearTerm2030.scope1And2Reduction}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Scope 3 Reduction:</span>
+                  <span className="font-medium">{company.sbtiTargets.nearTerm2030.scope3Reduction}%</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">Current Progress</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Scope 1 & 2 Achieved:</span>
+                  <span className="font-medium text-teal-600">{company.sbtiTargets.currentProgress.scope1And2Achieved}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Scope 3 Achieved:</span>
+                  <span className="font-medium text-teal-600">{company.sbtiTargets.currentProgress.scope3Achieved}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
