@@ -110,7 +110,7 @@ const Decarbonization = () => {
                 />
                 <Bar 
                   dataKey="reduction" 
-                  fill={(entry) => entry.category === 'scope1and2' ? '#0d9488' : '#0891b2'}
+                  fill="#0d9488"
                   radius={[4, 4, 0, 0]} 
                 />
               </BarChart>
@@ -253,14 +253,11 @@ const Decarbonization = () => {
                     border: '1px solid #e5e7eb',
                     borderRadius: '8px'
                   }}
-                  formatter={(value) => [`${Math.abs(value)} tCO2e`, value < 0 ? 'Reduction' : 'Emissions']}
+                  formatter={(value) => [`${Math.abs(Number(value))} tCO2e`, Number(value) < 0 ? 'Reduction' : 'Emissions']}
                 />
                 <Bar 
                   dataKey="value" 
-                  fill={(entry, index) => {
-                    if (entry.name === '2019 Baseline' || entry.name === '2030 Target') return '#6b7280';
-                    return entry.value < 0 ? '#0d9488' : '#ef4444';
-                  }}
+                  fill="#0d9488"
                   radius={[4, 4, 0, 0]} 
                 />
               </BarChart>
