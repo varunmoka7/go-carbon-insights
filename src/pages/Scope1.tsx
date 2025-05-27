@@ -1,22 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { companies, getCompanyById } from '@/data/mockData';
 
 const Scope1 = () => {
-  const trendData = [
-    { year: '2019', emissions: 1200 },
-    { year: '2020', emissions: 1100 },
-    { year: '2021', emissions: 1000 },
-    { year: '2022', emissions: 950 },
-    { year: '2023', emissions: 900 }
-  ];
+  const [selectedCompany, setSelectedCompany] = useState('techcorp');
 
-  const sourceData = [
-    { source: 'Stationary Combustion', emissions: 450 },
-    { source: 'Mobile Combustion', emissions: 280 },
-    { source: 'Process Emissions', emissions: 120 },
-    { source: 'Fugitive Emissions', emissions: 50 }
-  ];
+  const company = getCompanyById(selectedCompany);
+
+  if (!company) {
+    return <div>Company not found</div>;
+  }
 
   const keyFactors = [
     { factor: 'Operational Efficiency', impact: '+12%', description: 'Improved equipment efficiency and maintenance' },
@@ -30,13 +25,30 @@ const Scope1 = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Scope 1 Emissions Analysis</h1>
         <p className="text-gray-600">Direct emissions from sources owned or controlled by your company</p>
+        
+        {/* Company Selection */}
+        <div className="flex items-center space-x-4 mt-6">
+          <label className="text-sm font-medium text-gray-700">Select Company:</label>
+          <Select value={selectedCompany} onValueChange={setSelectedCompany}>
+            <SelectTrigger className="w-64">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {companies.map((comp) => (
+                <SelectItem key={comp.id} value={comp.id}>
+                  {comp.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Trends Chart */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">5-Year Trend: Total Scope 1 Emissions</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={trendData}>
+          <LineChart data={company.scope1Data.trendData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="year" stroke="#6b7280" />
             <YAxis stroke="#6b7280" />
@@ -63,7 +75,7 @@ const Scope1 = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Emissions by Source</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={sourceData}>
+          <BarChart data={company.scope1Data.sourceData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="source" stroke="#6b7280" />
             <YAxis stroke="#6b7280" />

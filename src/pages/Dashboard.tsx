@@ -3,25 +3,18 @@ import React, { useState } from 'react';
 import MetricCard from '@/components/MetricCard';
 import EmissionChart from '@/components/EmissionChart';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { companies, getCompanyById } from '@/data/mockData';
 
 const Dashboard = () => {
+  const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const [selectedSector, setSelectedSector] = useState('technology');
   const [selectedIndustry, setSelectedIndustry] = useState('software');
 
-  const emissionsData = [
-    { year: '2019', scope1: 1200, scope2: 800, scope3: 2400 },
-    { year: '2020', scope1: 1100, scope2: 750, scope3: 2200 },
-    { year: '2021', scope1: 1000, scope2: 700, scope3: 2000 },
-    { year: '2022', scope1: 950, scope2: 650, scope3: 1800 },
-    { year: '2023', scope1: 900, scope2: 600, scope3: 1600 }
-  ];
+  const company = getCompanyById(selectedCompany);
 
-  const companyDetails = {
-    name: 'TechCorp Solutions',
-    sector: 'Technology',
-    industry: 'Software Development',
-    reportingYear: '2023'
-  };
+  if (!company) {
+    return <div>Company not found</div>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -29,8 +22,24 @@ const Dashboard = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Emissions Overview Dashboard</h1>
         
-        {/* Filters */}
+        {/* Company Selection */}
         <div className="flex flex-wrap gap-4 mb-6">
+          <div className="flex items-center space-x-2">
+            <label className="text-sm font-medium text-gray-700">Company:</label>
+            <Select value={selectedCompany} onValueChange={setSelectedCompany}>
+              <SelectTrigger className="w-64">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {companies.map((comp) => (
+                  <SelectItem key={comp.id} value={comp.id}>
+                    {comp.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
           <div className="flex items-center space-x-2">
             <label className="text-sm font-medium text-gray-700">Sector:</label>
             <Select value={selectedSector} onValueChange={setSelectedSector}>
@@ -42,6 +51,9 @@ const Dashboard = () => {
                 <SelectItem value="manufacturing">Manufacturing</SelectItem>
                 <SelectItem value="finance">Finance</SelectItem>
                 <SelectItem value="healthcare">Healthcare</SelectItem>
+                <SelectItem value="retail">Retail</SelectItem>
+                <SelectItem value="energy">Energy</SelectItem>
+                <SelectItem value="consumer-goods">Consumer Goods</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -57,6 +69,12 @@ const Dashboard = () => {
                 <SelectItem value="hardware">Hardware Manufacturing</SelectItem>
                 <SelectItem value="consulting">IT Consulting</SelectItem>
                 <SelectItem value="cloud">Cloud Services</SelectItem>
+                <SelectItem value="automotive">Automotive</SelectItem>
+                <SelectItem value="pharmaceuticals">Pharmaceuticals</SelectItem>
+                <SelectItem value="banking">Banking</SelectItem>
+                <SelectItem value="utilities">Utilities</SelectItem>
+                <SelectItem value="food-beverage">Food & Beverage</SelectItem>
+                <SelectItem value="aerospace">Aerospace & Defense</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -68,19 +86,19 @@ const Dashboard = () => {
           <div className="grid md:grid-cols-4 gap-4">
             <div>
               <span className="text-sm text-gray-500">Company Name</span>
-              <p className="font-medium text-gray-900">{companyDetails.name}</p>
+              <p className="font-medium text-gray-900">{company.name}</p>
             </div>
             <div>
               <span className="text-sm text-gray-500">Sector</span>
-              <p className="font-medium text-gray-900">{companyDetails.sector}</p>
+              <p className="font-medium text-gray-900">{company.sector}</p>
             </div>
             <div>
               <span className="text-sm text-gray-500">Industry</span>
-              <p className="font-medium text-gray-900">{companyDetails.industry}</p>
+              <p className="font-medium text-gray-900">{company.industry}</p>
             </div>
             <div>
               <span className="text-sm text-gray-500">Reporting Year</span>
-              <p className="font-medium text-gray-900">{companyDetails.reportingYear}</p>
+              <p className="font-medium text-gray-900">{company.reportingYear}</p>
             </div>
           </div>
         </div>
@@ -90,21 +108,21 @@ const Dashboard = () => {
       <div className="grid md:grid-cols-3 gap-6 mb-8">
         <MetricCard
           title="Total Emissions"
-          value="3,100"
+          value={company.totalEmissions.toLocaleString()}
           unit="tCO2e"
           change={-15.2}
           trend="down"
         />
         <MetricCard
           title="Emissions Intensity"
-          value="0.18"
+          value={company.emissionsIntensity.toString()}
           unit="tCO2e/Revenue"
           change={-8.5}
           trend="down"
         />
         <MetricCard
           title="Target Achievement"
-          value="87"
+          value={company.targetAchievement.toString()}
           unit="%"
           change={12.3}
           trend="up"
@@ -113,7 +131,7 @@ const Dashboard = () => {
 
       {/* Emissions Trends Chart */}
       <EmissionChart
-        data={emissionsData}
+        data={company.emissionsData}
         title="Emissions Trends (Last 5 Years)"
         height={400}
       />

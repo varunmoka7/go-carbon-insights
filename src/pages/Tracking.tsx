@@ -5,15 +5,16 @@ import MetricCard from '@/components/MetricCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Factory, Zap, Truck } from 'lucide-react';
+import { companies, getCompanyById } from '@/data/mockData';
 
 const Tracking = () => {
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
 
-  const companies = [
-    { id: 'techcorp', name: 'TechCorp Solutions' },
-    { id: 'greenmanuf', name: 'Green Manufacturing Co.' },
-    { id: 'sustaintech', name: 'SustainTech Industries' }
-  ];
+  const company = getCompanyById(selectedCompany);
+
+  if (!company) {
+    return <div>Company not found</div>;
+  }
 
   const emissionScopes = [
     {
@@ -59,9 +60,9 @@ const Tracking = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {companies.map((company) => (
-                <SelectItem key={company.id} value={company.id}>
-                  {company.name}
+              {companies.map((comp) => (
+                <SelectItem key={comp.id} value={comp.id}>
+                  {comp.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -75,21 +76,21 @@ const Tracking = () => {
         <div className="grid md:grid-cols-3 gap-6">
           <MetricCard
             title="Carbon Footprint"
-            value="3,100"
+            value={company.carbonFootprint.toLocaleString()}
             unit="tCO2e"
             change={-15.2}
             trend="down"
           />
           <MetricCard
             title="Energy Consumption"
-            value="12,450"
+            value={company.energyConsumption.toLocaleString()}
             unit="MWh"
             change={-8.3}
             trend="down"
           />
           <MetricCard
             title="Waste Generated"
-            value="245"
+            value={company.wasteGenerated.toString()}
             unit="tons"
             change={-12.1}
             trend="down"
