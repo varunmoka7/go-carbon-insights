@@ -13,7 +13,7 @@ import Scope2 from "./pages/Scope2";
 import Scope3 from "./pages/Scope3";
 import Decarbonization from "./pages/Decarbonization";
 import Profile from "./pages/Profile";
-import NotFound from "./pages/NotFound";
+import Landing from "./pages/Landing";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +24,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={
+          <Route path="/" element={<Landing />} />
+          <Route path="/home" element={
             <Layout>
               <Home />
             </Layout>
@@ -74,7 +75,7 @@ const App = () => (
               <div className="p-8 text-center text-gray-600">Analysis page coming soon</div>
             </Layout>
           } />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

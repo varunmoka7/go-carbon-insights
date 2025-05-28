@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isActive = (path: string) => location.pathname === path;
   
   const navItems = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/home' },
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Tracking', path: '/tracking' },
     { name: 'Reports', path: '/reports' },
