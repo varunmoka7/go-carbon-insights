@@ -1,14 +1,17 @@
 
 import React, { useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import MetricCard from '@/components/MetricCard';
 import EmissionChart from '@/components/EmissionChart';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import { companies, getCompanyById } from '@/data/mockData';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
-  const [selectedSector, setSelectedSector] = useState('technology');
-  const [selectedIndustry, setSelectedIndustry] = useState('software');
+  const [selectedScope, setSelectedScope] = useState('all');
 
   const company = getCompanyById(selectedCompany);
 
@@ -16,8 +19,48 @@ const Dashboard = () => {
     return <div>Company not found</div>;
   }
 
+  // Prepare chart data based on selected scope
+  const getChartData = () => {
+    switch (selectedScope) {
+      case 'scope1':
+        return company.emissionsData.map(item => ({
+          year: item.year,
+          scope1: item.scope1
+        }));
+      case 'scope2':
+        return company.emissionsData.map(item => ({
+          year: item.year,
+          scope2: item.scope2
+        }));
+      case 'scope3':
+        return company.emissionsData.map(item => ({
+          year: item.year,
+          scope3: item.scope3
+        }));
+      case 'total':
+        return company.emissionsData.map(item => ({
+          year: item.year,
+          total: item.scope1 + item.scope2 + item.scope3
+        }));
+      default:
+        return company.emissionsData;
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Back Button */}
+      <div className="mb-6">
+        <Button
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="flex items-center space-x-2 text-gray-600 hover:text-teal-600"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back</span>
+        </Button>
+      </div>
+
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Emissions Overview Dashboard</h1>
@@ -42,41 +85,16 @@ const Dashboard = () => {
           
           <div className="flex items-center space-x-2">
             <label className="text-sm font-medium text-gray-700">Sector:</label>
-            <Select value={selectedSector} onValueChange={setSelectedSector}>
-              <SelectTrigger className="w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="technology">Technology</SelectItem>
-                <SelectItem value="manufacturing">Manufacturing</SelectItem>
-                <SelectItem value="finance">Finance</SelectItem>
-                <SelectItem value="healthcare">Healthcare</SelectItem>
-                <SelectItem value="retail">Retail</SelectItem>
-                <SelectItem value="energy">Energy</SelectItem>
-                <SelectItem value="consumer-goods">Consumer Goods</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="w-48 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-sm">
+              {company.sector}
+            </div>
           </div>
           
           <div className="flex items-center space-x-2">
             <label className="text-sm font-medium text-gray-700">Industry:</label>
-            <Select value={selectedIndustry} onValueChange={setSelectedIndustry}>
-              <SelectTrigger className="w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="software">Software Development</SelectItem>
-                <SelectItem value="hardware">Hardware Manufacturing</SelectItem>
-                <SelectItem value="consulting">IT Consulting</SelectItem>
-                <SelectItem value="cloud">Cloud Services</SelectItem>
-                <SelectItem value="automotive">Automotive</SelectItem>
-                <SelectItem value="pharmaceuticals">Pharmaceuticals</SelectItem>
-                <SelectItem value="banking">Banking</SelectItem>
-                <SelectItem value="utilities">Utilities</SelectItem>
-                <SelectItem value="food-beverage">Food & Beverage</SelectItem>
-                <SelectItem value="aerospace">Aerospace & Defense</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="w-48 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-sm">
+              {company.industry}
+            </div>
           </div>
         </div>
 
@@ -130,11 +148,32 @@ const Dashboard = () => {
       </div>
 
       {/* Emissions Trends Chart */}
-      <EmissionChart
-        data={company.emissionsData}
-        title="Emissions Trends (Last 5 Years)"
-        height={400}
-      />
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">Emissions Trends (Last 5 Years)</h3>
+          <div className="flex items-center space-x-2">
+            <label className="text-sm font-medium text-gray-700">View:</label>
+            <Select value={selectedScope} onValueChange={setSelectedScope}>
+              <SelectTrigger className="w-48">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Scopes</SelectItem>
+                <SelectItem value="scope1">Scope 1 Only</SelectItem>
+                <SelectItem value="scope2">Scope 2 Only</SelectItem>
+                <SelectItem value="scope3">Scope 3 Only</SelectItem>
+                <SelectItem value="total">Total Emissions</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <EmissionChart
+          data={getChartData()}
+          title=""
+          height={400}
+          selectedScope={selectedScope}
+        />
+      </div>
 
       {/* Additional Insights */}
       <div className="mt-8 grid lg:grid-cols-2 gap-6">
