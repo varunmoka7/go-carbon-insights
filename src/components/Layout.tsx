@@ -1,13 +1,12 @@
 
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, User, BarChart, LogOut } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Search, User, BarChart } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const navigate = useNavigate();
   
   const isActive = (path: string) => location.pathname === path;
   
@@ -19,11 +18,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { name: 'Analysis', path: '/analysis' },
     { name: 'Profile', path: '/profile' }
   ];
-
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    navigate('/login');
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -67,14 +61,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   <User className="h-5 w-5" />
                 </Button>
               </Link>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={handleLogout}
-                className="p-2 text-gray-600 hover:text-red-600 transition-colors"
-              >
-                <LogOut className="h-5 w-5" />
-              </Button>
             </div>
           </div>
         </div>
