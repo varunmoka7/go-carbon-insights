@@ -23,40 +23,31 @@ const Dashboard = () => {
     return <div className="text-center text-gray-600">Company not found</div>;
   }
 
-  // Mock emissions data for chart - you can replace this with real data from Supabase
-  const mockEmissionsData = [
-    { year: '2019', scope1: 1200, scope2: 800, scope3: 2400 },
-    { year: '2020', scope1: 1100, scope2: 750, scope3: 2200 },
-    { year: '2021', scope1: 1000, scope2: 700, scope3: 2000 },
-    { year: '2022', scope1: 900, scope2: 650, scope3: 1800 },
-    { year: '2023', scope1: 800, scope2: 600, scope3: 1600 }
-  ];
-
   // Prepare chart data based on selected scope
   const getChartData = () => {
     switch (selectedScope) {
       case 'scope1':
-        return mockEmissionsData.map(item => ({
+        return company.emissionsData.map(item => ({
           year: item.year,
           scope1: item.scope1
         }));
       case 'scope2':
-        return mockEmissionsData.map(item => ({
+        return company.emissionsData.map(item => ({
           year: item.year,
           scope2: item.scope2
         }));
       case 'scope3':
-        return mockEmissionsData.map(item => ({
+        return company.emissionsData.map(item => ({
           year: item.year,
           scope3: item.scope3
         }));
       case 'total':
-        return mockEmissionsData.map(item => ({
+        return company.emissionsData.map(item => ({
           year: item.year,
           total: item.scope1 + item.scope2 + item.scope3
         }));
       default:
-        return mockEmissionsData;
+        return company.emissionsData;
     }
   };
 
@@ -118,11 +109,11 @@ const Dashboard = () => {
             </div>
             <div>
               <span className="text-sm text-gray-500">Carbon Footprint</span>
-              <p className="font-medium text-gray-900">{company.carbon_footprint} tCO2e</p>
+              <p className="font-medium text-gray-900">{company.carbonFootprint} tCO2e</p>
             </div>
             <div>
-              <span className="text-sm text-gray-500">Last Updated</span>
-              <p className="font-medium text-gray-900">{new Date(company.updated_at).toLocaleDateString()}</p>
+              <span className="text-sm text-gray-500">Reporting Year</span>
+              <p className="font-medium text-gray-900">{company.reportingYear}</p>
             </div>
           </div>
         </div>
@@ -132,21 +123,21 @@ const Dashboard = () => {
       <div className="grid md:grid-cols-3 gap-6 mb-8">
         <MetricCard
           title="Total Emissions"
-          value={company.carbon_footprint.toLocaleString()}
+          value={company.totalEmissions.toLocaleString()}
           unit="tCO2e"
           change={-15.2}
           trend="down"
         />
         <MetricCard
           title="Energy Consumption"
-          value={company.energy_consumption.toLocaleString()}
+          value={company.energyConsumption.toLocaleString()}
           unit="MWh"
           change={-8.5}
           trend="down"
         />
         <MetricCard
           title="Waste Generated"
-          value={company.waste_generated.toString()}
+          value={company.wasteGenerated.toString()}
           unit="tons"
           change={12.3}
           trend="up"

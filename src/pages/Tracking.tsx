@@ -82,21 +82,21 @@ const Tracking = () => {
         <div className="grid md:grid-cols-3 gap-6">
           <MetricCard
             title="Carbon Footprint"
-            value={company.carbon_footprint.toLocaleString()}
+            value={company.carbonFootprint.toLocaleString()}
             unit="tCO2e"
             change={-15.2}
             trend="down"
           />
           <MetricCard
             title="Energy Consumption"
-            value={company.energy_consumption.toLocaleString()}
+            value={company.energyConsumption.toLocaleString()}
             unit="MWh"
             change={-8.3}
             trend="down"
           />
           <MetricCard
             title="Waste Generated"
-            value={company.waste_generated.toString()}
+            value={company.wasteGenerated.toString()}
             unit="tons"
             change={-12.1}
             trend="down"
