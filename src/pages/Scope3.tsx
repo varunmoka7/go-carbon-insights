@@ -2,56 +2,23 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useCompanies } from '@/hooks/useCompanies';
+import { useScope3Data } from '@/hooks/useScope3Data';
 
 const Scope3 = () => {
+  const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const [selectedFactor, setSelectedFactor] = useState('supplier-engagement');
+  const { data: companies = [] } = useCompanies();
+  const { data: scope3Data, isLoading } = useScope3Data(selectedCompany);
 
-  const trendData = [
-    { year: '2019', emissions: 2400 },
-    { year: '2020', emissions: 2200 },
-    { year: '2021', emissions: 2000 },
-    { year: '2022', emissions: 1800 },
-    { year: '2023', emissions: 1600 }
-  ];
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-64">Loading...</div>;
+  }
 
-  const categoryData = [
-    { 
-      category: 'Purchased Goods & Services', 
-      emissions: 800, 
-      influenceFactors: 'Supplier selection, material choices',
-      insights: 'Partner with sustainable suppliers, optimize material usage'
-    },
-    { 
-      category: 'Capital Goods', 
-      emissions: 200, 
-      influenceFactors: 'Equipment efficiency, lifecycle',
-      insights: 'Invest in energy-efficient equipment, extend asset lifecycle'
-    },
-    { 
-      category: 'Business Travel', 
-      emissions: 250, 
-      influenceFactors: 'Travel frequency, mode choice',
-      insights: 'Increase virtual meetings, choose efficient transport'
-    },
-    { 
-      category: 'Employee Commuting', 
-      emissions: 150, 
-      influenceFactors: 'Remote work, transport mode',
-      insights: 'Promote remote work, provide sustainable transport options'
-    },
-    { 
-      category: 'Waste Generated', 
-      emissions: 100, 
-      influenceFactors: 'Waste reduction, recycling',
-      insights: 'Implement circular economy principles, increase recycling'
-    },
-    { 
-      category: 'Transportation & Distribution', 
-      emissions: 100, 
-      influenceFactors: 'Logistics efficiency, mode choice',
-      insights: 'Optimize logistics, use low-carbon transport'
-    }
-  ];
+  if (!scope3Data) {
+    return <div className="text-center text-gray-600">No data available</div>;
+  }
 
   const impactFactors = {
     'supplier-engagement': [
@@ -79,13 +46,30 @@ const Scope3 = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Scope 3 Emissions Analysis</h1>
         <p className="text-gray-600">All other indirect emissions in your value chain</p>
+        
+        {/* Company Selection */}
+        <div className="flex items-center space-x-4 mt-6">
+          <label className="text-sm font-medium text-gray-700">Select Company:</label>
+          <Select value={selectedCompany} onValueChange={setSelectedCompany}>
+            <SelectTrigger className="w-64">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {companies.map((comp) => (
+                <SelectItem key={comp.id} value={comp.id}>
+                  {comp.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Trends Chart */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">5-Year Trend: Total Scope 3 Emissions</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={trendData}>
+          <LineChart data={scope3Data.trendData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="year" stroke="#6b7280" />
             <YAxis stroke="#6b7280" />
@@ -122,7 +106,7 @@ const Scope3 = () => {
               </tr>
             </thead>
             <tbody>
-              {categoryData.map((category, index) => (
+              {scope3Data.categoryData.map((category, index) => (
                 <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="py-4 px-4 font-medium text-gray-900">{category.category}</td>
                   <td className="py-4 px-4 text-gray-700">{category.emissions}</td>

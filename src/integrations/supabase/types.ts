@@ -9,7 +9,203 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      companies: {
+        Row: {
+          carbon_footprint: number
+          created_at: string | null
+          energy_consumption: number
+          id: string
+          industry: string | null
+          name: string
+          updated_at: string | null
+          waste_generated: number
+        }
+        Insert: {
+          carbon_footprint?: number
+          created_at?: string | null
+          energy_consumption?: number
+          id: string
+          industry?: string | null
+          name: string
+          updated_at?: string | null
+          waste_generated?: number
+        }
+        Update: {
+          carbon_footprint?: number
+          created_at?: string | null
+          energy_consumption?: number
+          id?: string
+          industry?: string | null
+          name?: string
+          updated_at?: string | null
+          waste_generated?: number
+        }
+        Relationships: []
+      }
+      sbti_targets: {
+        Row: {
+          company_id: string | null
+          created_at: string | null
+          current_progress_scope1_2: number
+          current_progress_scope3: number
+          id: string
+          near_term_2030_scope1_2: number
+          near_term_2030_scope3: number
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string | null
+          current_progress_scope1_2: number
+          current_progress_scope3: number
+          id?: string
+          near_term_2030_scope1_2: number
+          near_term_2030_scope3: number
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string | null
+          current_progress_scope1_2?: number
+          current_progress_scope3?: number
+          id?: string
+          near_term_2030_scope1_2?: number
+          near_term_2030_scope3?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sbti_targets_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scope1_emissions: {
+        Row: {
+          company_id: string | null
+          created_at: string | null
+          emissions_by_source: number
+          id: string
+          source: string
+          total_emissions: number
+          year: number
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string | null
+          emissions_by_source: number
+          id?: string
+          source: string
+          total_emissions: number
+          year: number
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string | null
+          emissions_by_source?: number
+          id?: string
+          source?: string
+          total_emissions?: number
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scope1_emissions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scope2_emissions: {
+        Row: {
+          company_id: string | null
+          created_at: string | null
+          emissions_by_source: number
+          id: string
+          location: string | null
+          percentage: string | null
+          source: string
+          total_emissions: number
+          year: number
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string | null
+          emissions_by_source: number
+          id?: string
+          location?: string | null
+          percentage?: string | null
+          source: string
+          total_emissions: number
+          year: number
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string | null
+          emissions_by_source?: number
+          id?: string
+          location?: string | null
+          percentage?: string | null
+          source?: string
+          total_emissions?: number
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scope2_emissions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scope3_emissions: {
+        Row: {
+          category: string
+          company_id: string | null
+          created_at: string | null
+          emissions_by_category: number
+          id: string
+          influence_factors: string | null
+          insights: string | null
+          total_emissions: number
+          year: number
+        }
+        Insert: {
+          category: string
+          company_id?: string | null
+          created_at?: string | null
+          emissions_by_category: number
+          id?: string
+          influence_factors?: string | null
+          insights?: string | null
+          total_emissions: number
+          year: number
+        }
+        Update: {
+          category?: string
+          company_id?: string | null
+          created_at?: string | null
+          emissions_by_category?: number
+          id?: string
+          influence_factors?: string | null
+          insights?: string | null
+          total_emissions?: number
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scope3_emissions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

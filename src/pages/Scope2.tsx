@@ -2,15 +2,20 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { companies, getCompanyById } from '@/data/mockData';
+import { useCompanies } from '@/hooks/useCompanies';
+import { useScope2Data } from '@/hooks/useScope2Data';
 
 const Scope2 = () => {
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const { data: companies = [] } = useCompanies();
+  const { data: scope2Data, isLoading } = useScope2Data(selectedCompany);
 
-  const company = getCompanyById(selectedCompany);
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-64">Loading...</div>;
+  }
 
-  if (!company) {
-    return <div>Company not found</div>;
+  if (!scope2Data) {
+    return <div className="text-center text-gray-600">No data available</div>;
   }
 
   const reductionInitiatives = [
@@ -49,7 +54,7 @@ const Scope2 = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">5-Year Trend: Total Scope 2 Emissions</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={company.scope2Data.trendData}>
+          <LineChart data={scope2Data.trendData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="year" stroke="#6b7280" />
             <YAxis stroke="#6b7280" />
@@ -76,7 +81,7 @@ const Scope2 = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Emissions Breakdown by Source</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={company.scope2Data.sourceData}>
+          <BarChart data={scope2Data.sourceData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="source" stroke="#6b7280" />
             <YAxis stroke="#6b7280" />
@@ -98,7 +103,7 @@ const Scope2 = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Emissions by Location</h2>
           <div className="space-y-4">
-            {company.scope2Data.locationData.map((location, index) => (
+            {scope2Data.locationData.map((location, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <span className="font-medium text-gray-900">{location.location}</span>

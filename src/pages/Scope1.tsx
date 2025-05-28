@@ -2,15 +2,20 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { companies, getCompanyById } from '@/data/mockData';
+import { useCompanies } from '@/hooks/useCompanies';
+import { useScope1Data } from '@/hooks/useScope1Data';
 
 const Scope1 = () => {
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const { data: companies = [] } = useCompanies();
+  const { data: scope1Data, isLoading } = useScope1Data(selectedCompany);
 
-  const company = getCompanyById(selectedCompany);
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-64">Loading...</div>;
+  }
 
-  if (!company) {
-    return <div>Company not found</div>;
+  if (!scope1Data) {
+    return <div className="text-center text-gray-600">No data available</div>;
   }
 
   const keyFactors = [
@@ -48,7 +53,7 @@ const Scope1 = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">5-Year Trend: Total Scope 1 Emissions</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={company.scope1Data.trendData}>
+          <LineChart data={scope1Data.trendData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="year" stroke="#6b7280" />
             <YAxis stroke="#6b7280" />
@@ -75,7 +80,7 @@ const Scope1 = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Emissions by Source</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={company.scope1Data.sourceData}>
+          <BarChart data={scope1Data.sourceData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="source" stroke="#6b7280" />
             <YAxis stroke="#6b7280" />
