@@ -14,6 +14,7 @@ import Scope3 from "./pages/Scope3";
 import Decarbonization from "./pages/Decarbonization";
 import Profile from "./pages/Profile";
 import Landing from "./pages/Landing";
+import Analysis from "./pages/Analysis";
 
 const queryClient = new QueryClient();
 
@@ -72,7 +73,7 @@ const App = () => (
           } />
           <Route path="/analysis" element={
             <Layout>
-              <div className="p-8 text-center text-gray-600">Analysis page coming soon</div>
+              <Analysis />
             </Layout>
           } />
           <Route path="*" element={<Landing />} />
