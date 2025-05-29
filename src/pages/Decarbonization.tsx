@@ -1,13 +1,12 @@
-
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Cell } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { enhancedCompanies, getCompanyById } from '@/data/enhancedMockData';
+import { enhancedCompanies, getCompanyById, getCompaniesBySector } from '@/data/enhancedMockData';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle, TrendingUp, TrendingDown, Building2 } from 'lucide-react';
+import { AlertTriangle, TrendingUp, TrendingDown, Building2, Users, Award, Leaf, Target } from 'lucide-react';
 
 const Decarbonization = () => {
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
@@ -29,6 +28,9 @@ const Decarbonization = () => {
     { name: 'Other Levers', value: -150, cumulative: 2800, type: 'reduction', color: '#10b981' },
     { name: '2030 Target', value: 0, cumulative: 2200, type: 'target', color: '#3b82f6' }
   ];
+
+  // Get companies in the same sector for comparison
+  const sectorCompanies = getCompaniesBySector(company.sector).filter(c => c.id !== company.id);
 
   // Mock sector analysis data representing ~3,000 companies
   const expandedSectorAnalysis = [
@@ -195,21 +197,142 @@ const Decarbonization = () => {
             </AlertDescription>
           </Alert>
 
-          {/* Coming Soon Placeholder for companies without data */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Climate Strategy Overview</h2>
-            <div className="text-center py-12">
-              <div className="max-w-md mx-auto">
-                <div className="mb-4">
-                  <Building2 className="h-16 w-16 text-gray-400 mx-auto" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">Coming Soon</h3>
-                <p className="text-gray-500 leading-relaxed">
-                  Detailed carbon strategy data for {company.name} is currently being compiled. 
-                  This section will include comprehensive decarbonization pathways, carbon levers analysis, 
-                  and implementation timelines once the data integration is complete.
-                </p>
+          {/* Company Profile and Carbon Strategy Content */}
+          <div className="grid lg:grid-cols-2 gap-8 mb-8">
+            {/* Company Profile */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
+              <div className="flex items-center mb-6">
+                <Building2 className="h-8 w-8 text-teal-600 mr-3" />
+                <h2 className="text-2xl font-bold text-gray-900">Company Profile</h2>
               </div>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{company.name}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{company.description}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                  <div className="text-center p-4 bg-gray-50 rounded-lg">
+                    <div className="text-2xl font-bold text-teal-600">{company.sector}</div>
+                    <div className="text-sm text-gray-600">Sector</div>
+                  </div>
+                  <div className="text-center p-4 bg-gray-50 rounded-lg">
+                    <div className="text-2xl font-bold text-teal-600">{(company.totalEmissions / 1000).toFixed(0)}k</div>
+                    <div className="text-sm text-gray-600">tCO2e</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Carbon Credits KPI */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
+              <div className="flex items-center mb-6">
+                <Leaf className="h-8 w-8 text-green-600 mr-3" />
+                <h2 className="text-2xl font-bold text-gray-900">Carbon Credits Portfolio</h2>
+              </div>
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-green-600 mb-2">{company.carbonCredits?.toLocaleString()}</div>
+                  <div className="text-gray-600">Active Carbon Credits (tCO2e)</div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-lg font-bold text-green-700">VCS</div>
+                    <div className="text-sm text-gray-600">45%</div>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-lg font-bold text-blue-700">CDM</div>
+                    <div className="text-sm text-gray-600">35%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 mb-8">
+            {/* Double Materiality Assessment */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
+              <div className="flex items-center mb-6">
+                <Target className="h-8 w-8 text-purple-600 mr-3" />
+                <h2 className="text-2xl font-bold text-gray-900">Double Materiality Assessment</h2>
+              </div>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">Overall Materiality Score</span>
+                  <span className="text-2xl font-bold text-purple-600">{company.materialityScore}/10</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div 
+                    className="bg-purple-600 h-3 rounded-full transition-all duration-500" 
+                    style={{ width: `${(company.materialityScore || 0) * 10}%` }}
+                  ></div>
+                </div>
+                <div className="text-sm text-gray-600 leading-relaxed">
+                  Assessment covers financial impact on business operations and environmental impact on external stakeholders, 
+                  including climate risks, regulatory changes, and stakeholder expectations.
+                </div>
+              </div>
+            </div>
+
+            {/* Carbon Footprint Tracking */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
+              <div className="flex items-center mb-6">
+                <Users className="h-8 w-8 text-orange-600 mr-3" />
+                <h2 className="text-2xl font-bold text-gray-900">Value Chain Tracking</h2>
+              </div>
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div className="p-3 bg-red-50 rounded-lg">
+                    <div className="text-lg font-bold text-red-600">Scope 1</div>
+                    <div className="text-sm text-gray-600">{(company.emissionsData[company.emissionsData.length - 1]?.scope1 / 1000).toFixed(0)}k tCO2e</div>
+                  </div>
+                  <div className="p-3 bg-yellow-50 rounded-lg">
+                    <div className="text-lg font-bold text-yellow-600">Scope 2</div>
+                    <div className="text-sm text-gray-600">{(company.emissionsData[company.emissionsData.length - 1]?.scope2 / 1000).toFixed(0)}k tCO2e</div>
+                  </div>
+                  <div className="p-3 bg-blue-50 rounded-lg">
+                    <div className="text-lg font-bold text-blue-600">Scope 3</div>
+                    <div className="text-sm text-gray-600">{(company.emissionsData[company.emissionsData.length - 1]?.scope3 / 1000).toFixed(0)}k tCO2e</div>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-600 leading-relaxed">
+                  Comprehensive tracking across all emission scopes with real-time monitoring of direct operations, 
+                  energy consumption, and entire value chain activities.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Supplier Decarbonization Strategy */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mb-8">
+            <div className="flex items-center mb-6">
+              <Award className="h-8 w-8 text-indigo-600 mr-3" />
+              <h2 className="text-2xl font-bold text-gray-900">Supplier Decarbonization Strategy & Progress</h2>
+            </div>
+            <div className="grid lg:grid-cols-3 gap-6">
+              <div className="text-center p-6 bg-indigo-50 rounded-lg">
+                <div className="text-3xl font-bold text-indigo-600 mb-2">{company.supplierDecarbonization}%</div>
+                <div className="text-gray-700 font-medium mb-2">Supplier Engagement</div>
+                <div className="text-sm text-gray-600">Suppliers committed to SBTi targets</div>
+              </div>
+              <div className="text-center p-6 bg-green-50 rounded-lg">
+                <div className="text-3xl font-bold text-green-600 mb-2">85%</div>
+                <div className="text-gray-700 font-medium mb-2">Assessment Coverage</div>
+                <div className="text-sm text-gray-600">Suppliers assessed for climate risks</div>
+              </div>
+              <div className="text-center p-6 bg-teal-50 rounded-lg">
+                <div className="text-3xl font-bold text-teal-600 mb-2">92%</div>
+                <div className="text-gray-700 font-medium mb-2">Collaboration Rate</div>
+                <div className="text-sm text-gray-600">Active in decarbonization programs</div>
+              </div>
+            </div>
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h3 className="font-semibold text-gray-800 mb-2">Key Initiatives:</h3>
+              <ul className="text-sm text-gray-600 space-y-1">
+                <li>• Supplier Climate Academy training program</li>
+                <li>• Financial incentives for emission reduction targets</li>
+                <li>• Collaborative renewable energy procurement</li>
+                <li>• Supply chain emission monitoring platform</li>
+              </ul>
             </div>
           </div>
         </>
@@ -275,7 +398,7 @@ const Decarbonization = () => {
             </div>
           </div>
 
-          {/* Emissions Reduction Waterfall - Fixed */}
+          {/* Emissions Reduction Waterfall */}
           <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Emissions Reduction Pathway to 2030</h2>
             <div className="w-full max-w-4xl mx-auto">
@@ -323,24 +446,80 @@ const Decarbonization = () => {
 
       {activeView === 'comparison' && (
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Company SBTI Performance Comparison</h2>
-          <div className="text-center py-12">
-            <div className="max-w-md mx-auto">
-              <div className="mb-4">
-                <Building2 className="h-16 w-16 text-gray-400 mx-auto" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Coming Soon</h3>
-              <p className="text-gray-500 leading-relaxed">
-                Company comparison data is being prepared. This section will provide comprehensive 
-                SBTI performance rankings and benchmarking across industry peers.
-              </p>
-            </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            Sector Comparison: {company.sector}
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Comparing {company.name} with other companies in the {company.sector} sector
+          </p>
+          
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-semibold">Company</TableHead>
+                  <TableHead className="font-semibold">Total Emissions (tCO2e)</TableHead>
+                  <TableHead className="font-semibold">Renewable Energy %</TableHead>
+                  <TableHead className="font-semibold">SBTI Progress %</TableHead>
+                  <TableHead className="font-semibold">Carbon Credits</TableHead>
+                  <TableHead className="font-semibold">Materiality Score</TableHead>
+                  <TableHead className="font-semibold">SBTI Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {/* Current company highlighted */}
+                <TableRow className="bg-teal-50 border-teal-200">
+                  <TableCell className="font-bold text-teal-900">{company.name} (Current)</TableCell>
+                  <TableCell className="font-medium">{company.totalEmissions.toLocaleString()}</TableCell>
+                  <TableCell className="font-medium">{company.renewableEnergyPercentage}%</TableCell>
+                  <TableCell className="font-medium">{company.sbtiProgress}%</TableCell>
+                  <TableCell className="font-medium">{company.carbonCredits?.toLocaleString()}</TableCell>
+                  <TableCell className="font-medium">{company.materialityScore}/10</TableCell>
+                  <TableCell>
+                    <Badge className={company.frameworks.SBTI ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}>
+                      {company.frameworks.SBTI ? "Committed" : "Not Committed"}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+                
+                {/* Other companies in the same sector */}
+                {sectorCompanies.map((comp, index) => (
+                  <TableRow key={comp.id} className="hover:bg-gray-50">
+                    <TableCell className="font-medium text-gray-900">{comp.name}</TableCell>
+                    <TableCell>{comp.totalEmissions.toLocaleString()}</TableCell>
+                    <TableCell>{comp.renewableEnergyPercentage}%</TableCell>
+                    <TableCell>{comp.sbtiProgress}%</TableCell>
+                    <TableCell>{comp.carbonCredits?.toLocaleString()}</TableCell>
+                    <TableCell>{comp.materialityScore}/10</TableCell>
+                    <TableCell>
+                      <Badge className={comp.frameworks.SBTI ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}>
+                        {comp.frameworks.SBTI ? "Committed" : "Not Committed"}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
+          
+          {sectorCompanies.length === 0 && (
+            <div className="text-center py-8 text-gray-500">
+              No other companies found in the {company.sector} sector for comparison.
+            </div>
+          )}
         </div>
       )}
 
       {activeView === 'sectors' && (
         <div className="space-y-8">
+          {/* Mock Data Warning for Sector Analysis */}
+          <Alert className="bg-amber-50 border-amber-200">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription className="text-amber-800">
+              <strong>Mock Data Warning:</strong> The sector analysis data below represents simulated information for demonstration purposes and does not reflect actual company performance data.
+            </AlertDescription>
+          </Alert>
+
           <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
             <div className="flex items-center justify-between mb-6">
               <div>
