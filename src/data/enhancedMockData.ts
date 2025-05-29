@@ -1,1131 +1,1187 @@
-export interface FrameworkStatus {
-  SBTI: boolean;
-  CSRD: boolean;
-  CDP: boolean;
-  UNGC: boolean;
-  SDG: boolean;
-}
 
-export interface CompanyDetails {
+export interface Company {
   id: string;
   name: string;
   industry: string;
   sector: string;
   description: string;
-  topCarbonFootprints: string[];
-  frameworks: FrameworkStatus;
-  sbtiTargets?: {
-    description: string;
-    nearTermTarget: string;
-    longTermTarget: string;
-    baselineYear: number;
-    targetYear: number;
-  };
-  carbonFootprint: number;
   totalEmissions: number;
   energyConsumption: number;
   wasteGenerated: number;
   renewableEnergyPercentage: number;
-  reportingYear: number;
-  emissionsData: Array<{
-    year: number;
-    scope1: number;
-    scope2: number;
-    scope3: number;
-    renewablePercentage?: number;
-  }>;
-  // New fields for carbon strategy
+  topCarbonFootprints: string[];
+  frameworks: Framework[];
+  emissionsData: EmissionData[];
+  sbtiTargets?: SBTITarget;
+  sbtiProgress?: number;
   carbonCredits?: number;
   materialityScore?: number;
   supplierDecarbonization?: number;
-  sbtiProgress?: number;
 }
 
-export const enhancedCompanies: CompanyDetails[] = [
+export interface EmissionData {
+  year: number;
+  scope1: number;
+  scope2: number;
+  scope3: number;
+}
+
+export interface Framework {
+  name: string;
+  status: 'Implemented' | 'In Progress' | 'Planned' | 'Not Started';
+  score?: number;
+}
+
+export interface SBTITarget {
+  description: string;
+  nearTermTarget: string;
+  longTermTarget: string;
+  baselineYear: string;
+}
+
+// Technology Sector Companies (6)
+const technologyCompanies: Company[] = [
   {
     id: 'techcorp',
     name: 'TechCorp Industries',
-    industry: 'Technology',
-    sector: 'Software & IT Services',
-    description: 'Leading cloud computing and software solutions provider with global data centers and operations spanning 40+ countries. Committed to sustainable technology infrastructure and carbon-neutral cloud services.',
-    topCarbonFootprints: ['Data center operations', 'Employee business travel', 'Cloud infrastructure'],
-    frameworks: {
-      SBTI: true,
-      CSRD: true,
-      CDP: true,
-      UNGC: true,
-      SDG: false
-    },
-    sbtiTargets: {
-      description: 'Committed to reducing absolute Scope 1 and 2 GHG emissions by 50% by 2030 from a 2019 base year and achieving net-zero emissions by 2050.',
-      nearTermTarget: '50% reduction in Scope 1 & 2 emissions by 2030',
-      longTermTarget: 'Net-zero emissions by 2050',
-      baselineYear: 2019,
-      targetYear: 2030
-    },
-    carbonFootprint: 125000,
+    industry: 'Software & IT Services',
+    sector: 'Technology',
+    description: 'Leading global technology company specializing in cloud computing, artificial intelligence, and enterprise software solutions. Committed to achieving carbon neutrality by 2030 through renewable energy adoption and sustainable innovation.',
     totalEmissions: 125000,
-    energyConsumption: 85000,
+    energyConsumption: 285000,
     wasteGenerated: 1200,
-    renewableEnergyPercentage: 68.5,
-    reportingYear: 2024,
-    carbonCredits: 15000,
-    materialityScore: 8.5,
-    supplierDecarbonization: 72,
-    sbtiProgress: 84,
+    renewableEnergyPercentage: 78,
+    topCarbonFootprints: [
+      'Data center operations and cloud infrastructure',
+      'Employee commuting and business travel',
+      'Manufacturing of hardware components'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 85 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 92 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 70 },
+      { name: 'GRI Standards', status: 'Implemented', score: 88 }
+    ],
     emissionsData: [
-      { year: 2019, scope1: 15000, scope2: 45000, scope3: 80000, renewablePercentage: 45.0 },
-      { year: 2020, scope1: 14200, scope2: 42000, scope3: 78000, renewablePercentage: 49.5 },
-      { year: 2021, scope1: 13500, scope2: 40000, scope3: 75000, renewablePercentage: 54.0 },
-      { year: 2022, scope1: 12800, scope2: 38000, scope3: 72000, renewablePercentage: 58.5 },
-      { year: 2023, scope1: 12000, scope2: 35000, scope3: 68000, renewablePercentage: 63.0 },
-      { year: 2024, scope1: 11500, scope2: 33500, scope3: 65000, renewablePercentage: 68.5 }
-    ]
-  },
-  {
-    id: 'greenmanufacturing',
-    name: 'Green Manufacturing Co.',
-    industry: 'Manufacturing',
-    sector: 'Industrial Equipment',
-    description: 'Sustainable manufacturing company specializing in eco-friendly industrial equipment with renewable energy integration. Pioneer in circular economy practices and zero-waste manufacturing processes.',
-    topCarbonFootprints: ['Manufacturing processes', 'Raw material production', 'Product transportation'],
-    frameworks: {
-      SBTI: true,
-      CSRD: false,
-      CDP: true,
-      UNGC: true,
-      SDG: true
-    },
+      { year: 2019, scope1: 15000, scope2: 45000, scope3: 80000 },
+      { year: 2020, scope1: 14200, scope2: 42000, scope3: 78000 },
+      { year: 2021, scope1: 13500, scope2: 39000, scope3: 75000 },
+      { year: 2022, scope1: 12800, scope2: 36000, scope3: 72000 },
+      { year: 2023, scope1: 12100, scope2: 33000, scope3: 69000 },
+      { year: 2024, scope1: 11500, scope2: 30000, scope3: 65000 }
+    ],
     sbtiTargets: {
-      description: 'Committed to reducing absolute Scope 1 and 2 GHG emissions by 42% by 2030 from a 2020 base year.',
-      nearTermTarget: '42% reduction in Scope 1 & 2 emissions by 2030',
-      longTermTarget: 'Net-zero emissions by 2045',
-      baselineYear: 2020,
-      targetYear: 2030
+      description: 'TechCorp commits to reduce absolute Scope 1 and 2 greenhouse gas emissions by 50% by 2030 from a 2019 base year and to achieve net-zero emissions across the value chain by 2050.',
+      nearTermTarget: '50% reduction in Scope 1+2 emissions by 2030',
+      longTermTarget: 'Net-zero across value chain by 2050',
+      baselineYear: '2019'
     },
-    carbonFootprint: 89000,
-    totalEmissions: 89000,
-    energyConsumption: 65000,
-    wasteGenerated: 850,
-    renewableEnergyPercentage: 72.3,
-    reportingYear: 2024,
-    carbonCredits: 12500,
-    materialityScore: 9.2,
-    supplierDecarbonization: 85,
     sbtiProgress: 78,
-    emissionsData: [
-      { year: 2019, scope1: 25000, scope2: 18000, scope3: 52000, renewablePercentage: 52.0 },
-      { year: 2020, scope1: 24000, scope2: 17500, scope3: 50000, renewablePercentage: 56.5 },
-      { year: 2021, scope1: 22800, scope2: 16800, scope3: 48000, renewablePercentage: 61.0 },
-      { year: 2022, scope1: 21500, scope2: 16000, scope3: 45000, renewablePercentage: 65.5 },
-      { year: 2023, scope1: 20200, scope2: 15200, scope3: 42000, renewablePercentage: 69.0 },
-      { year: 2024, scope1: 19000, scope2: 14500, scope3: 40000, renewablePercentage: 72.3 }
-    ]
-  },
-  {
-    id: 'retailgiant',
-    name: 'Retail Giant',
-    industry: 'Retail',
-    sector: 'Consumer Goods',
-    description: 'Global retail chain with 2000+ stores worldwide, focusing on sustainable supply chain and renewable energy adoption. Leading initiatives in sustainable packaging and circular retail models.',
-    topCarbonFootprints: ['Supply chain logistics', 'Store operations', 'Product manufacturing'],
-    frameworks: {
-      SBTI: false,
-      CSRD: true,
-      CDP: true,
-      UNGC: false,
-      SDG: true
-    },
-    carbonFootprint: 156000,
-    totalEmissions: 156000,
-    energyConsumption: 95000,
-    wasteGenerated: 2100,
-    renewableEnergyPercentage: 58.2,
-    reportingYear: 2024,
-    carbonCredits: 8200,
-    materialityScore: 7.8,
-    supplierDecarbonization: 65,
-    sbtiProgress: 62,
-    emissionsData: [
-      { year: 2019, scope1: 12000, scope2: 35000, scope3: 120000, renewablePercentage: 38.0 },
-      { year: 2020, scope1: 11800, scope2: 34000, scope3: 118000, renewablePercentage: 42.0 },
-      { year: 2021, scope1: 11500, scope2: 33000, scope3: 115000, renewablePercentage: 46.0 },
-      { year: 2022, scope1: 11200, scope2: 32000, scope3: 112000, renewablePercentage: 50.5 },
-      { year: 2023, scope1: 11000, scope2: 31000, scope3: 110000, renewablePercentage: 54.2 },
-      { year: 2024, scope1: 10800, scope2: 30000, scope3: 108000, renewablePercentage: 58.2 }
-    ]
-  },
-  // Additional 17 companies from 7 different sectors
-  {
-    id: 'innovatech',
-    name: 'InnovaTech Solutions',
-    industry: 'Technology',
-    sector: 'Software Development',
-    description: 'AI and machine learning solutions provider focused on sustainable technology.',
-    topCarbonFootprints: ['Data processing', 'Office operations', 'Employee commuting'],
-    frameworks: { SBTI: true, CSRD: true, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 45000,
-    totalEmissions: 45000,
-    energyConsumption: 32000,
-    wasteGenerated: 280,
-    renewableEnergyPercentage: 85.2,
-    reportingYear: 2024,
-    carbonCredits: 5500,
-    materialityScore: 8.8,
-    supplierDecarbonization: 78,
-    sbtiProgress: 89,
-    emissionsData: [{ year: 2024, scope1: 5000, scope2: 15000, scope3: 25000, renewablePercentage: 85.2 }]
+    carbonCredits: 12000,
+    materialityScore: 8.5,
+    supplierDecarbonization: 65
   },
   {
     id: 'cloudtech',
-    name: 'CloudTech Enterprises',
-    industry: 'Technology',
-    sector: 'Cloud Services',
-    description: 'Enterprise cloud infrastructure and services provider.',
-    topCarbonFootprints: ['Server operations', 'Cooling systems', 'Network infrastructure'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 98000,
+    name: 'CloudTech Solutions',
+    industry: 'Cloud Computing',
+    sector: 'Technology',
+    description: 'Major cloud infrastructure provider focused on sustainable data center operations and green computing solutions.',
     totalEmissions: 98000,
-    energyConsumption: 78000,
-    wasteGenerated: 450,
-    renewableEnergyPercentage: 75.5,
-    reportingYear: 2024,
-    carbonCredits: 11200,
-    materialityScore: 8.2,
-    supplierDecarbonization: 82,
-    sbtiProgress: 76,
-    emissionsData: [{ year: 2024, scope1: 12000, scope2: 28000, scope3: 58000, renewablePercentage: 75.5 }]
+    energyConsumption: 320000,
+    wasteGenerated: 980,
+    renewableEnergyPercentage: 85,
+    topCarbonFootprints: [
+      'Data center cooling and power consumption',
+      'Server manufacturing and replacement',
+      'Network infrastructure operations'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 88 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 90 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 82 },
+      { name: 'GRI Standards', status: 'Implemented', score: 85 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 8000, scope2: 35000, scope3: 65000 },
+      { year: 2020, scope1: 7500, scope2: 32000, scope3: 62000 },
+      { year: 2021, scope1: 7000, scope2: 29000, scope3: 59000 },
+      { year: 2022, scope1: 6500, scope2: 26000, scope3: 56000 },
+      { year: 2023, scope1: 6000, scope2: 23000, scope3: 53000 },
+      { year: 2024, scope1: 5500, scope2: 20000, scope3: 50000 }
+    ],
+    sbtiTargets: {
+      description: 'CloudTech commits to reduce Scope 1 and 2 emissions by 60% by 2030 and achieve carbon neutrality by 2040.',
+      nearTermTarget: '60% reduction in Scope 1+2 emissions by 2030',
+      longTermTarget: 'Carbon neutrality by 2040',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 82,
+    carbonCredits: 15000,
+    materialityScore: 9.0,
+    supplierDecarbonization: 72
+  },
+  {
+    id: 'cybersec',
+    name: 'CyberSec Innovations',
+    industry: 'Cybersecurity',
+    sector: 'Technology',
+    description: 'Leading cybersecurity firm providing enterprise security solutions with a focus on sustainable digital infrastructure.',
+    totalEmissions: 45000,
+    energyConsumption: 125000,
+    wasteGenerated: 420,
+    renewableEnergyPercentage: 68,
+    topCarbonFootprints: [
+      'Office buildings and facilities',
+      'Employee travel and commuting',
+      'IT equipment and servers'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'In Progress', score: 65 },
+      { name: 'SBTi Targets', status: 'Planned', score: 40 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 55 },
+      { name: 'GRI Standards', status: 'Implemented', score: 75 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 5000, scope2: 18000, scope3: 27000 },
+      { year: 2020, scope1: 4800, scope2: 16500, scope3: 25500 },
+      { year: 2021, scope1: 4600, scope2: 15000, scope3: 24000 },
+      { year: 2022, scope1: 4400, scope2: 13500, scope3: 22500 },
+      { year: 2023, scope1: 4200, scope2: 12000, scope3: 21000 },
+      { year: 2024, scope1: 4000, scope2: 10500, scope3: 19500 }
+    ],
+    sbtiProgress: 45,
+    carbonCredits: 5000,
+    materialityScore: 7.2,
+    supplierDecarbonization: 38
+  },
+  {
+    id: 'aitech',
+    name: 'AI Tech Dynamics',
+    industry: 'Artificial Intelligence',
+    sector: 'Technology',
+    description: 'AI and machine learning company developing sustainable computing solutions for enterprise applications.',
+    totalEmissions: 78000,
+    energyConsumption: 195000,
+    wasteGenerated: 680,
+    renewableEnergyPercentage: 72,
+    topCarbonFootprints: [
+      'High-performance computing infrastructure',
+      'Model training and data processing',
+      'Research and development facilities'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 80 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 70 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 68 },
+      { name: 'GRI Standards', status: 'Implemented', score: 82 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 8500, scope2: 28000, scope3: 48500 },
+      { year: 2020, scope1: 8200, scope2: 26500, scope3: 46000 },
+      { year: 2021, scope1: 7900, scope2: 25000, scope3: 43500 },
+      { year: 2022, scope1: 7600, scope2: 23500, scope3: 41000 },
+      { year: 2023, scope1: 7300, scope2: 22000, scope3: 38500 },
+      { year: 2024, scope1: 7000, scope2: 20500, scope3: 36000 }
+    ],
+    sbtiProgress: 68,
+    carbonCredits: 8500,
+    materialityScore: 8.1,
+    supplierDecarbonization: 55
+  },
+  {
+    id: 'greendata',
+    name: 'GreenData Systems',
+    industry: 'Data Analytics',
+    sector: 'Technology',
+    description: 'Data analytics company specializing in environmental monitoring and sustainability reporting solutions.',
+    totalEmissions: 32000,
+    energyConsumption: 88000,
+    wasteGenerated: 285,
+    renewableEnergyPercentage: 88,
+    topCarbonFootprints: [
+      'Data processing and analytics infrastructure',
+      'Client implementation travel',
+      'Office operations and facilities'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 92 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 95 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 88 },
+      { name: 'GRI Standards', status: 'Implemented', score: 90 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 3500, scope2: 12000, scope3: 19500 },
+      { year: 2020, scope1: 3200, scope2: 11000, scope3: 18000 },
+      { year: 2021, scope1: 2900, scope2: 10000, scope3: 16500 },
+      { year: 2022, scope1: 2600, scope2: 9000, scope3: 15000 },
+      { year: 2023, scope1: 2300, scope2: 8000, scope3: 13500 },
+      { year: 2024, scope1: 2000, scope2: 7000, scope3: 12000 }
+    ],
+    sbtiTargets: {
+      description: 'GreenData commits to achieving net-zero emissions by 2035 and helping clients reduce their carbon footprint by 30%.',
+      nearTermTarget: '70% reduction in total emissions by 2030',
+      longTermTarget: 'Net-zero emissions by 2035',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 88,
+    carbonCredits: 3500,
+    materialityScore: 9.2,
+    supplierDecarbonization: 78
+  },
+  {
+    id: 'digitalwave',
+    name: 'DigitalWave Technologies',
+    industry: 'Software Development',
+    sector: 'Technology',
+    description: 'Enterprise software development company focused on creating sustainable digital solutions for various industries.',
+    totalEmissions: 56000,
+    energyConsumption: 145000,
+    wasteGenerated: 520,
+    renewableEnergyPercentage: 65,
+    topCarbonFootprints: [
+      'Software development infrastructure',
+      'Client support and maintenance',
+      'Employee workspace and facilities'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'In Progress', score: 70 },
+      { name: 'SBTi Targets', status: 'Planned', score: 35 },
+      { name: 'TCFD Reporting', status: 'Not Started', score: 25 },
+      { name: 'GRI Standards', status: 'In Progress', score: 68 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 6000, scope2: 22000, scope3: 32000 },
+      { year: 2020, scope1: 5800, scope2: 20500, scope3: 30500 },
+      { year: 2021, scope1: 5600, scope2: 19000, scope3: 29000 },
+      { year: 2022, scope1: 5400, scope2: 17500, scope3: 27500 },
+      { year: 2023, scope1: 5200, scope2: 16000, scope3: 26000 },
+      { year: 2024, scope1: 5000, scope2: 14500, scope3: 24500 }
+    ],
+    sbtiProgress: 42,
+    carbonCredits: 6200,
+    materialityScore: 6.8,
+    supplierDecarbonization: 45
+  }
+];
+
+// Manufacturing Sector Companies (6)
+const manufacturingCompanies: Company[] = [
+  {
+    id: 'greenmanufacturing',
+    name: 'Green Manufacturing Co.',
+    industry: 'Industrial Equipment',
+    sector: 'Manufacturing',
+    description: 'Sustainable manufacturing company producing industrial equipment with focus on circular economy principles and renewable energy integration.',
+    totalEmissions: 285000,
+    energyConsumption: 450000,
+    wasteGenerated: 3500,
+    renewableEnergyPercentage: 55,
+    topCarbonFootprints: [
+      'Manufacturing processes and production lines',
+      'Raw material extraction and processing',
+      'Product transportation and logistics'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 78 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 65 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 60 },
+      { name: 'GRI Standards', status: 'Implemented', score: 80 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 120000, scope2: 65000, scope3: 125000 },
+      { year: 2020, scope1: 115000, scope2: 62000, scope3: 120000 },
+      { year: 2021, scope1: 110000, scope2: 59000, scope3: 115000 },
+      { year: 2022, scope1: 105000, scope2: 56000, scope3: 110000 },
+      { year: 2023, scope1: 100000, scope2: 53000, scope3: 105000 },
+      { year: 2024, scope1: 95000, scope2: 50000, scope3: 100000 }
+    ],
+    sbtiTargets: {
+      description: 'Green Manufacturing commits to reduce Scope 1 and 2 emissions by 45% by 2030 and achieve net-zero manufacturing by 2050.',
+      nearTermTarget: '45% reduction in Scope 1+2 emissions by 2030',
+      longTermTarget: 'Net-zero manufacturing by 2050',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 62,
+    carbonCredits: 18000,
+    materialityScore: 8.3,
+    supplierDecarbonization: 58
   },
   {
     id: 'steelworks',
     name: 'Advanced Steel Works',
-    industry: 'Manufacturing',
-    sector: 'Steel Production',
-    description: 'Modern steel manufacturing with focus on green steel technologies.',
-    topCarbonFootprints: ['Steel production', 'Energy consumption', 'Raw materials'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: false },
-    carbonFootprint: 445000,
+    industry: 'Steel Production',
+    sector: 'Manufacturing',
+    description: 'Major steel production company implementing hydrogen-based steel making and carbon capture technologies.',
+    totalEmissions: 820000,
+    energyConsumption: 1200000,
+    wasteGenerated: 12000,
+    renewableEnergyPercentage: 28,
+    topCarbonFootprints: [
+      'Blast furnace operations and steel production',
+      'Coking coal consumption',
+      'Iron ore processing and transportation'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 72 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 55 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 68 },
+      { name: 'GRI Standards', status: 'Implemented', score: 75 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 650000, scope2: 85000, scope3: 120000 },
+      { year: 2020, scope1: 635000, scope2: 82000, scope3: 115000 },
+      { year: 2021, scope1: 620000, scope2: 79000, scope3: 110000 },
+      { year: 2022, scope1: 605000, scope2: 76000, scope3: 105000 },
+      { year: 2023, scope1: 590000, scope2: 73000, scope3: 100000 },
+      { year: 2024, scope1: 575000, scope2: 70000, scope3: 95000 }
+    ],
+    sbtiProgress: 48,
+    carbonCredits: 25000,
+    materialityScore: 7.8,
+    supplierDecarbonization: 42
+  },
+  {
+    id: 'chemworks',
+    name: 'ChemWorks Industries',
+    industry: 'Chemical Production',
+    sector: 'Manufacturing',
+    description: 'Chemical manufacturing company transitioning to bio-based chemicals and sustainable production processes.',
     totalEmissions: 445000,
-    energyConsumption: 320000,
-    wasteGenerated: 8500,
-    renewableEnergyPercentage: 35.8,
-    reportingYear: 2024,
-    carbonCredits: 28000,
-    materialityScore: 9.5,
-    supplierDecarbonization: 55,
-    sbtiProgress: 45,
-    emissionsData: [{ year: 2024, scope1: 180000, scope2: 85000, scope3: 180000, renewablePercentage: 35.8 }]
+    energyConsumption: 680000,
+    wasteGenerated: 5800,
+    renewableEnergyPercentage: 42,
+    topCarbonFootprints: [
+      'Chemical reaction processes',
+      'Steam and heat generation',
+      'Feedstock transportation and processing'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 75 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 68 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 62 },
+      { name: 'GRI Standards', status: 'Implemented', score: 78 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 280000, scope2: 75000, scope3: 115000 },
+      { year: 2020, scope1: 270000, scope2: 72000, scope3: 110000 },
+      { year: 2021, scope1: 260000, scope2: 69000, scope3: 105000 },
+      { year: 2022, scope1: 250000, scope2: 66000, scope3: 100000 },
+      { year: 2023, scope1: 240000, scope2: 63000, scope3: 95000 },
+      { year: 2024, scope1: 230000, scope2: 60000, scope3: 90000 }
+    ],
+    sbtiTargets: {
+      description: 'ChemWorks commits to reduce absolute emissions by 40% by 2030 and transition to 80% bio-based chemicals by 2040.',
+      nearTermTarget: '40% absolute emission reduction by 2030',
+      longTermTarget: '80% bio-based chemicals by 2040',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 58,
+    carbonCredits: 22000,
+    materialityScore: 8.0,
+    supplierDecarbonization: 52
   },
   {
     id: 'autoparts',
-    name: 'EcoParts Manufacturing',
-    industry: 'Manufacturing',
-    sector: 'Automotive Parts',
-    description: 'Sustainable automotive parts manufacturer for electric vehicles.',
-    topCarbonFootprints: ['Component manufacturing', 'Transportation', 'Assembly operations'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 125000,
-    totalEmissions: 125000,
-    energyConsumption: 95000,
-    wasteGenerated: 1850,
-    renewableEnergyPercentage: 62.4,
-    reportingYear: 2024,
-    carbonCredits: 9800,
-    materialityScore: 8.1,
-    supplierDecarbonization: 68,
-    sbtiProgress: 72,
-    emissionsData: [{ year: 2024, scope1: 35000, scope2: 28000, scope3: 62000, renewablePercentage: 62.4 }]
-  },
-  {
-    id: 'energycorp',
-    name: 'GreenPower Energy Corp',
-    industry: 'Energy',
-    sector: 'Renewable Energy',
-    description: 'Leading renewable energy provider with wind and solar operations.',
-    topCarbonFootprints: ['Equipment manufacturing', 'Maintenance operations', 'Grid connections'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 78000,
-    totalEmissions: 78000,
-    energyConsumption: 25000,
-    wasteGenerated: 420,
-    renewableEnergyPercentage: 98.5,
-    reportingYear: 2024,
-    carbonCredits: 45000,
-    materialityScore: 9.8,
-    supplierDecarbonization: 92,
-    sbtiProgress: 95,
-    emissionsData: [{ year: 2024, scope1: 8000, scope2: 2000, scope3: 68000, renewablePercentage: 98.5 }]
-  },
-  {
-    id: 'oilrefinery',
-    name: 'Legacy Oil Refinery',
-    industry: 'Energy',
-    sector: 'Oil & Gas',
-    description: 'Traditional oil refinery transitioning to cleaner operations.',
-    topCarbonFootprints: ['Refining processes', 'Flaring operations', 'Transportation'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: false, SDG: false },
-    carbonFootprint: 890000,
-    totalEmissions: 890000,
-    energyConsumption: 520000,
-    wasteGenerated: 12000,
-    renewableEnergyPercentage: 15.2,
-    reportingYear: 2024,
-    carbonCredits: 15000,
-    materialityScore: 6.5,
-    supplierDecarbonization: 35,
-    sbtiProgress: 25,
-    emissionsData: [{ year: 2024, scope1: 420000, scope2: 180000, scope3: 290000, renewablePercentage: 15.2 }]
-  },
-  {
-    id: 'healthsystem',
-    name: 'Metropolitan Health System',
-    industry: 'Healthcare',
-    sector: 'Hospital Networks',
-    description: 'Large healthcare network with sustainable medical practices.',
-    topCarbonFootprints: ['Facility operations', 'Medical equipment', 'Transportation'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 145000,
-    totalEmissions: 145000,
-    energyConsumption: 115000,
-    wasteGenerated: 2800,
-    renewableEnergyPercentage: 48.7,
-    reportingYear: 2024,
-    carbonCredits: 8500,
-    materialityScore: 7.9,
-    supplierDecarbonization: 58,
-    sbtiProgress: 65,
-    emissionsData: [{ year: 2024, scope1: 25000, scope2: 45000, scope3: 75000, renewablePercentage: 48.7 }]
-  },
-  {
-    id: 'pharmatech',
-    name: 'BioTech Pharmaceuticals',
-    industry: 'Healthcare',
-    sector: 'Pharmaceuticals',
-    description: 'Biotechnology company developing sustainable pharmaceutical solutions.',
-    topCarbonFootprints: ['Research facilities', 'Manufacturing', 'Cold chain logistics'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 185000,
-    totalEmissions: 185000,
-    energyConsumption: 125000,
-    wasteGenerated: 1950,
-    renewableEnergyPercentage: 55.3,
-    reportingYear: 2024,
-    carbonCredits: 12800,
+    name: 'AutoParts Global',
+    industry: 'Automotive Components',
+    sector: 'Manufacturing',
+    description: 'Automotive parts manufacturer focusing on electric vehicle components and sustainable manufacturing practices.',
+    totalEmissions: 195000,
+    energyConsumption: 325000,
+    wasteGenerated: 2400,
+    renewableEnergyPercentage: 68,
+    topCarbonFootprints: [
+      'Metal stamping and forming operations',
+      'Assembly line operations',
+      'Component transportation and logistics'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 82 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 85 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 78 },
+      { name: 'GRI Standards', status: 'Implemented', score: 85 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 85000, scope2: 45000, scope3: 85000 },
+      { year: 2020, scope1: 80000, scope2: 42000, scope3: 80000 },
+      { year: 2021, scope1: 75000, scope2: 39000, scope3: 75000 },
+      { year: 2022, scope1: 70000, scope2: 36000, scope3: 70000 },
+      { year: 2023, scope1: 65000, scope2: 33000, scope3: 65000 },
+      { year: 2024, scope1: 60000, scope2: 30000, scope3: 60000 }
+    ],
+    sbtiTargets: {
+      description: 'AutoParts Global commits to reduce Scope 1 and 2 emissions by 55% by 2030 and achieve carbon neutrality by 2045.',
+      nearTermTarget: '55% reduction in Scope 1+2 emissions by 2030',
+      longTermTarget: 'Carbon neutrality by 2045',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 75,
+    carbonCredits: 14500,
     materialityScore: 8.6,
-    supplierDecarbonization: 74,
-    sbtiProgress: 81,
-    emissionsData: [{ year: 2024, scope1: 45000, scope2: 55000, scope3: 85000, renewablePercentage: 55.3 }]
-  },
-  {
-    id: 'financialbank',
-    name: 'Sustainable Finance Bank',
-    industry: 'Financial Services',
-    sector: 'Banking',
-    description: 'Green banking institution focused on sustainable finance.',
-    topCarbonFootprints: ['Office operations', 'Data centers', 'Business travel'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 35000,
-    totalEmissions: 35000,
-    energyConsumption: 28000,
-    wasteGenerated: 180,
-    renewableEnergyPercentage: 88.4,
-    reportingYear: 2024,
-    carbonCredits: 4200,
-    materialityScore: 8.9,
-    supplierDecarbonization: 85,
-    sbtiProgress: 92,
-    emissionsData: [{ year: 2024, scope1: 3000, scope2: 12000, scope3: 20000, renewablePercentage: 88.4 }]
-  },
-  {
-    id: 'insurancecorp',
-    name: 'EcoInsurance Corporation',
-    industry: 'Financial Services',
-    sector: 'Insurance',
-    description: 'Insurance company specializing in climate risk assessment.',
-    topCarbonFootprints: ['Office buildings', 'IT infrastructure', 'Claims processing'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 42000,
-    totalEmissions: 42000,
-    energyConsumption: 35000,
-    wasteGenerated: 220,
-    renewableEnergyPercentage: 72.1,
-    reportingYear: 2024,
-    carbonCredits: 3800,
-    materialityScore: 7.6,
-    supplierDecarbonization: 68,
-    sbtiProgress: 74,
-    emissionsData: [{ year: 2024, scope1: 4000, scope2: 15000, scope3: 23000, renewablePercentage: 72.1 }]
-  },
-  {
-    id: 'logistics',
-    name: 'GreenLogistics Express',
-    industry: 'Transportation',
-    sector: 'Logistics & Shipping',
-    description: 'Sustainable logistics company with electric vehicle fleet.',
-    topCarbonFootprints: ['Vehicle fleet', 'Warehouse operations', 'Packaging'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: false },
-    carbonFootprint: 285000,
-    totalEmissions: 285000,
-    energyConsumption: 185000,
-    wasteGenerated: 3200,
-    renewableEnergyPercentage: 42.8,
-    reportingYear: 2024,
-    carbonCredits: 18500,
-    materialityScore: 8.3,
-    supplierDecarbonization: 61,
-    sbtiProgress: 69,
-    emissionsData: [{ year: 2024, scope1: 125000, scope2: 45000, scope3: 115000, renewablePercentage: 42.8 }]
-  },
-  {
-    id: 'airline',
-    name: 'SkyGreen Airlines',
-    industry: 'Transportation',
-    sector: 'Aviation',
-    description: 'Commercial airline investing in sustainable aviation fuels.',
-    topCarbonFootprints: ['Aircraft operations', 'Ground operations', 'Maintenance'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 1250000,
-    totalEmissions: 1250000,
-    energyConsumption: 890000,
-    wasteGenerated: 4500,
-    renewableEnergyPercentage: 12.5,
-    reportingYear: 2024,
-    carbonCredits: 85000,
-    materialityScore: 7.2,
-    supplierDecarbonization: 45,
-    sbtiProgress: 38,
-    emissionsData: [{ year: 2024, scope1: 980000, scope2: 85000, scope3: 185000, renewablePercentage: 12.5 }]
-  },
-  {
-    id: 'foodprocessor',
-    name: 'Organic Food Processors',
-    industry: 'Food & Agriculture',
-    sector: 'Food Processing',
-    description: 'Organic food processing company with regenerative agriculture focus.',
-    topCarbonFootprints: ['Processing facilities', 'Refrigeration', 'Transportation'],
-    frameworks: { SBTI: false, CSRD: true, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 165000,
-    totalEmissions: 165000,
-    energyConsumption: 125000,
-    wasteGenerated: 2850,
-    renewableEnergyPercentage: 58.9,
-    reportingYear: 2024,
-    carbonCredits: 9200,
-    materialityScore: 8.4,
-    supplierDecarbonization: 71,
-    sbtiProgress: 66,
-    emissionsData: [{ year: 2024, scope1: 35000, scope2: 48000, scope3: 82000, renewablePercentage: 58.9 }]
-  },
-  {
-    id: 'agritech',
-    name: 'Precision AgriTech',
-    industry: 'Food & Agriculture',
-    sector: 'Agricultural Technology',
-    description: 'Technology company developing precision farming solutions.',
-    topCarbonFootprints: ['Equipment manufacturing', 'Field operations', 'Research facilities'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 78000,
-    totalEmissions: 78000,
-    energyConsumption: 55000,
-    wasteGenerated: 680,
-    renewableEnergyPercentage: 67.3,
-    reportingYear: 2024,
-    carbonCredits: 6800,
-    materialityScore: 8.7,
-    supplierDecarbonization: 79,
-    sbtiProgress: 83,
-    emissionsData: [{ year: 2024, scope1: 15000, scope2: 22000, scope3: 41000, renewablePercentage: 67.3 }]
-  },
-  {
-    id: 'chemicals',
-    name: 'GreenChem Industries',
-    industry: 'Chemicals',
-    sector: 'Specialty Chemicals',
-    description: 'Chemical manufacturer focused on green chemistry innovations.',
-    topCarbonFootprints: ['Chemical processes', 'Steam generation', 'Raw materials'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: false },
-    carbonFootprint: 335000,
-    totalEmissions: 335000,
-    energyConsumption: 245000,
-    wasteGenerated: 5200,
-    renewableEnergyPercentage: 38.7,
-    reportingYear: 2024,
-    carbonCredits: 22500,
-    materialityScore: 9.1,
-    supplierDecarbonization: 62,
-    sbtiProgress: 57,
-    emissionsData: [{ year: 2024, scope1: 145000, scope2: 68000, scope3: 122000, renewablePercentage: 38.7 }]
-  },
-  {
-    id: 'materials',
-    name: 'Advanced Materials Corp',
-    industry: 'Materials',
-    sector: 'Advanced Materials',
-    description: 'Innovative materials company developing sustainable alternatives.',
-    topCarbonFootprints: ['Material synthesis', 'Testing facilities', 'Supply chain'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 145000,
-    totalEmissions: 145000,
-    energyConsumption: 115000,
-    wasteGenerated: 1850,
-    renewableEnergyPercentage: 52.6,
-    reportingYear: 2024,
-    carbonCredits: 11500,
-    materialityScore: 8.0,
-    supplierDecarbonization: 65,
-    sbtiProgress: 71,
-    emissionsData: [{ year: 2024, scope1: 45000, scope2: 38000, scope3: 62000, renewablePercentage: 52.6 }]
+    supplierDecarbonization: 68
   },
   {
     id: 'textiles',
-    name: 'Sustainable Textiles Ltd',
-    industry: 'Consumer Goods',
-    sector: 'Textiles & Apparel',
-    description: 'Textile manufacturer using organic and recycled materials.',
-    topCarbonFootprints: ['Fabric production', 'Dyeing processes', 'Transportation'],
-    frameworks: { SBTI: true, CSRD: false, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 95000,
-    totalEmissions: 95000,
-    energyConsumption: 78000,
-    wasteGenerated: 1450,
-    renewableEnergyPercentage: 61.8,
-    reportingYear: 2024,
-    carbonCredits: 7200,
-    materialityScore: 7.8,
-    supplierDecarbonization: 69,
-    sbtiProgress: 75,
-    emissionsData: [{ year: 2024, scope1: 22000, scope2: 28000, scope3: 45000, renewablePercentage: 61.8 }]
-  },
-  {
-    id: 'electronics',
-    name: 'EcoElectronics Manufacturing',
-    industry: 'Consumer Goods',
-    sector: 'Electronics',
-    description: 'Electronics manufacturer focused on circular economy principles.',
-    topCarbonFootprints: ['Component assembly', 'Testing operations', 'Packaging'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 185000,
-    totalEmissions: 185000,
-    energyConsumption: 145000,
-    wasteGenerated: 2250,
-    renewableEnergyPercentage: 64.2,
-    reportingYear: 2024,
-    carbonCredits: 13800,
-    materialityScore: 8.5,
-    supplierDecarbonization: 73,
-    sbtiProgress: 79,
-    emissionsData: [{ year: 2024, scope1: 42000, scope2: 58000, scope3: 85000, renewablePercentage: 64.2 }]
-  },
-  {
-    id: 'megabank',
-    name: 'MegaBank Corporation',
-    industry: 'Financial Services',
-    sector: 'Banking',
-    description: 'Global investment bank with operations in 50+ countries.',
-    topCarbonFootprints: ['Office buildings', 'Data centers', 'Business travel'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 52000,
-    totalEmissions: 52000,
-    energyConsumption: 42000,
-    wasteGenerated: 320,
-    renewableEnergyPercentage: 82.3,
-    reportingYear: 2024,
-    carbonCredits: 6200,
-    materialityScore: 8.7,
-    supplierDecarbonization: 79,
-    sbtiProgress: 88,
-    emissionsData: [{ year: 2024, scope1: 5000, scope2: 18000, scope3: 29000, renewablePercentage: 82.3 }]
-  },
-  {
-    id: 'globalshipping',
-    name: 'Global Shipping Lines',
-    industry: 'Transportation',
-    sector: 'Maritime Shipping',
-    description: 'International container shipping company with green fleet initiatives.',
-    topCarbonFootprints: ['Marine fuel consumption', 'Port operations', 'Container handling'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: false },
-    carbonFootprint: 2450000,
-    totalEmissions: 2450000,
-    energyConsumption: 1850000,
-    wasteGenerated: 8900,
-    renewableEnergyPercentage: 18.5,
-    reportingYear: 2024,
-    carbonCredits: 125000,
-    materialityScore: 6.8,
-    supplierDecarbonization: 42,
-    sbtiProgress: 35,
-    emissionsData: [{ year: 2024, scope1: 1980000, scope2: 120000, scope3: 350000, renewablePercentage: 18.5 }]
-  },
-  {
-    id: 'smartgrid',
-    name: 'SmartGrid Energy Solutions',
-    industry: 'Energy',
-    sector: 'Smart Grid Technology',
-    description: 'Advanced energy management and smart grid technology provider.',
-    topCarbonFootprints: ['Equipment manufacturing', 'Installation services', 'R&D facilities'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 68000,
-    totalEmissions: 68000,
-    energyConsumption: 45000,
-    wasteGenerated: 580,
-    renewableEnergyPercentage: 92.1,
-    reportingYear: 2024,
-    carbonCredits: 25000,
-    materialityScore: 9.3,
-    supplierDecarbonization: 89,
-    sbtiProgress: 91,
-    emissionsData: [{ year: 2024, scope1: 8000, scope2: 12000, scope3: 48000, renewablePercentage: 92.1 }]
-  },
-  {
-    id: 'miningcorp',
-    name: 'Sustainable Mining Corp',
-    industry: 'Mining & Metals',
-    sector: 'Copper Mining',
-    description: 'Copper mining operations with focus on sustainable extraction methods.',
-    topCarbonFootprints: ['Mining equipment', 'Processing facilities', 'Transportation'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 750000,
-    totalEmissions: 750000,
-    energyConsumption: 520000,
-    wasteGenerated: 15000,
-    renewableEnergyPercentage: 28.7,
-    reportingYear: 2024,
-    carbonCredits: 45000,
-    materialityScore: 7.2,
-    supplierDecarbonization: 48,
+    name: 'Sustainable Textiles Inc.',
+    industry: 'Textile Manufacturing',
+    sector: 'Manufacturing',
+    description: 'Textile manufacturer pioneering sustainable fabrics and circular fashion solutions with renewable energy adoption.',
+    totalEmissions: 125000,
+    energyConsumption: 220000,
+    wasteGenerated: 1850,
+    renewableEnergyPercentage: 72,
+    topCarbonFootprints: [
+      'Fabric dyeing and finishing processes',
+      'Cotton and fiber processing',
+      'Textile machinery operations'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'In Progress', score: 68 },
+      { name: 'SBTi Targets', status: 'Planned', score: 45 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 55 },
+      { name: 'GRI Standards', status: 'Implemented', score: 72 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 45000, scope2: 35000, scope3: 55000 },
+      { year: 2020, scope1: 43000, scope2: 33000, scope3: 52000 },
+      { year: 2021, scope1: 41000, scope2: 31000, scope3: 49000 },
+      { year: 2022, scope1: 39000, scope2: 29000, scope3: 46000 },
+      { year: 2023, scope1: 37000, scope2: 27000, scope3: 43000 },
+      { year: 2024, scope1: 35000, scope2: 25000, scope3: 40000 }
+    ],
     sbtiProgress: 52,
-    emissionsData: [{ year: 2024, scope1: 380000, scope2: 165000, scope3: 205000, renewablePercentage: 28.7 }]
-  },
-  {
-    id: 'cloudservices',
-    name: 'CloudFirst Services',
-    industry: 'Technology',
-    sector: 'Cloud Infrastructure',
-    description: 'Enterprise cloud services and infrastructure management.',
-    topCarbonFootprints: ['Data center cooling', 'Server operations', 'Network equipment'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 145000,
-    totalEmissions: 145000,
-    energyConsumption: 118000,
-    wasteGenerated: 680,
-    renewableEnergyPercentage: 79.4,
-    reportingYear: 2024,
-    carbonCredits: 18500,
-    materialityScore: 8.9,
-    supplierDecarbonization: 84,
-    sbtiProgress: 87,
-    emissionsData: [{ year: 2024, scope1: 18000, scope2: 42000, scope3: 85000, renewablePercentage: 79.4 }]
-  },
-  {
-    id: 'foodchainmega',
-    name: 'MegaFood Chain',
-    industry: 'Food & Agriculture',
-    sector: 'Food Retail',
-    description: 'Global food retail chain with 5000+ stores worldwide.',
-    topCarbonFootprints: ['Cold chain logistics', 'Store refrigeration', 'Food waste'],
-    frameworks: { SBTI: false, CSRD: true, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 285000,
-    totalEmissions: 285000,
-    energyConsumption: 225000,
-    wasteGenerated: 4500,
-    renewableEnergyPercentage: 45.8,
-    reportingYear: 2024,
-    carbonCredits: 15200,
+    carbonCredits: 8800,
     materialityScore: 7.5,
-    supplierDecarbonization: 58,
-    sbtiProgress: 64,
-    emissionsData: [{ year: 2024, scope1: 35000, scope2: 85000, scope3: 165000, renewablePercentage: 45.8 }]
+    supplierDecarbonization: 48
   },
   {
-    id: 'cleanwater',
-    name: 'CleanWater Technologies',
-    industry: 'Utilities',
-    sector: 'Water Treatment',
-    description: 'Advanced water treatment and purification technology solutions.',
-    topCarbonFootprints: ['Treatment plants', 'Pumping stations', 'Chemical processes'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 125000,
-    totalEmissions: 125000,
-    energyConsumption: 95000,
-    wasteGenerated: 1200,
-    renewableEnergyPercentage: 68.9,
-    reportingYear: 2024,
-    carbonCredits: 12800,
-    materialityScore: 8.4,
-    supplierDecarbonization: 71,
-    sbtiProgress: 79,
-    emissionsData: [{ year: 2024, scope1: 25000, scope2: 45000, scope3: 55000, renewablePercentage: 68.9 }]
-  },
-  {
-    id: 'fashionhouse',
-    name: 'Sustainable Fashion House',
-    industry: 'Consumer Goods',
-    sector: 'Fashion & Apparel',
-    description: 'Premium fashion brand focusing on sustainable and ethical production.',
-    topCarbonFootprints: ['Textile production', 'Transportation', 'Retail operations'],
-    frameworks: { SBTI: true, CSRD: true, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 95000,
-    totalEmissions: 95000,
-    energyConsumption: 68000,
-    wasteGenerated: 1850,
-    renewableEnergyPercentage: 72.6,
-    reportingYear: 2024,
-    carbonCredits: 8900,
-    materialityScore: 8.1,
-    supplierDecarbonization: 76,
-    sbtiProgress: 81,
-    emissionsData: [{ year: 2024, scope1: 12000, scope2: 23000, scope3: 60000, renewablePercentage: 72.6 }]
-  },
-  {
-    id: 'telecomgiant',
-    name: 'TelecomGiant Networks',
-    industry: 'Telecommunications',
-    sector: 'Mobile Networks',
-    description: 'Leading telecommunications provider with 5G network infrastructure.',
-    topCarbonFootprints: ['Network infrastructure', 'Data transmission', 'Equipment cooling'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 185000,
-    totalEmissions: 185000,
-    energyConsumption: 148000,
-    wasteGenerated: 950,
-    renewableEnergyPercentage: 65.3,
-    reportingYear: 2024,
-    carbonCredits: 22500,
-    materialityScore: 8.6,
-    supplierDecarbonization: 73,
-    sbtiProgress: 78,
-    emissionsData: [{ year: 2024, scope1: 25000, scope2: 68000, scope3: 92000, renewablePercentage: 65.3 }]
-  },
-  {
-    id: 'renewabledev',
-    name: 'Renewable Development Co',
-    industry: 'Energy',
-    sector: 'Project Development',
-    description: 'Renewable energy project development and construction company.',
-    topCarbonFootprints: ['Construction activities', 'Heavy machinery', 'Material transport'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 85000,
-    totalEmissions: 85000,
-    energyConsumption: 35000,
-    wasteGenerated: 1250,
-    renewableEnergyPercentage: 94.2,
-    reportingYear: 2024,
-    carbonCredits: 35000,
-    materialityScore: 9.1,
-    supplierDecarbonization: 88,
-    sbtiProgress: 93,
-    emissionsData: [{ year: 2024, scope1: 15000, scope2: 8000, scope3: 62000, renewablePercentage: 94.2 }]
-  },
-  {
-    id: 'plasticsinnovation',
-    name: 'PlasticsInnovation Ltd',
-    industry: 'Chemicals',
-    sector: 'Recycled Plastics',
-    description: 'Advanced plastic recycling and circular economy solutions.',
-    topCarbonFootprints: ['Recycling processes', 'Chemical treatment', 'Energy consumption'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 165000,
-    totalEmissions: 165000,
-    energyConsumption: 125000,
-    wasteGenerated: 2200,
-    renewableEnergyPercentage: 52.8,
-    reportingYear: 2024,
-    carbonCredits: 14500,
-    materialityScore: 7.9,
-    supplierDecarbonization: 64,
-    sbtiProgress: 69,
-    emissionsData: [{ year: 2024, scope1: 55000, scope2: 42000, scope3: 68000, renewablePercentage: 52.8 }]
-  },
-  {
-    id: 'smartcity',
-    name: 'SmartCity Solutions',
-    industry: 'Technology',
-    sector: 'Urban Technology',
-    description: 'Smart city infrastructure and IoT solutions provider.',
-    topCarbonFootprints: ['Manufacturing sensors', 'Installation services', 'Data processing'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 75000,
-    totalEmissions: 75000,
-    energyConsumption: 58000,
-    wasteGenerated: 420,
-    renewableEnergyPercentage: 81.7,
-    reportingYear: 2024,
-    carbonCredits: 9200,
-    materialityScore: 8.3,
-    supplierDecarbonization: 77,
-    sbtiProgress: 84,
-    emissionsData: [{ year: 2024, scope1: 12000, scope2: 18000, scope3: 45000, renewablePercentage: 81.7 }]
-  },
-  {
-    id: 'aerospace',
-    name: 'AeroSpace Dynamics',
-    industry: 'Aerospace',
-    sector: 'Aircraft Manufacturing',
-    description: 'Advanced aerospace components and sustainable aviation technology.',
-    topCarbonFootprints: ['Manufacturing processes', 'Testing facilities', 'Material processing'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: false },
-    carbonFootprint: 425000,
-    totalEmissions: 425000,
-    energyConsumption: 285000,
-    wasteGenerated: 3800,
-    renewableEnergyPercentage: 41.2,
-    reportingYear: 2024,
-    carbonCredits: 32500,
-    materialityScore: 8.7,
-    supplierDecarbonization: 59,
-    sbtiProgress: 63,
-    emissionsData: [{ year: 2024, scope1: 165000, scope2: 98000, scope3: 162000, renewablePercentage: 41.2 }]
-  },
-  {
-    id: 'greenbuilding',
-    name: 'GreenBuilding Corp',
-    industry: 'Construction',
-    sector: 'Sustainable Construction',
-    description: 'Green building construction and sustainable architecture services.',
-    topCarbonFootprints: ['Construction equipment', 'Material transport', 'Concrete production'],
-    frameworks: { SBTI: false, CSRD: true, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 385000,
-    totalEmissions: 385000,
-    energyConsumption: 268000,
-    wasteGenerated: 8500,
-    renewableEnergyPercentage: 38.4,
-    reportingYear: 2024,
-    carbonCredits: 28000,
-    materialityScore: 7.6,
-    supplierDecarbonization: 52,
-    sbtiProgress: 58,
-    emissionsData: [{ year: 2024, scope1: 185000, scope2: 68000, scope3: 132000, renewablePercentage: 38.4 }]
-  },
-  {
-    id: 'biotech',
-    name: 'BioTech Innovations',
-    industry: 'Healthcare',
-    sector: 'Biotechnology',
-    description: 'Cutting-edge biotechnology research and development company.',
-    topCarbonFootprints: ['Laboratory operations', 'Cold storage', 'Research equipment'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 95000,
-    totalEmissions: 95000,
-    energyConsumption: 78000,
-    wasteGenerated: 850,
-    renewableEnergyPercentage: 71.5,
-    reportingYear: 2024,
-    carbonCredits: 11200,
-    materialityScore: 8.8,
-    supplierDecarbonization: 79,
-    sbtiProgress: 85,
-    emissionsData: [{ year: 2024, scope1: 18000, scope2: 32000, scope3: 45000, renewablePercentage: 71.5 }]
-  },
-  {
-    id: 'digitalmarketing',
-    name: 'Digital Marketing Hub',
-    industry: 'Technology',
-    sector: 'Digital Services',
-    description: 'Digital marketing and advertising technology platform.',
-    topCarbonFootprints: ['Data centers', 'Office operations', 'Cloud services'],
-    frameworks: { SBTI: false, CSRD: false, CDP: true, UNGC: false, SDG: false },
-    carbonFootprint: 25000,
-    totalEmissions: 25000,
-    energyConsumption: 22000,
-    wasteGenerated: 120,
-    renewableEnergyPercentage: 89.3,
-    reportingYear: 2024,
-    carbonCredits: 2800,
-    materialityScore: 7.2,
-    supplierDecarbonization: 82,
-    sbtiProgress: 88,
-    emissionsData: [{ year: 2024, scope1: 2000, scope2: 8000, scope3: 15000, renewablePercentage: 89.3 }]
-  },
-  {
-    id: 'solarmanufacturing',
-    name: 'Solar Manufacturing Inc',
-    industry: 'Energy',
-    sector: 'Solar Equipment',
-    description: 'Solar panel and photovoltaic system manufacturing.',
-    topCarbonFootprints: ['Silicon processing', 'Assembly operations', 'Quality testing'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 195000,
-    totalEmissions: 195000,
-    energyConsumption: 158000,
-    wasteGenerated: 2800,
-    renewableEnergyPercentage: 78.9,
-    reportingYear: 2024,
-    carbonCredits: 28500,
-    materialityScore: 9.0,
-    supplierDecarbonization: 81,
-    sbtiProgress: 86,
-    emissionsData: [{ year: 2024, scope1: 48000, scope2: 52000, scope3: 95000, renewablePercentage: 78.9 }]
-  },
-  {
-    id: 'evcharging',
-    name: 'EV Charging Networks',
-    industry: 'Transportation',
-    sector: 'Charging Infrastructure',
-    description: 'Electric vehicle charging infrastructure and services.',
-    topCarbonFootprints: ['Equipment manufacturing', 'Installation', 'Grid connection'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 65000,
-    totalEmissions: 65000,
-    energyConsumption: 45000,
-    wasteGenerated: 480,
-    renewableEnergyPercentage: 85.6,
-    reportingYear: 2024,
-    carbonCredits: 15800,
-    materialityScore: 8.9,
-    supplierDecarbonization: 86,
-    sbtiProgress: 89,
-    emissionsData: [{ year: 2024, scope1: 8000, scope2: 15000, scope3: 42000, renewablePercentage: 85.6 }]
-  },
-  {
-    id: 'proptech',
-    name: 'PropTech Solutions',
-    industry: 'Real Estate',
-    sector: 'Property Technology',
-    description: 'Smart building technology and property management solutions.',
-    topCarbonFootprints: ['Software development', 'Office operations', 'Client implementations'],
-    frameworks: { SBTI: false, CSRD: true, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 35000,
-    totalEmissions: 35000,
-    energyConsumption: 28000,
-    wasteGenerated: 180,
-    renewableEnergyPercentage: 74.2,
-    reportingYear: 2024,
-    carbonCredits: 4200,
-    materialityScore: 7.8,
-    supplierDecarbonization: 72,
-    sbtiProgress: 76,
-    emissionsData: [{ year: 2024, scope1: 3500, scope2: 12000, scope3: 19500, renewablePercentage: 74.2 }]
-  },
-  {
-    id: 'dataanalytics',
-    name: 'DataAnalytics Pro',
-    industry: 'Technology',
-    sector: 'Data Analytics',
-    description: 'Big data analytics and business intelligence solutions.',
-    topCarbonFootprints: ['Data processing', 'Cloud infrastructure', 'Office energy'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 58000,
-    totalEmissions: 58000,
-    energyConsumption: 48000,
-    wasteGenerated: 220,
-    renewableEnergyPercentage: 83.1,
-    reportingYear: 2024,
-    carbonCredits: 7800,
-    materialityScore: 8.4,
-    supplierDecarbonization: 81,
-    sbtiProgress: 87,
-    emissionsData: [{ year: 2024, scope1: 5000, scope2: 18000, scope3: 35000, renewablePercentage: 83.1 }]
-  },
-  {
-    id: 'greenlogistics',
-    name: 'GreenLogistics Global',
-    industry: 'Transportation',
-    sector: 'Supply Chain',
-    description: 'Sustainable supply chain and logistics optimization services.',
-    topCarbonFootprints: ['Fleet operations', 'Warehouse energy', 'Last-mile delivery'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 325000,
-    totalEmissions: 325000,
-    energyConsumption: 245000,
-    wasteGenerated: 3200,
-    renewableEnergyPercentage: 56.4,
-    reportingYear: 2024,
-    carbonCredits: 35000,
-    materialityScore: 8.2,
-    supplierDecarbonization: 68,
-    sbtiProgress: 74,
-    emissionsData: [{ year: 2024, scope1: 145000, scope2: 65000, scope3: 115000, renewablePercentage: 56.4 }]
-  },
-  {
-    id: 'medicaldevices',
-    name: 'Advanced Medical Devices',
-    industry: 'Healthcare',
-    sector: 'Medical Equipment',
-    description: 'Innovative medical device manufacturing and technology.',
-    topCarbonFootprints: ['Manufacturing processes', 'Sterilization', 'Quality control'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: false },
-    carbonFootprint: 135000,
-    totalEmissions: 135000,
-    energyConsumption: 98000,
-    wasteGenerated: 1850,
-    renewableEnergyPercentage: 62.7,
-    reportingYear: 2024,
-    carbonCredits: 16500,
-    materialityScore: 8.1,
-    supplierDecarbonization: 71,
-    sbtiProgress: 77,
-    emissionsData: [{ year: 2024, scope1: 35000, scope2: 38000, scope3: 62000, renewablePercentage: 62.7 }]
-  },
-  {
-    id: 'agrifood',
-    name: 'AgriFood Technologies',
-    industry: 'Food & Agriculture',
-    sector: 'Agricultural Innovation',
-    description: 'Advanced agricultural technology and sustainable farming solutions.',
-    topCarbonFootprints: ['Equipment operations', 'Processing facilities', 'Transportation'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 145000,
-    totalEmissions: 145000,
-    energyConsumption: 115000,
-    wasteGenerated: 2400,
-    renewableEnergyPercentage: 61.3,
-    reportingYear: 2024,
-    carbonCredits: 18200,
-    materialityScore: 8.0,
-    supplierDecarbonization: 66,
-    sbtiProgress: 72,
-    emissionsData: [{ year: 2024, scope1: 42000, scope2: 38000, scope3: 65000, renewablePercentage: 61.3 }]
-  },
-  {
-    id: 'cybersecurity',
-    name: 'CyberSecure Systems',
-    industry: 'Technology',
-    sector: 'Cybersecurity',
-    description: 'Enterprise cybersecurity solutions and threat intelligence.',
-    topCarbonFootprints: ['Data centers', 'Security operations', 'Research facilities'],
-    frameworks: { SBTI: true, CSRD: true, CDP: false, UNGC: true, SDG: false },
-    carbonFootprint: 42000,
-    totalEmissions: 42000,
-    energyConsumption: 35000,
-    wasteGenerated: 280,
-    renewableEnergyPercentage: 76.8,
-    reportingYear: 2024,
-    carbonCredits: 5800,
-    materialityScore: 8.2,
-    supplierDecarbonization: 78,
-    sbtiProgress: 82,
-    emissionsData: [{ year: 2024, scope1: 4500, scope2: 15000, scope3: 22500, renewablePercentage: 76.8 }]
-  },
-  {
-    id: 'cleanenergy',
-    name: 'CleanEnergy Storage',
-    industry: 'Energy',
-    sector: 'Energy Storage',
-    description: 'Advanced battery storage and grid-scale energy solutions.',
-    topCarbonFootprints: ['Battery manufacturing', 'Installation', 'Recycling processes'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 185000,
-    totalEmissions: 185000,
-    energyConsumption: 125000,
-    wasteGenerated: 2200,
-    renewableEnergyPercentage: 88.2,
-    reportingYear: 2024,
-    carbonCredits: 42000,
-    materialityScore: 9.2,
-    supplierDecarbonization: 87,
-    sbtiProgress: 91,
-    emissionsData: [{ year: 2024, scope1: 35000, scope2: 25000, scope3: 125000, renewablePercentage: 88.2 }]
-  },
-  {
-    id: 'wastemanagement',
-    name: 'Circular Waste Solutions',
-    industry: 'Utilities',
-    sector: 'Waste Management',
-    description: 'Advanced waste management and circular economy solutions.',
-    topCarbonFootprints: ['Collection vehicles', 'Processing facilities', 'Landfill operations'],
-    frameworks: { SBTI: false, CSRD: true, CDP: true, UNGC: false, SDG: true },
-    carbonFootprint: 235000,
-    totalEmissions: 235000,
+    id: 'packaging',
+    name: 'EcoPack Solutions',
+    industry: 'Packaging Materials',
+    sector: 'Manufacturing',
+    description: 'Packaging manufacturer specializing in biodegradable and recyclable packaging solutions for various industries.',
+    totalEmissions: 88000,
     energyConsumption: 165000,
-    wasteGenerated: 850,
-    renewableEnergyPercentage: 45.9,
-    reportingYear: 2024,
-    carbonCredits: 28500,
-    materialityScore: 7.8,
-    supplierDecarbonization: 58,
-    sbtiProgress: 64,
-    emissionsData: [{ year: 2024, scope1: 98000, scope2: 52000, scope3: 85000, renewablePercentage: 45.9 }]
-  },
-  {
-    id: 'retailtech',
-    name: 'RetailTech Innovations',
-    industry: 'Consumer Goods',
-    sector: 'Retail Technology',
-    description: 'Advanced retail technology and e-commerce solutions.',
-    topCarbonFootprints: ['Data centers', 'Fulfillment centers', 'Last-mile delivery'],
-    frameworks: { SBTI: true, CSRD: false, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 125000,
-    totalEmissions: 125000,
-    energyConsumption: 95000,
-    wasteGenerated: 1200,
-    renewableEnergyPercentage: 69.7,
-    reportingYear: 2024,
-    carbonCredits: 15800,
-    materialityScore: 8.3,
-    supplierDecarbonization: 74,
-    sbtiProgress: 79,
-    emissionsData: [{ year: 2024, scope1: 18000, scope2: 42000, scope3: 65000, renewablePercentage: 69.7 }]
-  },
-  {
-    id: 'greenhousing',
-    name: 'GreenHousing Development',
-    industry: 'Real Estate',
-    sector: 'Residential Development',
-    description: 'Sustainable residential development and green building construction.',
-    topCarbonFootprints: ['Construction activities', 'Material transport', 'Site preparation'],
-    frameworks: { SBTI: false, CSRD: true, CDP: false, UNGC: true, SDG: true },
-    carbonFootprint: 295000,
-    totalEmissions: 295000,
-    energyConsumption: 185000,
-    wasteGenerated: 6500,
-    renewableEnergyPercentage: 42.1,
-    reportingYear: 2024,
-    carbonCredits: 22500,
-    materialityScore: 7.4,
-    supplierDecarbonization: 54,
-    sbtiProgress: 61,
-    emissionsData: [{ year: 2024, scope1: 128000, scope2: 58000, scope3: 109000, renewablePercentage: 42.1 }]
-  },
-  {
-    id: 'fintech',
-    name: 'GreenFinTech Solutions',
-    industry: 'Financial Services',
-    sector: 'Financial Technology',
-    description: 'Sustainable finance and green investment technology platform.',
-    topCarbonFootprints: ['Cloud infrastructure', 'Office operations', 'Data processing'],
-    frameworks: { SBTI: true, CSRD: true, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 28000,
-    totalEmissions: 28000,
-    energyConsumption: 24000,
-    wasteGenerated: 150,
-    renewableEnergyPercentage: 91.4,
-    reportingYear: 2024,
-    carbonCredits: 4500,
-    materialityScore: 9.1,
-    supplierDecarbonization: 89,
-    sbtiProgress: 94,
-    emissionsData: [{ year: 2024, scope1: 2500, scope2: 8500, scope3: 17000, renewablePercentage: 91.4 }]
-  },
-  {
-    id: 'educationtech',
-    name: 'EduTech Innovations',
-    industry: 'Education',
-    sector: 'Educational Technology',
-    description: 'Digital learning platforms and educational technology solutions.',
-    topCarbonFootprints: ['Data centers', 'Content delivery', 'Office operations'],
-    frameworks: { SBTI: false, CSRD: false, CDP: true, UNGC: true, SDG: true },
-    carbonFootprint: 38000,
-    totalEmissions: 38000,
-    energyConsumption: 32000,
-    wasteGenerated: 180,
-    renewableEnergyPercentage: 78.5,
-    reportingYear: 2024,
-    carbonCredits: 4800,
-    materialityScore: 7.9,
-    supplierDecarbonization: 75,
-    sbtiProgress: 80,
-    emissionsData: [{ year: 2024, scope1: 3500, scope2: 13000, scope3: 21500, renewablePercentage: 78.5 }]
+    wasteGenerated: 980,
+    renewableEnergyPercentage: 78,
+    topCarbonFootprints: [
+      'Paper and cardboard production',
+      'Printing and coating operations',
+      'Raw material transportation'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 85 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 88 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 80 },
+      { name: 'GRI Standards', status: 'Implemented', score: 88 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 32000, scope2: 25000, scope3: 38000 },
+      { year: 2020, scope1: 30000, scope2: 23000, scope3: 35000 },
+      { year: 2021, scope1: 28000, scope2: 21000, scope3: 32000 },
+      { year: 2022, scope1: 26000, scope2: 19000, scope3: 29000 },
+      { year: 2023, scope1: 24000, scope2: 17000, scope3: 26000 },
+      { year: 2024, scope1: 22000, scope2: 15000, scope3: 23000 }
+    ],
+    sbtiTargets: {
+      description: 'EcoPack commits to reduce absolute emissions by 60% by 2030 and achieve 100% renewable packaging by 2035.',
+      nearTermTarget: '60% absolute emission reduction by 2030',
+      longTermTarget: '100% renewable packaging by 2035',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 82,
+    carbonCredits: 7200,
+    materialityScore: 8.8,
+    supplierDecarbonization: 72
   }
 ];
 
-export const getCompanyById = (id: string): CompanyDetails | undefined => {
+// Transportation Sector Companies (6)
+const transportationCompanies: Company[] = [
+  {
+    id: 'globallogistics',
+    name: 'Global Logistics Corp',
+    industry: 'Freight & Logistics',
+    sector: 'Transportation',
+    description: 'International logistics company transitioning to electric delivery vehicles and sustainable supply chain solutions.',
+    totalEmissions: 340000,
+    energyConsumption: 185000,
+    wasteGenerated: 1200,
+    renewableEnergyPercentage: 45,
+    topCarbonFootprints: [
+      'Freight transportation and delivery vehicles',
+      'Warehouse operations and facilities',
+      'Air freight and international shipping'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 75 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 62 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 58 },
+      { name: 'GRI Standards', status: 'Implemented', score: 78 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 220000, scope2: 35000, scope3: 105000 },
+      { year: 2020, scope1: 210000, scope2: 33000, scope3: 100000 },
+      { year: 2021, scope1: 200000, scope2: 31000, scope3: 95000 },
+      { year: 2022, scope1: 190000, scope2: 29000, scope3: 90000 },
+      { year: 2023, scope1: 180000, scope2: 27000, scope3: 85000 },
+      { year: 2024, scope1: 170000, scope2: 25000, scope3: 80000 }
+    ],
+    sbtiTargets: {
+      description: 'Global Logistics commits to reduce transport emissions by 50% by 2030 and achieve net-zero logistics by 2050.',
+      nearTermTarget: '50% reduction in transport emissions by 2030',
+      longTermTarget: 'Net-zero logistics by 2050',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 58,
+    carbonCredits: 16500,
+    materialityScore: 8.2,
+    supplierDecarbonization: 48
+  },
+  {
+    id: 'airlines',
+    name: 'SkyGreen Airlines',
+    industry: 'Aviation',
+    sector: 'Transportation',
+    description: 'Major airline investing in sustainable aviation fuels and carbon offset programs for passenger and cargo flights.',
+    totalEmissions: 1250000,
+    energyConsumption: 2800000,
+    wasteGenerated: 8500,
+    renewableEnergyPercentage: 25,
+    topCarbonFootprints: [
+      'Jet fuel consumption for passenger flights',
+      'Ground operations and airport facilities',
+      'Aircraft manufacturing and maintenance'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 70 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 55 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 65 },
+      { name: 'GRI Standards', status: 'Implemented', score: 72 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 980000, scope2: 45000, scope3: 285000 },
+      { year: 2020, scope1: 750000, scope2: 35000, scope3: 220000 },
+      { year: 2021, scope1: 820000, scope2: 38000, scope3: 240000 },
+      { year: 2022, scope1: 900000, scope2: 42000, scope3: 265000 },
+      { year: 2023, scope1: 950000, scope2: 43000, scope3: 275000 },
+      { year: 2024, scope1: 980000, scope2: 44000, scope3: 280000 }
+    ],
+    sbtiProgress: 35,
+    carbonCredits: 85000,
+    materialityScore: 7.5,
+    supplierDecarbonization: 32
+  },
+  {
+    id: 'shipping',
+    name: 'OceanShip Maritime',
+    industry: 'Maritime Shipping',
+    sector: 'Transportation',
+    description: 'International shipping company implementing green ammonia fuel and wind-assisted propulsion technologies.',
+    totalEmissions: 680000,
+    energyConsumption: 1450000,
+    wasteGenerated: 3200,
+    renewableEnergyPercentage: 18,
+    topCarbonFootprints: [
+      'Marine fuel consumption',
+      'Port operations and cargo handling',
+      'Ship construction and maintenance'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'In Progress', score: 62 },
+      { name: 'SBTi Targets', status: 'Planned', score: 38 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 52 },
+      { name: 'GRI Standards', status: 'Implemented', score: 68 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 520000, scope2: 25000, scope3: 155000 },
+      { year: 2020, scope1: 510000, scope2: 24000, scope3: 150000 },
+      { year: 2021, scope1: 500000, scope2: 23000, scope3: 145000 },
+      { year: 2022, scope1: 490000, scope2: 22000, scope3: 140000 },
+      { year: 2023, scope1: 480000, scope2: 21000, scope3: 135000 },
+      { year: 2024, scope1: 470000, scope2: 20000, scope3: 130000 }
+    ],
+    sbtiProgress: 42,
+    carbonCredits: 35000,
+    materialityScore: 7.8,
+    supplierDecarbonization: 38
+  },
+  {
+    id: 'railcorp',
+    name: 'RailCorp Express',
+    industry: 'Railway Transportation',
+    sector: 'Transportation',
+    description: 'Railway company operating electric and hybrid trains with focus on sustainable passenger and freight transport.',
+    totalEmissions: 125000,
+    energyConsumption: 385000,
+    wasteGenerated: 850,
+    renewableEnergyPercentage: 68,
+    topCarbonFootprints: [
+      'Electric train operations',
+      'Railway infrastructure maintenance',
+      'Station facilities and operations'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 88 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 85 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 82 },
+      { name: 'GRI Standards', status: 'Implemented', score: 85 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 35000, scope2: 45000, scope3: 55000 },
+      { year: 2020, scope1: 33000, scope2: 42000, scope3: 52000 },
+      { year: 2021, scope1: 31000, scope2: 39000, scope3: 49000 },
+      { year: 2022, scope1: 29000, scope2: 36000, scope3: 46000 },
+      { year: 2023, scope1: 27000, scope2: 33000, scope3: 43000 },
+      { year: 2024, scope1: 25000, scope2: 30000, scope3: 40000 }
+    ],
+    sbtiTargets: {
+      description: 'RailCorp commits to achieve 100% renewable electricity by 2030 and carbon neutrality by 2040.',
+      nearTermTarget: '100% renewable electricity by 2030',
+      longTermTarget: 'Carbon neutrality by 2040',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 78,
+    carbonCredits: 8500,
+    materialityScore: 8.5,
+    supplierDecarbonization: 65
+  },
+  {
+    id: 'urbanmobility',
+    name: 'Urban Mobility Solutions',
+    industry: 'Public Transportation',
+    sector: 'Transportation',
+    description: 'Urban transportation company operating electric buses and sustainable mobility solutions for smart cities.',
+    totalEmissions: 85000,
+    energyConsumption: 245000,
+    wasteGenerated: 420,
+    renewableEnergyPercentage: 82,
+    topCarbonFootprints: [
+      'Electric bus fleet operations',
+      'Charging infrastructure',
+      'Maintenance facilities'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 90 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 92 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 85 },
+      { name: 'GRI Standards', status: 'Implemented', score: 88 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 25000, scope2: 28000, scope3: 37000 },
+      { year: 2020, scope1: 23000, scope2: 25000, scope3: 34000 },
+      { year: 2021, scope1: 21000, scope2: 22000, scope3: 31000 },
+      { year: 2022, scope1: 19000, scope2: 19000, scope3: 28000 },
+      { year: 2023, scope1: 17000, scope2: 16000, scope3: 25000 },
+      { year: 2024, scope1: 15000, scope2: 13000, scope3: 22000 }
+    ],
+    sbtiTargets: {
+      description: 'Urban Mobility commits to achieve zero-emission public transport by 2030 and carbon negative operations by 2040.',
+      nearTermTarget: 'Zero-emission public transport by 2030',
+      longTermTarget: 'Carbon negative operations by 2040',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 88,
+    carbonCredits: 5500,
+    materialityScore: 9.1,
+    supplierDecarbonization: 78
+  },
+  {
+    id: 'fleetmanagement',
+    name: 'FleetGreen Management',
+    industry: 'Fleet Services',
+    sector: 'Transportation',
+    description: 'Fleet management company specializing in electric vehicle transition and sustainable transportation solutions.',
+    totalEmissions: 165000,
+    energyConsumption: 125000,
+    wasteGenerated: 680,
+    renewableEnergyPercentage: 75,
+    topCarbonFootprints: [
+      'Commercial vehicle operations',
+      'Fleet maintenance and servicing',
+      'Vehicle manufacturing and disposal'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 82 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 72 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 68 },
+      { name: 'GRI Standards', status: 'Implemented', score: 80 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 95000, scope2: 22000, scope3: 58000 },
+      { year: 2020, scope1: 90000, scope2: 20000, scope3: 55000 },
+      { year: 2021, scope1: 85000, scope2: 18000, scope3: 52000 },
+      { year: 2022, scope1: 80000, scope2: 16000, scope3: 49000 },
+      { year: 2023, scope1: 75000, scope2: 14000, scope3: 46000 },
+      { year: 2024, scope1: 70000, scope2: 12000, scope3: 43000 }
+    ],
+    sbtiProgress: 68,
+    carbonCredits: 12000,
+    materialityScore: 8.2,
+    supplierDecarbonization: 62
+  }
+];
+
+// Mining Sector Companies (6)
+const miningCompanies: Company[] = [
+  {
+    id: 'coppermining',
+    name: 'Copper Mountain Mining',
+    industry: 'Copper Mining',
+    sector: 'Mining',
+    description: 'Copper mining company implementing renewable energy and sustainable extraction practices for global metal supply.',
+    totalEmissions: 580000,
+    energyConsumption: 950000,
+    wasteGenerated: 15000,
+    renewableEnergyPercentage: 35,
+    topCarbonFootprints: [
+      'Heavy machinery and excavation equipment',
+      'Ore processing and smelting operations',
+      'Mine site electricity and heating'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 68 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 52 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 62 },
+      { name: 'GRI Standards', status: 'Implemented', score: 75 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 380000, scope2: 95000, scope3: 125000 },
+      { year: 2020, scope1: 370000, scope2: 92000, scope3: 120000 },
+      { year: 2021, scope1: 360000, scope2: 89000, scope3: 115000 },
+      { year: 2022, scope1: 350000, scope2: 86000, scope3: 110000 },
+      { year: 2023, scope1: 340000, scope2: 83000, scope3: 105000 },
+      { year: 2024, scope1: 330000, scope2: 80000, scope3: 100000 }
+    ],
+    sbtiTargets: {
+      description: 'Copper Mountain commits to reduce Scope 1 and 2 emissions by 35% by 2030 and achieve net-zero mining by 2050.',
+      nearTermTarget: '35% reduction in Scope 1+2 emissions by 2030',
+      longTermTarget: 'Net-zero mining by 2050',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 48,
+    carbonCredits: 28000,
+    materialityScore: 7.8,
+    supplierDecarbonization: 42
+  },
+  {
+    id: 'ironore',
+    name: 'IronCore Extractors',
+    industry: 'Iron Ore Mining',
+    sector: 'Mining',
+    description: 'Iron ore mining company transitioning to hydrogen-powered equipment and renewable energy for mining operations.',
+    totalEmissions: 720000,
+    energyConsumption: 1200000,
+    wasteGenerated: 22000,
+    renewableEnergyPercentage: 28,
+    topCarbonFootprints: [
+      'Iron ore extraction and processing',
+      'Heavy diesel equipment operations',
+      'Rail transport to ports'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'In Progress', score: 62 },
+      { name: 'SBTi Targets', status: 'Planned', score: 38 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 55 },
+      { name: 'GRI Standards', status: 'Implemented', score: 70 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 520000, scope2: 105000, scope3: 125000 },
+      { year: 2020, scope1: 510000, scope2: 102000, scope3: 120000 },
+      { year: 2021, scope1: 500000, scope2: 99000, scope3: 115000 },
+      { year: 2022, scope1: 490000, scope2: 96000, scope3: 110000 },
+      { year: 2023, scope1: 480000, scope2: 93000, scope3: 105000 },
+      { year: 2024, scope1: 470000, scope2: 90000, scope3: 100000 }
+    ],
+    sbtiProgress: 42,
+    carbonCredits: 32000,
+    materialityScore: 7.5,
+    supplierDecarbonization: 35
+  },
+  {
+    id: 'goldmining',
+    name: 'Golden Valley Resources',
+    industry: 'Gold Mining',
+    sector: 'Mining',
+    description: 'Gold mining company implementing solar power and water recycling technologies for sustainable precious metal extraction.',
+    totalEmissions: 285000,
+    energyConsumption: 485000,
+    wasteGenerated: 8500,
+    renewableEnergyPercentage: 48,
+    topCarbonFootprints: [
+      'Gold extraction and refining processes',
+      'Underground mining operations',
+      'Chemical processing and waste treatment'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 75 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 62 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 68 },
+      { name: 'GRI Standards', status: 'Implemented', score: 78 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 180000, scope2: 55000, scope3: 70000 },
+      { year: 2020, scope1: 175000, scope2: 52000, scope3: 68000 },
+      { year: 2021, scope1: 170000, scope2: 49000, scope3: 66000 },
+      { year: 2022, scope1: 165000, scope2: 46000, scope3: 64000 },
+      { year: 2023, scope1: 160000, scope2: 43000, scope3: 62000 },
+      { year: 2024, scope1: 155000, scope2: 40000, scope3: 60000 }
+    ],
+    sbtiProgress: 58,
+    carbonCredits: 18500,
+    materialityScore: 8.0,
+    supplierDecarbonization: 52
+  },
+  {
+    id: 'coalmining',
+    name: 'BlackRock Coal Corp',
+    industry: 'Coal Mining',
+    sector: 'Mining',
+    description: 'Coal mining company diversifying into renewable energy and implementing carbon capture technologies.',
+    totalEmissions: 950000,
+    energyConsumption: 1500000,
+    wasteGenerated: 35000,
+    renewableEnergyPercentage: 15,
+    topCarbonFootprints: [
+      'Coal extraction and processing',
+      'Methane emissions from coal seams',
+      'Heavy machinery and transportation'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'In Progress', score: 58 },
+      { name: 'SBTi Targets', status: 'Not Started', score: 25 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 48 },
+      { name: 'GRI Standards', status: 'Implemented', score: 65 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 720000, scope2: 125000, scope3: 155000 },
+      { year: 2020, scope1: 710000, scope2: 122000, scope3: 150000 },
+      { year: 2021, scope1: 700000, scope2: 119000, scope3: 145000 },
+      { year: 2022, scope1: 690000, scope2: 116000, scope3: 140000 },
+      { year: 2023, scope1: 680000, scope2: 113000, scope3: 135000 },
+      { year: 2024, scope1: 670000, scope2: 110000, scope3: 130000 }
+    ],
+    sbtiProgress: 28,
+    carbonCredits: 45000,
+    materialityScore: 6.5,
+    supplierDecarbonization: 25
+  },
+  {
+    id: 'lithium',
+    name: 'LithiumTech Extractors',
+    industry: 'Lithium Mining',
+    sector: 'Mining',
+    description: 'Lithium mining company supporting battery production with sustainable extraction methods and water conservation.',
+    totalEmissions: 145000,
+    energyConsumption: 285000,
+    wasteGenerated: 3200,
+    renewableEnergyPercentage: 65,
+    topCarbonFootprints: [
+      'Lithium brine processing',
+      'Solar evaporation pond operations',
+      'Chemical refining processes'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 85 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 88 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 82 },
+      { name: 'GRI Standards', status: 'Implemented', score: 85 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 65000, scope2: 35000, scope3: 55000 },
+      { year: 2020, scope1: 62000, scope2: 32000, scope3: 52000 },
+      { year: 2021, scope1: 59000, scope2: 29000, scope3: 49000 },
+      { year: 2022, scope1: 56000, scope2: 26000, scope3: 46000 },
+      { year: 2023, scope1: 53000, scope2: 23000, scope3: 43000 },
+      { year: 2024, scope1: 50000, scope2: 20000, scope3: 40000 }
+    ],
+    sbtiTargets: {
+      description: 'LithiumTech commits to achieve carbon neutrality by 2035 and support the clean energy transition.',
+      nearTermTarget: '60% reduction in total emissions by 2030',
+      longTermTarget: 'Carbon neutrality by 2035',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 82,
+    carbonCredits: 12000,
+    materialityScore: 8.8,
+    supplierDecarbonization: 72
+  },
+  {
+    id: 'aggregates',
+    name: 'StoneWorks Aggregates',
+    industry: 'Construction Materials',
+    sector: 'Mining',
+    description: 'Aggregate and construction materials company implementing electric quarrying equipment and sustainable practices.',
+    totalEmissions: 220000,
+    energyConsumption: 385000,
+    wasteGenerated: 5800,
+    renewableEnergyPercentage: 52,
+    topCarbonFootprints: [
+      'Quarrying and crushing operations',
+      'Cement and concrete production',
+      'Material transportation to construction sites'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 72 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 58 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 62 },
+      { name: 'GRI Standards', status: 'Implemented', score: 75 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 125000, scope2: 45000, scope3: 65000 },
+      { year: 2020, scope1: 120000, scope2: 42000, scope3: 62000 },
+      { year: 2021, scope1: 115000, scope2: 39000, scope3: 59000 },
+      { year: 2022, scope1: 110000, scope2: 36000, scope3: 56000 },
+      { year: 2023, scope1: 105000, scope2: 33000, scope3: 53000 },
+      { year: 2024, scope1: 100000, scope2: 30000, scope3: 50000 }
+    ],
+    sbtiProgress: 55,
+    carbonCredits: 15500,
+    materialityScore: 7.8,
+    supplierDecarbonization: 48
+  }
+];
+
+// FMCG Sector Companies (6)
+const fmcgCompanies: Company[] = [
+  {
+    id: 'retailgiant',
+    name: 'Retail Giant',
+    industry: 'Consumer Goods Retail',
+    sector: 'FMCG',
+    description: 'Major retail chain implementing sustainable packaging, renewable energy in stores, and circular economy principles.',
+    totalEmissions: 185000,
+    energyConsumption: 425000,
+    wasteGenerated: 2800,
+    renewableEnergyPercentage: 68,
+    topCarbonFootprints: [
+      'Store operations and refrigeration systems',
+      'Supply chain and product transportation',
+      'Packaging and consumer goods production'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 82 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 85 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 78 },
+      { name: 'GRI Standards', status: 'Implemented', score: 85 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 55000, scope2: 65000, scope3: 85000 },
+      { year: 2020, scope1: 52000, scope2: 62000, scope3: 80000 },
+      { year: 2021, scope1: 49000, scope2: 59000, scope3: 75000 },
+      { year: 2022, scope1: 46000, scope2: 56000, scope3: 70000 },
+      { year: 2023, scope1: 43000, scope2: 53000, scope3: 65000 },
+      { year: 2024, scope1: 40000, scope2: 50000, scope3: 60000 }
+    ],
+    sbtiTargets: {
+      description: 'Retail Giant commits to reduce absolute emissions by 55% by 2030 and achieve net-zero retail operations by 2040.',
+      nearTermTarget: '55% absolute emission reduction by 2030',
+      longTermTarget: 'Net-zero retail operations by 2040',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 78,
+    carbonCredits: 14500,
+    materialityScore: 8.5,
+    supplierDecarbonization: 68
+  },
+  {
+    id: 'foodbeverage',
+    name: 'Global Food & Beverage Co',
+    industry: 'Food & Beverage',
+    sector: 'FMCG',
+    description: 'International food and beverage company focusing on sustainable agriculture and regenerative farming practices.',
+    totalEmissions: 420000,
+    energyConsumption: 685000,
+    wasteGenerated: 8500,
+    renewableEnergyPercentage: 58,
+    topCarbonFootprints: [
+      'Agricultural supply chain and farming',
+      'Food processing and manufacturing',
+      'Cold chain and refrigerated transport'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 78 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 82 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 75 },
+      { name: 'GRI Standards', status: 'Implemented', score: 82 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 85000, scope2: 95000, scope3: 280000 },
+      { year: 2020, scope1: 82000, scope2: 92000, scope3: 270000 },
+      { year: 2021, scope1: 79000, scope2: 89000, scope3: 260000 },
+      { year: 2022, scope1: 76000, scope2: 86000, scope3: 250000 },
+      { year: 2023, scope1: 73000, scope2: 83000, scope3: 240000 },
+      { year: 2024, scope1: 70000, scope2: 80000, scope3: 230000 }
+    ],
+    sbtiTargets: {
+      description: 'Global Food & Beverage commits to reduce Scope 1 and 2 emissions by 50% by 2030 and achieve net-zero across value chain by 2050.',
+      nearTermTarget: '50% reduction in Scope 1+2 emissions by 2030',
+      longTermTarget: 'Net-zero across value chain by 2050',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 68,
+    carbonCredits: 28000,
+    materialityScore: 8.2,
+    supplierDecarbonization: 58
+  },
+  {
+    id: 'personalcare',
+    name: 'BeautyGreen Personal Care',
+    industry: 'Personal Care & Cosmetics',
+    sector: 'FMCG',
+    description: 'Personal care company pioneering sustainable beauty products with biodegradable packaging and ethical sourcing.',
+    totalEmissions: 95000,
+    energyConsumption: 185000,
+    wasteGenerated: 1200,
+    renewableEnergyPercentage: 78,
+    topCarbonFootprints: [
+      'Manufacturing and product formulation',
+      'Packaging production and materials',
+      'Global distribution and retail'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 88 },
+      { name: 'SBTi Targets', status: 'Implemented', score: 90 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 85 },
+      { name: 'GRI Standards', status: 'Implemented', score: 88 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 22000, scope2: 28000, scope3: 55000 },
+      { year: 2020, scope1: 20000, scope2: 25000, scope3: 52000 },
+      { year: 2021, scope1: 18000, scope2: 22000, scope3: 49000 },
+      { year: 2022, scope1: 16000, scope2: 19000, scope3: 46000 },
+      { year: 2023, scope1: 14000, scope2: 16000, scope3: 43000 },
+      { year: 2024, scope1: 12000, scope2: 13000, scope3: 40000 }
+    ],
+    sbtiTargets: {
+      description: 'BeautyGreen commits to achieve carbon neutrality by 2030 and pioneer sustainable beauty industry practices.',
+      nearTermTarget: '70% reduction in total emissions by 2030',
+      longTermTarget: 'Carbon neutrality by 2030',
+      baselineYear: '2019'
+    },
+    sbtiProgress: 85,
+    carbonCredits: 8000,
+    materialityScore: 9.0,
+    supplierDecarbonization: 78
+  },
+  {
+    id: 'household',
+    name: 'CleanHome Products',
+    industry: 'Household Products',
+    sector: 'FMCG',
+    description: 'Household products manufacturer developing eco-friendly cleaning solutions and sustainable packaging alternatives.',
+    totalEmissions: 125000,
+    energyConsumption: 225000,
+    wasteGenerated: 1850,
+    renewableEnergyPercentage: 65,
+    topCarbonFootprints: [
+      'Chemical production and formulation',
+      'Plastic packaging and containers',
+      'Product distribution and logistics'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 80 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 72 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 68 },
+      { name: 'GRI Standards', status: 'Implemented', score: 82 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 35000, scope2: 38000, scope3: 62000 },
+      { year: 2020, scope1: 33000, scope2: 36000, scope3: 59000 },
+      { year: 2021, scope1: 31000, scope2: 34000, scope3: 56000 },
+      { year: 2022, scope1: 29000, scope2: 32000, scope3: 53000 },
+      { year: 2023, scope1: 27000, scope2: 30000, scope3: 50000 },
+      { year: 2024, scope1: 25000, scope2: 28000, scope3: 47000 }
+    ],
+    sbtiProgress: 68,
+    carbonCredits: 9500,
+    materialityScore: 8.0,
+    supplierDecarbonization: 62
+  },
+  {
+    id: 'pharma',
+    name: 'HealthTech Pharmaceuticals',
+    industry: 'Pharmaceuticals',
+    sector: 'FMCG',
+    description: 'Pharmaceutical company implementing green chemistry and sustainable drug manufacturing processes.',
+    totalEmissions: 285000,
+    energyConsumption: 485000,
+    wasteGenerated: 4200,
+    renewableEnergyPercentage: 48,
+    topCarbonFootprints: [
+      'Chemical synthesis and drug manufacturing',
+      'Research and development facilities',
+      'Cold chain pharmaceutical distribution'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'Implemented', score: 75 },
+      { name: 'SBTi Targets', status: 'In Progress', score: 65 },
+      { name: 'TCFD Reporting', status: 'Implemented', score: 70 },
+      { name: 'GRI Standards', status: 'Implemented', score: 78 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 95000, scope2: 85000, scope3: 125000 },
+      { year: 2020, scope1: 92000, scope2: 82000, scope3: 120000 },
+      { year: 2021, scope1: 89000, scope2: 79000, scope3: 115000 },
+      { year: 2022, scope1: 86000, scope2: 76000, scope3: 110000 },
+      { year: 2023, scope1: 83000, scope2: 73000, scope3: 105000 },
+      { year: 2024, scope1: 80000, scope2: 70000, scope3: 100000 }
+    ],
+    sbtiProgress: 58,
+    carbonCredits: 18500,
+    materialityScore: 7.8,
+    supplierDecarbonization: 52
+  },
+  {
+    id: 'tobacco',
+    name: 'TobaccoLeaf Industries',
+    industry: 'Tobacco Products',
+    sector: 'FMCG',
+    description: 'Tobacco company transitioning to alternative products and implementing sustainable agriculture practices.',
+    totalEmissions: 165000,
+    energyConsumption: 285000,
+    wasteGenerated: 2400,
+    renewableEnergyPercentage: 42,
+    topCarbonFootprints: [
+      'Tobacco farming and curing processes',
+      'Manufacturing and processing facilities',
+      'Product packaging and distribution'
+    ],
+    frameworks: [
+      { name: 'CDP Climate Change', status: 'In Progress', score: 62 },
+      { name: 'SBTi Targets', status: 'Planned', score: 45 },
+      { name: 'TCFD Reporting', status: 'In Progress', score: 55 },
+      { name: 'GRI Standards', status: 'Implemented', score: 68 }
+    ],
+    emissionsData: [
+      { year: 2019, scope1: 65000, scope2: 45000, scope3: 75000 },
+      { year: 2020, scope1: 63000, scope2: 43000, scope3: 72000 },
+      { year: 2021, scope1: 61000, scope2: 41000, scope3: 69000 },
+      { year: 2022, scope1: 59000, scope2: 39000, scope3: 66000 },
+      { year: 2023, scope1: 57000, scope2: 37000, scope3: 63000 },
+      { year: 2024, scope1: 55000, scope2: 35000, scope3: 60000 }
+    ],
+    sbtiProgress: 48,
+    carbonCredits: 12500,
+    materialityScore: 7.2,
+    supplierDecarbonization: 42
+  }
+];
+
+// Combine all companies
+export const enhancedCompanies: Company[] = [
+  ...technologyCompanies,
+  ...manufacturingCompanies,
+  ...transportationCompanies,
+  ...miningCompanies,
+  ...fmcgCompanies
+];
+
+export const getCompanyById = (id: string): Company | undefined => {
   return enhancedCompanies.find(company => company.id === id);
 };
 
-export const getAllCompanies = (): CompanyDetails[] => {
-  return enhancedCompanies;
-};
-
-export const getCompaniesBySector = (sector: string): CompanyDetails[] => {
+export const getCompaniesBySector = (sector: string): Company[] => {
   return enhancedCompanies.filter(company => company.sector === sector);
 };

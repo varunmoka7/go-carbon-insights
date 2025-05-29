@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Factory, Zap, Truck, Target, CheckCircle, ExternalLink, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useCompany } from '@/hooks/useCompanies';
 import { useSBTITargets } from '@/hooks/useSBTITargets';
 import { useNavigate } from 'react-router-dom';
+import { enhancedCompanies } from '@/data/enhancedMockData';
 
 const Tracking = () => {
   const navigate = useNavigate();
@@ -58,10 +58,15 @@ const Tracking = () => {
                   <SelectTrigger className="w-64 backdrop-blur-sm bg-white/80 h-11">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="techcorp">TechCorp Industries</SelectItem>
-                    <SelectItem value="greenmanufacturing">Green Manufacturing Co.</SelectItem>
-                    <SelectItem value="retailgiant">Retail Giant</SelectItem>
+                  <SelectContent className="max-h-60 overflow-y-auto">
+                    {enhancedCompanies.map((comp) => (
+                      <SelectItem key={comp.id} value={comp.id}>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{comp.name}</span>
+                          <span className="text-xs text-gray-500">{comp.sector}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

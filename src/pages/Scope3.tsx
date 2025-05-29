@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, ShoppingCart, Plane, Users, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, Cell, PieChart, Pie } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,11 +25,33 @@ const Scope3 = () => {
   const categoryDataWithIcons = scope3Data.categoryData.map((item, index) => ({
     ...item,
     color: categoryColors[index],
+    value: parseInt(item.emissions.replace(',', '')),
     icon: index === 0 ? <ShoppingCart className="h-4 w-4" /> : 
           index === 1 ? <Plane className="h-4 w-4" /> :
           index === 2 ? <Users className="h-4 w-4" /> :
           <Trash2 className="h-4 w-4" />
   }));
+
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text 
+        x={x} 
+        y={y} 
+        fill="white" 
+        textAnchor={x > cx ? 'start' : 'end'} 
+        dominantBaseline="central"
+        fontSize="14"
+        fontWeight="bold"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -132,71 +153,75 @@ const Scope3 = () => {
         </CardContent>
       </Card>
 
-      {/* Category Breakdown */}
+      {/* Category Breakdown - Updated to Pie Chart */}
       <Card className="mb-8">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-900">Emissions by Category</CardTitle>
           <CardDescription className="text-gray-600">
-            Major Scope 3 categories with influence factors and strategic insights
+            Distribution of Scope 3 emissions across major categories
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart 
-              data={categoryDataWithIcons} 
-              margin={{ top: 30, right: 30, left: 20, bottom: 100 }}
-              barCategoryGap="20%"
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" opacity={0.7} />
-              <XAxis 
-                dataKey="category" 
-                stroke="#6b7280"
-                fontSize={12}
-                fontWeight={600}
-                tick={{ fill: '#6b7280' }}
-                axisLine={{ stroke: '#d1d5db', strokeWidth: 2 }}
-                tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
-                angle={-45}
-                textAnchor="end"
-                height={120}
-              />
-              <YAxis 
-                stroke="#6b7280"
-                fontSize={14}
-                fontWeight={600}
-                tick={{ fill: '#6b7280' }}
-                axisLine={{ stroke: '#d1d5db', strokeWidth: 2 }}
-                tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
-                label={{ 
-                  value: 'Emissions (tCO2e)', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  style: { textAnchor: 'middle', fontSize: '14px', fontWeight: '600', fill: '#374151' }
-                }}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-                }}
-                formatter={(value) => [`${value} tCO2e`, 'Emissions']}
-                labelStyle={{ fontWeight: '600', color: '#1f2937' }}
-              />
-              <Bar 
-                dataKey="emissions" 
-                radius={[8, 8, 0, 0]}
-                fill="#0d9488"
-              >
-                {categoryDataWithIcons.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="grid lg:grid-cols-2 gap-8">
+            <div>
+              <ResponsiveContainer width="100%" height={400}>
+                <PieChart>
+                  <Pie
+                    data={categoryDataWithIcons}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                    outerRadius={120}
+                    fill="#8884d8"
+                    dataKey="value"
+                    stroke="#ffffff"
+                    strokeWidth={3}
+                  >
+                    {categoryDataWithIcons.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'white',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                    }}
+                    formatter={(value) => [`${value} tCO2e`, 'Emissions']}
+                  />
+                  <Legend 
+                    verticalAlign="bottom" 
+                    height={36}
+                    wrapperStyle={{ fontSize: '14px', fontWeight: '500' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-gray-900">Category Breakdown</h3>
+              {categoryDataWithIcons.map((category, index) => (
+                <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                  <div 
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                    style={{ backgroundColor: category.color }}
+                  >
+                    {category.icon}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-semibold text-gray-800">{category.category}</span>
+                      <span className="font-bold text-lg text-gray-800">{category.emissions} tCO2e</span>
+                    </div>
+                    <div className="text-sm text-gray-600">{category.insights}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </CardContent>
       </Card>
 
