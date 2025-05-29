@@ -1,23 +1,25 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import MetricCard from '@/components/MetricCard';
-import EmissionChart from '@/components/EmissionChart';
+import FrameworksStatus from '@/components/FrameworksStatus';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useCompanies, useCompany } from '@/hooks/useCompanies';
+import { enhancedCompanies, getCompanyById } from '@/data/enhancedMockData';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const [selectedScope, setSelectedScope] = useState('all');
-  const { data: companies = [] } = useCompanies();
-  const { data: company, isLoading } = useCompany(selectedCompany);
-
-  if (isLoading) {
-    return <div className="flex justify-center items-center h-64">Loading...</div>;
-  }
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  const company = getCompanyById(selectedCompany);
+  const filteredCompanies = enhancedCompanies.filter(comp => 
+    comp.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (!company) {
     return <div className="text-center text-gray-600">Company not found</div>;
@@ -36,6 +38,11 @@ const Dashboard = () => {
           year: item.year,
           scope2: item.scope2
         }));
+      case 'scope1+2':
+        return company.emissionsData.map(item => ({
+          year: item.year,
+          'scope1+2': item.scope1 + item.scope2
+        }));
       case 'scope3':
         return company.emissionsData.map(item => ({
           year: item.year,
@@ -47,7 +54,13 @@ const Dashboard = () => {
           total: item.scope1 + item.scope2 + item.scope3
         }));
       default:
-        return company.emissionsData;
+        return company.emissionsData.map(item => ({
+          year: item.year,
+          scope1: item.scope1,
+          scope2: item.scope2,
+          scope3: item.scope3,
+          total: item.scope1 + item.scope2 + item.scope3
+        }));
     }
   };
 
@@ -69,16 +82,25 @@ const Dashboard = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Emissions Overview Dashboard</h1>
         
-        {/* Company Selection */}
-        <div className="flex flex-wrap gap-4 mb-6">
+        {/* Company Selection with Search */}
+        <div className="flex flex-col lg:flex-row gap-4 mb-6">
           <div className="flex items-center space-x-2">
             <label className="text-sm font-medium text-gray-700">Company:</label>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search companies..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 w-64"
+              />
+            </div>
             <Select value={selectedCompany} onValueChange={setSelectedCompany}>
               <SelectTrigger className="w-64">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {companies.map((comp) => (
+                {filteredCompanies.map((comp) => (
                   <SelectItem key={comp.id} value={comp.id}>
                     {comp.name}
                   </SelectItem>
@@ -87,44 +109,74 @@ const Dashboard = () => {
             </Select>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <label className="text-sm font-medium text-gray-700">Industry:</label>
-            <div className="w-48 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-sm">
-              {company.industry || 'N/A'}
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <label className="text-sm font-medium text-gray-700">Industry:</label>
+              <div className="w-40 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-sm">
+                {company.industry}
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <label className="text-sm font-medium text-gray-700">Sector:</label>
+              <div className="w-48 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-sm">
+                {company.sector}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Company Details */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Company Details</h2>
-          <div className="grid md:grid-cols-4 gap-4">
+        {/* Company Description and SBTI Targets */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Company Overview</h2>
+          <div className="grid lg:grid-cols-2 gap-6">
             <div>
-              <span className="text-sm text-gray-500">Company Name</span>
-              <p className="font-medium text-gray-900">{company.name}</p>
+              <h3 className="font-medium text-gray-800 mb-2">Company Description</h3>
+              <p className="text-gray-600 mb-4">{company.description}</p>
+              <div>
+                <h4 className="font-medium text-gray-800 mb-2">Top 3 Carbon Footprints:</h4>
+                <ul className="space-y-1">
+                  {company.topCarbonFootprints.map((footprint, index) => (
+                    <li key={index} className="text-sm text-gray-600 flex items-center">
+                      <div className="w-2 h-2 bg-teal-500 rounded-full mr-2"></div>
+                      {footprint}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div>
-              <span className="text-sm text-gray-500">Industry</span>
-              <p className="font-medium text-gray-900">{company.industry || 'N/A'}</p>
-            </div>
-            <div>
-              <span className="text-sm text-gray-500">Carbon Footprint</span>
-              <p className="font-medium text-gray-900">{company.carbonFootprint} tCO2e</p>
-            </div>
-            <div>
-              <span className="text-sm text-gray-500">Reporting Year</span>
-              <p className="font-medium text-gray-900">{company.reportingYear}</p>
-            </div>
+            {company.sbtiTargets && (
+              <div>
+                <h3 className="font-medium text-gray-800 mb-2">Science Based Targets (SBTi)</h3>
+                <p className="text-gray-600 mb-3">{company.sbtiTargets.description}</p>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Near-term Target:</span>
+                    <span className="font-medium">{company.sbtiTargets.nearTermTarget}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Long-term Target:</span>
+                    <span className="font-medium">{company.sbtiTargets.longTermTarget}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Baseline Year:</span>
+                    <span className="font-medium">{company.sbtiTargets.baselineYear}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* Frameworks Status */}
+        <FrameworksStatus frameworks={company.frameworks} />
       </div>
 
       {/* Key ESG Metrics */}
       <div className="grid md:grid-cols-3 gap-6 mb-8">
         <MetricCard
-          title="Total Emissions"
-          value={company.totalEmissions.toLocaleString()}
-          unit="tCO2e"
+          title="Total Carbon Footprint"
+          value={(company.totalEmissions / 1000).toFixed(1)}
+          unit="million tCO2e"
           change={-15.2}
           trend="down"
         />
@@ -147,7 +199,7 @@ const Dashboard = () => {
       {/* Emissions Trends Chart */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">Emissions Trends (Last 5 Years)</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Emissions Trends (2019-2024)</h3>
           <div className="flex items-center space-x-2">
             <label className="text-sm font-medium text-gray-700">View:</label>
             <Select value={selectedScope} onValueChange={setSelectedScope}>
@@ -155,21 +207,53 @@ const Dashboard = () => {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Scopes</SelectItem>
+                <SelectItem value="all">As is (Scope 1,2,3 + Total)</SelectItem>
                 <SelectItem value="scope1">Scope 1 Only</SelectItem>
                 <SelectItem value="scope2">Scope 2 Only</SelectItem>
+                <SelectItem value="scope1+2">Scope 1 + 2</SelectItem>
                 <SelectItem value="scope3">Scope 3 Only</SelectItem>
-                <SelectItem value="total">Total Emissions</SelectItem>
+                <SelectItem value="total">Total (Scope 1+2+3)</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
-        <EmissionChart
-          data={getChartData()}
-          title=""
-          height={400}
-          selectedScope={selectedScope}
-        />
+        <ResponsiveContainer width="100%" height={400}>
+          <ComposedChart data={getChartData()}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis 
+              dataKey="year" 
+              stroke="#6b7280"
+              label={{ value: 'Year', position: 'insideBottom', offset: -5 }}
+            />
+            <YAxis 
+              stroke="#6b7280"
+              label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px'
+              }}
+              formatter={(value, name) => [`${value} tCO2e`, name]}
+            />
+            <Legend />
+            
+            {selectedScope === 'all' && (
+              <>
+                <Bar dataKey="scope1" fill="#dc2626" name="Scope 1" />
+                <Bar dataKey="scope2" fill="#ea580c" name="Scope 2" />
+                <Bar dataKey="scope3" fill="#0d9488" name="Scope 3" />
+                <Line type="monotone" dataKey="total" stroke="#1f2937" strokeWidth={3} name="Total" />
+              </>
+            )}
+            {selectedScope === 'scope1' && <Bar dataKey="scope1" fill="#dc2626" name="Scope 1" />}
+            {selectedScope === 'scope2' && <Bar dataKey="scope2" fill="#ea580c" name="Scope 2" />}
+            {selectedScope === 'scope1+2' && <Bar dataKey="scope1+2" fill="#f59e0b" name="Scope 1+2" />}
+            {selectedScope === 'scope3' && <Bar dataKey="scope3" fill="#0d9488" name="Scope 3" />}
+            {selectedScope === 'total' && <Line type="monotone" dataKey="total" stroke="#1f2937" strokeWidth={3} name="Total" />}
+          </ComposedChart>
+        </ResponsiveContainer>
       </div>
 
       {/* Additional Insights */}
@@ -178,16 +262,16 @@ const Dashboard = () => {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Achievements</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="text-gray-600">Scope 1 Reduction</span>
-              <span className="text-green-600 font-medium">-25%</span>
+              <span className="text-gray-600">Scope 1 Reduction (2019-2024)</span>
+              <span className="text-green-600 font-medium">-23%</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="text-gray-600">Scope 2 Reduction</span>
-              <span className="text-green-600 font-medium">-25%</span>
+              <span className="text-gray-600">Scope 2 Reduction (2019-2024)</span>
+              <span className="text-green-600 font-medium">-26%</span>
             </div>
             <div className="flex items-center justify-between py-2">
-              <span className="text-gray-600">Scope 3 Reduction</span>
-              <span className="text-green-600 font-medium">-33%</span>
+              <span className="text-gray-600">Scope 3 Reduction (2019-2024)</span>
+              <span className="text-green-600 font-medium">-19%</span>
             </div>
           </div>
         </div>

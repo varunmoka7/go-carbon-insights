@@ -1,25 +1,25 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Leaf } from 'lucide-react';
+import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Landing = () => {
   const features = [
     {
       icon: BarChart,
-      title: 'Emissions Tracking',
-      description: 'Monitor carbon footprint across operations with detailed breakdowns across all emission scopes.'
+      title: 'Company Comparison',
+      description: 'Compare emissions performance across companies and track relative progress in your industry.'
     },
     {
       icon: Target,
-      title: 'Target Setting',
-      description: 'Establish and track science-based sustainability goals aligned with global climate commitments.'
+      title: 'Sector & Industry Analysis',
+      description: 'Deep-dive into sector-level performance with comprehensive industry benchmarking and trends.'
     },
     {
       icon: FileText,
-      title: 'Compliance Reporting',
-      description: 'Generate comprehensive reports for regulatory requirements and stakeholder communications.'
+      title: 'Track Your Companies',
+      description: 'Monitor multiple companies\' performance and see detailed breakdowns of their carbon footprint.'
     }
   ];
 
@@ -48,8 +48,11 @@ const Landing = () => {
           <div className="flex justify-center mb-8">
             <div className="flex items-center space-x-3 animate-fade-in">
               <div className="relative">
-                <BarChart className="h-16 w-16 text-teal-600 animate-pulse" />
-                <Leaf className="absolute -top-2 -right-2 h-6 w-6 text-green-500 animate-bounce" />
+                <img 
+                  src="/lovable-uploads/9efb52bb-4927-4097-8968-6bfba4ce29c0.png" 
+                  alt="GoCarbonTracker Logo" 
+                  className="h-16 w-16 animate-pulse"
+                />
               </div>
               <span className="text-3xl font-bold text-gray-900">GoCarbonTracker</span>
             </div>
@@ -84,10 +87,10 @@ const Landing = () => {
           </div>
 
           {/* Stats with Animation */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 animate-fade-in delay-1200">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-16 animate-fade-in delay-1200">
             <div className="text-center group cursor-pointer">
               <div className="text-4xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">500+</div>
-              <div className="text-gray-600">Companies Tracking</div>
+              <div className="text-gray-600">Companies in Database</div>
             </div>
             <div className="text-center group cursor-pointer">
               <div className="text-4xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">30%</div>
@@ -96,10 +99,6 @@ const Landing = () => {
             <div className="text-center group cursor-pointer">
               <div className="text-4xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">95%</div>
               <div className="text-gray-600">Compliance Rate</div>
-            </div>
-            <div className="text-center group cursor-pointer">
-              <div className="text-4xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">24/7</div>
-              <div className="text-gray-600">Monitoring</div>
             </div>
           </div>
         </div>
@@ -146,7 +145,8 @@ const Landing = () => {
               </h2>
               <p className="text-xl text-gray-600 mb-10">
                 Our platform provides comprehensive tools and insights to help your organization 
-                achieve its sustainability goals and meet regulatory requirements.
+                achieve its sustainability goals and meet regulatory requirements with real-time 
+                company tracking and sector analysis capabilities.
               </p>
               <div className="space-y-6">
                 {benefits.map((benefit, index) => (
@@ -164,7 +164,7 @@ const Landing = () => {
                 <div className="grid grid-cols-2 gap-8">
                   <div className="text-center">
                     <div className="text-5xl font-bold text-teal-600 mb-4">500+</div>
-                    <div className="text-gray-600 font-medium">Companies Tracking</div>
+                    <div className="text-gray-600 font-medium">Companies in Database</div>
                   </div>
                   <div className="text-center">
                     <div className="text-5xl font-bold text-teal-600 mb-4">30%</div>
@@ -175,8 +175,8 @@ const Landing = () => {
                     <div className="text-gray-600 font-medium">Compliance Rate</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-5xl font-bold text-teal-600 mb-4">24/7</div>
-                    <div className="text-gray-600 font-medium">Monitoring</div>
+                    <div className="text-5xl font-bold text-teal-600 mb-4">15+</div>
+                    <div className="text-gray-600 font-medium">Industry Sectors</div>
                   </div>
                 </div>
               </div>
