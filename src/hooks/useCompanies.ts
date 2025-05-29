@@ -1,9 +1,9 @@
 
-import { companies, getCompanyById } from '@/data/mockData';
+import { enhancedCompanies, getCompanyById } from '@/data/enhancedMockData';
 
 export const useCompanies = () => {
   return {
-    data: companies,
+    data: enhancedCompanies,
     isLoading: false,
     error: null
   };

@@ -15,6 +15,9 @@ import Decarbonization from "./pages/Decarbonization";
 import Profile from "./pages/Profile";
 import Landing from "./pages/Landing";
 import Analysis from "./pages/Analysis";
+import Methodology from "./pages/Methodology";
+import Reference from "./pages/Reference";
+import Reports from "./pages/Reports";
 
 const queryClient = new QueryClient();
 
@@ -68,12 +71,22 @@ const App = () => (
           } />
           <Route path="/reports" element={
             <Layout>
-              <div className="p-8 text-center text-gray-600">Reports page coming soon</div>
+              <Reports />
             </Layout>
           } />
           <Route path="/analysis" element={
             <Layout>
               <Analysis />
+            </Layout>
+          } />
+          <Route path="/methodology" element={
+            <Layout>
+              <Methodology />
+            </Layout>
+          } />
+          <Route path="/reference" element={
+            <Layout>
+              <Reference />
             </Layout>
           } />
           <Route path="*" element={<Landing />} />
