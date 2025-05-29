@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -100,10 +99,13 @@ const Dashboard = () => {
               <SelectTrigger className="w-64 h-10">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-60 overflow-y-auto">
                 {filteredCompanies.map((comp) => (
                   <SelectItem key={comp.id} value={comp.id}>
-                    {comp.name}
+                    <div className="flex flex-col">
+                      <span className="font-medium">{comp.name}</span>
+                      <span className="text-xs text-gray-500">{comp.sector}</span>
+                    </div>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -174,7 +176,7 @@ const Dashboard = () => {
         <FrameworksStatus frameworks={company.frameworks} />
       </div>
 
-      {/* Key ESG Metrics */}
+      {/* Key ESG Metrics - Updated to use dynamic values */}
       <div className="grid md:grid-cols-4 gap-6 mb-8">
         <MetricCard
           title="Total Carbon Footprint"
@@ -199,7 +201,7 @@ const Dashboard = () => {
         />
         <MetricCard
           title="Renewable Energy"
-          value="68.5"
+          value={company.renewableEnergyPercentage.toString()}
           unit="%"
           change={15.8}
           trend="up"

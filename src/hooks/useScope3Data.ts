@@ -1,5 +1,5 @@
 
-import { getCompanyById } from '@/data/mockData';
+import { getCompanyById } from '@/data/enhancedMockData';
 
 export const useScope3Data = (companyId: string) => {
   const company = getCompanyById(companyId);
