@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { TrendingDown, TrendingUp, Calendar, Globe, Building2, CheckCircle, Clock, DollarSign, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,22 +26,22 @@ const Analysis = () => {
       return acc + reduction;
     }, 0) / sectorCompanies.length;
 
-    const topPerformer = sectorCompanies.reduce((best, company) => {
+    const topPerformerData = sectorCompanies.reduce((best: { company: string; reduction: number } | null, company) => {
       const oldestData = company.emissionsData[0];
       const newestData = company.emissionsData[company.emissionsData.length - 1];
       const totalOld = oldestData.scope1 + oldestData.scope2 + oldestData.scope3;
       const totalNew = newestData.scope1 + newestData.scope2 + newestData.scope3;
       const reduction = ((totalOld - totalNew) / totalOld) * 100;
       
-      if (!best) return { company, reduction };
-      return reduction > best.reduction ? { company, reduction } : best;
+      if (!best) return { company: company.name, reduction };
+      return reduction > best.reduction ? { company: company.name, reduction } : best;
     }, null);
 
     return {
       sector,
       companies: sectorCompanies.length,
       avgReduction: `${avgReduction.toFixed(1)}%`,
-      topPerformer: topPerformer?.company.name || 'N/A',
+      topPerformer: topPerformerData?.company || 'N/A',
       challenges: getIndustryChallenges(sector),
       opportunities: getIndustryOpportunities(sector),
       trendDirection: avgReduction > 10 ? 'improving' : avgReduction > 5 ? 'stable' : 'declining'
