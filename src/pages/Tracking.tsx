@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Factory, Zap, Truck, Target, CheckCircle, ExternalLink, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -28,14 +29,18 @@ const Tracking = () => {
     const baseYear = parseInt(year);
     const yearIndex = company.emissionsData.findIndex(data => data.year.toString() === year);
     
+    // Handle both Supabase and mock data property names
+    const energyConsumption = company.energy_consumption || company.energyConsumption || 50000;
+    const wasteGenerated = company.waste_generated || company.wasteGenerated || 2500;
+    
     // Mock dynamic data that changes based on year
-    const energyConsumption = company.energyConsumption * (1 - (baseYear - 2019) * 0.08); // 8% reduction per year
-    const wasteGenerated = company.wasteGenerated * (1 + (baseYear - 2019) * 0.05); // 5% increase per year
+    const calculatedEnergyConsumption = energyConsumption * (1 - (baseYear - 2019) * 0.08); // 8% reduction per year
+    const calculatedWasteGenerated = wasteGenerated * (1 + (baseYear - 2019) * 0.05); // 5% increase per year
     const renewablePercentage = 45 + (baseYear - 2019) * 4.5; // 4.5% increase per year
     
     return {
-      energyConsumption: Math.round(energyConsumption),
-      wasteGenerated: Math.round(wasteGenerated),
+      energyConsumption: Math.round(calculatedEnergyConsumption),
+      wasteGenerated: Math.round(calculatedWasteGenerated),
       renewablePercentage: Math.min(renewablePercentage, 85).toFixed(1) // Cap at 85%
     };
   };
@@ -258,7 +263,7 @@ const Tracking = () => {
         </div>
 
         {/* Science Based Targets */}
-        {company.sbtiTargets && (
+        {(company.sbtiTargets || sbtiTargets) && (
           <div className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-8 hover:shadow-xl transition-all duration-300">
             <div className="flex items-center space-x-3 mb-6">
               <Target className="h-6 w-6 text-blue-600" />
@@ -268,20 +273,28 @@ const Tracking = () => {
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Target Description</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{company.sbtiTargets.description}</p>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {(company.sbtiTargets?.description || sbtiTargets?.description || 'Committed to science-based emission reduction targets.')}
+                </p>
               </div>
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-white/50 rounded-lg">
                   <span className="text-sm font-semibold">Near-term Target:</span>
-                  <span className="text-sm text-gray-600 font-medium">{company.sbtiTargets.nearTermTarget}</span>
+                  <span className="text-sm text-gray-600 font-medium">
+                    {(company.sbtiTargets?.nearTermTarget || company.sbtiTargets?.near_term_target || sbtiTargets?.near_term_target || 'Set targets by 2030')}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-white/50 rounded-lg">
                   <span className="text-sm font-semibold">Long-term Target:</span>
-                  <span className="text-sm text-gray-600 font-medium">{company.sbtiTargets.longTermTarget}</span>
+                  <span className="text-sm text-gray-600 font-medium">
+                    {(company.sbtiTargets?.longTermTarget || company.sbtiTargets?.long_term_target || sbtiTargets?.long_term_target || 'Net-zero by 2050')}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-white/50 rounded-lg">
                   <span className="text-sm font-semibold">Baseline Year:</span>
-                  <span className="text-sm text-gray-600 font-medium">{company.sbtiTargets.baselineYear}</span>
+                  <span className="text-sm text-gray-600 font-medium">
+                    {(company.sbtiTargets?.baselineYear || company.sbtiTargets?.baseline_year || sbtiTargets?.baseline_year || '2019')}
+                  </span>
                 </div>
               </div>
             </div>
