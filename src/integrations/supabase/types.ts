@@ -9,66 +9,251 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      carbon_strategies: {
+        Row: {
+          company_id: string | null
+          created_at: string | null
+          description: string | null
+          expected_reduction: number | null
+          id: string
+          implementation_year: number | null
+          status: string | null
+          strategy_type: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          expected_reduction?: number | null
+          id?: string
+          implementation_year?: number | null
+          status?: string | null
+          strategy_type: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          expected_reduction?: number | null
+          id?: string
+          implementation_year?: number | null
+          status?: string | null
+          strategy_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "carbon_strategies_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           carbon_footprint: number
           created_at: string | null
+          description: string | null
           energy_consumption: number
           id: string
           industry: string | null
           name: string
+          renewable_energy_percentage: number | null
+          sector: string | null
+          top_carbon_footprints: string[] | null
           updated_at: string | null
           waste_generated: number
         }
         Insert: {
           carbon_footprint?: number
           created_at?: string | null
+          description?: string | null
           energy_consumption?: number
           id: string
           industry?: string | null
           name: string
+          renewable_energy_percentage?: number | null
+          sector?: string | null
+          top_carbon_footprints?: string[] | null
           updated_at?: string | null
           waste_generated?: number
         }
         Update: {
           carbon_footprint?: number
           created_at?: string | null
+          description?: string | null
           energy_consumption?: number
           id?: string
           industry?: string | null
           name?: string
+          renewable_energy_percentage?: number | null
+          sector?: string | null
+          top_carbon_footprints?: string[] | null
           updated_at?: string | null
           waste_generated?: number
         }
         Relationships: []
       }
-      sbti_targets: {
+      emissions_data: {
         Row: {
           company_id: string | null
           created_at: string | null
-          current_progress_scope1_2: number
-          current_progress_scope3: number
           id: string
-          near_term_2030_scope1_2: number
-          near_term_2030_scope3: number
+          scope1: number
+          scope2: number
+          scope3: number
+          year: number
         }
         Insert: {
           company_id?: string | null
           created_at?: string | null
-          current_progress_scope1_2: number
-          current_progress_scope3: number
           id?: string
-          near_term_2030_scope1_2: number
-          near_term_2030_scope3: number
+          scope1?: number
+          scope2?: number
+          scope3?: number
+          year: number
         }
         Update: {
           company_id?: string | null
           created_at?: string | null
+          id?: string
+          scope1?: number
+          scope2?: number
+          scope3?: number
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "emissions_data_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      frameworks_compliance: {
+        Row: {
+          company_id: string | null
+          created_at: string | null
+          description: string | null
+          framework_name: string
+          id: string
+          last_updated: string | null
+          status: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          framework_name: string
+          id?: string
+          last_updated?: string | null
+          status: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          framework_name?: string
+          id?: string
+          last_updated?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "frameworks_compliance_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sbti_pathway_data: {
+        Row: {
+          actual_emissions: number | null
+          company_id: string | null
+          created_at: string | null
+          id: string
+          target_emissions: number | null
+          year: number
+        }
+        Insert: {
+          actual_emissions?: number | null
+          company_id?: string | null
+          created_at?: string | null
+          id?: string
+          target_emissions?: number | null
+          year: number
+        }
+        Update: {
+          actual_emissions?: number | null
+          company_id?: string | null
+          created_at?: string | null
+          id?: string
+          target_emissions?: number | null
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sbti_pathway_data_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sbti_targets: {
+        Row: {
+          baseline_year: number | null
+          company_id: string | null
+          created_at: string | null
+          current_progress_scope1_2: number
+          current_progress_scope3: number
+          description: string | null
+          id: string
+          long_term_target: string | null
+          near_term_2030_scope1_2: number
+          near_term_2030_scope3: number
+          near_term_target: string | null
+          progress_percentage: number | null
+          status: string | null
+          target_year: number | null
+        }
+        Insert: {
+          baseline_year?: number | null
+          company_id?: string | null
+          created_at?: string | null
+          current_progress_scope1_2: number
+          current_progress_scope3: number
+          description?: string | null
+          id?: string
+          long_term_target?: string | null
+          near_term_2030_scope1_2: number
+          near_term_2030_scope3: number
+          near_term_target?: string | null
+          progress_percentage?: number | null
+          status?: string | null
+          target_year?: number | null
+        }
+        Update: {
+          baseline_year?: number | null
+          company_id?: string | null
+          created_at?: string | null
           current_progress_scope1_2?: number
           current_progress_scope3?: number
+          description?: string | null
           id?: string
+          long_term_target?: string | null
           near_term_2030_scope1_2?: number
           near_term_2030_scope3?: number
+          near_term_target?: string | null
+          progress_percentage?: number | null
+          status?: string | null
+          target_year?: number | null
         }
         Relationships: [
           {

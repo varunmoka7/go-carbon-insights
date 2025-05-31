@@ -1,54 +1,62 @@
 
+import { useSupabaseScope3Data } from './useSupabaseScope3';
 import { getCompanyById } from '@/data/enhancedMockData';
 
 export const useScope3Data = (companyId: string) => {
-  const company = getCompanyById(companyId);
+  const supabaseQuery = useSupabaseScope3Data(companyId);
   
-  if (!company) {
+  // If Supabase data is loading or there's an error, fallback to mock data
+  if (supabaseQuery.isLoading || supabaseQuery.error || !supabaseQuery.data?.trendData?.length) {
+    const company = getCompanyById(companyId);
+    
+    if (!company) {
+      return {
+        data: null,
+        isLoading: supabaseQuery.isLoading,
+        error: supabaseQuery.error || new Error('Company not found')
+      };
+    }
+
+    // Generate scope 3 data structure
+    const scope3Data = {
+      trendData: company.emissionsData.map(item => ({
+        year: item.year,
+        emissions: item.scope3
+      })),
+      categoryData: [
+        {
+          category: 'Purchased Goods & Services',
+          emissions: '1,200',
+          influenceFactors: 'Supplier engagement, sustainable procurement',
+          insights: 'Focus on supplier carbon requirements and local sourcing'
+        },
+        {
+          category: 'Business Travel',
+          emissions: '180',
+          influenceFactors: 'Travel policy, virtual meetings adoption',
+          insights: 'Implement virtual-first meeting policy and efficient routes'
+        },
+        {
+          category: 'Employee Commuting',
+          emissions: '150',
+          influenceFactors: 'Remote work policy, public transport incentives',
+          insights: 'Promote hybrid work model and sustainable transport'
+        },
+        {
+          category: 'Waste Generated',
+          emissions: '70',
+          influenceFactors: 'Circular design, recycling programs',
+          insights: 'Implement waste prevention and composting programs'
+        }
+      ]
+    };
+
     return {
-      data: null,
-      isLoading: false,
-      error: new Error('Company not found')
+      data: scope3Data,
+      isLoading: supabaseQuery.isLoading,
+      error: supabaseQuery.error
     };
   }
 
-  // Generate scope 3 data structure
-  const scope3Data = {
-    trendData: company.emissionsData.map(item => ({
-      year: item.year,
-      emissions: item.scope3
-    })),
-    categoryData: [
-      {
-        category: 'Purchased Goods & Services',
-        emissions: '1,200',
-        influenceFactors: 'Supplier engagement, sustainable procurement',
-        insights: 'Focus on supplier carbon requirements and local sourcing'
-      },
-      {
-        category: 'Business Travel',
-        emissions: '180',
-        influenceFactors: 'Travel policy, virtual meetings adoption',
-        insights: 'Implement virtual-first meeting policy and efficient routes'
-      },
-      {
-        category: 'Employee Commuting',
-        emissions: '150',
-        influenceFactors: 'Remote work policy, public transport incentives',
-        insights: 'Promote hybrid work model and sustainable transport'
-      },
-      {
-        category: 'Waste Generated',
-        emissions: '70',
-        influenceFactors: 'Circular design, recycling programs',
-        insights: 'Implement waste prevention and composting programs'
-      }
-    ]
-  };
-
-  return {
-    data: scope3Data,
-    isLoading: false,
-    error: null
-  };
+  return supabaseQuery;
 };
