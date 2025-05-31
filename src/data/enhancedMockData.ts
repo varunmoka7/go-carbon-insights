@@ -1,4 +1,34 @@
 
+export interface Framework {
+  name: string;
+  status: 'Implemented' | 'In Progress' | 'Planned' | 'Not Started';
+  score?: string;
+}
+
+export interface EmissionDataPoint {
+  year: number;
+  scope1: number;
+  scope2: number;
+  scope3: number;
+}
+
+export interface SBTITargets {
+  description: string;
+  nearTermTarget: string;
+  longTermTarget: string;
+  baselineYear: number;
+  targetYear: number;
+  validationStatus: string;
+  scope1Reduction: number;
+  scope3Reduction: number;
+}
+
+export interface PathwayDataPoint {
+  year: number;
+  emissions: number;
+  target: number;
+}
+
 export interface EnhancedCompany {
   id: string;
   name: string;
@@ -24,6 +54,17 @@ export interface EnhancedCompany {
   opportunities: string[];
   reportingFrameworks: string[];
   lastUpdated: string;
+  
+  // Additional properties needed by the application
+  emissionsData: EmissionDataPoint[];
+  topCarbonFootprints: string[];
+  sbtiTargets?: SBTITargets;
+  sbtiProgress?: number;
+  frameworks: Framework[];
+  pathwayData?: PathwayDataPoint[];
+  carbonCredits?: number;
+  materialityScore?: number;
+  supplierDecarbonization?: number;
 }
 
 export const enhancedCompanies: EnhancedCompany[] = [
@@ -52,7 +93,25 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Fossil fuel dependency', 'Regulatory pressure', 'Energy transition'],
     opportunities: ['Blue hydrogen production', 'CCUS technology', 'Renewable energy expansion'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 420000, scope2: 85000, scope3: 345000 },
+      { year: 2020, scope1: 415000, scope2: 83000, scope3: 340000 },
+      { year: 2021, scope1: 412000, scope2: 82000, scope3: 338000 },
+      { year: 2022, scope1: 408000, scope2: 81000, scope3: 335000 },
+      { year: 2023, scope1: 405000, scope2: 80000, scope3: 332000 },
+      { year: 2024, scope1: 400000, scope2: 78000, scope3: 330000 }
+    ],
+    topCarbonFootprints: ['Oil extraction and processing', 'Refinery operations', 'Transportation and logistics'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'In Progress' },
+      { name: 'CDP', status: 'Planned' }
+    ],
+    carbonCredits: 0,
+    materialityScore: 6.2,
+    supplierDecarbonization: 25
   },
   {
     id: 'exxonmobil',
@@ -78,7 +137,25 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Climate litigation', 'Stranded assets', 'Energy transition'],
     opportunities: ['Biofuels development', 'Carbon capture', 'Chemical recycling'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 280000, scope2: 56000, scope3: 224000 },
+      { year: 2020, scope1: 275000, scope2: 55000, scope3: 220000 },
+      { year: 2021, scope1: 270000, scope2: 54000, scope3: 216000 },
+      { year: 2022, scope1: 265000, scope2: 53000, scope3: 212000 },
+      { year: 2023, scope1: 260000, scope2: 52000, scope3: 208000 },
+      { year: 2024, scope1: 255000, scope2: 51000, scope3: 204000 }
+    ],
+    topCarbonFootprints: ['Refining operations', 'Upstream production', 'Product transportation'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented' }
+    ],
+    carbonCredits: 15000,
+    materialityScore: 6.8,
+    supplierDecarbonization: 32
   },
 
   // Technology Sector
@@ -106,7 +183,46 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Logistics emissions', 'Packaging waste', 'Energy-intensive operations'],
     opportunities: ['Clean energy infrastructure', 'Sustainable packaging', 'Carbon-neutral delivery'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 8500, scope2: 16500, scope3: 60000 },
+      { year: 2020, scope1: 8200, scope2: 16000, scope3: 58000 },
+      { year: 2021, scope1: 7800, scope2: 15200, scope3: 55000 },
+      { year: 2022, scope1: 7500, scope2: 14800, scope3: 52000 },
+      { year: 2023, scope1: 7200, scope2: 14300, scope3: 50000 },
+      { year: 2024, scope1: 6900, scope2: 13800, scope3: 48000 }
+    ],
+    topCarbonFootprints: ['Data center operations', 'Logistics and transportation', 'Packaging materials'],
+    sbtiTargets: {
+      description: 'Net-zero carbon across all operations by 2040, 10 years ahead of the Paris Agreement',
+      nearTermTarget: '50% reduction by 2030',
+      longTermTarget: 'Net-zero by 2040',
+      baselineYear: 2019,
+      targetYear: 2040,
+      validationStatus: 'Targets Approved',
+      scope1Reduction: 50,
+      scope3Reduction: 40
+    },
+    sbtiProgress: 65,
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'A-' }
+    ],
+    pathwayData: [
+      { year: 2019, emissions: 85000, target: 85000 },
+      { year: 2020, emissions: 82200, target: 81200 },
+      { year: 2021, emissions: 78000, target: 77400 },
+      { year: 2022, emissions: 74300, target: 73600 },
+      { year: 2023, emissions: 71500, target: 69800 },
+      { year: 2024, emissions: 68700, target: 66000 },
+      { year: 2030, emissions: 42500, target: 42500 },
+      { year: 2040, emissions: 0, target: 0 }
+    ],
+    carbonCredits: 125000,
+    materialityScore: 8.5,
+    supplierDecarbonization: 72
   },
   {
     id: 'microsoft',
@@ -132,7 +248,44 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Data center energy use', 'Supply chain emissions', 'Customer product use'],
     opportunities: ['Carbon removal technology', 'Sustainable cloud services', 'Green AI solutions'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 1800, scope2: 3200, scope3: 13000 },
+      { year: 2020, scope1: 1700, scope2: 3000, scope3: 12500 },
+      { year: 2021, scope1: 1600, scope2: 2800, scope3: 12000 },
+      { year: 2022, scope1: 1500, scope2: 2600, scope3: 11500 },
+      { year: 2023, scope1: 1400, scope2: 2400, scope3: 11000 },
+      { year: 2024, scope1: 1300, scope2: 2200, scope3: 10500 }
+    ],
+    topCarbonFootprints: ['Cloud infrastructure', 'Business travel', 'Employee commuting'],
+    sbtiTargets: {
+      description: 'Carbon negative by 2030 and remove all historical emissions by 2050',
+      nearTermTarget: 'Carbon negative by 2030',
+      longTermTarget: 'Remove all historical emissions by 2050',
+      baselineYear: 2020,
+      targetYear: 2030,
+      validationStatus: 'Targets Approved',
+      scope1Reduction: 75,
+      scope3Reduction: 50
+    },
+    sbtiProgress: 78,
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'A' }
+    ],
+    pathwayData: [
+      { year: 2020, emissions: 17200, target: 17200 },
+      { year: 2021, emissions: 16400, target: 15480 },
+      { year: 2022, emissions: 15600, target: 13760 },
+      { year: 2023, emissions: 14800, target: 12040 },
+      { year: 2024, emissions: 14000, target: 10320 },
+      { year: 2030, emissions: -5000, target: -5000 }
+    ],
+    carbonCredits: 85000,
+    materialityScore: 9.2,
+    supplierDecarbonization: 85
   },
   {
     id: 'tesla',
@@ -158,7 +311,44 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Battery supply chain', 'Manufacturing scale-up', 'Charging infrastructure'],
     opportunities: ['Battery technology advancement', 'Energy storage systems', 'Autonomous driving'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 800, scope2: 1500, scope3: 6200 },
+      { year: 2020, scope1: 850, scope2: 1600, scope3: 6800 },
+      { year: 2021, scope1: 900, scope2: 1700, scope3: 7200 },
+      { year: 2022, scope1: 950, scope2: 1800, scope3: 7500 },
+      { year: 2023, scope1: 1000, scope2: 1900, scope3: 7800 },
+      { year: 2024, scope1: 1050, scope2: 2000, scope3: 8100 }
+    ],
+    topCarbonFootprints: ['Battery manufacturing', 'Vehicle production', 'Supply chain materials'],
+    sbtiTargets: {
+      description: 'Achieve carbon neutrality across the entire vehicle lifecycle by 2040',
+      nearTermTarget: '50% reduction in manufacturing emissions by 2030',
+      longTermTarget: 'Carbon neutral lifecycle by 2040',
+      baselineYear: 2020,
+      targetYear: 2040,
+      validationStatus: 'Under Review',
+      scope1Reduction: 50,
+      scope3Reduction: 60
+    },
+    sbtiProgress: 45,
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'In Progress' },
+      { name: 'TCFD', status: 'Implemented' }
+    ],
+    pathwayData: [
+      { year: 2020, emissions: 8850, target: 8850 },
+      { year: 2021, emissions: 9800, target: 8673 },
+      { year: 2022, emissions: 10250, target: 8496 },
+      { year: 2023, emissions: 10700, target: 8319 },
+      { year: 2024, emissions: 11150, target: 8142 },
+      { year: 2030, emissions: 5500, target: 4425 },
+      { year: 2040, emissions: 0, target: 0 }
+    ],
+    carbonCredits: 25000,
+    materialityScore: 8.8,
+    supplierDecarbonization: 68
   },
 
   // Manufacturing - Automotive
@@ -186,7 +376,25 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['ICE vehicle transition', 'Supply chain complexity', 'Regional energy grids'],
     opportunities: ['Electric vehicle expansion', 'Hydrogen mobility', 'Circular economy'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 4500, scope2: 8500, scope3: 32000 },
+      { year: 2020, scope1: 4300, scope2: 8200, scope3: 30500 },
+      { year: 2021, scope1: 4100, scope2: 7900, scope3: 29000 },
+      { year: 2022, scope1: 3900, scope2: 7600, scope3: 27500 },
+      { year: 2023, scope1: 3700, scope2: 7300, scope3: 26000 },
+      { year: 2024, scope1: 3500, scope2: 7000, scope3: 24500 }
+    ],
+    topCarbonFootprints: ['Vehicle manufacturing', 'Steel production', 'Global supply chain'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'B' }
+    ],
+    carbonCredits: 45000,
+    materialityScore: 7.5,
+    supplierDecarbonization: 58
   },
 
   // Retail
@@ -214,7 +422,25 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Supply chain scope 3', 'Store energy use', 'Packaging waste'],
     opportunities: ['Supplier engagement', 'Electric delivery', 'Circular retail'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 2800, scope2: 5200, scope3: 20000 },
+      { year: 2020, scope1: 2700, scope2: 5000, scope3: 19500 },
+      { year: 2021, scope1: 2600, scope2: 4800, scope3: 19000 },
+      { year: 2022, scope1: 2500, scope2: 4600, scope3: 18500 },
+      { year: 2023, scope1: 2400, scope2: 4400, scope3: 18000 },
+      { year: 2024, scope1: 2300, scope2: 4200, scope3: 17500 }
+    ],
+    topCarbonFootprints: ['Supply chain operations', 'Store energy consumption', 'Transportation logistics'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'B+' }
+    ],
+    carbonCredits: 65000,
+    materialityScore: 7.8,
+    supplierDecarbonization: 62
   },
 
   // Add the original companies to maintain compatibility
@@ -242,7 +468,46 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Data center efficiency', 'Employee commuting', 'Supply chain visibility'],
     opportunities: ['Carbon-neutral cloud services', 'Sustainable software practices', 'Digital transformation'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 550, scope2: 1200, scope3: 8250 },
+      { year: 2020, scope1: 520, scope2: 1150, scope3: 7830 },
+      { year: 2021, scope1: 480, scope2: 1100, scope3: 7420 },
+      { year: 2022, scope1: 450, scope2: 1050, scope3: 7000 },
+      { year: 2023, scope1: 420, scope2: 1000, scope3: 6580 },
+      { year: 2024, scope1: 390, scope2: 950, scope3: 6160 }
+    ],
+    topCarbonFootprints: ['Cloud infrastructure', 'Employee commuting', 'Business travel'],
+    sbtiTargets: {
+      description: 'Achieve net-zero emissions across all operations by 2050 with interim targets',
+      nearTermTarget: '50% reduction by 2030',
+      longTermTarget: 'Net-zero by 2050',
+      baselineYear: 2019,
+      targetYear: 2050,
+      validationStatus: 'Targets Approved',
+      scope1Reduction: 50,
+      scope3Reduction: 42
+    },
+    sbtiProgress: 58,
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'A-' }
+    ],
+    pathwayData: [
+      { year: 2019, emissions: 10000, target: 10000 },
+      { year: 2020, emissions: 9500, target: 9500 },
+      { year: 2021, emissions: 9000, target: 9000 },
+      { year: 2022, emissions: 8500, target: 8500 },
+      { year: 2023, emissions: 8000, target: 8000 },
+      { year: 2024, emissions: 7500, target: 7500 },
+      { year: 2030, emissions: 5000, target: 5000 },
+      { year: 2050, emissions: 0, target: 0 }
+    ],
+    carbonCredits: 12000,
+    materialityScore: 8.2,
+    supplierDecarbonization: 75
   },
 
   // Consumer Goods
@@ -270,7 +535,25 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Agricultural supply chain', 'Packaging waste', 'Water scarcity'],
     opportunities: ['Plant-based products', 'Circular packaging', 'Climate-smart agriculture'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 1800, scope2: 3400, scope3: 12800 },
+      { year: 2020, scope1: 1750, scope2: 3300, scope3: 12500 },
+      { year: 2021, scope1: 1700, scope2: 3200, scope3: 12200 },
+      { year: 2022, scope1: 1650, scope2: 3100, scope3: 11900 },
+      { year: 2023, scope1: 1600, scope2: 3000, scope3: 11600 },
+      { year: 2024, scope1: 1550, scope2: 2900, scope3: 11300 }
+    ],
+    topCarbonFootprints: ['Agricultural supply chain', 'Manufacturing operations', 'Packaging materials'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'B' }
+    ],
+    carbonCredits: 35000,
+    materialityScore: 7.2,
+    supplierDecarbonization: 55
   },
 
   // Aerospace
@@ -298,7 +581,25 @@ export const enhancedCompanies: EnhancedCompany[] = [
     challenges: ['Aviation industry emissions', 'Long product lifecycles', 'Customer operations'],
     opportunities: ['Electric aircraft', 'Sustainable aviation fuels', 'Advanced materials'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 2800, scope2: 5200, scope3: 20000 },
+      { year: 2020, scope1: 2600, scope2: 4800, scope3: 18500 },
+      { year: 2021, scope1: 2400, scope2: 4400, scope3: 17000 },
+      { year: 2022, scope1: 2500, scope2: 4600, scope3: 17800 },
+      { year: 2023, scope1: 2300, scope2: 4200, scope3: 16500 },
+      { year: 2024, scope1: 2200, scope2: 4000, scope3: 16000 }
+    ],
+    topCarbonFootprints: ['Aircraft manufacturing', 'Material processing', 'Supply chain logistics'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'In Progress' }
+    ],
+    carbonCredits: 18000,
+    materialityScore: 6.8,
+    supplierDecarbonization: 42
   }
 ];
 
