@@ -1,258 +1,306 @@
+
 import React, { useState } from 'react';
-import { TrendingDown, TrendingUp, Calendar, Globe, Building2, CheckCircle, Clock, DollarSign, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, TrendingUp, Target, Users, Building, Zap, Factory, AlertCircle, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { enhancedCompanies } from '@/data/enhancedMockData';
+import { useNavigate } from 'react-router-dom';
+import { useSupabaseSBTIPathway } from '@/hooks/useSupabaseSBTI';
+import { useSupabaseCompanies } from '@/hooks/useSupabaseCompanies';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
 const Analysis = () => {
-  const [dateRange, setDateRange] = useState('last-30-days');
-  const [region, setRegion] = useState('global');
-  const [sector, setSector] = useState('all');
+  const navigate = useNavigate();
+  const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const { data: companies } = useSupabaseCompanies();
+  const { data: sbtiPathway } = useSupabaseSBTIPathway(selectedCompany);
 
-  // Get unique sectors from the data
-  const sectors = [...new Set(enhancedCompanies.map(company => company.industry))];
-
-  const sectorAnalysis = sectors.map(sector => {
-    const sectorCompanies = enhancedCompanies.filter(company => company.industry === sector);
-    const avgReduction = sectorCompanies.reduce((acc, company) => {
-      const oldestData = company.emissionsData[0];
-      const newestData = company.emissionsData[company.emissionsData.length - 1];
-      const totalOld = oldestData.scope1 + oldestData.scope2 + oldestData.scope3;
-      const totalNew = newestData.scope1 + newestData.scope2 + newestData.scope3;
-      const reduction = ((totalOld - totalNew) / totalOld) * 100;
-      return acc + reduction;
-    }, 0) / sectorCompanies.length;
-
-    const topPerformerData = sectorCompanies.reduce((best: { company: string; reduction: number } | null, company) => {
-      const oldestData = company.emissionsData[0];
-      const newestData = company.emissionsData[company.emissionsData.length - 1];
-      const totalOld = oldestData.scope1 + oldestData.scope2 + oldestData.scope3;
-      const totalNew = newestData.scope1 + newestData.scope2 + newestData.scope3;
-      const reduction = ((totalOld - totalNew) / totalOld) * 100;
-      
-      if (!best) return { company: company.name, reduction };
-      return reduction > best.reduction ? { company: company.name, reduction } : best;
-    }, null);
-
-    return {
-      sector,
-      companies: sectorCompanies.length,
-      avgReduction: `${avgReduction.toFixed(1)}%`,
-      topPerformer: topPerformerData?.company || 'N/A',
-      challenges: getIndustryChallenges(sector),
-      opportunities: getIndustryOpportunities(sector),
-      trendDirection: avgReduction > 10 ? 'improving' : avgReduction > 5 ? 'stable' : 'declining'
-    };
-  });
-
-  const bestPractices = [
-    {
-      id: 1,
-      company: 'TechCorp Industries',
-      title: 'AI-powered energy optimization',
-      savings: '$2.1M',
-      emissionReduction: '28%',
-      description: 'Implemented machine learning algorithms to optimize energy consumption across facilities',
-      category: 'Technology Innovation'
-    },
-    {
-      id: 2,
-      company: 'Green Manufacturing Co.',
-      title: 'Circular waste management',
-      savings: '$1.7M',
-      emissionReduction: '35%',
-      description: 'Zero-waste-to-landfill initiative with comprehensive recycling and upcycling programs',
-      category: 'Waste Reduction'
-    },
-    {
-      id: 3,
-      company: 'Retail Giant',
-      title: 'Supply chain optimization',
-      savings: '$950K',
-      emissionReduction: '22%',
-      description: 'Implemented local sourcing and sustainable procurement practices',
-      category: 'Supply Chain'
-    }
+  // SBTI pathway data for the chart
+  const sbtiChartData = sbtiPathway?.length > 0 ? sbtiPathway.map(item => ({
+    year: item.year,
+    target: item.target_emissions,
+    actual: item.actual_emissions,
+    status: item.actual_emissions ? 'actual' : 'projected'
+  })) : [
+    { year: 2020, target: 1850, actual: 1850, status: 'baseline' },
+    { year: 2021, target: 1776, actual: 1700, status: 'ahead' },
+    { year: 2022, target: 1702, actual: 1600, status: 'ahead' },
+    { year: 2023, target: 1628, actual: 1500, status: 'ahead' },
+    { year: 2024, target: 1554, actual: null, status: 'projected' },
+    { year: 2025, target: 1480, actual: null, status: 'projected' },
+    { year: 2030, target: 925, actual: null, status: 'target' }
   ];
 
-  function getIndustryChallenges(industry: string) {
-    const challenges = {
-      'Technology': 'Data center energy consumption, supply chain emissions, rapid hardware turnover',
-      'Manufacturing': 'Process emissions, legacy equipment, energy-intensive operations',
-      'Retail': 'Supply chain complexity, store operations, logistics emissions'
-    };
-    return challenges[industry] || 'Industry-specific operational challenges';
-  }
-
-  function getIndustryOpportunities(industry: string) {
-    const opportunities = {
-      'Technology': 'AI optimization, renewable energy adoption, circular design principles',
-      'Manufacturing': 'Electrification, circular economy practices, energy efficiency',
-      'Retail': 'Sustainable sourcing, renewable energy, supply chain transparency'
-    };
-    return opportunities[industry] || 'Renewable adoption, efficiency improvements';
-  }
-
-  const getTrendIcon = (trend: string) => {
-    switch (trend) {
-      case 'improving': return <TrendingUp className="h-4 w-4 text-green-600" />;
-      case 'declining': return <TrendingDown className="h-4 w-4 text-red-600" />;
-      default: return <Clock className="h-4 w-4 text-gray-600" />;
-    }
-  };
+  const companyOptions = companies || [
+    { id: 'techcorp', name: 'TechCorp Solutions', sector: 'Technology' },
+    { id: 'amazon', name: 'Amazon', sector: 'Technology' },
+    { id: 'microsoft', name: 'Microsoft', sector: 'Technology' },
+    { id: 'tesla', name: 'Tesla', sector: 'Manufacturing' },
+    { id: 'toyota', name: 'Toyota', sector: 'Manufacturing' }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-teal-50 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header with Filters */}
-        <div className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-6">
-          <Alert className="mb-4 bg-yellow-50/70 border-yellow-200">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              This analysis uses mock data to demonstrate platform capabilities. Real data integration will provide actual insights.
-            </AlertDescription>
-          </Alert>
-          
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Carbon Analytics & Insights</h1>
-              <p className="text-gray-600 mt-2">Expert analysis and actionable intelligence for carbon management</p>
+        {/* Header */}
+        <div className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center space-x-4">
+              <Button 
+                variant="ghost" 
+                onClick={() => navigate('/tracking')}
+                className="hover:bg-white/50"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Overview
+              </Button>
+              <div className="h-8 w-px bg-gray-300"></div>
+              <div className="flex items-center space-x-3">
+                <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900">Emissions Analysis</h1>
+                  <p className="text-gray-600">Comprehensive carbon performance analysis and insights</p>
+                </div>
+              </div>
             </div>
             
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center space-x-2">
-                <Calendar className="h-4 w-4 text-gray-500" />
-                <Select value={dateRange} onValueChange={setDateRange}>
-                  <SelectTrigger className="w-40 backdrop-blur-sm bg-white/80">
-                    <SelectValue placeholder="Date range" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="last-7-days">Last 7 days</SelectItem>
-                    <SelectItem value="last-30-days">Last 30 days</SelectItem>
-                    <SelectItem value="last-quarter">Last quarter</SelectItem>
-                    <SelectItem value="last-year">Last year</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Globe className="h-4 w-4 text-gray-500" />
-                <Select value={region} onValueChange={setRegion}>
-                  <SelectTrigger className="w-32 backdrop-blur-sm bg-white/80">
-                    <SelectValue placeholder="Region" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="global">Global</SelectItem>
-                    <SelectItem value="europe">Europe</SelectItem>
-                    <SelectItem value="north-america">North America</SelectItem>
-                    <SelectItem value="asia-pacific">Asia Pacific</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Building2 className="h-4 w-4 text-gray-500" />
-                <Select value={sector} onValueChange={setSector}>
-                  <SelectTrigger className="w-40 backdrop-blur-sm bg-white/80">
-                    <SelectValue placeholder="Sector" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Sectors</SelectItem>
-                    {sectors.map(s => (
-                      <SelectItem key={s} value={s.toLowerCase()}>{s}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div>
+              <label className="text-sm font-semibold text-gray-700 block mb-3">Select Company:</label>
+              <Select value={selectedCompany} onValueChange={setSelectedCompany}>
+                <SelectTrigger className="w-64 backdrop-blur-sm bg-white/80 h-11">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {companyOptions.map((comp) => (
+                    <SelectItem key={comp.id} value={comp.id}>
+                      <div className="flex flex-col">
+                        <span className="font-medium">{comp.name}</span>
+                        <span className="text-xs text-gray-500">{comp.sector}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
 
-        {/* Sector Analysis */}
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-            <Building2 className="h-5 w-5 text-purple-600 mr-2" />
-            Sector Analysis
-          </h2>
-          <Accordion type="single" collapsible className="space-y-2">
-            {sectorAnalysis.map((sector, index) => (
-              <AccordionItem key={index} value={`sector-${index}`} className="backdrop-blur-lg bg-white/70 rounded-xl border border-white/20 hover:shadow-lg transition-all duration-300">
-                <AccordionTrigger className="px-6 hover:no-underline">
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex items-center space-x-4">
-                      <span className="font-medium">{sector.sector}</span>
-                      <span className="text-sm text-gray-500">({sector.companies} companies)</span>
-                    </div>
-                    <div className="flex items-center space-x-4 mr-4">
-                      <div className="text-right">
-                        <div className="text-sm font-medium text-green-600">{sector.avgReduction} avg reduction</div>
-                        <div className="text-xs text-gray-500">Top: {sector.topPerformer}</div>
-                      </div>
-                      {getTrendIcon(sector.trendDirection)}
-                    </div>
+        {/* SBTI Pathway Analysis - Moved from Scope 3 */}
+        <Card className="backdrop-blur-lg bg-white/70 border-white/20">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold flex items-center space-x-2">
+              <Target className="h-5 w-5 text-blue-600" />
+              <span>Science-Based Targets Pathway</span>
+              <Badge variant="secondary" className="bg-blue-100 text-blue-800">SBTi Committed</Badge>
+            </CardTitle>
+            <CardDescription>
+              Scope 1+2 emissions trajectory towards 2030 target (50% reduction from 2020 baseline)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={sbtiChartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+                <XAxis 
+                  dataKey="year" 
+                  stroke="#666"
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis 
+                  stroke="#666"
+                  tick={{ fontSize: 12 }}
+                  label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                    border: '1px solid #ccc',
+                    borderRadius: '8px'
+                  }}
+                  formatter={(value, name) => [
+                    `${value?.toLocaleString()} tCO2e`, 
+                    name === 'target' ? 'SBTi Target Path' : 'Actual Emissions'
+                  ]}
+                />
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="target" 
+                  stroke="#ef4444" 
+                  strokeWidth={3}
+                  strokeDasharray="8 8"
+                  name="SBTi Target Path"
+                  dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="actual" 
+                  stroke="#10b981" 
+                  strokeWidth={3}
+                  name="Actual Emissions"
+                  dot={{ fill: '#10b981', strokeWidth: 2, r: 5 }}
+                  connectNulls={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+            <div className="mt-6 grid md:grid-cols-3 gap-4">
+              <div className="p-4 bg-green-50 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <span className="font-semibold text-green-800">Current Progress</span>
+                </div>
+                <p className="text-sm text-green-700">
+                  35% reduction achieved vs 50% target by 2030. Company is ahead of schedule.
+                </p>
+              </div>
+              <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span className="font-semibold text-blue-800">2030 Target</span>
+                </div>
+                <p className="text-sm text-blue-700">
+                  Reduce Scope 1+2 emissions to 925 tCO2e (50% reduction from 2020 baseline).
+                </p>
+              </div>
+              <div className="p-4 bg-purple-50 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                  <span className="font-semibold text-purple-800">Long-term Goal</span>
+                </div>
+                <p className="text-sm text-purple-700">
+                  Achieve net-zero emissions across all scopes by 2050.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Emissions Performance Dashboard */}
+        <div className="grid lg:grid-cols-2 gap-8">
+          <Card className="backdrop-blur-lg bg-white/70 border-white/20">
+            <CardHeader>
+              <CardTitle className="text-xl font-bold">Performance Summary</CardTitle>
+              <CardDescription>Key performance indicators and benchmarks</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    <span className="font-medium">Scope 1 & 2 Reduction</span>
                   </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pb-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="backdrop-blur-sm bg-white/50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-900 mb-2">Key Challenges</h4>
-                      <p className="text-sm text-gray-600">{sector.challenges}</p>
-                    </div>
-                    <div className="backdrop-blur-sm bg-white/50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-900 mb-2">Opportunities</h4>
-                      <p className="text-sm text-gray-600">{sector.opportunities}</p>
-                    </div>
+                  <span className="text-green-700 font-bold">35%</span>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <AlertCircle className="h-5 w-5 text-yellow-600" />
+                    <span className="font-medium">Scope 3 Reduction</span>
                   </div>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                  <span className="text-yellow-700 font-bold">22%</span>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <Target className="h-5 w-5 text-blue-600" />
+                    <span className="font-medium">Overall Target Achievement</span>
+                  </div>
+                  <span className="text-blue-700 font-bold">87%</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="backdrop-blur-lg bg-white/70 border-white/20">
+            <CardHeader>
+              <CardTitle className="text-xl font-bold">Sector Benchmarking</CardTitle>
+              <CardDescription>Performance compared to industry peers</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span>Emissions Intensity</span>
+                    <span>Better than 85% of peers</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '85%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span>Renewable Energy Adoption</span>
+                    <span>Above industry average</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: '75%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span>Target Ambition</span>
+                    <span>Science-based targets set</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-purple-600 h-2 rounded-full" style={{ width: '90%' }}></div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Success Stories & Best Practices */}
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-            <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
-            Success Stories & Best Practices
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {bestPractices.map((practice) => (
-              <Card key={practice.id} className="backdrop-blur-lg bg-gradient-to-br from-green-50/70 to-emerald-50/70 border-green-200/30 hover:shadow-xl transition-all duration-300">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg text-green-800">{practice.company}</CardTitle>
-                    <span className="px-2 py-1 bg-green-100/70 text-green-700 text-xs rounded-full backdrop-blur-sm">
-                      {practice.category}
-                    </span>
-                  </div>
-                  <CardDescription className="text-green-700 font-medium">
-                    {practice.title}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-green-700 mb-4">{practice.description}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1">
-                        <DollarSign className="h-4 w-4 text-green-600" />
-                        <span className="font-medium text-green-800">{practice.savings}</span>
-                        <span className="text-xs text-green-600">saved</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <TrendingDown className="h-4 w-4 text-green-600" />
-                        <span className="font-medium text-green-800">{practice.emissionReduction}</span>
-                        <span className="text-xs text-green-600">reduction</span>
-                      </div>
+        {/* Key Insights */}
+        <Card className="backdrop-blur-lg bg-white/70 border-white/20">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold">Key Insights & Recommendations</CardTitle>
+            <CardDescription>AI-powered analysis of emission patterns and opportunities</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h3 className="font-semibold text-gray-900">Opportunities</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                    <TrendingUp className="h-5 w-5 text-green-600 mt-1" />
+                    <div>
+                      <p className="font-medium text-green-800">Accelerate Scope 3 Reductions</p>
+                      <p className="text-sm text-green-700">Focus on supply chain engagement and sustainable procurement</p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+                  <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                    <Zap className="h-5 w-5 text-blue-600 mt-1" />
+                    <div>
+                      <p className="font-medium text-blue-800">Energy Efficiency</p>
+                      <p className="text-sm text-blue-700">Additional 15% reduction potential through smart building systems</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="font-semibold text-gray-900">Risk Areas</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg">
+                    <AlertCircle className="h-5 w-5 text-orange-600 mt-1" />
+                    <div>
+                      <p className="font-medium text-orange-800">Supply Chain Emissions</p>
+                      <p className="text-sm text-orange-700">Monitor supplier sustainability to avoid scope 3 increases</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 p-3 bg-red-50 rounded-lg">
+                    <Factory className="h-5 w-5 text-red-600 mt-1" />
+                    <div>
+                      <p className="font-medium text-red-800">Operational Growth</p>
+                      <p className="text-sm text-red-700">Ensure emissions don't scale with business expansion</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
