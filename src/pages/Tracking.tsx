@@ -29,9 +29,9 @@ const Tracking = () => {
     const baseYear = parseInt(year);
     const yearIndex = company.emissionsData.findIndex(data => data.year.toString() === year);
     
-    // Handle both Supabase and mock data property names
-    const energyConsumption = company.energy_consumption || company.energyConsumption || 50000;
-    const wasteGenerated = company.waste_generated || company.wasteGenerated || 2500;
+    // Handle both Supabase and mock data property names with safe access
+    const energyConsumption = (company as any).energy_consumption || (company as any).energyConsumption || 50000;
+    const wasteGenerated = (company as any).waste_generated || (company as any).wasteGenerated || 2500;
     
     // Mock dynamic data that changes based on year
     const calculatedEnergyConsumption = energyConsumption * (1 - (baseYear - 2019) * 0.08); // 8% reduction per year
@@ -274,26 +274,26 @@ const Tracking = () => {
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Target Description</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  {(company.sbtiTargets?.description || sbtiTargets?.description || 'Committed to science-based emission reduction targets.')}
+                  {(company.sbtiTargets as any)?.description || (sbtiTargets as any)?.description || 'Committed to science-based emission reduction targets.'}
                 </p>
               </div>
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-white/50 rounded-lg">
                   <span className="text-sm font-semibold">Near-term Target:</span>
                   <span className="text-sm text-gray-600 font-medium">
-                    {(company.sbtiTargets?.nearTermTarget || company.sbtiTargets?.near_term_target || sbtiTargets?.near_term_target || 'Set targets by 2030')}
+                    {(company.sbtiTargets as any)?.nearTermTarget || (company.sbtiTargets as any)?.near_term_target || (sbtiTargets as any)?.near_term_target || 'Set targets by 2030'}
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-white/50 rounded-lg">
                   <span className="text-sm font-semibold">Long-term Target:</span>
                   <span className="text-sm text-gray-600 font-medium">
-                    {(company.sbtiTargets?.longTermTarget || company.sbtiTargets?.long_term_target || sbtiTargets?.long_term_target || 'Net-zero by 2050')}
+                    {(company.sbtiTargets as any)?.longTermTarget || (company.sbtiTargets as any)?.long_term_target || (sbtiTargets as any)?.long_term_target || 'Net-zero by 2050'}
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-white/50 rounded-lg">
                   <span className="text-sm font-semibold">Baseline Year:</span>
                   <span className="text-sm text-gray-600 font-medium">
-                    {(company.sbtiTargets?.baselineYear || company.sbtiTargets?.baseline_year || sbtiTargets?.baseline_year || '2019')}
+                    {(company.sbtiTargets as any)?.baselineYear || (company.sbtiTargets as any)?.baseline_year || (sbtiTargets as any)?.baseline_year || '2019'}
                   </span>
                 </div>
               </div>
