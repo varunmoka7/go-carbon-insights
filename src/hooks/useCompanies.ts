@@ -1,6 +1,6 @@
 
 import { useSupabaseCompanies, useSupabaseCompany } from './useSupabaseCompanies';
-import { enhancedCompanies, getCompanyById as getMockCompanyById } from '@/data/enhancedMockData';
+import { companies, getCompanyById as getMockCompanyById } from '@/data/companyMockData';
 
 export const useCompanies = () => {
   const supabaseQuery = useSupabaseCompanies();
@@ -8,7 +8,7 @@ export const useCompanies = () => {
   // If Supabase data is loading or there's an error, fallback to mock data
   if (supabaseQuery.isLoading || supabaseQuery.error || !supabaseQuery.data?.length) {
     return {
-      data: enhancedCompanies,
+      data: companies,
       isLoading: supabaseQuery.isLoading,
       error: supabaseQuery.error
     };

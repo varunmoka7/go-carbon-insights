@@ -149,22 +149,22 @@ export const emissionsData = [
   
   // Continue for remaining companies...
   { company_id: 'energyplus', year: 2019, scope1: 45000, scope2: 35000, scope3: 70000 },
-  { company_id: 'energyplus', year: 2024, scope1: 40000, scope2: 30000, scope3: 65000 },
+  { company_id: 'energyplus', year: 2024, scope1: 40000, scope2: 30000, scope3: 60000 },
   
   { company_id: 'retailchain', year: 2019, scope1: 65000, scope2: 75000, scope3: 140000 },
-  { company_id: 'retailchain', year: 2024, scope1: 58000, scope2: 68000, scope3: 125000 },
+  { company_id: 'retailchain', year: 2024, scope1: 56000, scope2: 66000, scope3: 124000 },
   
   { company_id: 'agrifarm', year: 2019, scope1: 85000, scope2: 45000, scope3: 65000 },
-  { company_id: 'agrifarm', year: 2024, scope1: 80000, scope2: 40000, scope3: 60000 },
+  { company_id: 'agrifarm', year: 2024, scope1: 80000, scope2: 40000, scope3: 58000 },
   
   { company_id: 'pharmalife', year: 2019, scope1: 35000, scope2: 40000, scope3: 50000 },
-  { company_id: 'pharmalife', year: 2024, scope1: 32000, scope2: 36000, scope3: 45000 },
+  { company_id: 'pharmalife', year: 2024, scope1: 32000, scope2: 36000, scope3: 43000 },
   
   { company_id: 'buildtech', year: 2019, scope1: 145000, scope2: 85000, scope3: 150000 },
   { company_id: 'buildtech', year: 2024, scope1: 135000, scope2: 78000, scope3: 140000 },
   
   { company_id: 'financeplus', year: 2019, scope1: 25000, scope2: 35000, scope3: 35000 },
-  { company_id: 'financeplus', year: 2024, scope1: 22000, scope2: 31000, scope3: 32000 },
+  { company_id: 'financeplus', year: 2024, scope1: 22000, scope2: 31000, scope3: 31000 },
   
   { company_id: 'foodglobal', year: 2019, scope1: 75000, scope2: 65000, scope3: 105000 },
   { company_id: 'foodglobal', year: 2024, scope1: 68000, scope2: 58000, scope3: 95000 }
@@ -183,7 +183,7 @@ export const sbtiTargets = [
     current_progress_scope1_2: 65,
     current_progress_scope3: 35,
     progress_percentage: 75,
-    status: 'Targets Approved'
+    status: 'committed'
   },
   {
     company_id: 'greenmanu',
@@ -197,7 +197,7 @@ export const sbtiTargets = [
     current_progress_scope1_2: 55,
     current_progress_scope3: 28,
     progress_percentage: 68,
-    status: 'Targets Approved'
+    status: 'committed'
   },
   {
     company_id: 'oceanlog',
@@ -211,7 +211,7 @@ export const sbtiTargets = [
     current_progress_scope1_2: 42,
     current_progress_scope3: 22,
     progress_percentage: 55,
-    status: 'Under Review'
+    status: 'committed'
   }
 ];
 
@@ -265,3 +265,35 @@ export const frameworksCompliance = [
     last_updated: '2024-01-30'
   }
 ];
+
+// Helper function to get company by ID
+export const getCompanyById = (id: string) => {
+  const company = companies.find(c => c.id === id);
+  if (!company) return null;
+
+  // Add emissions data
+  const companyEmissions = emissionsData.filter(e => e.company_id === id);
+  
+  // Add SBTi targets
+  const sbtiTarget = sbtiTargets.find(t => t.company_id === id);
+  
+  // Add frameworks
+  const frameworks = frameworksCompliance.filter(f => f.company_id === id);
+  
+  // Add carbon strategies  
+  const strategies = carbonStrategies.filter(s => s.company_id === id);
+
+  return {
+    ...company,
+    emissionsData: companyEmissions,
+    sbtiTargets: sbtiTarget,
+    frameworks: frameworks,
+    carbonStrategies: strategies,
+    totalEmissions: companyEmissions.length > 0 
+      ? companyEmissions[companyEmissions.length - 1].scope1 + 
+        companyEmissions[companyEmissions.length - 1].scope2 + 
+        companyEmissions[companyEmissions.length - 1].scope3
+      : company.carbon_footprint,
+    sbtiProgress: sbtiTarget?.progress_percentage || 0
+  };
+};

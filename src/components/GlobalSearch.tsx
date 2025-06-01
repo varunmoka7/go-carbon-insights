@@ -37,7 +37,7 @@ const GlobalSearch = () => {
     ...(companies?.map(company => ({
       id: company.id,
       title: company.name,
-      description: `${company.industry} - ${company.country || company.sector}`,
+      description: `${company.industry} - ${company.sector}`,
       type: 'company' as const,
       path: `/dashboard?company=${company.id}`,
       icon: Building2
