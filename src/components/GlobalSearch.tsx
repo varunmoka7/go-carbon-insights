@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useCompanies } from '@/hooks/useCompanies';
 import { useNavigate } from 'react-router-dom';
+import { LucideIcon } from 'lucide-react';
 
 interface SearchResult {
   id: string;
@@ -14,7 +15,7 @@ interface SearchResult {
   description: string;
   type: 'company' | 'page' | 'metric' | 'report';
   path: string;
-  icon: React.ComponentType;
+  icon: LucideIcon;
 }
 
 const GlobalSearch = () => {
