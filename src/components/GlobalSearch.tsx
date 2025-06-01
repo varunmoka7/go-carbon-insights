@@ -149,7 +149,7 @@ const GlobalSearch = () => {
               )}
 
               <div className="p-3 border-t bg-muted/30 text-xs text-muted-foreground">
-                Press <kbd className="px-1 py-0.5 bg-background rounded">ESC</kbd> to close
+                Press <kbd className="px-1 py-0.5 bg-background rounded border">ESC</kbd> to close
               </div>
             </CardContent>
           </Card>
