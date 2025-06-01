@@ -48,11 +48,7 @@ const Landing = () => {
           <div className="flex justify-center mb-8">
             <div className="flex items-center space-x-3 animate-fade-in">
               <div className="relative">
-                <img 
-                  src="/lovable-uploads/9efb52bb-4927-4097-8968-6bfba4ce29c0.png" 
-                  alt="GoCarbonTracker Logo" 
-                  className="h-16 w-16 animate-pulse"
-                />
+                <BarChart className="h-16 w-16 text-teal-600 animate-pulse" />
               </div>
               <span className="text-3xl font-bold text-gray-900">GoCarbonTracker</span>
             </div>

@@ -2,35 +2,31 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Factory, Truck, Fuel, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useScope1Data } from '@/hooks/useScope1Data';
-import { enhancedCompanies } from '@/data/enhancedMockData';
+import { useCompanies } from '@/hooks/useCompanies';
 
 const Scope1 = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
-  
-  const { data: scope1Data, isLoading, error } = useScope1Data(selectedCompany);
+  const { data: companies } = useCompanies();
 
-  if (isLoading) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-center text-red-600">Error: {error.message}</div>;
-  if (!scope1Data) return <div className="text-center">No data available</div>;
+  const trendData = [
+    { year: '2020', emissions: 1200 },
+    { year: '2021', emissions: 1150 },
+    { year: '2022', emissions: 1100 },
+    { year: '2023', emissions: 1000 },
+    { year: '2024', emissions: 950 }
+  ];
 
-  // Enhanced colors for professional appearance
-  const trendColors = ['#0d9488', '#14b8a6', '#2dd4bf', '#5eead4'];
-  const sourceColors = ['#dc2626', '#ea580c', '#d97706', '#65a30d'];
-
-  const sourceDataWithIcons = scope1Data.sourceData.map((item, index) => ({
-    ...item,
-    color: sourceColors[index],
-    icon: index === 0 ? <Factory className="h-4 w-4" /> : 
-          index === 1 ? <Fuel className="h-4 w-4" /> :
-          index === 2 ? <Truck className="h-4 w-4" /> :
-          <Zap className="h-4 w-4" />
-  }));
+  const sourceData = [
+    { source: 'Natural Gas', emissions: 450, icon: <Fuel className="h-4 w-4" /> },
+    { source: 'Diesel Fuel', emissions: 280, icon: <Truck className="h-4 w-4" /> },
+    { source: 'Company Vehicles', emissions: 150, icon: <Truck className="h-4 w-4" /> },
+    { source: 'Refrigerants', emissions: 70, icon: <Zap className="h-4 w-4" /> }
+  ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -39,10 +35,10 @@ const Scope1 = () => {
         <Button
           variant="ghost"
           onClick={() => navigate(-1)}
-          className="flex items-center space-x-2 text-gray-600 hover:text-teal-600 transition-colors"
+          className="flex items-center space-x-2 text-gray-600 hover:text-teal-600"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span className="text-sm font-medium">Back</span>
+          <span>Back</span>
         </Button>
       </div>
 
@@ -55,16 +51,13 @@ const Scope1 = () => {
         <div className="flex items-center space-x-4">
           <label className="text-sm font-semibold text-gray-800">Company:</label>
           <Select value={selectedCompany} onValueChange={setSelectedCompany}>
-            <SelectTrigger className="w-72 h-10">
+            <SelectTrigger className="w-64">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="max-h-60 overflow-y-auto">
-              {enhancedCompanies.map((comp) => (
+            <SelectContent>
+              {companies?.map((comp) => (
                 <SelectItem key={comp.id} value={comp.id}>
-                  <div className="flex flex-col">
-                    <span className="font-medium">{comp.name}</span>
-                    <span className="text-xs text-gray-500">{comp.sector}</span>
-                  </div>
+                  {comp.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -76,56 +69,21 @@ const Scope1 = () => {
       <Card className="mb-8">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-900">Scope 1 Emissions Trend</CardTitle>
-          <CardDescription className="text-gray-600">
-            Historical direct emissions data showing year-over-year progress
-          </CardDescription>
+          <CardDescription>Historical direct emissions data showing year-over-year progress</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={scope1Data.trendData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" opacity={0.7} />
-              <XAxis 
-                dataKey="year" 
-                stroke="#6b7280"
-                fontSize={14}
-                fontWeight={600}
-                tick={{ fill: '#6b7280' }}
-                axisLine={{ stroke: '#d1d5db', strokeWidth: 2 }}
-                tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
-              />
-              <YAxis 
-                stroke="#6b7280"
-                fontSize={14}
-                fontWeight={600}
-                tick={{ fill: '#6b7280' }}
-                axisLine={{ stroke: '#d1d5db', strokeWidth: 2 }}
-                tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
-                label={{ 
-                  value: 'Emissions (tCO2e)', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  style: { textAnchor: 'middle', fontSize: '14px', fontWeight: '600', fill: '#374151' }
-                }}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-                }}
-                formatter={(value) => [`${value} tCO2e`, 'Scope 1 Emissions']}
-                labelStyle={{ fontWeight: '600', color: '#1f2937' }}
-              />
+            <LineChart data={trendData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="year" />
+              <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
+              <Tooltip formatter={(value) => [`${value} tCO2e`, 'Scope 1 Emissions']} />
               <Line 
                 type="monotone" 
                 dataKey="emissions" 
                 stroke="#dc2626" 
-                strokeWidth={4}
-                dot={{ fill: '#dc2626', strokeWidth: 3, r: 6 }}
-                activeDot={{ r: 8, stroke: '#dc2626', strokeWidth: 3, fill: '#fef2f2' }}
+                strokeWidth={3}
+                dot={{ fill: '#dc2626', r: 6 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -136,76 +94,29 @@ const Scope1 = () => {
       <Card className="mb-8">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-900">Emissions by Source</CardTitle>
-          <CardDescription className="text-gray-600">
-            Breakdown of direct emissions by emission source category
-          </CardDescription>
+          <CardDescription>Breakdown of direct emissions by emission source category</CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={450}>
-            <BarChart 
-              data={sourceDataWithIcons} 
-              margin={{ top: 30, right: 30, left: 20, bottom: 80 }}
-              barCategoryGap="25%"
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" opacity={0.7} />
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={sourceData}>
+              <CartesianGrid strokeDasharray="3 3" />
               <XAxis 
                 dataKey="source" 
-                stroke="#6b7280"
-                fontSize={13}
-                fontWeight={600}
-                tick={{ fill: '#6b7280' }}
-                axisLine={{ stroke: '#d1d5db', strokeWidth: 2 }}
-                tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
                 angle={-45}
                 textAnchor="end"
                 height={100}
               />
-              <YAxis 
-                stroke="#6b7280"
-                fontSize={14}
-                fontWeight={600}
-                tick={{ fill: '#6b7280' }}
-                axisLine={{ stroke: '#d1d5db', strokeWidth: 2 }}
-                tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
-                label={{ 
-                  value: 'Emissions (tCO2e)', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  style: { textAnchor: 'middle', fontSize: '14px', fontWeight: '600', fill: '#374151' }
-                }}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-                }}
-                formatter={(value) => [`${value} tCO2e`, 'Emissions']}
-                labelStyle={{ fontWeight: '600', color: '#1f2937' }}
-              />
-              <Bar 
-                dataKey="emissions" 
-                radius={[8, 8, 0, 0]}
-                fill="#dc2626"
-              >
-                {sourceDataWithIcons.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Bar>
+              <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
+              <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+              <Bar dataKey="emissions" fill="#dc2626" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
           
-          {/* Source Legend with Icons */}
+          {/* Source Legend */}
           <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {sourceDataWithIcons.map((item, index) => (
+            {sourceData.map((item, index) => (
               <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                <div 
-                  className="w-4 h-4 rounded-full flex items-center justify-center text-white text-xs"
-                  style={{ backgroundColor: item.color }}
-                >
+                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
                   {item.icon}
                 </div>
                 <div>
@@ -230,7 +141,7 @@ const Scope1 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">23% reduction in direct emissions over 5 years</span>
+                  <span className="text-gray-600">21% reduction in direct emissions over 4 years</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>

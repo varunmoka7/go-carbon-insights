@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { enhancedCompanies } from '@/data/enhancedMockData';
 
 const Reference = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -89,25 +88,8 @@ const Reference = () => {
     }
   ];
 
-  const companyReferences = enhancedCompanies.map(company => ({
-    name: company.name,
-    industry: company.industry,
-    description: company.description.substring(0, 100) + '...',
-    websites: {
-      corporate: `https://${company.name.toLowerCase().replace(/\s+/g, '')}.com`,
-      sustainability: `https://${company.name.toLowerCase().replace(/\s+/g, '')}.com/sustainability`,
-      reports: `https://${company.name.toLowerCase().replace(/\s+/g, '')}.com/reports`
-    },
-    frameworks: company.frameworks
-  }));
-
   const filteredReferences = references.filter(category => 
     selectedCategory === 'all' || category.category.toLowerCase().includes(selectedCategory)
-  );
-
-  const filteredCompanies = companyReferences.filter(company =>
-    company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    company.industry.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -120,7 +102,7 @@ const Reference = () => {
             <h1 className="text-3xl font-bold text-gray-900">References & Data Sources</h1>
           </div>
           <p className="text-gray-600 text-lg">
-            Comprehensive directory of standards, frameworks, and company sustainability information
+            Comprehensive directory of standards, frameworks, and sustainability information
           </p>
         </div>
 
@@ -130,7 +112,7 @@ const Reference = () => {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
-                placeholder="Search companies or frameworks..."
+                placeholder="Search frameworks..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 backdrop-blur-sm bg-white/80"
@@ -176,7 +158,10 @@ const Reference = () => {
               <div key={categoryIndex} className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{category.category}</h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {category.items.map((item, itemIndex) => (
+                  {category.items.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.description.toLowerCase().includes(searchTerm.toLowerCase())
+                  ).map((item, itemIndex) => (
                     <div key={itemIndex} className="bg-white/50 rounded-lg p-4 hover:bg-white/70 transition-all duration-300 group">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
@@ -204,82 +189,13 @@ const Reference = () => {
           </div>
         </div>
 
-        {/* Company References */}
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
-            <Building2 className="h-6 w-6 text-green-600 mr-2" />
-            Company Sustainability References
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCompanies.map((company, index) => (
-              <Card key={index} className="backdrop-blur-lg bg-white/70 border-white/20 hover:shadow-xl transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    <span>{company.name}</span>
-                    <Badge variant="outline">{company.industry}</Badge>
-                  </CardTitle>
-                  <CardDescription>{company.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {/* Frameworks Status */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Frameworks:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {Object.entries(company.frameworks).map(([framework, status]) => (
-                        <Badge
-                          key={framework}
-                          variant={status ? "default" : "secondary"}
-                          className={`text-xs ${status ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}
-                        >
-                          {framework}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Website Links */}
-                  <div className="space-y-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={() => window.open(company.websites.corporate, '_blank')}
-                    >
-                      <Globe className="h-3 w-3 mr-2" />
-                      Corporate Website
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={() => window.open(company.websites.sustainability, '_blank')}
-                    >
-                      <ExternalLink className="h-3 w-3 mr-2" />
-                      Sustainability Page
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={() => window.open(company.websites.reports, '_blank')}
-                    >
-                      <FileText className="h-3 w-3 mr-2" />
-                      ESG Reports
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
         {/* Disclaimer */}
         <div className="backdrop-blur-lg bg-yellow-50/70 rounded-xl shadow-lg border border-yellow-200/30 p-6">
           <h3 className="text-lg font-semibold text-yellow-800 mb-2">Important Note</h3>
           <p className="text-yellow-700 text-sm">
-            The company-specific links provided are illustrative examples for demonstration purposes. 
-            In a production environment, these would link to actual corporate websites and sustainability reports. 
-            All framework and standards references link to official websites and authoritative sources.
+            All framework and standards references link to official websites and authoritative sources. 
+            This directory provides access to the most current and reliable information for carbon accounting 
+            and sustainability reporting.
           </p>
         </div>
       </div>
