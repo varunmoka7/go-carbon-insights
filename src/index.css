@@ -74,6 +74,30 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  .high-contrast {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --border: 0 0% 0%;
+    --input: 0 0% 100%;
+    --ring: 0 0% 0%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 10%;
+  }
+
+  .high-contrast.dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --border: 0 0% 100%;
+    --input: 0 0% 0%;
+    --ring: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 90%;
+  }
 }
 
 @layer base {
@@ -83,6 +107,11 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
   }
 }
 
@@ -95,8 +124,20 @@
     animation: slideInRight 0.8s ease-out forwards;
   }
   
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+  
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  
   .delay-300 {
     animation-delay: 0.3s;
+  }
+  
+  .delay-400 {
+    animation-delay: 0.4s;
   }
   
   .delay-500 {
@@ -113,6 +154,41 @@
   
   .delay-1200 {
     animation-delay: 1.2s;
+  }
+
+  /* Text scaling support */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-in-right {
+      animation: none;
+    }
+  }
+
+  /* High contrast mode utilities */
+  .high-contrast .shadow-lg {
+    @apply border-2 border-foreground shadow-none;
+  }
+
+  .high-contrast .hover\:shadow-lg:hover {
+    @apply border-2 border-foreground shadow-none;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Focus indicators */
+  .focus-visible\:ring-2:focus-visible {
+    @apply ring-2 ring-primary ring-offset-2;
   }
 }
 
@@ -136,4 +212,35 @@
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* Keyboard navigation styles */
+kbd {
+  @apply inline-flex items-center justify-center px-2 py-1 text-xs font-medium bg-muted border border-border rounded;
+}
+
+/* Voice navigation feedback */
+[data-voice-command-active] {
+  @apply ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Multi-tab support */
+.tab-container {
+  @apply border border-border rounded-lg overflow-hidden;
+}
+
+.tab-header {
+  @apply flex border-b border-border bg-muted;
+}
+
+.tab-button {
+  @apply px-4 py-2 text-sm font-medium border-r border-border last:border-r-0 hover:bg-background transition-colors;
+}
+
+.tab-button[aria-selected="true"] {
+  @apply bg-background text-foreground;
+}
+
+.tab-content {
+  @apply p-4;
 }
