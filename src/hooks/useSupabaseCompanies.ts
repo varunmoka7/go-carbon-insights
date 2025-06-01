@@ -78,7 +78,17 @@ export const useSupabaseCompany = (companyId: string) => {
           ? emissionsData[emissionsData.length - 1].scope1 + 
             emissionsData[emissionsData.length - 1].scope2 + 
             emissionsData[emissionsData.length - 1].scope3
-          : 0
+          : 0,
+        // Add mock data for properties not in database yet
+        topCarbonFootprints: [
+          'Manufacturing Operations',
+          'Supply Chain Transport',
+          'Employee Commuting'
+        ],
+        energyConsumption: company?.energy_consumption || 50000,
+        wasteGenerated: company?.waste_generated || 2500,
+        renewableEnergyPercentage: company?.renewable_energy_percentage || 45,
+        sbtiProgress: sbtiTarget?.progress_percentage || 0
       };
     },
     enabled: !!companyId

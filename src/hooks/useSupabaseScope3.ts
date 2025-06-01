@@ -18,12 +18,12 @@ export const useSupabaseScope3Data = (companyId: string) => {
         throw emissionsError;
       }
 
-      // Get scope 3 categories
+      // Get scope 3 categories for latest year
       const { data: categoriesData, error: categoriesError } = await supabase
         .from('scope3_emissions')
         .select('category, emissions_by_category, influence_factors, insights')
         .eq('company_id', companyId)
-        .eq('year', 2024); // Get latest year data
+        .eq('year', 2023); // Get latest year data
 
       if (categoriesError) {
         console.error('Error fetching scope 3 categories:', categoriesError);

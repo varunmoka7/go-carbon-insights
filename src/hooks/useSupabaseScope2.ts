@@ -18,12 +18,12 @@ export const useSupabaseScope2Data = (companyId: string) => {
         throw emissionsError;
       }
 
-      // Get scope 2 sources
+      // Get scope 2 sources for latest year
       const { data: sourcesData, error: sourcesError } = await supabase
         .from('scope2_emissions')
         .select('source, emissions_by_source, location, percentage')
         .eq('company_id', companyId)
-        .eq('year', 2024); // Get latest year data
+        .eq('year', 2023); // Get latest year data
 
       if (sourcesError) {
         console.error('Error fetching scope 2 sources:', sourcesError);
