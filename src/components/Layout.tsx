@@ -36,9 +36,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-8">
               <Link to="/home" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
-                  <BarChart className="h-5 w-5 text-white" />
-                </div>
+                <img 
+                  src="/lovable-uploads/9efb52bb-4927-4097-8968-6bfba4ce29c0.png" 
+                  alt="GoCarbonTracker Logo" 
+                  className="w-8 h-8 rounded-lg object-cover"
+                />
                 <span className="text-xl font-bold text-gray-900 dark:text-white">
                   GoCarbonTracker
                 </span>
