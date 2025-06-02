@@ -2,6 +2,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { 
+  sanitizeInput, 
+  validateEmail, 
+  validatePassword, 
+  validateUsername,
+  checkRateLimit,
+  getGenericAuthError 
+} from '@/utils/securityValidation';
 
 interface AuthContextType {
   user: User | null;
@@ -54,34 +62,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       
+      // Sanitize inputs
+      const sanitizedEmail = sanitizeInput(email);
+      const sanitizedUsername = username ? sanitizeInput(username) : sanitizedEmail.split('@')[0];
+      
+      // Rate limiting
+      if (!checkRateLimit(`signup:${sanitizedEmail}`, 3, 15 * 60 * 1000)) {
+        return { error: { message: 'Too many signup attempts. Please try again later.' } };
+      }
+      
       // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+      if (!validateEmail(sanitizedEmail)) {
         return { error: { message: 'Please enter a valid email address' } };
       }
 
-      // Validate password strength
-      if (password.length < 6) {
-        return { error: { message: 'Password must be at least 6 characters long' } };
+      // Validate password
+      const passwordValidation = validatePassword(password);
+      if (!passwordValidation.isValid) {
+        return { error: { message: passwordValidation.message } };
+      }
+
+      // Validate username
+      const usernameValidation = validateUsername(sanitizedUsername);
+      if (!usernameValidation.isValid) {
+        return { error: { message: usernameValidation.message } };
       }
 
       const redirectUrl = `${window.location.origin}/`;
       
       const { error } = await supabase.auth.signUp({
-        email,
+        email: sanitizedEmail,
         password,
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            username: username || email.split('@')[0],
-            display_name: username || email.split('@')[0]
+            username: sanitizedUsername,
+            display_name: sanitizedUsername
           }
         }
       });
 
       if (error) {
         console.error('Signup error:', error);
-        return { error };
+        // Return generic error to prevent enumeration
+        if (error.message.includes('User already registered')) {
+          return { error: { message: 'An account with this email may already exist. Please try signing in instead.' } };
+        }
+        return { error: { message: 'Unable to create account. Please try again.' } };
       }
 
       return { error: null };
@@ -98,11 +125,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(true);
       
       // Sanitize input
-      const cleanInput = emailOrUsername.trim().toLowerCase();
+      const cleanInput = sanitizeInput(emailOrUsername).toLowerCase();
+      
+      // Rate limiting
+      if (!checkRateLimit(`signin:${cleanInput}`, 5, 15 * 60 * 1000)) {
+        return { error: { message: 'Too many login attempts. Please try again later.' } };
+      }
       
       // Check if input looks like an email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const isEmail = emailRegex.test(cleanInput);
+      const isEmail = validateEmail(cleanInput);
       
       if (isEmail) {
         // Direct email login
@@ -113,7 +144,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         if (error) {
           console.error('Email login error:', error);
-          return { error };
+          return { error: { message: getGenericAuthError() } };
         }
         
         return { error: null };
@@ -123,7 +154,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (error) {
       console.error('Unexpected login error:', error);
-      return { error: { message: 'An unexpected error occurred during login' } };
+      return { error: { message: getGenericAuthError() } };
     } finally {
       setLoading(false);
     }
@@ -132,7 +163,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signInWithUsername = async (username: string, password: string) => {
     try {
       // Sanitize username input
-      const cleanUsername = username.trim().toLowerCase();
+      const cleanUsername = sanitizeInput(username).toLowerCase();
+      
+      // Validate username format
+      const usernameValidation = validateUsername(cleanUsername);
+      if (!usernameValidation.isValid) {
+        return { error: { message: getGenericAuthError() } };
+      }
       
       // Lookup email by username
       const { data: profile, error: lookupError } = await supabase
@@ -143,11 +180,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (lookupError) {
         console.error('Username lookup error:', lookupError);
-        return { error: { message: 'Failed to find user with that username' } };
+        return { error: { message: getGenericAuthError() } };
       }
 
       if (!profile) {
-        return { error: { message: 'No user found with that username' } };
+        return { error: { message: getGenericAuthError() } };
       }
 
       // Sign in with the found email
@@ -158,13 +195,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (error) {
         console.error('Username login error:', error);
-        return { error };
+        return { error: { message: getGenericAuthError() } };
       }
 
       return { error: null };
     } catch (error) {
       console.error('Unexpected username login error:', error);
-      return { error: { message: 'An unexpected error occurred during username login' } };
+      return { error: { message: getGenericAuthError() } };
     }
   };
 
@@ -191,27 +228,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetPassword = async (email: string) => {
     try {
+      // Sanitize email
+      const sanitizedEmail = sanitizeInput(email);
+      
+      // Rate limiting
+      if (!checkRateLimit(`reset:${sanitizedEmail}`, 2, 15 * 60 * 1000)) {
+        return { error: { message: 'Too many password reset attempts. Please try again later.' } };
+      }
+      
       // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+      if (!validateEmail(sanitizedEmail)) {
         return { error: { message: 'Please enter a valid email address' } };
       }
 
       const redirectUrl = `${window.location.origin}/auth?mode=reset`;
       
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      const { error } = await supabase.auth.resetPasswordForEmail(sanitizedEmail, {
         redirectTo: redirectUrl
       });
 
       if (error) {
         console.error('Password reset error:', error);
-        return { error };
+        // Always return success message to prevent email enumeration
+        return { error: null };
       }
 
       return { error: null };
     } catch (error) {
       console.error('Unexpected password reset error:', error);
-      return { error: { message: 'An unexpected error occurred during password reset' } };
+      return { error: null }; // Always return success to prevent enumeration
     }
   };
 

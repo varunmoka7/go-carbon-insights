@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { sanitizeInput, validateEmail, validatePassword, validateUsername } from '@/utils/securityValidation';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -30,7 +31,16 @@ const Auth = () => {
     }
   }, [user, navigate]);
 
-  const isEmail = (input: string) => /\S+@\S+\.\S+/.test(input);
+  const handleInputChange = (field: string, value: string) => {
+    // Sanitize input as user types
+    const sanitized = sanitizeInput(value);
+    setFormData(prev => ({
+      ...prev,
+      [field]: sanitized
+    }));
+    // Clear errors when user starts typing
+    if (error) setError('');
+  };
 
   const validateForm = () => {
     if (isSignUp) {
@@ -39,13 +49,25 @@ const Auth = () => {
         return false;
       }
       
-      if (!isEmail(formData.email)) {
+      if (!validateEmail(formData.email)) {
         setError('Please enter a valid email address');
         return false;
       }
 
-      if (formData.username.length < 3) {
-        setError('Username must be at least 3 characters long');
+      const usernameValidation = validateUsername(formData.username);
+      if (!usernameValidation.isValid) {
+        setError(usernameValidation.message || 'Invalid username format');
+        return false;
+      }
+
+      const passwordValidation = validatePassword(formData.password);
+      if (!passwordValidation.isValid) {
+        setError(passwordValidation.message || 'Password does not meet requirements');
+        return false;
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
         return false;
       }
     } else {
@@ -53,16 +75,6 @@ const Auth = () => {
         setError('Please fill in all required fields');
         return false;
       }
-    }
-    
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
-      return false;
-    }
-    
-    if (isSignUp && formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return false;
     }
     
     return true;
@@ -81,26 +93,16 @@ const Auth = () => {
         const { error } = await signUp(formData.email, formData.password, formData.username);
         
         if (error) {
-          if (error.message.includes('User already registered')) {
-            setError('An account with this email already exists. Please sign in instead.');
-          } else {
-            setError(error.message || 'An error occurred during sign up. Please try again.');
-          }
+          setError(error.message || 'An error occurred during sign up. Please try again.');
         } else {
           // Sign up successful, user should be automatically signed in
           navigate('/dashboard');
         }
       } else {
-        // For sign in, determine if input is email or username
-        const loginIdentifier = formData.emailOrUsername;
-        const { error } = await signIn(loginIdentifier, formData.password);
+        const { error } = await signIn(formData.emailOrUsername, formData.password);
         
         if (error) {
-          if (error.message.includes('Invalid login credentials')) {
-            setError('Invalid credentials. Please check your email/username and password.');
-          } else {
-            setError(error.message || 'An error occurred during sign in. Please try again.');
-          }
+          setError(error.message || 'An error occurred during sign in. Please try again.');
         }
       }
     } catch (err) {
@@ -108,6 +110,17 @@ const Auth = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({ 
+      emailOrUsername: '', 
+      email: '', 
+      username: '', 
+      password: '', 
+      confirmPassword: '' 
+    });
+    setError('');
   };
 
   return (
@@ -153,9 +166,10 @@ const Auth = () => {
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
                       placeholder="Enter your email"
                       className="w-full"
+                      maxLength={100}
                     />
                   </div>
 
@@ -168,9 +182,10 @@ const Auth = () => {
                       type="text"
                       required
                       value={formData.username}
-                      onChange={(e) => setFormData({...formData, username: e.target.value})}
+                      onChange={(e) => handleInputChange('username', e.target.value)}
                       placeholder="Choose a username"
                       className="w-full"
+                      maxLength={20}
                     />
                   </div>
                 </>
@@ -184,9 +199,10 @@ const Auth = () => {
                     type="text"
                     required
                     value={formData.emailOrUsername}
-                    onChange={(e) => setFormData({...formData, emailOrUsername: e.target.value})}
+                    onChange={(e) => handleInputChange('emailOrUsername', e.target.value)}
                     placeholder="Enter your email or username"
                     className="w-full"
+                    maxLength={100}
                   />
                 </div>
               )}
@@ -201,9 +217,10 @@ const Auth = () => {
                     type={showPassword ? 'text' : 'password'}
                     required
                     value={formData.password}
-                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
                     placeholder="Enter your password"
                     className="w-full pr-10"
+                    maxLength={128}
                   />
                   <button
                     type="button"
@@ -217,6 +234,11 @@ const Auth = () => {
                     )}
                   </button>
                 </div>
+                {isSignUp && (
+                  <p className="mt-1 text-xs text-gray-500">
+                    Password must be at least 8 characters with uppercase, lowercase, and number
+                  </p>
+                )}
               </div>
 
               {isSignUp && (
@@ -229,9 +251,10 @@ const Auth = () => {
                     type="password"
                     required
                     value={formData.confirmPassword}
-                    onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                     placeholder="Confirm your password"
                     className="w-full"
+                    maxLength={128}
                   />
                 </div>
               )}
@@ -252,14 +275,7 @@ const Auth = () => {
                   type="button"
                   onClick={() => {
                     setIsSignUp(!isSignUp);
-                    setError('');
-                    setFormData({ 
-                      emailOrUsername: '', 
-                      email: '', 
-                      username: '', 
-                      password: '', 
-                      confirmPassword: '' 
-                    });
+                    resetForm();
                   }}
                   className="text-teal-600 hover:text-teal-500 font-medium"
                 >
