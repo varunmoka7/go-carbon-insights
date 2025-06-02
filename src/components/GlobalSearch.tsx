@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Search, Building2, BarChart3, FileText, Target } from 'lucide-react';
+import { Search, Building2, BarChart3, FileText, Target, LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,7 +14,7 @@ interface SearchResult {
   description: string;
   type: 'company' | 'page' | 'metric' | 'report';
   path: string;
-  icon: React.ComponentType;
+  icon: LucideIcon;
 }
 
 const GlobalSearch = () => {
