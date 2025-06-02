@@ -1,4 +1,5 @@
 
+
 // Data Utilities and Helper Functions for Carbon Tracker
 // These functions help you interact with and analyze the generated mock data
 
@@ -294,13 +295,3 @@ export async function searchCompanies(searchTerm: string, filters: any = {}) {
   }
 }
 
-export {
-  getDashboardData,
-  getEmissionsTrends,
-  getCompaniesOverview,
-  getScope3Analysis,
-  addEmissionEntry,
-  calculateEmissionsIntensity,
-  calculateYearOverYearChange,
-  searchCompanies
-};
