@@ -58,12 +58,19 @@ const Scope3 = () => {
       }));
     }
 
-    return scope3Data.categoryData.map(item => ({
-      category: item.category.length > 15 ? item.category.substring(0, 15) + '...' : item.category,
-      emissions: typeof item.emissions === 'string' ? parseInt(item.emissions.replace(/,/g, '')) : item.emissions,
-      percentage: Math.round((parseInt(typeof item.emissions === 'string' ? item.emissions.replace(/,/g, '') : item.emissions.toString()) / 
-        scope3Data.categoryData.reduce((sum, cat) => sum + parseInt(typeof cat.emissions === 'string' ? cat.emissions.replace(/,/g, '') : cat.emissions.toString()), 0)) * 100)
-    }));
+    const totalEmissions = scope3Data.categoryData.reduce((sum, cat) => {
+      const emissions = typeof cat.emissions === 'string' ? parseInt(cat.emissions.replace(/,/g, '')) : Number(cat.emissions);
+      return sum + emissions;
+    }, 0);
+
+    return scope3Data.categoryData.map(item => {
+      const emissions = typeof item.emissions === 'string' ? parseInt(item.emissions.replace(/,/g, '')) : Number(item.emissions);
+      return {
+        category: item.category.length > 15 ? item.category.substring(0, 15) + '...' : item.category,
+        emissions: emissions,
+        percentage: Math.round((emissions / totalEmissions) * 100)
+      };
+    });
   }, [scope3Data, upstreamDownstreamData]);
 
   const trendData = scope3Data?.trendData || [
