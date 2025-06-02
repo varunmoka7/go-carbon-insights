@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Plus, BarChart3, Calculator, Upload } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,10 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { addEmissionEntry } from '@/utils/dataUtils';
 
 const Tracking = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('manual');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     date: '',
     category: '',
@@ -19,13 +20,41 @@ const Tracking = () => {
     description: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Default company ID - in a real app, this would come from user context
+  const defaultCompanyId = 'acme-corp';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Emission Entry Added",
-      description: "Your emission data has been successfully recorded.",
-    });
-    setFormData({ date: '', category: '', amount: '', unit: '', description: '' });
+    setIsSubmitting(true);
+
+    try {
+      const result = await addEmissionEntry({
+        company_id: defaultCompanyId,
+        date: formData.date,
+        category: formData.category,
+        amount: parseFloat(formData.amount),
+        unit: formData.unit,
+        description: formData.description
+      });
+
+      if (result.success) {
+        toast({
+          title: "Emission Entry Added",
+          description: "Your emission data has been successfully recorded.",
+        });
+        setFormData({ date: '', category: '', amount: '', unit: '', description: '' });
+      } else {
+        throw new Error('Failed to add emission entry');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add emission entry. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const quickActions = [
@@ -170,8 +199,12 @@ const Tracking = () => {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700">
-                  Add Entry
+                <Button 
+                  type="submit" 
+                  className="w-full bg-teal-600 hover:bg-teal-700"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Adding Entry...' : 'Add Entry'}
                 </Button>
               </form>
             </CardContent>
