@@ -6,11 +6,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import GlobalSearch from './GlobalSearch';
 import Breadcrumb from './Breadcrumb';
+import LogoutButton from './LogoutButton';
+import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const { isDarkMode } = useTheme();
+  const { user } = useAuth();
   
   const navigation = [
     { name: 'Home', href: '/home', icon: Home },
@@ -77,6 +80,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   3
                 </Badge>
               </Button>
+
+              {user && (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    {user.email}
+                  </span>
+                  <LogoutButton />
+                </div>
+              )}
 
               <Button variant="outline" size="icon" className="lg:hidden">
                 <Menu className="h-4 w-4" />
