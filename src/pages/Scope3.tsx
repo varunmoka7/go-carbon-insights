@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ArrowLeft, Package, Truck, Users, Recycle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
@@ -7,13 +7,66 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCompanies } from '@/hooks/useCompanies';
+import { useScope3Data } from '@/hooks/useScope3Data';
+import { categorizeScope3Data, generateFallbackScope3Distribution, type UpstreamDownstreamData } from '@/utils/scope3Categorization';
 
 const Scope3 = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const { data: companies } = useCompanies();
+  const { data: scope3Data, isLoading, error } = useScope3Data(selectedCompany);
 
-  const trendData = [
+  // Process upstream/downstream data
+  const upstreamDownstreamData = useMemo((): UpstreamDownstreamData => {
+    if (!scope3Data?.categoryData || scope3Data.categoryData.length === 0) {
+      // Fallback: use trend data to estimate total scope 3
+      const latestEmissions = scope3Data?.trendData?.[scope3Data.trendData.length - 1]?.emissions || 1750;
+      return generateFallbackScope3Distribution(latestEmissions);
+    }
+
+    return categorizeScope3Data(scope3Data.categoryData);
+  }, [scope3Data]);
+
+  // Prepare chart data
+  const upstreamDownstreamChartData = [
+    {
+      category: 'Upstream',
+      emissions: upstreamDownstreamData.upstream.total,
+      color: '#0d9488',
+      percentage: upstreamDownstreamData.upstream.percentage
+    },
+    {
+      category: 'Downstream',
+      emissions: upstreamDownstreamData.downstream.total,
+      color: '#14b8a6',
+      percentage: upstreamDownstreamData.downstream.percentage
+    }
+  ];
+
+  // Prepare category data for charts
+  const categoryData = useMemo(() => {
+    if (!scope3Data?.categoryData || scope3Data.categoryData.length === 0) {
+      // Use fallback data for category breakdown
+      const fallbackData = upstreamDownstreamData;
+      return [
+        ...fallbackData.upstream.categories,
+        ...fallbackData.downstream.categories
+      ].map((item, index) => ({
+        category: item.category.length > 15 ? item.category.substring(0, 15) + '...' : item.category,
+        emissions: item.emissions,
+        percentage: Math.round((item.emissions / (fallbackData.upstream.total + fallbackData.downstream.total)) * 100)
+      }));
+    }
+
+    return scope3Data.categoryData.map(item => ({
+      category: item.category.length > 15 ? item.category.substring(0, 15) + '...' : item.category,
+      emissions: typeof item.emissions === 'string' ? parseInt(item.emissions.replace(/,/g, '')) : item.emissions,
+      percentage: Math.round((parseInt(typeof item.emissions === 'string' ? item.emissions.replace(/,/g, '') : item.emissions.toString()) / 
+        scope3Data.categoryData.reduce((sum, cat) => sum + parseInt(typeof cat.emissions === 'string' ? cat.emissions.replace(/,/g, '') : cat.emissions.toString()), 0)) * 100)
+    }));
+  }, [scope3Data, upstreamDownstreamData]);
+
+  const trendData = scope3Data?.trendData || [
     { year: '2020', emissions: 2500 },
     { year: '2021', emissions: 2300 },
     { year: '2022', emissions: 2100 },
@@ -21,21 +74,15 @@ const Scope3 = () => {
     { year: '2024', emissions: 1750 }
   ];
 
-  const categoryData = [
-    { category: 'Purchased Goods', emissions: 650, percentage: 37 },
-    { category: 'Transportation', emissions: 420, percentage: 24 },
-    { category: 'Business Travel', emissions: 280, percentage: 16 },
-    { category: 'Employee Commuting', emissions: 210, percentage: 12 },
-    { category: 'Waste', emissions: 120, percentage: 7 },
-    { category: 'Other', emissions: 70, percentage: 4 }
-  ];
-
-  const upstreamDownstream = [
-    { category: 'Upstream', emissions: 1200, color: '#0d9488' },
-    { category: 'Downstream', emissions: 550, color: '#14b8a6' }
-  ];
-
   const categoryColors = ['#dc2626', '#ea580c', '#d97706', '#65a30d', '#0d9488', '#0891b2'];
+
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center">Loading Scope 3 data...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -117,7 +164,7 @@ const Scope3 = () => {
                   label={({ category, percentage }) => `${category}: ${percentage}%`}
                 >
                   {categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={categoryColors[index]} />
+                    <Cell key={`cell-${index}`} fill={categoryColors[index % categoryColors.length]} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
@@ -130,17 +177,20 @@ const Scope3 = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl font-bold text-gray-900">Upstream vs Downstream</CardTitle>
-            <CardDescription>Distribution across value chain</CardDescription>
+            <CardDescription>Distribution across value chain (GHG Protocol categories)</CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={upstreamDownstream} layout="horizontal">
+              <BarChart data={upstreamDownstreamChartData} layout="horizontal">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" />
                 <YAxis dataKey="category" type="category" />
-                <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+                <Tooltip 
+                  formatter={(value, name) => [`${value} tCO2e`, 'Emissions']}
+                  labelFormatter={(label) => `${label} Activities`}
+                />
                 <Bar dataKey="emissions" radius={[0, 4, 4, 0]}>
-                  {upstreamDownstream.map((entry, index) => (
+                  {upstreamDownstreamChartData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Bar>
@@ -148,13 +198,25 @@ const Scope3 = () => {
             </ResponsiveContainer>
             
             <div className="mt-4 space-y-2">
-              <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                <span className="text-sm font-medium">Upstream Activities</span>
-                <span className="text-sm">1,200 tCO2e (69%)</span>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                <div>
+                  <span className="text-sm font-medium">Upstream Activities</span>
+                  <p className="text-xs text-gray-600">Categories 1-8: Purchased goods, business travel, etc.</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-sm font-bold">{upstreamDownstreamData.upstream.total.toLocaleString()} tCO2e</span>
+                  <p className="text-xs text-gray-600">({upstreamDownstreamData.upstream.percentage}%)</p>
+                </div>
               </div>
-              <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                <span className="text-sm font-medium">Downstream Activities</span>
-                <span className="text-sm">550 tCO2e (31%)</span>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                <div>
+                  <span className="text-sm font-medium">Downstream Activities</span>
+                  <p className="text-xs text-gray-600">Categories 9-15: Use of products, end-of-life, etc.</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-sm font-bold">{upstreamDownstreamData.downstream.total.toLocaleString()} tCO2e</span>
+                  <p className="text-xs text-gray-600">({upstreamDownstreamData.downstream.percentage}%)</p>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -181,7 +243,7 @@ const Scope3 = () => {
               <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
               <Bar dataKey="emissions" radius={[4, 4, 0, 0]}>
                 {categoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={categoryColors[index]} />
+                  <Cell key={`cell-${index}`} fill={categoryColors[index % categoryColors.length]} />
                 ))}
               </Bar>
             </BarChart>
@@ -201,15 +263,21 @@ const Scope3 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">30% reduction in value chain emissions over 4 years</span>
+                  <span className="text-gray-600">
+                    {upstreamDownstreamData.upstream.percentage}% of emissions are from upstream activities
+                  </span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Upstream activities represent 69% of Scope 3 emissions</span>
+                  <span className="text-gray-600">
+                    Value chain emissions: {(upstreamDownstreamData.upstream.total + upstreamDownstreamData.downstream.total).toLocaleString()} tCO2e total
+                  </span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Purchased goods remain the largest category at 37%</span>
+                  <span className="text-gray-600">
+                    Upstream activities represent the majority of value chain impact
+                  </span>
                 </li>
               </ul>
             </div>
