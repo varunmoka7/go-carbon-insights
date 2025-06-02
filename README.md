@@ -1,8 +1,27 @@
+
 # Welcome to your Lovable project
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/6fcef7a7-25cd-4c8d-b7e1-5fdfbaf9a17b
+
+## 📚 Documentation
+
+**For comprehensive project documentation, see [PROJECT_KNOWLEDGE.md](./PROJECT_KNOWLEDGE.md)**
+
+This includes:
+- Complete technical architecture
+- Component documentation  
+- API reference
+- Development guidelines
+- Security considerations
+- Roadmap and changelog
+
+### Quick Links
+- 📖 [Full Project Knowledge Base](./PROJECT_KNOWLEDGE.md)
+- 📁 [Documentation Directory](./docs/)
+- 🔄 [Update Process](./docs/UPDATE_PROCESS.md)
+- 🤝 [Contributing Guidelines](./.github/CONTRIBUTING.md)
 
 ## How can I edit this code?
 
@@ -60,9 +79,11 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+For detailed technical architecture, see the [Technical Architecture section](./PROJECT_KNOWLEDGE.md#technical-architecture) in the project knowledge base.
+
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/6fcef7a7-25cd-4c8d-b7e1-5fdfbaf9a17b) and click on Share -> Publish.
+Simply open [Lovable](https://lovable.dev/projects/6fcef7a7-25cd-4c8d-b7e1-5fdfbaf9a17b) and click on Share → Publish.
 
 ## Can I connect a custom domain to my Lovable project?
 
@@ -71,3 +92,16 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## 🔐 Security & Authentication
+
+This project uses Supabase for authentication and database management. See the [Security section](./PROJECT_KNOWLEDGE.md#known-issues--roadmap) in the knowledge base for current security status and planned improvements.
+
+## 📊 Project Status
+
+- **Version**: 1.0.0
+- **Status**: Active Development
+- **Documentation**: Comprehensive
+- **Last Updated**: January 1, 2025
+
+For detailed project status, roadmap, and known issues, see the [Project Knowledge Base](./PROJECT_KNOWLEDGE.md).
