@@ -27,21 +27,28 @@ const Scope3 = () => {
     return categorizeScope3Data(scope3Data.categoryData);
   }, [scope3Data]);
 
-  // Prepare chart data
-  const upstreamDownstreamChartData = [
-    {
-      category: 'Upstream',
-      emissions: upstreamDownstreamData.upstream.total,
-      color: '#0d9488',
-      percentage: upstreamDownstreamData.upstream.percentage
-    },
-    {
-      category: 'Downstream',
-      emissions: upstreamDownstreamData.downstream.total,
-      color: '#14b8a6',
-      percentage: upstreamDownstreamData.downstream.percentage
-    }
-  ];
+  // Prepare chart data with proper structure
+  const upstreamDownstreamChartData = useMemo(() => {
+    const data = [
+      {
+        category: 'Upstream',
+        emissions: upstreamDownstreamData.upstream.total,
+        color: '#0d9488',
+        percentage: upstreamDownstreamData.upstream.percentage,
+        fill: '#0d9488'
+      },
+      {
+        category: 'Downstream',
+        emissions: upstreamDownstreamData.downstream.total,
+        color: '#14b8a6',
+        percentage: upstreamDownstreamData.downstream.percentage,
+        fill: '#14b8a6'
+      }
+    ];
+    
+    console.log('Chart data:', data);
+    return data;
+  }, [upstreamDownstreamData]);
 
   // Prepare category data for charts
   const categoryData = useMemo(() => {
@@ -187,41 +194,55 @@ const Scope3 = () => {
             <CardDescription>Distribution across value chain (GHG Protocol categories)</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={upstreamDownstreamChartData} layout="horizontal">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="category" type="category" />
-                <Tooltip 
-                  formatter={(value, name) => [`${value} tCO2e`, 'Emissions']}
-                  labelFormatter={(label) => `${label} Activities`}
-                />
-                <Bar dataKey="emissions" radius={[0, 4, 4, 0]}>
-                  {upstreamDownstreamChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <div className="mb-4">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={upstreamDownstreamChartData} margin={{ top: 20, right: 30, left: 40, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="category" 
+                    tick={{ fontSize: 12 }}
+                  />
+                  <YAxis 
+                    label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }}
+                    tick={{ fontSize: 12 }}
+                  />
+                  <Tooltip 
+                    formatter={(value, name) => [`${Number(value).toLocaleString()} tCO2e`, 'Emissions']}
+                    labelFormatter={(label) => `${label} Activities`}
+                  />
+                  <Bar 
+                    dataKey="emissions" 
+                    radius={[4, 4, 0, 0]}
+                    fill="#0d9488"
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
             
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <span className="text-sm font-medium">Upstream Activities</span>
-                  <p className="text-xs text-gray-600">Categories 1-8: Purchased goods, business travel, etc.</p>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-teal-50 rounded-lg border border-teal-200">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-teal-700 rounded"></div>
+                  <div>
+                    <span className="text-sm font-medium text-gray-900">Upstream Activities</span>
+                    <p className="text-xs text-gray-600">Categories 1-8: Purchased goods, business travel, etc.</p>
+                  </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm font-bold">{upstreamDownstreamData.upstream.total.toLocaleString()} tCO2e</span>
+                  <span className="text-sm font-bold text-gray-900">{upstreamDownstreamData.upstream.total.toLocaleString()} tCO2e</span>
                   <p className="text-xs text-gray-600">({upstreamDownstreamData.upstream.percentage}%)</p>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <span className="text-sm font-medium">Downstream Activities</span>
-                  <p className="text-xs text-gray-600">Categories 9-15: Use of products, end-of-life, etc.</p>
+              <div className="flex items-center justify-between p-3 bg-teal-50 rounded-lg border border-teal-200">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-teal-500 rounded"></div>
+                  <div>
+                    <span className="text-sm font-medium text-gray-900">Downstream Activities</span>
+                    <p className="text-xs text-gray-600">Categories 9-15: Use of products, end-of-life, etc.</p>
+                  </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm font-bold">{upstreamDownstreamData.downstream.total.toLocaleString()} tCO2e</span>
+                  <span className="text-sm font-bold text-gray-900">{upstreamDownstreamData.downstream.total.toLocaleString()} tCO2e</span>
                   <p className="text-xs text-gray-600">({upstreamDownstreamData.downstream.percentage}%)</p>
                 </div>
               </div>
