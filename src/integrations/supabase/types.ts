@@ -9,6 +9,63 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          company_id: string | null
+          created_at: string | null
+          id: string
+          ip_address: unknown | null
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          company_id?: string | null
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          company_id?: string | null
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "audit_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       carbon_strategies: {
         Row: {
           company_id: string | null
@@ -94,6 +151,65 @@ export type Database = {
           waste_generated?: number
         }
         Relationships: []
+      }
+      company_benchmarks: {
+        Row: {
+          benchmark_year: number
+          company_id: string | null
+          created_at: string | null
+          emissions_per_employee: number | null
+          emissions_per_revenue: number | null
+          employee_range: string | null
+          id: string
+          industry: string
+          is_public_data: boolean | null
+          revenue_range: string | null
+          sbti_status: string | null
+          sector: string | null
+          total_emissions: number
+          updated_at: string | null
+        }
+        Insert: {
+          benchmark_year: number
+          company_id?: string | null
+          created_at?: string | null
+          emissions_per_employee?: number | null
+          emissions_per_revenue?: number | null
+          employee_range?: string | null
+          id?: string
+          industry: string
+          is_public_data?: boolean | null
+          revenue_range?: string | null
+          sbti_status?: string | null
+          sector?: string | null
+          total_emissions: number
+          updated_at?: string | null
+        }
+        Update: {
+          benchmark_year?: number
+          company_id?: string | null
+          created_at?: string | null
+          emissions_per_employee?: number | null
+          emissions_per_revenue?: number | null
+          employee_range?: string | null
+          id?: string
+          industry?: string
+          is_public_data?: boolean | null
+          revenue_range?: string | null
+          sbti_status?: string | null
+          sector?: string | null
+          total_emissions?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_benchmarks_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       emissions_data: {
         Row: {
@@ -391,12 +507,110 @@ export type Database = {
           },
         ]
       }
+      user_company_access: {
+        Row: {
+          access_level: string
+          company_id: string | null
+          expires_at: string | null
+          granted_at: string | null
+          granted_by: string | null
+          id: string
+          is_active: boolean | null
+          user_id: string | null
+        }
+        Insert: {
+          access_level: string
+          company_id?: string | null
+          expires_at?: string | null
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          user_id?: string | null
+        }
+        Update: {
+          access_level?: string
+          company_id?: string | null
+          expires_at?: string | null
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_company_access_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_company_access_granted_by_fkey"
+            columns: ["granted_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_company_access_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_profiles: {
+        Row: {
+          created_at: string | null
+          email: string
+          email_verified: boolean | null
+          full_name: string | null
+          id: string
+          is_active: boolean | null
+          role: string
+          updated_at: string | null
+          username: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          email_verified?: boolean | null
+          full_name?: string | null
+          id: string
+          is_active?: boolean | null
+          role?: string
+          updated_at?: string | null
+          username: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          email_verified?: boolean | null
+          full_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          role?: string
+          updated_at?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      user_has_company_access: {
+        Args: { user_uuid: string; company_text: string }
+        Returns: boolean
+      }
+      user_is_company_admin: {
+        Args: { user_uuid: string; company_text: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

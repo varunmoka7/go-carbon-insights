@@ -7,9 +7,11 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  signUp: (email: string, password: string, username?: string) => Promise<{ error: any }>;
   signIn: (emailOrUsername: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, username: string) => Promise<{ error: any }>;
-  signOut: () => Promise<void>;
+  signInWithUsername: (username: string, password: string) => Promise<{ error: any }>;
+  signOut: () => Promise<{ error: any }>;
+  resetPassword: (email: string) => Promise<{ error: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,10 +30,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener
+    // Configure Supabase client for better session handling
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.email);
+      async (event, session) => {
+        console.log('Auth event:', event);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -48,61 +50,180 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const isEmail = (input: string) => /\S+@\S+\.\S+/.test(input);
-
-  const signIn = async (emailOrUsername: string, password: string) => {
+  const signUp = async (email: string, password: string, username?: string) => {
     try {
-      // If input looks like an email, use it directly
-      if (isEmail(emailOrUsername)) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: emailOrUsername,
-          password,
-        });
-        return { error };
-      } else {
-        // If it's a username, we need to find the associated email
-        // For now, we'll try to sign in with username as email (this will fail gracefully)
-        // In a real implementation, you'd query a profiles table to get the email
-        const { error } = await supabase.auth.signInWithPassword({
-          email: emailOrUsername, // This will fail for usernames, but provides consistent error handling
-          password,
-        });
-        return { error };
+      setLoading(true);
+      
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return { error: { message: 'Please enter a valid email address' } };
       }
-    } catch (error) {
-      return { error };
-    }
-  };
 
-  const signUp = async (email: string, password: string, username: string) => {
-    try {
+      // Validate password strength
+      if (password.length < 6) {
+        return { error: { message: 'Password must be at least 6 characters long' } };
+      }
+
+      const redirectUrl = `${window.location.origin}/`;
+      
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
+          emailRedirectTo: redirectUrl,
           data: {
-            username: username,
-            display_name: username
+            username: username || email.split('@')[0],
+            display_name: username || email.split('@')[0]
           }
         }
       });
-      return { error };
+
+      if (error) {
+        console.error('Signup error:', error);
+        return { error };
+      }
+
+      return { error: null };
     } catch (error) {
-      return { error };
+      console.error('Unexpected signup error:', error);
+      return { error: { message: 'An unexpected error occurred during signup' } };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signIn = async (emailOrUsername: string, password: string) => {
+    try {
+      setLoading(true);
+      
+      // Sanitize input
+      const cleanInput = emailOrUsername.trim().toLowerCase();
+      
+      // Check if input looks like an email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isEmail = emailRegex.test(cleanInput);
+      
+      if (isEmail) {
+        // Direct email login
+        const { error } = await supabase.auth.signInWithPassword({
+          email: cleanInput,
+          password
+        });
+        
+        if (error) {
+          console.error('Email login error:', error);
+          return { error };
+        }
+        
+        return { error: null };
+      } else {
+        // Username login - lookup email first
+        return await signInWithUsername(cleanInput, password);
+      }
+    } catch (error) {
+      console.error('Unexpected login error:', error);
+      return { error: { message: 'An unexpected error occurred during login' } };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signInWithUsername = async (username: string, password: string) => {
+    try {
+      // Sanitize username input
+      const cleanUsername = username.trim().toLowerCase();
+      
+      // Lookup email by username
+      const { data: profile, error: lookupError } = await supabase
+        .from('user_profiles')
+        .select('email')
+        .eq('username', cleanUsername)
+        .maybeSingle();
+
+      if (lookupError) {
+        console.error('Username lookup error:', lookupError);
+        return { error: { message: 'Failed to find user with that username' } };
+      }
+
+      if (!profile) {
+        return { error: { message: 'No user found with that username' } };
+      }
+
+      // Sign in with the found email
+      const { error } = await supabase.auth.signInWithPassword({
+        email: profile.email,
+        password
+      });
+
+      if (error) {
+        console.error('Username login error:', error);
+        return { error };
+      }
+
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected username login error:', error);
+      return { error: { message: 'An unexpected error occurred during username login' } };
     }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      setLoading(true);
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        console.error('Logout error:', error);
+        return { error };
+      }
+
+      setUser(null);
+      setSession(null);
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected logout error:', error);
+      return { error: { message: 'An unexpected error occurred during logout' } };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetPassword = async (email: string) => {
+    try {
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return { error: { message: 'Please enter a valid email address' } };
+      }
+
+      const redirectUrl = `${window.location.origin}/auth?mode=reset`;
+      
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: redirectUrl
+      });
+
+      if (error) {
+        console.error('Password reset error:', error);
+        return { error };
+      }
+
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected password reset error:', error);
+      return { error: { message: 'An unexpected error occurred during password reset' } };
+    }
   };
 
   const value = {
     user,
     session,
     loading,
-    signIn,
     signUp,
+    signIn,
+    signInWithUsername,
     signOut,
+    resetPassword
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

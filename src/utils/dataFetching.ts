@@ -2,18 +2,18 @@
 import { supabase } from '@/integrations/supabase/client';
 
 /**
- * Get dashboard overview data for a specific company
+ * Get dashboard overview data for a specific company with RLS security
  */
 export async function getDashboardData(companyId: string, year = 2023) {
   try {
-    // Get company basic info
+    // Get company basic info (accessible through RLS)
     const { data: company } = await supabase
       .from('companies')
       .select('*')
       .eq('id', companyId)
       .single();
 
-    // Get emissions data for the year
+    // Get emissions data for the year (private data - requires company access)
     const { data: emissions } = await supabase
       .from('emissions_data')
       .select('*')
@@ -21,20 +21,20 @@ export async function getDashboardData(companyId: string, year = 2023) {
       .eq('year', year)
       .single();
 
-    // Get SBTi targets
+    // Get SBTi targets (semi-public data)
     const { data: sbti } = await supabase
       .from('sbti_targets')
       .select('*')
       .eq('company_id', companyId)
       .single();
 
-    // Get compliance status
+    // Get compliance status (semi-public data)
     const { data: compliance } = await supabase
       .from('frameworks_compliance')
       .select('*')
       .eq('company_id', companyId);
 
-    // Get top 3 carbon footprint sources (Scope 3 breakdown)
+    // Get top 3 carbon footprint sources (private data)
     const { data: scope3Breakdown } = await supabase
       .from('scope3_emissions')
       .select('category, emissions_by_category')
@@ -43,12 +43,20 @@ export async function getDashboardData(companyId: string, year = 2023) {
       .order('emissions_by_category', { ascending: false })
       .limit(3);
 
+    // Get public benchmark data (accessible to all authenticated users)
+    const { data: benchmarks } = await supabase
+      .from('company_benchmarks')
+      .select('*')
+      .eq('company_id', companyId)
+      .eq('is_public_data', true);
+
     return {
       company,
       emissions,
       sbti,
       compliance,
       topCarbonSources: scope3Breakdown,
+      benchmarks,
       success: true
     };
   } catch (error) {
@@ -58,7 +66,7 @@ export async function getDashboardData(companyId: string, year = 2023) {
 }
 
 /**
- * Get emissions trends for multiple years
+ * Get emissions trends for multiple years (private data)
  */
 export async function getEmissionsTrends(companyId: string, startYear = 2019, endYear = 2023) {
   try {
@@ -83,22 +91,25 @@ export async function getEmissionsTrends(companyId: string, startYear = 2019, en
 }
 
 /**
- * Get all companies with their latest emissions data
+ * Get all companies with their public benchmark data (accessible to all users)
  */
 export async function getCompaniesOverview(year = 2023) {
   try {
     const { data, error } = await supabase
-      .from('companies')
+      .from('company_benchmarks')
       .select(`
         *,
-        emissions_data!inner(
-          scope1,
-          scope2, 
-          scope3
+        companies:company_id (
+          id,
+          name,
+          industry,
+          sector,
+          description
         )
       `)
-      .eq('emissions_data.year', year)
-      .order('name');
+      .eq('benchmark_year', year)
+      .eq('is_public_data', true)
+      .order('total_emissions', { ascending: false });
 
     if (error) throw error;
 
@@ -113,7 +124,7 @@ export async function getCompaniesOverview(year = 2023) {
 }
 
 /**
- * Get detailed Scope 3 analysis for a company
+ * Get detailed Scope 3 analysis for a company (private data)
  */
 export async function getScope3Analysis(companyId: string, year = 2023) {
   try {
@@ -140,6 +151,36 @@ export async function getScope3Analysis(companyId: string, year = 2023) {
     };
   } catch (error) {
     console.error('Error fetching Scope 3 analysis:', error);
+    return { success: false, error };
+  }
+}
+
+/**
+ * Get industry benchmarks for comparison (public data)
+ */
+export async function getIndustryBenchmarks(industry: string, year = 2023) {
+  try {
+    const { data, error } = await supabase
+      .from('company_benchmarks')
+      .select(`
+        *,
+        companies:company_id (
+          name
+        )
+      `)
+      .eq('industry', industry)
+      .eq('benchmark_year', year)
+      .eq('is_public_data', true)
+      .order('total_emissions', { ascending: false });
+
+    if (error) throw error;
+
+    return {
+      benchmarks: data,
+      success: true
+    };
+  } catch (error) {
+    console.error('Error fetching industry benchmarks:', error);
     return { success: false, error };
   }
 }

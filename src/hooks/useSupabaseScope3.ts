@@ -1,11 +1,18 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const useSupabaseScope3Data = (companyId: string) => {
+  const { user } = useAuth();
+  
   return useQuery({
-    queryKey: ['scope3-data', companyId],
+    queryKey: ['scope3-data', companyId, user?.id],
     queryFn: async () => {
+      if (!user?.id || !companyId) {
+        throw new Error('User not authenticated or company ID missing');
+      }
+
       // Get emissions trend data
       const { data: emissionsData, error: emissionsError } = await supabase
         .from('emissions_data')
@@ -23,10 +30,11 @@ export const useSupabaseScope3Data = (companyId: string) => {
         .from('scope3_emissions')
         .select('category, emissions_by_category, influence_factors, insights')
         .eq('company_id', companyId)
-        .eq('year', 2023); // Get latest year data
+        .eq('year', 2023);
 
       if (categoriesError) {
         console.error('Error fetching scope 3 categories:', categoriesError);
+        // Don't throw - user might not have access to detailed data
       }
 
       return {
@@ -42,6 +50,6 @@ export const useSupabaseScope3Data = (companyId: string) => {
         })) || []
       };
     },
-    enabled: !!companyId
+    enabled: !!companyId && !!user?.id
   });
 };

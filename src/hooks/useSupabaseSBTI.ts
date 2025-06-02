@@ -1,11 +1,18 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const useSupabaseSBTITargets = (companyId: string) => {
+  const { user } = useAuth();
+  
   return useQuery({
-    queryKey: ['sbti-targets', companyId],
+    queryKey: ['sbti-targets', companyId, user?.id],
     queryFn: async () => {
+      if (!user?.id || !companyId) {
+        throw new Error('User not authenticated or company ID missing');
+      }
+
       const { data, error } = await supabase
         .from('sbti_targets')
         .select('*')
@@ -19,14 +26,20 @@ export const useSupabaseSBTITargets = (companyId: string) => {
       
       return data;
     },
-    enabled: !!companyId
+    enabled: !!companyId && !!user?.id
   });
 };
 
 export const useSupabaseSBTIPathway = (companyId: string) => {
+  const { user } = useAuth();
+  
   return useQuery({
-    queryKey: ['sbti-pathway', companyId],
+    queryKey: ['sbti-pathway', companyId, user?.id],
     queryFn: async () => {
+      if (!user?.id || !companyId) {
+        throw new Error('User not authenticated or company ID missing');
+      }
+
       const { data, error } = await supabase
         .from('sbti_pathway_data')
         .select('*')
@@ -40,6 +53,6 @@ export const useSupabaseSBTIPathway = (companyId: string) => {
       
       return data || [];
     },
-    enabled: !!companyId
+    enabled: !!companyId && !!user?.id
   });
 };

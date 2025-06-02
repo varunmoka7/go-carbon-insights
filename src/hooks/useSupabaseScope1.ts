@@ -1,11 +1,18 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const useSupabaseScope1Data = (companyId: string) => {
+  const { user } = useAuth();
+  
   return useQuery({
-    queryKey: ['scope1-data', companyId],
+    queryKey: ['scope1-data', companyId, user?.id],
     queryFn: async () => {
+      if (!user?.id || !companyId) {
+        throw new Error('User not authenticated or company ID missing');
+      }
+
       // Get emissions trend data
       const { data: emissionsData, error: emissionsError } = await supabase
         .from('emissions_data')
@@ -23,10 +30,11 @@ export const useSupabaseScope1Data = (companyId: string) => {
         .from('scope1_emissions')
         .select('source, emissions_by_source')
         .eq('company_id', companyId)
-        .eq('year', 2023); // Get latest year data
+        .eq('year', 2023);
 
       if (sourcesError) {
         console.error('Error fetching scope 1 sources:', sourcesError);
+        // Don't throw - user might not have access to detailed data
       }
 
       return {
@@ -40,6 +48,6 @@ export const useSupabaseScope1Data = (companyId: string) => {
         })) || []
       };
     },
-    enabled: !!companyId
+    enabled: !!companyId && !!user?.id
   });
 };
