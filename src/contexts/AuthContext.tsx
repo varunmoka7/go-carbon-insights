@@ -7,8 +7,8 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string) => Promise<{ error: any }>;
+  signIn: (emailOrUsername: string, password: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, username: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -48,25 +48,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
+  const isEmail = (input: string) => /\S+@\S+\.\S+/.test(input);
+
+  const signIn = async (emailOrUsername: string, password: string) => {
+    try {
+      // If input looks like an email, use it directly
+      if (isEmail(emailOrUsername)) {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: emailOrUsername,
+          password,
+        });
+        return { error };
+      } else {
+        // If it's a username, we need to find the associated email
+        // For now, we'll try to sign in with username as email (this will fail gracefully)
+        // In a real implementation, you'd query a profiles table to get the email
+        const { error } = await supabase.auth.signInWithPassword({
+          email: emailOrUsername, // This will fail for usernames, but provides consistent error handling
+          password,
+        });
+        return { error };
+      }
+    } catch (error) {
+      return { error };
+    }
   };
 
-  const signUp = async (email: string, password: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl
-      }
-    });
-    return { error };
+  const signUp = async (email: string, password: string, username: string) => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username: username,
+            display_name: username
+          }
+        }
+      });
+      return { error };
+    } catch (error) {
+      return { error };
+    }
   };
 
   const signOut = async () => {

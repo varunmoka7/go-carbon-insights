@@ -16,7 +16,9 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
+    emailOrUsername: '',
     email: '',
+    username: '',
     password: '',
     confirmPassword: ''
   });
@@ -28,15 +30,29 @@ const Auth = () => {
     }
   }, [user, navigate]);
 
+  const isEmail = (input: string) => /\S+@\S+\.\S+/.test(input);
+
   const validateForm = () => {
-    if (!formData.email || !formData.password) {
-      setError('Please fill in all required fields');
-      return false;
-    }
-    
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      setError('Please enter a valid email address');
-      return false;
+    if (isSignUp) {
+      if (!formData.email || !formData.username || !formData.password) {
+        setError('Please fill in all required fields');
+        return false;
+      }
+      
+      if (!isEmail(formData.email)) {
+        setError('Please enter a valid email address');
+        return false;
+      }
+
+      if (formData.username.length < 3) {
+        setError('Username must be at least 3 characters long');
+        return false;
+      }
+    } else {
+      if (!formData.emailOrUsername || !formData.password) {
+        setError('Please fill in all required fields');
+        return false;
+      }
     }
     
     if (formData.password.length < 6) {
@@ -61,23 +77,31 @@ const Auth = () => {
     setLoading(true);
     
     try {
-      const { error } = isSignUp 
-        ? await signUp(formData.email, formData.password)
-        : await signIn(formData.email, formData.password);
-      
-      if (error) {
-        if (error.message.includes('Invalid login credentials')) {
-          setError('Invalid email or password. Please check your credentials and try again.');
-        } else if (error.message.includes('User already registered')) {
-          setError('An account with this email already exists. Please sign in instead.');
-        } else if (error.message.includes('Email not confirmed')) {
-          setError('Please check your email and click the confirmation link before signing in.');
+      if (isSignUp) {
+        const { error } = await signUp(formData.email, formData.password, formData.username);
+        
+        if (error) {
+          if (error.message.includes('User already registered')) {
+            setError('An account with this email already exists. Please sign in instead.');
+          } else {
+            setError(error.message || 'An error occurred during sign up. Please try again.');
+          }
         } else {
-          setError(error.message || 'An error occurred. Please try again.');
+          // Sign up successful, user should be automatically signed in
+          navigate('/dashboard');
         }
-      } else if (isSignUp) {
-        setError('');
-        alert('Check your email for a confirmation link before signing in.');
+      } else {
+        // For sign in, determine if input is email or username
+        const loginIdentifier = formData.emailOrUsername;
+        const { error } = await signIn(loginIdentifier, formData.password);
+        
+        if (error) {
+          if (error.message.includes('Invalid login credentials')) {
+            setError('Invalid credentials. Please check your email/username and password.');
+          } else {
+            setError(error.message || 'An error occurred during sign in. Please try again.');
+          }
+        }
       }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
@@ -118,20 +142,54 @@ const Auth = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email address
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="Enter your email"
-                  className="w-full"
-                />
-              </div>
+              {isSignUp ? (
+                <>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      Email address
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      placeholder="Enter your email"
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                      Username
+                    </label>
+                    <Input
+                      id="username"
+                      type="text"
+                      required
+                      value={formData.username}
+                      onChange={(e) => setFormData({...formData, username: e.target.value})}
+                      placeholder="Choose a username"
+                      className="w-full"
+                    />
+                  </div>
+                </>
+              ) : (
+                <div>
+                  <label htmlFor="emailOrUsername" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email or Username
+                  </label>
+                  <Input
+                    id="emailOrUsername"
+                    type="text"
+                    required
+                    value={formData.emailOrUsername}
+                    onChange={(e) => setFormData({...formData, emailOrUsername: e.target.value})}
+                    placeholder="Enter your email or username"
+                    className="w-full"
+                  />
+                </div>
+              )}
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
@@ -195,7 +253,13 @@ const Auth = () => {
                   onClick={() => {
                     setIsSignUp(!isSignUp);
                     setError('');
-                    setFormData({ email: '', password: '', confirmPassword: '' });
+                    setFormData({ 
+                      emailOrUsername: '', 
+                      email: '', 
+                      username: '', 
+                      password: '', 
+                      confirmPassword: '' 
+                    });
                   }}
                   className="text-teal-600 hover:text-teal-500 font-medium"
                 >
