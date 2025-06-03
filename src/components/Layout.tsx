@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import Logo from '@/components/ui/Logo';
 import GlobalSearch from './GlobalSearch';
 import Breadcrumb from './Breadcrumb';
 import LogoutButton from './LogoutButton';
@@ -39,11 +39,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-8">
               <Link to="/home" className="flex items-center gap-2">
-                <img 
-                  src="/lovable-uploads/9efb52bb-4927-4097-8968-6bfba4ce29c0.png" 
-                  alt="GoCarbonTracker Logo" 
-                  className="w-8 h-8 rounded-lg object-cover"
-                />
+                <Logo size="medium" className="rounded-lg" />
                 <span className="text-xl font-bold text-gray-900 dark:text-white">
                   GoCarbonTracker
                 </span>
