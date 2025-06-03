@@ -22,13 +22,16 @@ const DataPoint = ({ value, label, sourceKey, icon: Icon, trend = 'critical' }: 
     urgent: 'border-orange-500 bg-orange-50'
   };
 
+  // Safely get reliability or fallback to peer_review or default
+  const reliability = (source as any).reliability || (source as any).peer_review || 'Primary Source';
+
   return (
     <Card className={`${trendColors[trend]} border-l-4`}>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <Icon className="h-6 w-6 text-gray-700" />
           <Badge variant="outline" className="text-xs">
-            {source.reliability || 'Primary Source'}
+            {reliability}
           </Badge>
         </div>
       </CardHeader>
