@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -9,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeInput, validateEmail, validatePassword, validateUsername } from '@/utils/securityValidation';
-import { Logo } from '@/components/ui/Logo';
+import Logo from '@/components/ui/Logo';
 
 const Auth = () => {
   const navigate = useNavigate();
