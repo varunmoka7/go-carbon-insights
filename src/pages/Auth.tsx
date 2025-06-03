@@ -1,17 +1,21 @@
 
-import React, { useState } from 'react';
-import { BarChart, Eye, EyeOff, AlertCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
 import { sanitizeInput, validateEmail, validatePassword, validateUsername } from '@/utils/securityValidation';
+import { Logo } from '@/components/ui/Logo';
 
 const Auth = () => {
   const navigate = useNavigate();
   const { signIn, signUp, user } = useAuth();
+  const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,8 +28,37 @@ const Auth = () => {
     confirmPassword: ''
   });
 
+  // Handle email verification on page load
+  useEffect(() => {
+    const handleEmailVerification = async () => {
+      const token = searchParams.get('token');
+      const type = searchParams.get('type');
+      
+      if (token && type === 'email') {
+        toast({
+          title: "Email Verified",
+          description: "Your email has been successfully verified. You can now sign in.",
+        });
+        // Clear URL parameters
+        navigate('/auth', { replace: true });
+      }
+      
+      if (searchParams.get('error')) {
+        const errorMsg = searchParams.get('error_description') || 'Email verification failed';
+        setError(errorMsg);
+        toast({
+          title: "Verification Error",
+          description: errorMsg,
+          variant: "destructive",
+        });
+      }
+    };
+
+    handleEmailVerification();
+  }, [searchParams, navigate, toast]);
+
   // Redirect if already authenticated
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
       navigate('/dashboard');
     }
@@ -95,8 +128,12 @@ const Auth = () => {
         if (error) {
           setError(error.message || 'An error occurred during sign up. Please try again.');
         } else {
-          // Sign up successful, user should be automatically signed in
-          navigate('/dashboard');
+          toast({
+            title: "Account Created",
+            description: "Please check your email to verify your account before signing in.",
+          });
+          setIsSignUp(false);
+          resetForm();
         }
       } else {
         const { error } = await signIn(formData.emailOrUsername, formData.password);
@@ -127,8 +164,8 @@ const Auth = () => {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <div className="flex justify-center items-center space-x-2 mb-4">
-            <BarChart className="h-12 w-12 text-teal-600" />
+          <div className="flex flex-col items-center mb-6">
+            <Logo size="large" className="h-12 w-auto mb-4" />
             <span className="text-2xl font-bold text-gray-900">GoCarbonTracker</span>
           </div>
           <h2 className="text-3xl font-extrabold text-gray-900">
