@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Logo from '@/components/ui/Logo';
 
 const Landing = () => {
   const features = [
@@ -73,7 +74,7 @@ const Landing = () => {
           <div className="flex justify-center mb-8">
             <div className="flex items-center space-x-3 animate-fade-in">
               <div className="relative">
-                <BarChart className="h-16 w-16 text-teal-600 animate-pulse" />
+                <Logo size="large" className="h-16 w-auto animate-pulse" />
               </div>
               <span className="text-3xl font-bold text-gray-900">GoCarbonTracker</span>
             </div>
