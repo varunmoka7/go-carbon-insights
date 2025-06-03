@@ -1,0 +1,49 @@
+
+{
+  "source_attribution": {
+    "primary_source": "IPCC AR6 Working Group III",
+    "chapter": "Chapter 7: Demand, services and social aspects",
+    "url": "https://www.ipcc.ch/report/ar6/wg3/",
+    "title": "Global greenhouse gas emissions by economic sector",
+    "data_year": "2019",
+    "methodology": "Comprehensive analysis of global emissions by economic sector using EDGAR and other databases",
+    "license": "Open access - IPCC reports available for unrestricted use"
+  },
+  "sectors": [
+    {
+      "sector": "Energy & Electricity",
+      "percentage": 25,
+      "absolute": "14.5 GtCO₂eq",
+      "subcategories": [
+        {"name": "Fossil fuel electricity", "value": "10.9 GtCO₂eq", "percentage": 75},
+        {"name": "Heat generation", "value": "2.8 GtCO₂eq", "percentage": 19},
+        {"name": "Other energy", "value": "0.8 GtCO₂eq", "percentage": 6}
+      ],
+      "color": "#dc2626"
+    },
+    {
+      "sector": "Industry & Manufacturing", 
+      "percentage": 21,
+      "absolute": "12.2 GtCO₂eq",
+      "subcategories": [
+        {"name": "Steel production", "value": "3.0 GtCO₂eq", "percentage": 25},
+        {"name": "Cement production", "value": "2.4 GtCO₂eq", "percentage": 20},
+        {"name": "Chemicals", "value": "2.2 GtCO₂eq", "percentage": 18},
+        {"name": "Other manufacturing", "value": "4.6 GtCO₂eq", "percentage": 37}
+      ],
+      "color": "#ea580c"
+    },
+    {
+      "sector": "Transportation",
+      "percentage": 16, 
+      "absolute": "9.3 GtCO₂eq",
+      "subcategories": [
+        {"name": "Road transport", "value": "6.2 GtCO₂eq", "percentage": 67},
+        {"name": "Aviation", "value": "1.4 GtCO₂eq", "percentage": 15},
+        {"name": "Shipping", "value": "1.2 GtCO₂eq", "percentage": 13},
+        {"name": "Rail transport", "value": "0.5 GtCO₂eq", "percentage": 5}
+      ],
+      "color": "#f59e0b"
+    }
+  ]
+}
