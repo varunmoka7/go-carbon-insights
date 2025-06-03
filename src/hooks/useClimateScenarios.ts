@@ -20,7 +20,7 @@ export const useClimateScenarios = () => {
   return useQuery({
     queryKey: ['climate-scenarios'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('climate_scenarios')
         .select('*')
         .order('warming_by_2100', { ascending: true });

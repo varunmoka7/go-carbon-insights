@@ -20,7 +20,7 @@ export const useIndustryBenchmarks = () => {
   return useQuery({
     queryKey: ['industry-benchmarks'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('industry_benchmarks')
         .select('*')
         .order('avg_emission_intensity', { ascending: true });

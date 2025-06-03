@@ -18,7 +18,7 @@ export const useCorporateClimateData = () => {
   return useQuery({
     queryKey: ['corporate-climate-data'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('corporate_climate_data')
         .select('*')
         .order('climate_leadership_score', { ascending: false });
