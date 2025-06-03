@@ -92,7 +92,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: { message: usernameValidation.message } };
       }
 
-      // Use current origin for redirect URL to ensure it works in all environments
+      // Use the correct Lovable app URL for redirect instead of localhost
       const redirectUrl = `${window.location.origin}/auth`;
       
       const { error } = await supabase.auth.signUp({

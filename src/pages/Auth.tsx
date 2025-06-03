@@ -30,16 +30,26 @@ const Auth = () => {
   // Handle email verification on page load
   useEffect(() => {
     const handleEmailVerification = async () => {
-      const token = searchParams.get('token');
+      const token = searchParams.get('token_hash');
       const type = searchParams.get('type');
       
       if (token && type === 'email') {
         toast({
+          title: "Email Verified Successfully",
+          description: "Your email has been verified! You can now sign in to your account.",
+        });
+        // Clear URL parameters and switch to sign in mode
+        navigate('/auth', { replace: true });
+        setIsSignUp(false);
+      }
+      
+      // Handle various verification states
+      if (searchParams.get('verified') === 'true') {
+        toast({
           title: "Email Verified",
           description: "Your email has been successfully verified. You can now sign in.",
         });
-        // Clear URL parameters
-        navigate('/auth', { replace: true });
+        setIsSignUp(false);
       }
       
       if (searchParams.get('error')) {
@@ -50,6 +60,16 @@ const Auth = () => {
           description: errorMsg,
           variant: "destructive",
         });
+      }
+
+      // Handle confirmation errors
+      if (searchParams.get('error_code') === 'email_not_confirmed') {
+        toast({
+          title: "Email Not Verified",
+          description: "Please check your email and click the verification link before signing in.",
+          variant: "destructive",
+        });
+        setIsSignUp(false);
       }
     };
 
@@ -128,7 +148,7 @@ const Auth = () => {
           setError(error.message || 'An error occurred during sign up. Please try again.');
         } else {
           toast({
-            title: "Account Created",
+            title: "Account Created Successfully",
             description: "Please check your email to verify your account before signing in.",
           });
           setIsSignUp(false);
@@ -138,7 +158,11 @@ const Auth = () => {
         const { error } = await signIn(formData.emailOrUsername, formData.password);
         
         if (error) {
-          setError(error.message || 'An error occurred during sign in. Please try again.');
+          if (error.message?.includes('email_not_confirmed')) {
+            setError('Please verify your email address before signing in. Check your inbox for the verification link.');
+          } else {
+            setError(error.message || 'An error occurred during sign in. Please try again.');
+          }
         }
       }
     } catch (err) {

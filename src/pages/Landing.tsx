@@ -1,11 +1,26 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote, Factory, Zap, Globe, TreePine, Building, Recycle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import Logo from '@/components/ui/Logo';
 
 const Landing = () => {
+  const [searchParams] = useSearchParams();
+  const { toast } = useToast();
+
+  // Handle email verification success
+  useEffect(() => {
+    if (searchParams.get('verified') === 'true') {
+      toast({
+        title: "Email Verified Successfully!",
+        description: "Your email has been verified. You can now sign in to your account.",
+      });
+      // Clear the URL parameter
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [searchParams, toast]);
+
   const features = [
     {
       icon: BarChart,
@@ -121,9 +136,9 @@ const Landing = () => {
 
           {/* Enhanced CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in delay-1000">
-            <Link to="/dashboard">
+            <Link to="/auth">
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl group border-2 border-teal-600">
-                Explore the Platform
+                Get Started
                 <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -295,9 +310,9 @@ const Landing = () => {
             real environmental impact through collective action.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/dashboard">
+            <Link to="/auth">
               <Button size="lg" variant="secondary" className="bg-white text-teal-600 hover:bg-gray-100 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                Explore the Platform
+                Get Started
               </Button>
             </Link>
             <Link to="/methodology">
