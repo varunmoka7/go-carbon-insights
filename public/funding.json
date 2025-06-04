@@ -1,7 +1,7 @@
 
 {
   "$schema": "https://fundingjson.org/schema/funding.schema.json",
-  "version": "1.2.0",
+  "version": "v1",
   "entity": {
     "type": "individual",
     "role": "maintainer",
@@ -29,10 +29,10 @@
   },
   "funding": {
     "amount": {
-      "currency": "USD",
-      "min": 115000,
+      "currency": "EUR",
+      "min": 100000,
       "target": 125000,
-      "max": 135000
+      "max": 150000
     },
     "duration": {
       "months": 9
@@ -58,7 +58,7 @@
     "milestones": [
       {
         "phase": 1,
-        "fundingTarget": 25000,
+        "fundingTarget": 30000,
         "title": "Foundation & Scope 3 Specialization",
         "deliverables": [
           "Advanced Scope 3 emissions tracking and calculation engines",
@@ -70,7 +70,7 @@
       },
       {
         "phase": 2,
-        "fundingTarget": 50000,
+        "fundingTarget": 60000,
         "title": "Advanced Analytics & Double Materiality",
         "deliverables": [
           "Double materiality assessment framework and automation",
@@ -82,7 +82,7 @@
       },
       {
         "phase": 3,
-        "fundingTarget": 70000,
+        "fundingTarget": 85000,
         "title": "Enterprise Scale & Consulting Workflow",
         "deliverables": [
           "Multi-client consulting workflow management system",
@@ -106,23 +106,23 @@
       }
     ],
     "revenueModel": {
-      "strategy": "High-value consulting engagements ($2K-25K per project) targeting European companies' complex sustainability challenges, with consulting margins funding free educational access for schools, students, and the general public",
-      "targetRevenue": "$25K MRR by month 6 through specialized consulting services",
+      "strategy": "High-value consulting engagements (€2K-25K per project) targeting European companies' complex sustainability challenges, with consulting margins funding free educational access for schools, students, and the general public",
+      "targetRevenue": "€25K MRR by month 6 through specialized consulting services",
       "consultingServices": [
-        "Scope 3 emissions assessments ($8K-15K per engagement)",
-        "Life Cycle Assessments ($5K-25K per project)",
-        "Double materiality assessments ($3K-12K per engagement)",
-        "Decarbonization strategy development ($10K-20K per project)"
+        "Scope 3 emissions assessments (€8K-15K per engagement)",
+        "Life Cycle Assessments (€5K-25K per project)",
+        "Double materiality assessments (€3K-12K per engagement)",
+        "Decarbonization strategy development (€10K-20K per project)"
       ],
       "sustainability": "Premium consulting revenue funds completely free educational platform access"
     },
     "impact": {
       "businessImpact": {
-        "consultingRevenue": "$25K MRR",
+        "consultingRevenue": "€25K MRR",
         "scope3Assessments": 30,
         "lcaReports": 20,
         "companiesServed": 50,
-        "consultingValue": "$300K annual consulting revenue"
+        "consultingValue": "€300K annual consulting revenue"
       },
       "educationalImpact": {
         "studentsReached": 5000,
