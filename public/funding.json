@@ -1,4 +1,3 @@
-
 {
   "$schema": "https://fundingjson.org/schema/funding.schema.json",
   "version": "v1",
@@ -11,7 +10,7 @@
     "description": "Open source developer and sustainability advocate building carbon emissions tracking solutions for global supply chain transparency and decarbonization.",
     "webpageUrl": {
       "url": "https://gocarbontracker.net",
-      "wellKnown": ""
+      "wellKnown": "/.well-known/funding-manifest-urls"
     }
   },
   "project": {
