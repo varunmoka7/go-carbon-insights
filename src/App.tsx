@@ -22,6 +22,7 @@ import Methodology from "./pages/Methodology";
 import Reference from "./pages/Reference";
 import Reports from "./pages/Reports";
 import Auth from "./pages/Auth";
+import About from "./pages/About";
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 
@@ -38,6 +39,11 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/about" element={
+                <Layout>
+                  <About />
+                </Layout>
+              } />
               <Route path="/home" element={
                 <ProtectedRoute>
                   <Layout>

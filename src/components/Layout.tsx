@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu } from 'lucide-react';
+import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Logo from '@/components/ui/Logo';
@@ -17,6 +18,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   
   const navigation = [
     { name: 'Home', href: '/home', icon: Home },
+    { name: 'About', href: '/about', icon: Info },
     { name: 'Dashboard', href: '/dashboard', icon: BarChart },
     { name: 'Tracking', href: '/tracking', icon: Target },
     { name: 'Scope 1', href: '/scope1', icon: BarChart },
@@ -47,7 +49,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               
               {/* Desktop Navigation */}
               <nav className="hidden lg:flex items-center space-x-1">
-                {navigation.slice(0, 7).map((item) => {
+                {navigation.slice(0, 8).map((item) => {
                   const Icon = item.icon;
                   return (
                     <Link
@@ -109,7 +111,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Platform</h3>
               <div className="space-y-2">
-                {navigation.slice(1, 5).map((item) => (
+                <Link to="/about" className="block text-sm text-gray-600 dark:text-gray-300 hover:text-teal-600 transition-colors">
+                  About Us
+                </Link>
+                {navigation.slice(2, 6).map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}
@@ -123,7 +128,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Analytics</h3>
               <div className="space-y-2">
-                {navigation.slice(5, 8).map((item) => (
+                {navigation.slice(6, 9).map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}
@@ -148,6 +153,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Company</h3>
               <div className="space-y-2">
+                <Link to="/about" className="block text-sm text-gray-600 dark:text-gray-300 hover:text-teal-600 transition-colors">
+                  About Us
+                </Link>
                 <Link to="/profile" className="block text-sm text-gray-600 dark:text-gray-300 hover:text-teal-600 transition-colors">
                   Profile
                 </Link>
