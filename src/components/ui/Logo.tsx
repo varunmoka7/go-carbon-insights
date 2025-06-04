@@ -9,9 +9,9 @@ interface LogoProps {
 
 const Logo = ({ size = 'medium', className }: LogoProps) => {
   const sizeClasses = {
-    small: 'h-6 w-auto',
-    medium: 'h-8 w-auto',
-    large: 'h-10 w-auto'
+    small: 'w-20 h-auto', // 80px for mobile
+    medium: 'w-25 h-auto sm:w-28 h-auto', // 100px for tablet, 112px for larger
+    large: 'w-30 h-auto sm:w-32 h-auto' // 120px for tablet, 128px for larger
   };
 
   return (
@@ -21,67 +21,16 @@ const Logo = ({ size = 'medium', className }: LogoProps) => {
       className={cn(sizeClasses[size], className)}
       aria-label="GoCarbonTracker Logo"
     >
-      {/* Outer box frame */}
-      <rect 
-        x="10" 
-        y="10" 
-        width="180" 
-        height="100" 
-        fill="none" 
-        stroke="#228B22" 
-        strokeWidth="2" 
-        rx="4" 
-        ry="4"
-      />
+      {/* Three descending bars representing emissions tracking */}
+      <rect x="20" y="30" width="30" height="70" fill="#059669" rx="4"/>
+      <rect x="60" y="50" width="30" height="50" fill="#059669" rx="4"/>
+      <rect x="100" y="65" width="30" height="35" fill="#059669" rx="4"/>
       
-      {/* First bar (tallest) */}
-      <rect 
-        x="25" 
-        y="25" 
-        width="25" 
-        height="70" 
-        fill="none" 
-        stroke="#228B22" 
-        strokeWidth="3" 
-        rx="2" 
-        ry="2"
-      />
+      {/* Circle indicator for zero emissions target */}
+      <circle cx="155" cy="82" r="12" fill="none" stroke="#059669" strokeWidth="3"/>
       
-      {/* Second bar (medium) */}
-      <rect 
-        x="65" 
-        y="45" 
-        width="25" 
-        height="50" 
-        fill="none" 
-        stroke="#228B22" 
-        strokeWidth="3" 
-        rx="2" 
-        ry="2"
-      />
-      
-      {/* Third bar (shortest) */}
-      <rect 
-        x="105" 
-        y="65" 
-        width="25" 
-        height="30" 
-        fill="none" 
-        stroke="#228B22" 
-        strokeWidth="3" 
-        rx="2" 
-        ry="2"
-      />
-      
-      {/* Circle representing zero */}
-      <circle 
-        cx="157" 
-        cy="83" 
-        r="12" 
-        fill="none" 
-        stroke="#228B22" 
-        strokeWidth="3"
-      />
+      {/* Outer rounded rectangle border */}
+      <rect x="10" y="20" width="170" height="85" fill="none" stroke="#059669" strokeWidth="3" rx="8"/>
     </svg>
   );
 };
