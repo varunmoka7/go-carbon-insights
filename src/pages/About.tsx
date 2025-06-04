@@ -139,8 +139,12 @@ const About = () => {
             <div className="lg:col-span-1">
               <Card className="p-6">
                 <div className="text-center">
-                  <div className="w-48 h-48 mx-auto mb-6 bg-gradient-to-br from-teal-100 to-blue-100 dark:from-teal-900 dark:to-blue-900 rounded-full flex items-center justify-center">
-                    <div className="text-6xl">👨‍💼</div>
+                  <div className="w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden border-4 border-teal-100 dark:border-teal-800 shadow-xl">
+                    <img 
+                      src="/lovable-uploads/d71439d4-d721-4229-95b2-197eceafc614.png" 
+                      alt="Varun Moka, Founder of GoCarbonTracker" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Varun Moka</h3>
                   <p className="text-teal-600 dark:text-teal-400 font-medium mb-4">
