@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,12 +6,12 @@ import { Factory, Zap, Car, Wheat, Building, Settings, ExternalLink, AlertCircle
 import sectorData from '@/data/sources/sector-emissions-sources.json';
 
 const iconMap = {
-  "Energy & Electricity": Factory,
-  "Industry & Manufacturing": Settings,
-  "Transportation": Car,
+  "Energy & Electricity": Zap,
+  "Industry & Manufacturing": Factory,
   "Agriculture & Land Use": Wheat,
+  "Transportation": Car,
   "Buildings": Building,
-  "Other Energy Uses": Zap
+  "Other Energy Uses": Settings
 };
 
 const SectorEmissionsDashboard = () => {
