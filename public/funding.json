@@ -1,0 +1,112 @@
+
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "GoCarbonTracker",
+    "description": "Democratizing carbon emissions data to accelerate supply chain decarbonization through transparency and collaboration",
+    "website": "https://gocarbontracker.com",
+    "repository": "https://github.com/gocarbontracker/platform",
+    "license": "MIT"
+  },
+  "funding": {
+    "goal": {
+      "amount": 500000,
+      "currency": "USD",
+      "description": "Accelerate development of collaborative carbon tracking platform for global supply chain decarbonization"
+    },
+    "use_of_funds": [
+      {
+        "category": "Development",
+        "percentage": 60,
+        "description": "Platform development, API integrations, real-time emissions tracking, AI-powered insights"
+      },
+      {
+        "category": "Data & Infrastructure",
+        "percentage": 25,
+        "description": "Carbon emissions database expansion, global company data integration, cloud infrastructure"
+      },
+      {
+        "category": "Community & Partnerships",
+        "percentage": 15,
+        "description": "Industry partnerships, expert network development, collaborative features, documentation"
+      }
+    ],
+    "milestones": [
+      {
+        "phase": 1,
+        "funding_target": 100000,
+        "title": "Enhanced Data Integration",
+        "deliverables": [
+          "Real-time emissions data feeds",
+          "Enhanced Scope 3 supply chain mapping",
+          "Industry benchmarking dashboard"
+        ],
+        "timeline": "3 months"
+      },
+      {
+        "phase": 2,
+        "funding_target": 200000,
+        "title": "Collaborative Platform Features",
+        "deliverables": [
+          "Company collaboration workspace",
+          "Expert knowledge sharing platform",
+          "Science-based target setting tools"
+        ],
+        "timeline": "6 months"
+      },
+      {
+        "phase": 3,
+        "funding_target": 300000,
+        "title": "AI-Powered Insights",
+        "deliverables": [
+          "Predictive emissions modeling",
+          "Automated reduction recommendations",
+          "Risk assessment algorithms"
+        ],
+        "timeline": "9 months"
+      },
+      {
+        "phase": 4,
+        "funding_target": 400000,
+        "title": "Global Expansion",
+        "deliverables": [
+          "Multi-language support",
+          "Regional regulatory compliance",
+          "Enterprise API platform"
+        ],
+        "timeline": "12 months"
+      },
+      {
+        "phase": 5,
+        "funding_target": 500000,
+        "title": "Open Source Ecosystem",
+        "deliverables": [
+          "Open source carbon calculation engine",
+          "Community contribution platform",
+          "Educational resources and certification"
+        ],
+        "timeline": "15 months"
+      }
+    ],
+    "impact": {
+      "expected_users": 10000,
+      "companies_tracked": 5000,
+      "emissions_reduced": "1M tons CO2e annually",
+      "industries_covered": 50,
+      "countries_supported": 30
+    }
+  },
+  "transparency": {
+    "progress_tracking": "Monthly progress reports published on platform",
+    "fund_allocation": "Quarterly financial transparency reports",
+    "community_involvement": "Open roadmap with community voting on features",
+    "accountability": "Public milestone tracking with deliverable verification"
+  },
+  "contact": {
+    "founder": "Varun Moka",
+    "email": "moka@gocarbontracker.com",
+    "linkedin": "https://www.linkedin.com/in/varunmoka7"
+  },
+  "created_at": "2024-06-04T00:00:00Z",
+  "updated_at": "2024-06-04T00:00:00Z"
+}

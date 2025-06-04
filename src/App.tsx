@@ -24,6 +24,7 @@ import Reports from "./pages/Reports";
 import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Funding from "./pages/Funding";
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 
@@ -48,6 +49,11 @@ const App = () => (
               <Route path="/contact" element={
                 <Layout>
                   <Contact />
+                </Layout>
+              } />
+              <Route path="/funding" element={
+                <Layout>
+                  <Funding />
                 </Layout>
               } />
               <Route path="/home" element={
