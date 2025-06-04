@@ -4,7 +4,18 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { TrendingUp, Building, Star, ExternalLink } from 'lucide-react';
-import { CorporateClimateData } from '@/hooks/useCorporateClimateData';
+
+interface CorporateClimateData {
+  id: string;
+  country_name: string;
+  sbti_companies: number;
+  reporting_quality: number;
+  top_sectors: string[];
+  annual_improvement: string;
+  climate_leadership_score: number;
+  sector_breakdown: Record<string, any>;
+  notable_achievements: string[];
+}
 
 interface WorldMapProps {
   countries: CorporateClimateData[];

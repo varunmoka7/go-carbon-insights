@@ -3,31 +3,80 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Award, Globe, ExternalLink } from 'lucide-react';
-import { useIndustryBenchmarks } from '@/hooks/useIndustryBenchmarks';
+
+// Static mock data for industry benchmarks
+const mockBenchmarks = [
+  {
+    id: '1',
+    sector: 'Technology',
+    leading_companies: [
+      { company: 'Microsoft', achievement: 'Carbon negative by 2030', score: 95 },
+      { company: 'Google', achievement: '24/7 renewable energy by 2030', score: 92 },
+      { company: 'Apple', achievement: 'Carbon neutral supply chain by 2030', score: 90 }
+    ],
+    avg_emission_intensity: 0.2,
+    industry_avg_intensity: 0.8,
+    best_practices: ['100% renewable energy', 'Carbon neutral operations', 'Supply chain engagement'],
+    regional_leaders: {
+      'North America': 'Microsoft',
+      'Europe': 'SAP',
+      'Asia': 'Sony'
+    }
+  },
+  {
+    id: '2',
+    sector: 'Financial Services',
+    leading_companies: [
+      { company: 'Unilever', achievement: 'Net-zero by 2039', score: 88 },
+      { company: 'ING', achievement: 'Net-zero by 2050', score: 85 },
+      { company: 'UBS', achievement: 'Net-zero by 2050', score: 83 }
+    ],
+    avg_emission_intensity: 0.1,
+    industry_avg_intensity: 0.3,
+    best_practices: ['Green financing', 'Portfolio decarbonization', 'Climate risk assessment'],
+    regional_leaders: {
+      'North America': 'Bank of America',
+      'Europe': 'ING',
+      'Asia': 'MUFG'
+    }
+  },
+  {
+    id: '3',
+    sector: 'Manufacturing',
+    leading_companies: [
+      { company: 'Interface Inc', achievement: '96% reduction since 1996', score: 92 },
+      { company: 'IKEA', achievement: 'Climate positive by 2030', score: 89 },
+      { company: 'Siemens', achievement: 'Carbon neutral by 2030', score: 86 }
+    ],
+    avg_emission_intensity: 1.8,
+    industry_avg_intensity: 2.5,
+    best_practices: ['Circular economy', 'Renewable energy', 'Process optimization'],
+    regional_leaders: {
+      'North America': 'Interface',
+      'Europe': 'IKEA',
+      'Asia': 'Toyota'
+    }
+  },
+  {
+    id: '4',
+    sector: 'Energy',
+    leading_companies: [
+      { company: 'Ørsted', achievement: 'Carbon neutral by 2025', score: 94 },
+      { company: 'Iberdrola', achievement: 'Carbon neutral by 2050', score: 87 },
+      { company: 'Enel', achievement: 'Carbon neutral by 2050', score: 85 }
+    ],
+    avg_emission_intensity: 45.2,
+    industry_avg_intensity: 78.5,
+    best_practices: ['Renewable energy transition', 'Coal plant phase-out', 'Green hydrogen'],
+    regional_leaders: {
+      'North America': 'NextEra Energy',
+      'Europe': 'Ørsted',
+      'Asia': 'China Three Gorges'
+    }
+  }
+];
 
 const IndustryBenchmarking = () => {
-  const { data: benchmarks, isLoading, error } = useIndustryBenchmarks();
-
-  if (isLoading) {
-    return (
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">Loading industry benchmarks...</div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !benchmarks) {
-    return (
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-red-600">Error loading benchmarks</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-gradient-to-br from-blue-50 to-indigo-50 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,7 +95,7 @@ const IndustryBenchmarking = () => {
 
         {/* Sector Performance Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {benchmarks.map((benchmark, index) => (
+          {mockBenchmarks.map((benchmark, index) => (
             <Card key={benchmark.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="flex items-center justify-between">

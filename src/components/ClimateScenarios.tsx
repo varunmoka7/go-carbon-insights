@@ -3,31 +3,64 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, Target, Thermometer, Clock, ExternalLink } from 'lucide-react';
-import { useClimateScenarios } from '@/hooks/useClimateScenarios';
+
+// Static mock data for climate scenarios
+const mockScenarios = [
+  {
+    id: '1',
+    scenario_name: 'Current Policies',
+    warming_by_2100: '2.7-3.1°C by 2100',
+    description: 'If we continue with existing policies and measures',
+    color: '#dc2626',
+    key_milestones: [
+      { year: 2030, temp: '+1.4°C', description: 'Continued rise' },
+      { year: 2050, temp: '+2.1°C', description: 'Dangerous warming' },
+      { year: 2100, temp: '+2.9°C', description: 'Severe climate impacts' }
+    ],
+    requirements: [
+      'Catastrophic climate impacts',
+      'Massive ecosystem disruption',
+      'Global economic instability'
+    ]
+  },
+  {
+    id: '2',
+    scenario_name: 'Pledged Targets',
+    warming_by_2100: '2.1-2.4°C by 2100',
+    description: 'If all current national and corporate commitments are fully implemented',
+    color: '#f59e0b',
+    key_milestones: [
+      { year: 2030, temp: '+1.3°C', description: 'Slower increase' },
+      { year: 2050, temp: '+1.8°C', description: 'Significant improvement' },
+      { year: 2100, temp: '+2.2°C', description: 'Still above Paris target' }
+    ],
+    requirements: [
+      'Full implementation of current pledges',
+      'Enhanced international cooperation',
+      'Accelerated technology deployment'
+    ]
+  },
+  {
+    id: '3',
+    scenario_name: '1.5°C Target',
+    warming_by_2100: '1.5°C by 2100',
+    description: 'Paris Agreement ambitious goal - requires immediate transformation',
+    color: '#059669',
+    key_milestones: [
+      { year: 2030, temp: '+1.2°C', description: '45% emission reduction achieved' },
+      { year: 2050, temp: '+1.4°C', description: 'Net-zero emissions reached' },
+      { year: 2100, temp: '+1.5°C', description: 'Climate stabilized' }
+    ],
+    requirements: [
+      '45% global emission reduction by 2030',
+      'Net-zero emissions by 2050',
+      'Unprecedented international cooperation'
+    ]
+  }
+];
 
 const ClimateScenarios = () => {
-  const { data: scenarios, isLoading, error } = useClimateScenarios();
   const [selectedScenario, setSelectedScenario] = useState<string | null>(null);
-
-  if (isLoading) {
-    return (
-      <div className="bg-gradient-to-br from-orange-50 to-red-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">Loading climate scenarios...</div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !scenarios) {
-    return (
-      <div className="bg-gradient-to-br from-orange-50 to-red-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-red-600">Error loading scenarios</div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-gradient-to-br from-orange-50 to-red-50 py-16">
@@ -47,7 +80,7 @@ const ClimateScenarios = () => {
 
         {/* Scenario Cards */}
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {scenarios.map((scenario) => (
+          {mockScenarios.map((scenario) => (
             <Card 
               key={scenario.id} 
               className={`cursor-pointer transition-all duration-300 hover:shadow-lg ${
@@ -96,7 +129,7 @@ const ClimateScenarios = () => {
           <Card className="border-l-4 border-l-orange-500 bg-orange-50">
             <CardContent className="p-6">
               {(() => {
-                const scenario = scenarios.find(s => s.scenario_name === selectedScenario);
+                const scenario = mockScenarios.find(s => s.scenario_name === selectedScenario);
                 if (!scenario) return null;
                 
                 return (
