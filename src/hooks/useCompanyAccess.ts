@@ -20,7 +20,12 @@ export const useUserCompanyAccess = () => {
   return useQuery({
     queryKey: ['user-company-access', user?.id],
     queryFn: async () => {
-      if (!user?.id) throw new Error('User not authenticated');
+      if (!user?.id) {
+        console.log('No authenticated user, cannot fetch company access');
+        return [];
+      }
+      
+      console.log('Fetching user company access...');
       
       const { data, error } = await supabase
         .from('user_company_access')
@@ -37,13 +42,15 @@ export const useUserCompanyAccess = () => {
         .eq('is_active', true);
       
       if (error) {
-        console.error('Error fetching company access:', error);
-        throw error;
+        console.log('User company access query failed (expected with RLS):', error.message);
+        return [];
       }
       
+      console.log(`User has access to ${data?.length || 0} companies`);
       return data || [];
     },
-    enabled: !!user?.id
+    enabled: !!user?.id,
+    retry: false, // Don't retry on RLS failures
   });
 };
 
@@ -59,6 +66,8 @@ export const useGrantCompanyAccess = () => {
       expires_at?: string;
     }) => {
       if (!user?.id) throw new Error('User not authenticated');
+      
+      console.log('Granting company access...');
       
       const { data, error } = await supabase
         .from('user_company_access')

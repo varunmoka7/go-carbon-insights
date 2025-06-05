@@ -9,9 +9,11 @@ export const useSupabaseSBTITargets = (companyId: string) => {
   return useQuery({
     queryKey: ['sbti-targets', companyId, user?.id],
     queryFn: async () => {
-      if (!user?.id || !companyId) {
-        throw new Error('User not authenticated or company ID missing');
+      if (!companyId) {
+        throw new Error('Company ID is required');
       }
+
+      console.log(`Fetching SBTi targets for company ${companyId}...`);
 
       const { data, error } = await supabase
         .from('sbti_targets')
@@ -20,13 +22,14 @@ export const useSupabaseSBTITargets = (companyId: string) => {
         .maybeSingle();
       
       if (error) {
-        console.error('Error fetching SBTi targets:', error);
-        throw error;
+        console.log('SBTi targets data access restricted (expected with RLS):', error.message);
+        return null;
       }
       
       return data;
     },
-    enabled: !!companyId && !!user?.id
+    enabled: !!companyId,
+    retry: false, // Don't retry on RLS failures
   });
 };
 
@@ -36,9 +39,11 @@ export const useSupabaseSBTIPathway = (companyId: string) => {
   return useQuery({
     queryKey: ['sbti-pathway', companyId, user?.id],
     queryFn: async () => {
-      if (!user?.id || !companyId) {
-        throw new Error('User not authenticated or company ID missing');
+      if (!companyId) {
+        throw new Error('Company ID is required');
       }
+
+      console.log(`Fetching SBTi pathway for company ${companyId}...`);
 
       const { data, error } = await supabase
         .from('sbti_pathway_data')
@@ -47,12 +52,13 @@ export const useSupabaseSBTIPathway = (companyId: string) => {
         .order('year');
       
       if (error) {
-        console.error('Error fetching SBTi pathway data:', error);
-        throw error;
+        console.log('SBTi pathway data access restricted (expected with RLS):', error.message);
+        return [];
       }
       
       return data || [];
     },
-    enabled: !!companyId && !!user?.id
+    enabled: !!companyId,
+    retry: false, // Don't retry on RLS failures
   });
 };

@@ -603,8 +603,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      bulk_insert_companies: {
+        Args: { company_data: Json }
+        Returns: Json
+      }
+      get_user_role: {
+        Args: { user_uuid: string }
+        Returns: string
+      }
       user_has_company_access: {
         Args: { user_uuid: string; company_text: string }
+        Returns: boolean
+      }
+      user_has_company_access_level: {
+        Args: {
+          user_uuid: string
+          company_text: string
+          required_level: string
+        }
         Returns: boolean
       }
       user_is_company_admin: {

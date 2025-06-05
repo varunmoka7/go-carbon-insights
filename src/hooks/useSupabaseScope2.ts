@@ -9,9 +9,11 @@ export const useSupabaseScope2Data = (companyId: string) => {
   return useQuery({
     queryKey: ['scope2-data', companyId, user?.id],
     queryFn: async () => {
-      if (!user?.id || !companyId) {
-        throw new Error('User not authenticated or company ID missing');
+      if (!companyId) {
+        throw new Error('Company ID is required');
       }
+
+      console.log(`Fetching Scope 2 data for company ${companyId}...`);
 
       // Get emissions trend data
       const { data: emissionsData, error: emissionsError } = await supabase
@@ -21,8 +23,12 @@ export const useSupabaseScope2Data = (companyId: string) => {
         .order('year');
 
       if (emissionsError) {
-        console.error('Error fetching emissions data:', emissionsError);
-        throw emissionsError;
+        console.log('Scope 2 emissions data access restricted (expected with RLS):', emissionsError.message);
+        return {
+          trendData: [],
+          sourceData: [],
+          locationData: []
+        };
       }
 
       // Get scope 2 sources for latest year
@@ -33,8 +39,7 @@ export const useSupabaseScope2Data = (companyId: string) => {
         .eq('year', 2023);
 
       if (sourcesError) {
-        console.error('Error fetching scope 2 sources:', sourcesError);
-        // Don't throw - user might not have access to detailed data
+        console.log('Scope 2 sources data access restricted (expected with RLS):', sourcesError.message);
       }
 
       return {
@@ -56,6 +61,7 @@ export const useSupabaseScope2Data = (companyId: string) => {
         })) || []
       };
     },
-    enabled: !!companyId && !!user?.id
+    enabled: !!companyId,
+    retry: false, // Don't retry on RLS failures
   });
 };

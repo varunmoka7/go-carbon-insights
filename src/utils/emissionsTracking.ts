@@ -2,7 +2,7 @@
 import { supabase } from '@/integrations/supabase/client';
 
 /**
- * Add new emission entry
+ * Add new emission entry (secured by RLS policies)
  */
 export async function addEmissionEntry(entryData: {
   company_id: string;
@@ -13,20 +13,25 @@ export async function addEmissionEntry(entryData: {
   description?: string;
 }) {
   try {
-    // For now, we'll add to a tracking table - you may want to create this table
-    // This is a simplified version that adds to emissions_data
+    console.log('Adding emission entry with enhanced security...');
+    
     const year = new Date(entryData.date).getFullYear();
     
-    // Check if entry for this year exists
-    const { data: existingEntry } = await supabase
+    // Check if entry for this year exists (will be filtered by RLS)
+    const { data: existingEntry, error: fetchError } = await supabase
       .from('emissions_data')
       .select('*')
       .eq('company_id', entryData.company_id)
       .eq('year', year)
       .single();
 
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      console.error('Access denied or error checking existing entry:', fetchError.message);
+      return { success: false, error: fetchError, noAccess: true };
+    }
+
     if (existingEntry) {
-      // Update existing entry (simplified logic)
+      // Update existing entry (RLS will ensure user has write access)
       const updateData: any = {};
       if (entryData.category === 'electricity') {
         updateData.scope2 = existingEntry.scope2 + entryData.amount;
@@ -41,9 +46,12 @@ export async function addEmissionEntry(entryData: {
         .update(updateData)
         .eq('id', existingEntry.id);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Access denied updating emission entry:', error.message);
+        return { success: false, error, noAccess: true };
+      }
     } else {
-      // Create new entry
+      // Create new entry (RLS will ensure user has write access)
       const newEntry = {
         company_id: entryData.company_id,
         year: year,
@@ -56,9 +64,13 @@ export async function addEmissionEntry(entryData: {
         .from('emissions_data')
         .insert([newEntry]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Access denied creating emission entry:', error.message);
+        return { success: false, error, noAccess: true };
+      }
     }
 
+    console.log('Emission entry added successfully');
     return { success: true };
   } catch (error) {
     console.error('Error adding emission entry:', error);
