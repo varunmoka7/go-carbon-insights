@@ -12,6 +12,7 @@ import { useScope1Data } from '@/hooks/useScope1Data';
 const Scope1 = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const [selectedYear, setSelectedYear] = useState('2024');
   const { data: companies } = useCompanies();
   const { data: scope1Data, isLoading } = useScope1Data(selectedCompany);
 
@@ -22,6 +23,8 @@ const Scope1 = () => {
     'Refrigerants': <Zap className="h-4 w-4" />
   };
 
+  const availableYears = ['2019', '2020', '2021', '2022', '2023', '2024'];
+
   if (isLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -31,10 +34,19 @@ const Scope1 = () => {
   }
 
   const trendData = scope1Data?.trendData || [];
-  const sourceData = scope1Data?.sourceData?.map(item => ({
+  
+  // Get year-specific source data
+  const getSourceDataForYear = (year: string) => {
+    const yearData = trendData.find(item => item.year.toString() === year);
+    if (!yearData) return [];
+    
+    return scope1Data?.sourceDataByYear?.[year] || scope1Data?.sourceData || [];
+  };
+
+  const sourceData = getSourceDataForYear(selectedYear).map(item => ({
     ...item,
     icon: sourceIcons[item.source as keyof typeof sourceIcons] || <Factory className="h-4 w-4" />
-  })) || [];
+  }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -100,9 +112,23 @@ const Scope1 = () => {
 
       {/* Emissions by Source */}
       <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-gray-900">Emissions by Source</CardTitle>
-          <CardDescription>Breakdown of direct emissions by emission source category</CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-2xl font-bold text-gray-900">Emissions by Source</CardTitle>
+            <CardDescription>Breakdown of direct emissions by emission source category for {selectedYear}</CardDescription>
+          </div>
+          <Select value={selectedYear} onValueChange={setSelectedYear}>
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {availableYears.map((year) => (
+                <SelectItem key={year} value={year}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
@@ -164,7 +190,7 @@ const Scope1 = () => {
                   <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
                   <span className="text-gray-600">
                     {sourceData.length > 0 ? 
-                      `${sourceData[0]?.source} remains the largest emission source` :
+                      `${sourceData[0]?.source} remains the largest emission source in ${selectedYear}` :
                       'Monitoring emission source distribution'
                     }
                   </span>

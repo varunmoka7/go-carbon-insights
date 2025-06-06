@@ -135,6 +135,25 @@ export const useScope3Data = (companyId: string) => {
     };
 
     const categoryDistribution = getCategoryDistribution();
+
+    // Generate year-specific category data
+    const generateCategoryDataByYear = () => {
+      const categoryDataByYear: Record<string, any[]> = {};
+      
+      company.emissionsData.forEach(yearData => {
+        const year = yearData.year.toString();
+        const totalScope3 = yearData.scope3;
+        
+        categoryDataByYear[year] = Object.entries(categoryDistribution).map(([category, percentage]) => ({
+          category,
+          emissions: Math.round(totalScope3 * percentage).toString(),
+          influenceFactors: getCategoryInfluenceFactors(category),
+          insights: getCategoryInsights(category, company.industry)
+        }));
+      });
+      
+      return categoryDataByYear;
+    };
     
     return {
       trendData: company.emissionsData.map(item => ({
@@ -146,7 +165,8 @@ export const useScope3Data = (companyId: string) => {
         emissions: Math.round(baseEmissions * percentage).toString(),
         influenceFactors: getCategoryInfluenceFactors(category),
         insights: getCategoryInsights(category, company.industry)
-      }))
+      })),
+      categoryDataByYear: generateCategoryDataByYear()
     };
   };
 

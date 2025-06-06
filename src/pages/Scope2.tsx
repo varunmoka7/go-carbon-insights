@@ -12,6 +12,7 @@ import { useScope2Data } from '@/hooks/useScope2Data';
 const Scope2 = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const [selectedYear, setSelectedYear] = useState('2024');
   const { data: companies } = useCompanies();
   const { data: scope2Data, isLoading } = useScope2Data(selectedCompany);
 
@@ -20,6 +21,8 @@ const Scope2 = () => {
     'Steam & Heating': <Thermometer className="h-4 w-4" />,
     'Cooling': <Snowflake className="h-4 w-4" />
   };
+
+  const availableYears = ['2019', '2020', '2021', '2022', '2023', '2024'];
 
   if (isLoading) {
     return (
@@ -30,11 +33,21 @@ const Scope2 = () => {
   }
 
   const trendData = scope2Data?.trendData || [];
-  const sourceData = scope2Data?.sourceData?.map(item => ({
+  
+  // Get year-specific data
+  const getSourceDataForYear = (year: string) => {
+    return scope2Data?.sourceDataByYear?.[year] || scope2Data?.sourceData || [];
+  };
+
+  const getLocationDataForYear = (year: string) => {
+    return scope2Data?.locationDataByYear?.[year] || scope2Data?.locationData || [];
+  };
+
+  const sourceData = getSourceDataForYear(selectedYear).map(item => ({
     ...item,
     icon: sourceIcons[item.source as keyof typeof sourceIcons] || <Zap className="h-4 w-4" />
-  })) || [];
-  const locationData = scope2Data?.locationData || [];
+  }));
+  const locationData = getLocationDataForYear(selectedYear);
 
   const sourceColors = ['#ea580c', '#f59e0b', '#84cc16'];
   const locationColors = ['#3b82f6', '#8b5cf6', '#06b6d4'];
@@ -114,9 +127,23 @@ const Scope2 = () => {
       <div className="grid lg:grid-cols-2 gap-8 mb-8">
         {/* Emissions by Source */}
         <Card>
-          <CardHeader>
-            <CardTitle className="text-xl font-bold text-gray-900">Emissions by Source</CardTitle>
-            <CardDescription>Breakdown by energy consumption category</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-xl font-bold text-gray-900">Emissions by Source</CardTitle>
+              <CardDescription>Breakdown by energy consumption category for {selectedYear}</CardDescription>
+            </div>
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {availableYears.map((year) => (
+                  <SelectItem key={year} value={year}>
+                    {year}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -152,9 +179,23 @@ const Scope2 = () => {
 
         {/* Emissions by Location */}
         <Card>
-          <CardHeader>
-            <CardTitle className="text-xl font-bold text-gray-900">Emissions by Location</CardTitle>
-            <CardDescription>Regional distribution of energy consumption</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-xl font-bold text-gray-900">Emissions by Location</CardTitle>
+              <CardDescription>Regional distribution of energy consumption for {selectedYear}</CardDescription>
+            </div>
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {availableYears.map((year) => (
+                  <SelectItem key={year} value={year}>
+                    {year}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -220,7 +261,7 @@ const Scope2 = () => {
                   <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
                   <span className="text-gray-600">
                     {locationData.length > 0 ? 
-                      `${locationData[0]?.location} accounts for ${locationData[0]?.percentage} of energy emissions` :
+                      `${locationData[0]?.location} accounts for ${locationData[0]?.percentage} of energy emissions in ${selectedYear}` :
                       'Monitoring regional energy distribution'
                     }
                   </span>
