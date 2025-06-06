@@ -58,6 +58,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "audit_logs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "audit_logs_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -103,6 +110,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carbon_strategies_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
             referencedColumns: ["id"]
           },
         ]
@@ -209,6 +223,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "company_benchmarks_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
         ]
       }
       emissions_data: {
@@ -245,6 +266,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "emissions_data_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
             referencedColumns: ["id"]
           },
         ]
@@ -285,6 +313,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "frameworks_compliance_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
         ]
       }
       sbti_pathway_data: {
@@ -318,6 +353,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sbti_pathway_data_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
             referencedColumns: ["id"]
           },
         ]
@@ -379,6 +421,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "sbti_targets_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
         ]
       }
       scope1_emissions: {
@@ -415,6 +464,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scope1_emissions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
             referencedColumns: ["id"]
           },
         ]
@@ -461,6 +517,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "scope2_emissions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
         ]
       }
       scope3_emissions: {
@@ -505,6 +568,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "scope3_emissions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_company_access: {
@@ -544,6 +614,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_company_access_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
             referencedColumns: ["id"]
           },
           {
@@ -600,12 +677,37 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_company_data: {
+        Row: {
+          benchmark_year: number | null
+          description: string | null
+          id: string | null
+          industry: string | null
+          name: string | null
+          sbti_status: string | null
+          sector: string | null
+          total_emissions: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       bulk_insert_companies: {
         Args: { company_data: Json }
         Returns: Json
+      }
+      check_rate_limit: {
+        Args: { user_uuid: string; operation_type: string }
+        Returns: boolean
+      }
+      detect_suspicious_activity: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          user_id: string
+          activity_count: number
+          distinct_companies: number
+          risk_level: string
+        }[]
       }
       get_user_role: {
         Args: { user_uuid: string }

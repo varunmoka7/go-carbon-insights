@@ -2,6 +2,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useSecurityValidation } from './useSecurityValidation';
 
 export interface CompanyAccess {
   id: string;
@@ -25,7 +26,7 @@ export const useUserCompanyAccess = () => {
         return [];
       }
       
-      console.log('Fetching user company access...');
+      console.log('Fetching user company access with enhanced security...');
       
       const { data, error } = await supabase
         .from('user_company_access')
@@ -42,7 +43,7 @@ export const useUserCompanyAccess = () => {
         .eq('is_active', true);
       
       if (error) {
-        console.log('User company access query failed (expected with RLS):', error.message);
+        console.log('User company access query failed:', error.message);
         return [];
       }
       
@@ -50,13 +51,14 @@ export const useUserCompanyAccess = () => {
       return data || [];
     },
     enabled: !!user?.id,
-    retry: false, // Don't retry on RLS failures
+    retry: false,
   });
 };
 
 export const useGrantCompanyAccess = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const { validateOperation, isAdmin } = useSecurityValidation();
   
   return useMutation({
     mutationFn: async (accessData: {
@@ -67,7 +69,18 @@ export const useGrantCompanyAccess = () => {
     }) => {
       if (!user?.id) throw new Error('User not authenticated');
       
-      console.log('Granting company access...');
+      // Only admins can grant access
+      if (!isAdmin) {
+        throw new Error('Access denied: Admin role required');
+      }
+
+      // Validate rate limiting
+      const isAllowed = await validateOperation('INSERT');
+      if (!isAllowed) {
+        throw new Error('Rate limit exceeded');
+      }
+      
+      console.log('Granting company access with enhanced security...');
       
       const { data, error } = await supabase
         .from('user_company_access')
