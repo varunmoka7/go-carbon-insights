@@ -17,6 +17,20 @@ const transformMockDataToPublicStructure = (mockCompanies: typeof companies): Pu
   }));
 };
 
+// Transform a single mock company to match the secure public view structure
+const transformMockCompanyToPublicStructure = (mockCompany: typeof companies[0]): PublicCompanyData => {
+  return {
+    id: mockCompany.id,
+    name: mockCompany.name,
+    industry: mockCompany.industry || 'Unknown',
+    sector: mockCompany.sector,
+    description: mockCompany.description,
+    total_emissions: mockCompany.carbon_footprint || undefined,
+    benchmark_year: 2024,
+    sbti_status: undefined
+  };
+};
+
 export const useCompanies = () => {
   const supabaseQuery = useSupabaseCompanies();
   
@@ -40,14 +54,8 @@ export const useCompany = (companyId: string) => {
   if (supabaseQuery.isLoading || supabaseQuery.error || !supabaseQuery.data) {
     const mockCompany = getMockCompanyById(companyId);
     
-    // Transform mock company to include expected properties
     if (mockCompany) {
-      const transformedCompany = {
-        ...mockCompany,
-        total_emissions: mockCompany.carbon_footprint,
-        benchmark_year: 2024,
-        sbti_status: undefined
-      };
+      const transformedCompany = transformMockCompanyToPublicStructure(mockCompany);
       
       return {
         data: transformedCompany,
