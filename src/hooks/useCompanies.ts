@@ -44,7 +44,12 @@ export const useCompanies = () => {
     };
   }
 
-  return supabaseQuery;
+  // Ensure Supabase data is also properly typed
+  return {
+    data: supabaseQuery.data as PublicCompanyData[],
+    isLoading: supabaseQuery.isLoading,
+    error: supabaseQuery.error
+  };
 };
 
 export const useCompany = (companyId: string) => {
@@ -71,5 +76,10 @@ export const useCompany = (companyId: string) => {
     };
   }
 
-  return supabaseQuery;
+  // Ensure Supabase data is properly typed
+  return {
+    data: supabaseQuery.data as PublicCompanyData,
+    isLoading: supabaseQuery.isLoading,
+    error: supabaseQuery.error
+  };
 };

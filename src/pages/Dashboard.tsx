@@ -197,7 +197,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <p><span className="font-medium">Total Emissions:</span> {selectedCompanyData.total_emissions?.toLocaleString() || 'Not available'} tCO2e</p>
+                <p><span className="font-medium">Total Emissions:</span> {selectedCompanyData.total_emissions ? selectedCompanyData.total_emissions.toLocaleString() : 'Not available'} tCO2e</p>
                 <p><span className="font-medium">Benchmark Year:</span> {selectedCompanyData.benchmark_year || 'Not specified'}</p>
                 <p><span className="font-medium">SBTi Status:</span> {selectedCompanyData.sbti_status || 'Not available'}</p>
                 <div className="text-sm text-gray-500 mt-4">
