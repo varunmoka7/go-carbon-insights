@@ -190,17 +190,19 @@ const Dashboard = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">{selectedCompanyData.name}</h3>
-                <p className="text-gray-600 mb-4">{selectedCompanyData.description}</p>
+                <p className="text-gray-600 mb-4">{selectedCompanyData.description || 'No description available'}</p>
                 <div className="space-y-2">
-                  <p><span className="font-medium">Industry:</span> {selectedCompanyData.industry}</p>
-                  <p><span className="font-medium">Sector:</span> {selectedCompanyData.sector}</p>
+                  <p><span className="font-medium">Industry:</span> {selectedCompanyData.industry || 'Not specified'}</p>
+                  <p><span className="font-medium">Sector:</span> {selectedCompanyData.sector || 'Not specified'}</p>
                 </div>
               </div>
               <div className="space-y-2">
-                <p><span className="font-medium">Total Carbon Footprint:</span> {selectedCompanyData.carbon_footprint?.toLocaleString()} tCO2e</p>
-                <p><span className="font-medium">Energy Consumption:</span> {selectedCompanyData.energy_consumption?.toLocaleString()} MWh</p>
-                <p><span className="font-medium">Renewable Energy:</span> {selectedCompanyData.renewable_energy_percentage}%</p>
-                <p><span className="font-medium">Waste Generated:</span> {selectedCompanyData.waste_generated?.toLocaleString()} tons</p>
+                <p><span className="font-medium">Total Emissions:</span> {selectedCompanyData.total_emissions?.toLocaleString() || 'Not available'} tCO2e</p>
+                <p><span className="font-medium">Benchmark Year:</span> {selectedCompanyData.benchmark_year || 'Not specified'}</p>
+                <p><span className="font-medium">SBTi Status:</span> {selectedCompanyData.sbti_status || 'Not available'}</p>
+                <div className="text-sm text-gray-500 mt-4">
+                  <p>Additional company metrics available with full access</p>
+                </div>
               </div>
             </div>
           </CardContent>
