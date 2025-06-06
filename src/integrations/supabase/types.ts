@@ -713,6 +713,14 @@ export type Database = {
         Args: { user_uuid: string }
         Returns: string
       }
+      test_view_security: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          test_name: string
+          result: string
+          details: string
+        }[]
+      }
       user_has_company_access: {
         Args: { user_uuid: string; company_text: string }
         Returns: boolean

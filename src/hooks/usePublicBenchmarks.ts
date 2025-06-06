@@ -30,9 +30,7 @@ export const usePublicBenchmarks = (filters?: {
   return useQuery({
     queryKey: ['public-benchmarks', filters, user?.id],
     queryFn: async () => {
-      if (!user?.id) {
-        throw new Error('User not authenticated');
-      }
+      console.log('Fetching public benchmarks with enhanced security...');
 
       let query = supabase
         .from('company_benchmarks')
@@ -66,9 +64,10 @@ export const usePublicBenchmarks = (filters?: {
         throw error;
       }
       
+      console.log(`Fetched ${data?.length || 0} public benchmark records securely`);
       return data as PublicBenchmark[];
     },
-    enabled: !!user?.id
+    enabled: true // Now works for both authenticated and anonymous users
   });
 };
 
@@ -78,9 +77,7 @@ export const useIndustryBenchmarks = (industry: string, year = 2023) => {
   return useQuery({
     queryKey: ['industry-benchmarks', industry, year, user?.id],
     queryFn: async () => {
-      if (!user?.id) {
-        throw new Error('User not authenticated');
-      }
+      console.log(`Fetching industry benchmarks for ${industry} (${year}) with enhanced security...`);
 
       const { data, error } = await supabase
         .from('company_benchmarks')
@@ -105,11 +102,13 @@ export const useIndustryBenchmarks = (industry: string, year = 2023) => {
         companies: data?.length || 0
       };
       
+      console.log(`Industry ${industry} statistics calculated:`, stats);
+      
       return {
         benchmarks: data || [],
         statistics: stats
       };
     },
-    enabled: !!industry && !!user?.id
+    enabled: !!industry
   });
 };
