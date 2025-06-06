@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -24,7 +23,7 @@ import Reports from "./pages/Reports";
 import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Funding from "./pages/Funding";
+// import Funding from "./pages/Funding"; // Disabled for demo mode
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 
@@ -51,94 +50,72 @@ const App = () => (
                   <Contact />
                 </Layout>
               } />
-              <Route path="/funding" element={
+              {/* Funding route disabled for demo mode */}
+              {/* <Route path="/funding" element={
                 <Layout>
                   <Funding />
                 </Layout>
-              } />
+              } /> */}
+              {/* Demo mode: All pages accessible without authentication */}
               <Route path="/home" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Home />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Home />
+                </Layout>
               } />
               <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Dashboard />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Dashboard />
+                </Layout>
               } />
               <Route path="/tracking" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Tracking />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Tracking />
+                </Layout>
               } />
               <Route path="/scope1" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Scope1 />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Scope1 />
+                </Layout>
               } />
               <Route path="/scope2" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Scope2 />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Scope2 />
+                </Layout>
               } />
               <Route path="/scope3" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Scope3 />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Scope3 />
+                </Layout>
               } />
               <Route path="/decarbonization" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Decarbonization />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Decarbonization />
+                </Layout>
               } />
               <Route path="/profile" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Profile />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Profile />
+                </Layout>
               } />
               <Route path="/reports" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Reports />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Reports />
+                </Layout>
               } />
               <Route path="/analysis" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Analysis />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Analysis />
+                </Layout>
               } />
               <Route path="/methodology" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Methodology />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Methodology />
+                </Layout>
               } />
               <Route path="/reference" element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Reference />
-                  </Layout>
-                </ProtectedRoute>
+                <Layout>
+                  <Reference />
+                </Layout>
               } />
               <Route path="*" element={<Landing />} />
             </Routes>

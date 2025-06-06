@@ -10,6 +10,10 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user, loading } = useAuth();
 
+  // Demo mode: Allow access without authentication
+  // Remove this condition when moving to production
+  const isDemoMode = true;
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -21,6 +25,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     );
   }
 
+  // In demo mode, allow access without authentication
+  if (isDemoMode) {
+    return <>{children}</>;
+  }
+
+  // Production mode: require authentication
   if (!user) {
     return <Navigate to="/auth" replace />;
   }

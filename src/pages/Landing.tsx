@@ -1,7 +1,9 @@
+
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote, Factory, Zap, Globe, TreePine, Building, Recycle } from 'lucide-react';
+import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote, Factory, Zap, Globe, TreePine, Building, Recycle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import Logo from '@/components/ui/Logo';
 
@@ -100,6 +102,18 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-green-50 overflow-hidden">
+      {/* Demo Mode Notice */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Alert className="border-0 bg-transparent text-white">
+            <AlertCircle className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white font-medium">
+              <span className="font-bold">PROTOTYPE DEMO:</span> This is a development prototype showcasing GoCarbonTracker's capabilities with mock data. Currently under active development.
+            </AlertDescription>
+          </Alert>
+        </div>
+      </div>
+
       {/* Hero Section with Enhanced Animation */}
       <div className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         {/* Animated Background Elements */}
@@ -134,11 +148,11 @@ const Landing = () => {
             where companies and experts share <span className="text-green-600 font-bold">decarbonization knowledge</span>.
           </p>
 
-          {/* Enhanced CTA Buttons */}
+          {/* Updated CTA Buttons - Demo Mode */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in delay-1000">
-            <Link to="/auth">
+            <Link to="/home">
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl group border-2 border-teal-600">
-                Get Started
+                Explore Demo
                 <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -157,7 +171,6 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* Enhanced Stats focused on mission */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 animate-fade-in delay-1200">
             <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/50 transition-all">
               <div className="text-5xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">70%+</div>
@@ -229,7 +242,6 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Enhanced Features Section */}
       <div className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -253,7 +265,6 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Why Companies Should Choose Carbon Tracking Section */}
       <div className="py-20 bg-gradient-to-r from-teal-50 to-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -298,7 +309,6 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Enhanced Final CTA Section */}
       <div className="py-20 bg-gradient-to-r from-teal-600 to-green-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl font-bold text-white mb-6">
@@ -310,9 +320,9 @@ const Landing = () => {
             real environmental impact through collective action.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/auth">
+            <Link to="/home">
               <Button size="lg" variant="secondary" className="bg-white text-teal-600 hover:bg-gray-100 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                Get Started
+                Explore Demo
               </Button>
             </Link>
             <Link to="/methodology">

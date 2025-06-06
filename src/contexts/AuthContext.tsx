@@ -36,8 +36,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Demo mode flag - set to false when moving to production
+  const isDemoMode = true;
+
   useEffect(() => {
-    // Configure Supabase client for better session handling
+    // In demo mode, simulate a quick loading state then allow access
+    if (isDemoMode) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        // Create a mock user for demo purposes
+        const mockUser = {
+          id: 'demo-user',
+          email: 'demo@gocarbontracker.com',
+          email_confirmed_at: new Date().toISOString(),
+        } as User;
+        setUser(mockUser);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+
+    // Production mode: normal auth flow
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth event:', event);
@@ -45,14 +63,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         setLoading(false);
 
-        // Handle successful email verification
         if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
           console.log('Email verified and user signed in');
         }
       }
     );
 
-    // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
@@ -60,39 +76,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [isDemoMode]);
 
   const signUp = async (email: string, password: string, username?: string) => {
     try {
       setLoading(true);
       
-      // Sanitize inputs
       const sanitizedEmail = sanitizeInput(email);
       const sanitizedUsername = username ? sanitizeInput(username) : sanitizedEmail.split('@')[0];
       
-      // Rate limiting
       if (!checkRateLimit(`signup:${sanitizedEmail}`, 3, 15 * 60 * 1000)) {
         return { error: { message: 'Too many signup attempts. Please try again later.' } };
       }
       
-      // Validate email format
       if (!validateEmail(sanitizedEmail)) {
         return { error: { message: 'Please enter a valid email address' } };
       }
 
-      // Validate password
       const passwordValidation = validatePassword(password);
       if (!passwordValidation.isValid) {
         return { error: { message: passwordValidation.message } };
       }
 
-      // Validate username
       const usernameValidation = validateUsername(sanitizedUsername);
       if (!usernameValidation.isValid) {
         return { error: { message: usernameValidation.message } };
       }
 
-      // Use the correct Lovable app URL for redirect instead of localhost
       const redirectUrl = `${window.location.origin}/auth`;
       
       const { error } = await supabase.auth.signUp({
@@ -109,7 +119,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (error) {
         console.error('Signup error:', error);
-        // Return generic error to prevent enumeration
         if (error.message.includes('User already registered')) {
           return { error: { message: 'An account with this email may already exist. Please try signing in instead.' } };
         }
@@ -129,19 +138,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       
-      // Sanitize input
       const cleanInput = sanitizeInput(emailOrUsername).toLowerCase();
       
-      // Rate limiting
       if (!checkRateLimit(`signin:${cleanInput}`, 5, 15 * 60 * 1000)) {
         return { error: { message: 'Too many login attempts. Please try again later.' } };
       }
       
-      // Check if input looks like an email
       const isEmail = validateEmail(cleanInput);
       
       if (isEmail) {
-        // Direct email login
         const { error } = await supabase.auth.signInWithPassword({
           email: cleanInput,
           password
@@ -154,7 +159,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         return { error: null };
       } else {
-        // Username login - lookup email first
         return await signInWithUsername(cleanInput, password);
       }
     } catch (error) {
@@ -167,16 +171,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithUsername = async (username: string, password: string) => {
     try {
-      // Sanitize username input
       const cleanUsername = sanitizeInput(username).toLowerCase();
       
-      // Validate username format
       const usernameValidation = validateUsername(cleanUsername);
       if (!usernameValidation.isValid) {
         return { error: { message: getGenericAuthError() } };
       }
       
-      // Lookup email by username
       const { data: profile, error: lookupError } = await supabase
         .from('user_profiles')
         .select('email')
@@ -192,7 +193,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: { message: getGenericAuthError() } };
       }
 
-      // Sign in with the found email
       const { error } = await supabase.auth.signInWithPassword({
         email: profile.email,
         password
@@ -233,15 +233,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetPassword = async (email: string) => {
     try {
-      // Sanitize email
       const sanitizedEmail = sanitizeInput(email);
       
-      // Rate limiting
       if (!checkRateLimit(`reset:${sanitizedEmail}`, 2, 15 * 60 * 1000)) {
         return { error: { message: 'Too many password reset attempts. Please try again later.' } };
       }
       
-      // Validate email format
       if (!validateEmail(sanitizedEmail)) {
         return { error: { message: 'Please enter a valid email address' } };
       }
@@ -254,14 +251,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (error) {
         console.error('Password reset error:', error);
-        // Always return success message to prevent email enumeration
         return { error: null };
       }
 
       return { error: null };
     } catch (error) {
       console.error('Unexpected password reset error:', error);
-      return { error: null }; // Always return success to prevent enumeration
+      return { error: null };
     }
   };
 
