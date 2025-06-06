@@ -1,4 +1,3 @@
-
 export const companies = [
   {
     id: 'techcorp',
@@ -123,7 +122,7 @@ export const companies = [
 ];
 
 export const emissionsData = [
-  // TechCorp Solutions
+  // TechCorp Solutions - Complete 6-year data
   { company_id: 'techcorp', year: 2019, scope1: 15000, scope2: 25000, scope3: 45000 },
   { company_id: 'techcorp', year: 2020, scope1: 14500, scope2: 24000, scope3: 44000 },
   { company_id: 'techcorp', year: 2021, scope1: 14000, scope2: 23000, scope3: 43000 },
@@ -131,7 +130,7 @@ export const emissionsData = [
   { company_id: 'techcorp', year: 2023, scope1: 13000, scope2: 21000, scope3: 41000 },
   { company_id: 'techcorp', year: 2024, scope1: 12500, scope2: 20000, scope3: 40000 },
   
-  // GreenManufacturing Inc
+  // GreenManufacturing Inc - Complete 6-year data
   { company_id: 'greenmanu', year: 2019, scope1: 85000, scope2: 95000, scope3: 140000 },
   { company_id: 'greenmanu', year: 2020, scope1: 82000, scope2: 92000, scope3: 135000 },
   { company_id: 'greenmanu', year: 2021, scope1: 79000, scope2: 89000, scope3: 130000 },
@@ -139,7 +138,7 @@ export const emissionsData = [
   { company_id: 'greenmanu', year: 2023, scope1: 73000, scope2: 83000, scope3: 120000 },
   { company_id: 'greenmanu', year: 2024, scope1: 70000, scope2: 80000, scope3: 115000 },
   
-  // Ocean Logistics
+  // Ocean Logistics - Complete 6-year data
   { company_id: 'oceanlog', year: 2019, scope1: 180000, scope2: 85000, scope3: 185000 },
   { company_id: 'oceanlog', year: 2020, scope1: 175000, scope2: 82000, scope3: 180000 },
   { company_id: 'oceanlog', year: 2021, scope1: 170000, scope2: 79000, scope3: 175000 },
@@ -147,26 +146,60 @@ export const emissionsData = [
   { company_id: 'oceanlog', year: 2023, scope1: 160000, scope2: 73000, scope3: 165000 },
   { company_id: 'oceanlog', year: 2024, scope1: 155000, scope2: 70000, scope3: 160000 },
   
-  // Continue for remaining companies...
+  // EnergyPlus Corp - Complete 6-year data
   { company_id: 'energyplus', year: 2019, scope1: 45000, scope2: 35000, scope3: 70000 },
+  { company_id: 'energyplus', year: 2020, scope1: 43500, scope2: 33500, scope3: 68000 },
+  { company_id: 'energyplus', year: 2021, scope1: 42000, scope2: 32000, scope3: 66000 },
+  { company_id: 'energyplus', year: 2022, scope1: 41000, scope2: 31000, scope3: 64000 },
+  { company_id: 'energyplus', year: 2023, scope1: 40500, scope2: 30500, scope3: 62000 },
   { company_id: 'energyplus', year: 2024, scope1: 40000, scope2: 30000, scope3: 60000 },
   
+  // RetailChain Global - Complete 6-year data
   { company_id: 'retailchain', year: 2019, scope1: 65000, scope2: 75000, scope3: 140000 },
+  { company_id: 'retailchain', year: 2020, scope1: 63000, scope2: 72000, scope3: 136000 },
+  { company_id: 'retailchain', year: 2021, scope1: 61000, scope2: 70000, scope3: 132000 },
+  { company_id: 'retailchain', year: 2022, scope1: 59000, scope2: 68000, scope3: 128000 },
+  { company_id: 'retailchain', year: 2023, scope1: 57000, scope2: 67000, scope3: 126000 },
   { company_id: 'retailchain', year: 2024, scope1: 56000, scope2: 66000, scope3: 124000 },
   
+  // AgriFarm Enterprises - Complete 6-year data
   { company_id: 'agrifarm', year: 2019, scope1: 85000, scope2: 45000, scope3: 65000 },
+  { company_id: 'agrifarm', year: 2020, scope1: 84000, scope2: 44000, scope3: 63000 },
+  { company_id: 'agrifarm', year: 2021, scope1: 83000, scope2: 43000, scope3: 61000 },
+  { company_id: 'agrifarm', year: 2022, scope1: 82000, scope2: 42000, scope3: 60000 },
+  { company_id: 'agrifarm', year: 2023, scope1: 81000, scope2: 41000, scope3: 59000 },
   { company_id: 'agrifarm', year: 2024, scope1: 80000, scope2: 40000, scope3: 58000 },
   
+  // PharmaLife Sciences - Complete 6-year data
   { company_id: 'pharmalife', year: 2019, scope1: 35000, scope2: 40000, scope3: 50000 },
+  { company_id: 'pharmalife', year: 2020, scope1: 34000, scope2: 39000, scope3: 48000 },
+  { company_id: 'pharmalife', year: 2021, scope1: 33500, scope2: 38000, scope3: 46000 },
+  { company_id: 'pharmalife', year: 2022, scope1: 33000, scope2: 37500, scope3: 45000 },
+  { company_id: 'pharmalife', year: 2023, scope1: 32500, scope2: 37000, scope3: 44000 },
   { company_id: 'pharmalife', year: 2024, scope1: 32000, scope2: 36000, scope3: 43000 },
   
+  // BuildTech Construction - Complete 6-year data
   { company_id: 'buildtech', year: 2019, scope1: 145000, scope2: 85000, scope3: 150000 },
+  { company_id: 'buildtech', year: 2020, scope1: 142000, scope2: 83000, scope3: 147000 },
+  { company_id: 'buildtech', year: 2021, scope1: 140000, scope2: 81000, scope3: 145000 },
+  { company_id: 'buildtech', year: 2022, scope1: 138000, scope2: 80000, scope3: 143000 },
+  { company_id: 'buildtech', year: 2023, scope1: 136000, scope2: 79000, scope3: 141000 },
   { company_id: 'buildtech', year: 2024, scope1: 135000, scope2: 78000, scope3: 140000 },
   
+  // FinancePlus Bank - Complete 6-year data
   { company_id: 'financeplus', year: 2019, scope1: 25000, scope2: 35000, scope3: 35000 },
+  { company_id: 'financeplus', year: 2020, scope1: 24000, scope2: 34000, scope3: 34000 },
+  { company_id: 'financeplus', year: 2021, scope1: 23500, scope2: 33500, scope3: 33000 },
+  { company_id: 'financeplus', year: 2022, scope1: 23000, scope2: 33000, scope3: 32500 },
+  { company_id: 'financeplus', year: 2023, scope1: 22500, scope2: 32000, scope3: 32000 },
   { company_id: 'financeplus', year: 2024, scope1: 22000, scope2: 31000, scope3: 31000 },
   
+  // FoodGlobal Corp - Complete 6-year data
   { company_id: 'foodglobal', year: 2019, scope1: 75000, scope2: 65000, scope3: 105000 },
+  { company_id: 'foodglobal', year: 2020, scope1: 73000, scope2: 63000, scope3: 102000 },
+  { company_id: 'foodglobal', year: 2021, scope1: 71000, scope2: 61000, scope3: 100000 },
+  { company_id: 'foodglobal', year: 2022, scope1: 70000, scope2: 60000, scope3: 98000 },
+  { company_id: 'foodglobal', year: 2023, scope1: 69000, scope2: 59000, scope3: 96000 },
   { company_id: 'foodglobal', year: 2024, scope1: 68000, scope2: 58000, scope3: 95000 }
 ];
 

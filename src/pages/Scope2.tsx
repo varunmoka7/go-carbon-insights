@@ -7,31 +7,34 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCompanies } from '@/hooks/useCompanies';
+import { useScope2Data } from '@/hooks/useScope2Data';
 
 const Scope2 = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const { data: companies } = useCompanies();
+  const { data: scope2Data, isLoading } = useScope2Data(selectedCompany);
 
-  const trendData = [
-    { year: '2020', marketBased: 800, locationBased: 850 },
-    { year: '2021', marketBased: 750, locationBased: 780 },
-    { year: '2022', marketBased: 700, locationBased: 720 },
-    { year: '2023', marketBased: 650, locationBased: 670 },
-    { year: '2024', marketBased: 600, locationBased: 620 }
-  ];
+  const sourceIcons = {
+    'Purchased Electricity': <Zap className="h-4 w-4" />,
+    'Steam & Heating': <Thermometer className="h-4 w-4" />,
+    'Cooling': <Snowflake className="h-4 w-4" />
+  };
 
-  const sourceData = [
-    { source: 'Electricity', emissions: 450, icon: <Zap className="h-4 w-4" /> },
-    { source: 'Steam', emissions: 100, icon: <Thermometer className="h-4 w-4" /> },
-    { source: 'Cooling', emissions: 50, icon: <Snowflake className="h-4 w-4" /> }
-  ];
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center">Loading Scope 2 data...</div>
+      </div>
+    );
+  }
 
-  const locationData = [
-    { location: 'North America', emissions: 350, percentage: 58 },
-    { location: 'Europe', emissions: 180, percentage: 30 },
-    { location: 'Asia Pacific', emissions: 70, percentage: 12 }
-  ];
+  const trendData = scope2Data?.trendData || [];
+  const sourceData = scope2Data?.sourceData?.map(item => ({
+    ...item,
+    icon: sourceIcons[item.source as keyof typeof sourceIcons] || <Zap className="h-4 w-4" />
+  })) || [];
+  const locationData = scope2Data?.locationData || [];
 
   const sourceColors = ['#ea580c', '#f59e0b', '#84cc16'];
   const locationColors = ['#3b82f6', '#8b5cf6', '#06b6d4'];
@@ -124,11 +127,26 @@ const Scope2 = () => {
                 <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
                 <Bar dataKey="emissions" radius={[4, 4, 0, 0]}>
                   {sourceData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={sourceColors[index]} />
+                    <Cell key={`cell-${index}`} fill={sourceColors[index % sourceColors.length]} />
                   ))}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+            
+            {/* Source Legend */}
+            <div className="mt-4 grid grid-cols-1 gap-2">
+              {sourceData.map((item, index) => (
+                <div key={index} className="flex items-center space-x-3 p-2 bg-gray-50 rounded">
+                  <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
+                    {item.icon}
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-sm font-medium text-gray-800">{item.source}</span>
+                    <span className="text-xs text-gray-600 ml-2">{Math.round(item.emissions)} tCO2e</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
 
@@ -147,15 +165,30 @@ const Scope2 = () => {
                   cy="50%"
                   outerRadius={80}
                   dataKey="emissions"
-                  label={({ name, percentage }) => `${name}: ${percentage}%`}
+                  label={({ location, percentage }) => `${location}: ${percentage}`}
                 >
                   {locationData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={locationColors[index]} />
+                    <Cell key={`cell-${index}`} fill={locationColors[index % locationColors.length]} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
               </PieChart>
             </ResponsiveContainer>
+            
+            {/* Location Details */}
+            <div className="mt-4 space-y-2">
+              {locationData.map((item, index) => (
+                <div key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                  <span className="text-sm font-medium text-gray-800">{item.location}</span>
+                  <div className="text-right">
+                    <div className="text-sm font-semibold">{Math.round(item.emissions)} tCO2e</div>
+                    <div className="text-xs text-green-600">
+                      {item.renewablePercent} renewable
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -172,7 +205,12 @@ const Scope2 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">25% reduction in energy-related emissions over 4 years</span>
+                  <span className="text-gray-600">
+                    {trendData.length >= 2 ? 
+                      `${Math.round(((trendData[0].emissions - trendData[trendData.length - 1].emissions) / trendData[0].emissions * 100))}% reduction in energy-related emissions over ${trendData.length - 1} years` :
+                      'Tracking energy-related emissions progress'
+                    }
+                  </span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
@@ -180,7 +218,12 @@ const Scope2 = () => {
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">North America accounts for 58% of energy emissions</span>
+                  <span className="text-gray-600">
+                    {locationData.length > 0 ? 
+                      `${locationData[0]?.location} accounts for ${locationData[0]?.percentage} of energy emissions` :
+                      'Monitoring regional energy distribution'
+                    }
+                  </span>
                 </li>
               </ul>
             </div>

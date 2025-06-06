@@ -46,7 +46,6 @@ const Scope3 = () => {
       }
     ];
     
-    console.log('Chart data:', data);
     return data;
   }, [upstreamDownstreamData]);
 
@@ -80,13 +79,7 @@ const Scope3 = () => {
     });
   }, [scope3Data, upstreamDownstreamData]);
 
-  const trendData = scope3Data?.trendData || [
-    { year: '2020', emissions: 2500 },
-    { year: '2021', emissions: 2300 },
-    { year: '2022', emissions: 2100 },
-    { year: '2023', emissions: 1900 },
-    { year: '2024', emissions: 1750 }
-  ];
+  const trendData = scope3Data?.trendData || [];
 
   const categoryColors = ['#dc2626', '#ea580c', '#d97706', '#65a30d', '#0d9488', '#0891b2'];
 
@@ -170,14 +163,14 @@ const Scope3 = () => {
             <ResponsiveContainer width="100%" height={350}>
               <PieChart>
                 <Pie
-                  data={categoryData}
+                  data={categoryData.slice(0, 6)} // Show top 6 categories
                   cx="50%"
                   cy="50%"
                   outerRadius={100}
                   dataKey="emissions"
                   label={({ category, percentage }) => `${category}: ${percentage}%`}
                 >
-                  {categoryData.map((entry, index) => (
+                  {categoryData.slice(0, 6).map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={categoryColors[index % categoryColors.length]} />
                   ))}
                 </Pie>
@@ -252,32 +245,34 @@ const Scope3 = () => {
       </div>
 
       {/* Detailed Category Breakdown */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold text-gray-900">Category Performance</CardTitle>
-          <CardDescription>Detailed breakdown of all Scope 3 categories</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={categoryData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="category" 
-                angle={-45}
-                textAnchor="end"
-                height={100}
-              />
-              <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
-              <Bar dataKey="emissions" radius={[4, 4, 0, 0]}>
-                {categoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={categoryColors[index % categoryColors.length]} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      {categoryData.length > 0 && (
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold text-gray-900">Category Performance</CardTitle>
+            <CardDescription>Detailed breakdown of all Scope 3 categories</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={categoryData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="category" 
+                  angle={-45}
+                  textAnchor="end"
+                  height={100}
+                />
+                <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
+                <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+                <Bar dataKey="emissions" radius={[4, 4, 0, 0]}>
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={categoryColors[index % categoryColors.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Key Insights */}
       <Card>
@@ -304,7 +299,10 @@ const Scope3 = () => {
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
                   <span className="text-gray-600">
-                    Upstream activities represent the majority of value chain impact
+                    {trendData.length >= 2 ? 
+                      `${Math.round(((trendData[0].emissions - trendData[trendData.length - 1].emissions) / trendData[0].emissions * 100))}% reduction over ${trendData.length - 1} years` :
+                      'Upstream activities represent the majority of value chain impact'
+                    }
                   </span>
                 </li>
               </ul>

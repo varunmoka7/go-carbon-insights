@@ -7,26 +7,34 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCompanies } from '@/hooks/useCompanies';
+import { useScope1Data } from '@/hooks/useScope1Data';
 
 const Scope1 = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const { data: companies } = useCompanies();
+  const { data: scope1Data, isLoading } = useScope1Data(selectedCompany);
 
-  const trendData = [
-    { year: '2020', emissions: 1200 },
-    { year: '2021', emissions: 1150 },
-    { year: '2022', emissions: 1100 },
-    { year: '2023', emissions: 1000 },
-    { year: '2024', emissions: 950 }
-  ];
+  const sourceIcons = {
+    'Natural Gas': <Fuel className="h-4 w-4" />,
+    'Diesel Fuel': <Truck className="h-4 w-4" />,
+    'Company Vehicles': <Truck className="h-4 w-4" />,
+    'Refrigerants': <Zap className="h-4 w-4" />
+  };
 
-  const sourceData = [
-    { source: 'Natural Gas', emissions: 450, icon: <Fuel className="h-4 w-4" /> },
-    { source: 'Diesel Fuel', emissions: 280, icon: <Truck className="h-4 w-4" /> },
-    { source: 'Company Vehicles', emissions: 150, icon: <Truck className="h-4 w-4" /> },
-    { source: 'Refrigerants', emissions: 70, icon: <Zap className="h-4 w-4" /> }
-  ];
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center">Loading Scope 1 data...</div>
+      </div>
+    );
+  }
+
+  const trendData = scope1Data?.trendData || [];
+  const sourceData = scope1Data?.sourceData?.map(item => ({
+    ...item,
+    icon: sourceIcons[item.source as keyof typeof sourceIcons] || <Factory className="h-4 w-4" />
+  })) || [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -121,7 +129,7 @@ const Scope1 = () => {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-gray-800">{item.source}</div>
-                  <div className="text-xs text-gray-600">{item.emissions} tCO2e</div>
+                  <div className="text-xs text-gray-600">{Math.round(item.emissions)} tCO2e</div>
                 </div>
               </div>
             ))}
@@ -141,7 +149,12 @@ const Scope1 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">21% reduction in direct emissions over 4 years</span>
+                  <span className="text-gray-600">
+                    {trendData.length >= 2 ? 
+                      `${Math.round(((trendData[0].emissions - trendData[trendData.length - 1].emissions) / trendData[0].emissions * 100))}% reduction in direct emissions over ${trendData.length - 1} years` :
+                      'Tracking direct emissions progress'
+                    }
+                  </span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
@@ -149,7 +162,12 @@ const Scope1 = () => {
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Natural gas remains the largest emission source</span>
+                  <span className="text-gray-600">
+                    {sourceData.length > 0 ? 
+                      `${sourceData[0]?.source} remains the largest emission source` :
+                      'Monitoring emission source distribution'
+                    }
+                  </span>
                 </li>
               </ul>
             </div>

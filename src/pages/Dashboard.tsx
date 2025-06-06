@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { BarChart3, TrendingDown, Building2, Target, Zap, Factory } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { useCompanies } from '@/hooks/useCompanies';
+import { getCompanyById } from '@/data/companyMockData';
 
 const Dashboard = () => {
   const [searchParams] = useSearchParams();
@@ -14,30 +15,47 @@ const Dashboard = () => {
   
   const { data: companies, isLoading } = useCompanies();
 
+  // Get dynamic emissions data for the selected company
+  const emissionsData = useMemo(() => {
+    const company = getCompanyById(selectedCompany);
+    if (!company?.emissionsData) {
+      // Fallback data if no company found
+      return [
+        { year: '2020', scope1: 1200, scope2: 800, scope3: 2500 },
+        { year: '2021', scope1: 1150, scope2: 750, scope3: 2300 },
+        { year: '2022', scope1: 1100, scope2: 700, scope3: 2100 },
+        { year: '2023', scope1: 1000, scope2: 650, scope3: 1900 },
+        { year: '2024', scope1: 950, scope2: 600, scope3: 1750 }
+      ];
+    }
+    return company.emissionsData.map(item => ({
+      year: item.year.toString(),
+      scope1: item.scope1,
+      scope2: item.scope2,
+      scope3: item.scope3
+    }));
+  }, [selectedCompany]);
+
+  // Calculate dynamic pie data based on latest emissions
+  const pieData = useMemo(() => {
+    const latestData = emissionsData[emissionsData.length - 1];
+    return [
+      { name: 'Scope 1', value: latestData.scope1, color: '#dc2626' },
+      { name: 'Scope 2', value: latestData.scope2, color: '#ea580c' },
+      { name: 'Scope 3', value: latestData.scope3, color: '#0d9488' }
+    ];
+  }, [emissionsData]);
+
   if (isLoading) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
   const selectedCompanyData = companies?.find(c => c.id === selectedCompany);
 
-  const emissionsData = [
-    { year: '2020', scope1: 1200, scope2: 800, scope3: 2500 },
-    { year: '2021', scope1: 1150, scope2: 750, scope3: 2300 },
-    { year: '2022', scope1: 1100, scope2: 700, scope3: 2100 },
-    { year: '2023', scope1: 1000, scope2: 650, scope3: 1900 },
-    { year: '2024', scope1: 950, scope2: 600, scope3: 1750 }
-  ];
-
-  const pieData = [
-    { name: 'Scope 1', value: 950, color: '#dc2626' },
-    { name: 'Scope 2', value: 600, color: '#ea580c' },
-    { name: 'Scope 3', value: 1750, color: '#0d9488' }
-  ];
-
   const totalEmissions = emissionsData[emissionsData.length - 1];
   const total = totalEmissions.scope1 + totalEmissions.scope2 + totalEmissions.scope3;
   const previousTotal = emissionsData[emissionsData.length - 2]?.scope1 + emissionsData[emissionsData.length - 2]?.scope2 + emissionsData[emissionsData.length - 2]?.scope3;
-  const reduction = ((previousTotal - total) / previousTotal * 100).toFixed(1);
+  const reduction = previousTotal ? ((previousTotal - total) / previousTotal * 100).toFixed(1) : '0.0';
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -134,7 +152,7 @@ const Dashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle>Current Year Distribution</CardTitle>
-            <CardDescription>Breakdown of emissions by scope for 2024</CardDescription>
+            <CardDescription>Breakdown of emissions by scope for {emissionsData[emissionsData.length - 1]?.year}</CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
