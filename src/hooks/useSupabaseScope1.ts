@@ -27,7 +27,8 @@ export const useSupabaseScope1Data = (companyId: string) => {
         // Return empty data to trigger fallback to mock data
         return {
           trendData: [],
-          sourceData: []
+          sourceData: [],
+          sourceDataByYear: {}
         };
       }
 
@@ -50,7 +51,8 @@ export const useSupabaseScope1Data = (companyId: string) => {
         sourceData: sourcesData?.map(item => ({
           source: item.source,
           emissions: item.emissions_by_source
-        })) || []
+        })) || [],
+        sourceDataByYear: {}
       };
     },
     enabled: !!companyId,

@@ -34,13 +34,19 @@ const Scope2 = () => {
 
   const trendData = scope2Data?.trendData || [];
   
-  // Get year-specific data
+  // Get year-specific data with proper fallbacks
   const getSourceDataForYear = (year: string) => {
-    return scope2Data?.sourceDataByYear?.[year] || scope2Data?.sourceData || [];
+    if (scope2Data?.sourceDataByYear && scope2Data.sourceDataByYear[year]) {
+      return scope2Data.sourceDataByYear[year];
+    }
+    return scope2Data?.sourceData || [];
   };
 
   const getLocationDataForYear = (year: string) => {
-    return scope2Data?.locationDataByYear?.[year] || scope2Data?.locationData || [];
+    if (scope2Data?.locationDataByYear && scope2Data.locationDataByYear[year]) {
+      return scope2Data.locationDataByYear[year];
+    }
+    return scope2Data?.locationData || [];
   };
 
   const sourceData = getSourceDataForYear(selectedYear).map(item => ({

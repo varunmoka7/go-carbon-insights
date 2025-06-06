@@ -27,7 +27,9 @@ export const useSupabaseScope2Data = (companyId: string) => {
         return {
           trendData: [],
           sourceData: [],
-          locationData: []
+          locationData: [],
+          sourceDataByYear: {},
+          locationDataByYear: {}
         };
       }
 
@@ -58,7 +60,9 @@ export const useSupabaseScope2Data = (companyId: string) => {
           emissions: item.emissions_by_source,
           percentage: item.percentage || '0%',
           renewablePercent: '65%'
-        })) || []
+        })) || [],
+        sourceDataByYear: {},
+        locationDataByYear: {}
       };
     },
     enabled: !!companyId,

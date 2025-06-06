@@ -40,7 +40,12 @@ const Scope1 = () => {
     const yearData = trendData.find(item => item.year.toString() === year);
     if (!yearData) return [];
     
-    return scope1Data?.sourceDataByYear?.[year] || scope1Data?.sourceData || [];
+    // Check if sourceDataByYear exists, otherwise fallback to sourceData
+    if (scope1Data?.sourceDataByYear && scope1Data.sourceDataByYear[year]) {
+      return scope1Data.sourceDataByYear[year];
+    }
+    
+    return scope1Data?.sourceData || [];
   };
 
   const sourceData = getSourceDataForYear(selectedYear).map(item => ({
