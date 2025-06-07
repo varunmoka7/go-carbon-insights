@@ -1,272 +1,93 @@
-import React, { useState } from 'react';
-import { Plus, BarChart3, Calculator, Upload } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
-import { addEmissionEntry } from '@/utils/emissionsTracking';
+
+import React from 'react';
+import { Badge } from '@/components/ui/badge';
+import GlobalStatsCards from '@/components/GlobalStatsCards';
+import SectorBreakdownChart from '@/components/SectorBreakdownChart';
+import GrowthTimelineChart from '@/components/GrowthTimelineChart';
+import CompanyLocationsMap from '@/components/CompanyLocationsMap';
+import FeaturedCompaniesGrid from '@/components/FeaturedCompaniesGrid';
+import DataQualityMetrics from '@/components/DataQualityMetrics';
+import PlatformImpactMetrics from '@/components/PlatformImpactMetrics';
+import { Globe, Target, TrendingUp } from 'lucide-react';
 
 const Tracking = () => {
-  const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState('manual');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    date: '',
-    category: '',
-    amount: '',
-    unit: '',
-    description: ''
-  });
-
-  // Default company ID - in a real app, this would come from user context
-  const defaultCompanyId = 'acme-corp';
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const result = await addEmissionEntry({
-        company_id: defaultCompanyId,
-        date: formData.date,
-        category: formData.category,
-        amount: parseFloat(formData.amount),
-        unit: formData.unit,
-        description: formData.description
-      });
-
-      if (result.success) {
-        toast({
-          title: "Emission Entry Added",
-          description: "Your emission data has been successfully recorded.",
-        });
-        setFormData({ date: '', category: '', amount: '', unit: '', description: '' });
-      } else {
-        throw new Error('Failed to add emission entry');
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to add emission entry. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const quickActions = [
-    {
-      title: 'Calculate Electricity',
-      description: 'Enter your electricity consumption',
-      icon: BarChart3,
-      action: () => setActiveTab('electricity')
-    },
-    {
-      title: 'Vehicle Emissions',
-      description: 'Track fuel consumption and travel',
-      icon: Calculator,
-      action: () => setActiveTab('vehicle')
-    },
-    {
-      title: 'Import Data',
-      description: 'Upload CSV or Excel files',
-      icon: Upload,
-      action: () => setActiveTab('import')
-    }
-  ];
-
-  const categories = [
-    { value: 'electricity', label: 'Electricity Consumption' },
-    { value: 'fuel', label: 'Fuel Combustion' },
-    { value: 'vehicle', label: 'Vehicle Transport' },
-    { value: 'waste', label: 'Waste Management' },
-    { value: 'travel', label: 'Business Travel' },
-    { value: 'other', label: 'Other' }
-  ];
-
-  const units = [
-    { value: 'kwh', label: 'kWh' },
-    { value: 'liters', label: 'Liters' },
-    { value: 'kg', label: 'Kilograms' },
-    { value: 'km', label: 'Kilometers' },
-    { value: 'miles', label: 'Miles' },
-    { value: 'tons', label: 'Tons' }
-  ];
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Emissions Tracking</h1>
-        <p className="text-lg text-gray-600">Record and monitor your carbon emissions across all sources</p>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
-        {quickActions.map((action, index) => (
-          <Card key={index} className="cursor-pointer hover:shadow-lg transition-shadow" onClick={action.action}>
-            <CardHeader>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
-                  <action.icon className="h-5 w-5 text-teal-600" />
-                </div>
-                <div>
-                  <CardTitle className="text-lg">{action.title}</CardTitle>
-                  <CardDescription>{action.description}</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
-        ))}
-      </div>
-
-      {/* Main Content */}
-      <div className="grid lg:grid-cols-3 gap-8">
-        {/* Data Entry Form */}
-        <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Plus className="h-5 w-5" />
-                <span>Add Emission Entry</span>
-              </CardTitle>
-              <CardDescription>Record new emission data for tracking and analysis</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                    <Input
-                      type="date"
-                      value={formData.date}
-                      onChange={(e) => setFormData({...formData, date: e.target.value})}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                    <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.map((cat) => (
-                          <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Amount</label>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      value={formData.amount}
-                      onChange={(e) => setFormData({...formData, amount: e.target.value})}
-                      placeholder="Enter amount"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Unit</label>
-                    <Select value={formData.unit} onValueChange={(value) => setFormData({...formData, unit: value})}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select unit" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {units.map((unit) => (
-                          <SelectItem key={unit.value} value={unit.value}>{unit.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
-                  <Textarea
-                    value={formData.description}
-                    onChange={(e) => setFormData({...formData, description: e.target.value})}
-                    placeholder="Add additional details..."
-                    rows={3}
-                  />
-                </div>
-
-                <Button 
-                  type="submit" 
-                  className="w-full bg-teal-600 hover:bg-teal-700"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Adding Entry...' : 'Add Entry'}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+      {/* Header Section */}
+      <div className="text-center mb-12">
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <Badge variant="outline" className="px-4 py-2">
+            <Globe className="h-4 w-4 mr-2" />
+            Global Emissions Monitoring Center
+          </Badge>
         </div>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Tracking Corporate Carbon Footprints
+        </h1>
+        <p className="text-xl text-gray-600 max-w-4xl mx-auto mb-6">
+          GoCarbonTracker monitors emissions data from organizations worldwide, making previously 
+          untapped sustainability information accessible to humanity and accelerating climate transparency.
+        </p>
+        <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
+          <div className="flex items-center gap-2">
+            <Target className="h-4 w-4 text-teal-600" />
+            <span>Supply Chain Transparency</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <TrendingUp className="h-4 w-4 text-blue-600" />
+            <span>Real-time Monitoring</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Globe className="h-4 w-4 text-purple-600" />
+            <span>Global Coverage</span>
+          </div>
+        </div>
+      </div>
 
-        {/* Quick Stats */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>This Month</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Total Entries</span>
-                <span className="font-semibold">24</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Estimated CO2e</span>
-                <span className="font-semibold text-red-600">1,245 kg</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">vs Last Month</span>
-                <span className="font-semibold text-green-600">-12%</span>
-              </div>
-            </CardContent>
-          </Card>
+      {/* Global Overview Cards */}
+      <GlobalStatsCards />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Entries</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {[
-                { date: '2024-01-15', category: 'Electricity', amount: '1,250 kWh' },
-                { date: '2024-01-14', category: 'Vehicle', amount: '45 L' },
-                { date: '2024-01-13', category: 'Travel', amount: '350 km' }
-              ].map((entry, index) => (
-                <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                  <div>
-                    <div className="font-medium text-sm">{entry.category}</div>
-                    <div className="text-xs text-gray-500">{entry.date}</div>
-                  </div>
-                  <div className="text-sm font-medium">{entry.amount}</div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+      {/* Main Analytics Section */}
+      <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        <CompanyLocationsMap />
+        <SectorBreakdownChart />
+      </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Tips</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 text-sm text-gray-600">
-                <p>• Record data regularly for accurate tracking</p>
-                <p>• Use consistent units for better analysis</p>
-                <p>• Include detailed descriptions for complex entries</p>
-                <p>• Set up monthly goals to track progress</p>
-              </div>
-            </CardContent>
-          </Card>
+      {/* Growth and Quality Analysis */}
+      <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        <GrowthTimelineChart />
+        <DataQualityMetrics />
+      </div>
+
+      {/* Featured Companies */}
+      <div className="mb-12">
+        <FeaturedCompaniesGrid />
+      </div>
+
+      {/* Platform Impact Metrics */}
+      <PlatformImpactMetrics />
+
+      {/* Mission Statement Footer */}
+      <div className="mt-16 text-center bg-gradient-to-r from-teal-50 to-blue-50 rounded-xl p-8 border border-teal-200">
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
+        <p className="text-lg text-gray-700 max-w-4xl mx-auto mb-6">
+          We believe transparency accelerates climate action. By making corporate carbon data accessible 
+          and actionable, we empower companies, investors, and consumers to make informed decisions that 
+          drive meaningful emission reductions across global supply chains.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-teal-600 mb-2">15+</div>
+            <div className="text-sm text-gray-600">Companies Tracked</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-blue-600 mb-2">8</div>
+            <div className="text-sm text-gray-600">Industry Sectors</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-purple-600 mb-2">12</div>
+            <div className="text-sm text-gray-600">Countries</div>
+          </div>
         </div>
       </div>
     </div>
