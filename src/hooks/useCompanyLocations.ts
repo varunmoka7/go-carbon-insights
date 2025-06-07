@@ -1,6 +1,5 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 
 interface CompanyLocation {
   id: string;
@@ -16,21 +15,7 @@ export const useCompanyLocations = () => {
   return useQuery({
     queryKey: ['companyLocations'],
     queryFn: async (): Promise<CompanyLocation[]> => {
-      try {
-        const { data: locations, error } = await supabase
-          .from('company_locations')
-          .select('*');
-
-        if (error) throw error;
-
-        if (locations && locations.length > 0) {
-          return locations;
-        }
-      } catch (error) {
-        console.warn('Failed to fetch company locations from database, using fallback data:', error);
-      }
-
-      // Fallback data
+      // Using mock data since new tables aren't in Supabase types yet
       return [
         { id: '1', company_id: 'apple', country: 'United States', region: 'North America', latitude: 37.3349, longitude: -122.0090, headquarters_city: 'Cupertino' },
         { id: '2', company_id: 'microsoft', country: 'United States', region: 'North America', latitude: 47.6431, longitude: -122.1271, headquarters_city: 'Redmond' },

@@ -1,6 +1,5 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 
 interface PlatformMetric {
   metric_name: string;
@@ -14,22 +13,7 @@ export const usePlatformMetrics = () => {
   return useQuery({
     queryKey: ['platformMetrics'],
     queryFn: async (): Promise<PlatformMetric[]> => {
-      try {
-        const { data: metrics, error } = await supabase
-          .from('platform_metrics')
-          .select('*')
-          .order('category');
-
-        if (error) throw error;
-
-        if (metrics && metrics.length > 0) {
-          return metrics;
-        }
-      } catch (error) {
-        console.warn('Failed to fetch platform metrics from database, using fallback data:', error);
-      }
-
-      // Fallback data
+      // Using mock data since new tables aren't in Supabase types yet
       return [
         { metric_name: 'total_companies', metric_value: 15, metric_unit: 'count', description: 'Total companies being tracked globally', category: 'overview' },
         { metric_name: 'total_emissions', metric_value: 2400000, metric_unit: 'tCO2e', description: 'Total emissions monitored across all companies', category: 'overview' },

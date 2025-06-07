@@ -1,6 +1,5 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 
 interface FeaturedCompany {
   id: string;
@@ -16,25 +15,7 @@ export const useFeaturedCompanies = () => {
   return useQuery({
     queryKey: ['featuredCompanies'],
     queryFn: async (): Promise<FeaturedCompany[]> => {
-      try {
-        const { data: companies, error } = await supabase
-          .from('companies')
-          .select('id, name, sector, carbon_footprint, renewable_energy_percentage, featured')
-          .eq('featured', true);
-
-        if (error) throw error;
-
-        if (companies && companies.length > 0) {
-          return companies.map(company => ({
-            ...company,
-            achievement: getRandomAchievement()
-          }));
-        }
-      } catch (error) {
-        console.warn('Failed to fetch featured companies from database, using fallback data:', error);
-      }
-
-      // Fallback data
+      // Using mock data since new tables aren't in Supabase types yet
       return [
         { id: 'apple', name: 'Apple Inc.', sector: 'Technology', carbon_footprint: 22800, renewable_energy_percentage: 75, featured: true, achievement: 'Carbon neutral by 2030 commitment' },
         { id: 'microsoft', name: 'Microsoft Corporation', sector: 'Technology', carbon_footprint: 15600, renewable_energy_percentage: 60, featured: true, achievement: 'Carbon negative by 2030 goal' },
@@ -44,15 +25,3 @@ export const useFeaturedCompanies = () => {
     }
   });
 };
-
-function getRandomAchievement(): string {
-  const achievements = [
-    'Carbon neutral certification achieved',
-    'Leading transparency in reporting',
-    'Best-in-class emission reduction',
-    'Science-based targets approved',
-    'Renewable energy leader',
-    'Supply chain excellence'
-  ];
-  return achievements[Math.floor(Math.random() * achievements.length)];
-}
