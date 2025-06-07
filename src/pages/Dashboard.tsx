@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useCompanies } from '@/hooks/useCompanies';
 import { useClimateIntelligence } from '@/hooks/useClimateIntelligence';
 import ClimatePerformanceDashboard from '@/components/ClimatePerformanceDashboard';
-import { Leaf, Target, TrendingUp } from 'lucide-react';
+import { Leaf, Target, TrendingUp, AlertCircle } from 'lucide-react';
 
 const Dashboard = () => {
   const [searchParams] = useSearchParams();
@@ -14,9 +14,28 @@ const Dashboard = () => {
   const [selectedCompany, setSelectedCompany] = useState(initialCompany);
   
   const { data: companies, isLoading: companiesLoading } = useCompanies();
-  const { data: climateData, isLoading: climateLoading } = useClimateIntelligence(selectedCompany);
+  const { data: climateData, isLoading: climateLoading, error: climateError } = useClimateIntelligence(selectedCompany);
 
-  if (companiesLoading || climateLoading) {
+  console.log('Dashboard state:', {
+    selectedCompany,
+    companiesLoading,
+    climateLoading,
+    climateData: !!climateData,
+    climateError
+  });
+
+  if (companiesLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading companies...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (climateLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -27,10 +46,18 @@ const Dashboard = () => {
     );
   }
 
+  if (climateError) {
+    console.error('Climate data error:', climateError);
+  }
+
   if (!climateData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-600">No climate data available for this company.</p>
+        <div className="text-center">
+          <AlertCircle className="h-12 w-12 text-amber-500 mx-auto mb-4" />
+          <p className="text-gray-600 mb-4">Unable to load climate data for this company.</p>
+          <p className="text-sm text-gray-500">Please try selecting a different company or refresh the page.</p>
+        </div>
       </div>
     );
   }
@@ -94,7 +121,7 @@ const Dashboard = () => {
       />
 
       {/* Company Context */}
-      {selectedCompanyData && (
+      {selectedCompanyData && climateData.company && (
         <div className="mt-12 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-8 border border-gray-200">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">Climate Strategy Context</h3>
           <div className="grid md:grid-cols-2 gap-6">
