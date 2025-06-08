@@ -117,6 +117,7 @@ const Dashboard = () => {
       <ClimatePerformanceDashboard 
         climateMetrics={climateData.climateMetrics}
         carbonProjects={climateData.carbonProjects}
+        priorityActions={climateData.priorityActions || []}
         companyName={selectedCompanyData?.name || 'Selected Company'}
       />
 

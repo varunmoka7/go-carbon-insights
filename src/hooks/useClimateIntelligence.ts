@@ -14,6 +14,23 @@ interface ClimateMetrics {
   climateInvestment: number;
   averageROI: number;
   greenRevenue: number;
+  scope3Coverage: number;
+  energyEfficiency: number;
+  supplierEngagement: number;
+  industryBenchmark: {
+    carbonIntensity: { value: number; status: 'above' | 'at' | 'below' };
+    renewableEnergy: { value: number; status: 'above' | 'at' | 'below' };
+    scope3Coverage: { value: number; status: 'above' | 'at' | 'below' };
+    energyEfficiency: { value: number; status: 'above' | 'at' | 'below' };
+    supplierEngagement: { value: number; status: 'above' | 'at' | 'below' };
+  };
+  alerts: {
+    carbonIntensity: 'critical' | 'warning' | 'trending' | 'good';
+    scope3Coverage: 'critical' | 'warning' | 'trending' | 'good';
+    renewableEnergy: 'critical' | 'warning' | 'trending' | 'good';
+    energyEfficiency: 'critical' | 'warning' | 'trending' | 'good';
+    supplierEngagement: 'critical' | 'warning' | 'trending' | 'good';
+  };
 }
 
 interface CarbonProject {
@@ -36,6 +53,17 @@ interface CompanyClimateData {
   sbtiStatus: string;
   netZeroTargetYear: number;
   climateRiskScore: string;
+  scope3CoveragePercent: number;
+  supplierEngagementPercent: number;
+}
+
+interface PriorityAction {
+  id: string;
+  title: string;
+  description: string;
+  impact: 'high' | 'medium' | 'low';
+  effort: 'low' | 'medium' | 'high';
+  category: string;
 }
 
 export const useClimateIntelligence = (companyId: string) => {
@@ -46,8 +74,9 @@ export const useClimateIntelligence = (companyId: string) => {
     queryFn: () => {
       console.log('Generating climate intelligence for company:', companyId);
       
-      // Comprehensive strategic climate data for each company
+      // Comprehensive strategic climate data for existing + 5 new companies
       const strategicClimateData: Record<string, CompanyClimateData> = {
+        // ... keep existing code (existing companies data)
         apple: {
           revenueMillions: 394300,
           renewableEnergyPercent: 100,
@@ -55,7 +84,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 85,
           sbtiStatus: 'approved',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'low'
+          climateRiskScore: 'low',
+          scope3CoveragePercent: 95,
+          supplierEngagementPercent: 88
         },
         microsoft: {
           revenueMillions: 211900,
@@ -64,7 +95,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 70,
           sbtiStatus: 'approved',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'low'
+          climateRiskScore: 'low',
+          scope3CoveragePercent: 90,
+          supplierEngagementPercent: 82
         },
         google: {
           revenueMillions: 307400,
@@ -73,7 +106,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 60,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'medium'
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 85,
+          supplierEngagementPercent: 76
         },
         tesla: {
           revenueMillions: 96800,
@@ -82,7 +117,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 100,
           sbtiStatus: 'approved',
           netZeroTargetYear: 2025,
-          climateRiskScore: 'low'
+          climateRiskScore: 'low',
+          scope3CoveragePercent: 88,
+          supplierEngagementPercent: 92
         },
         amazon: {
           revenueMillions: 513900,
@@ -91,7 +128,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 80,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2040,
-          climateRiskScore: 'medium'
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 75,
+          supplierEngagementPercent: 68
         },
         meta: {
           revenueMillions: 118000,
@@ -100,7 +139,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 40,
           sbtiStatus: 'not_set',
           netZeroTargetYear: 2035,
-          climateRiskScore: 'high'
+          climateRiskScore: 'high',
+          scope3CoveragePercent: 45,
+          supplierEngagementPercent: 42
         },
         bmw: {
           revenueMillions: 142600,
@@ -109,7 +150,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 55,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'medium'
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 70,
+          supplierEngagementPercent: 65
         },
         volkswagen: {
           revenueMillions: 295800,
@@ -118,7 +161,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 45,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2035,
-          climateRiskScore: 'medium'
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 68,
+          supplierEngagementPercent: 58
         },
         toyota: {
           revenueMillions: 274500,
@@ -127,7 +172,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 65,
           sbtiStatus: 'approved',
           netZeroTargetYear: 2035,
-          climateRiskScore: 'low'
+          climateRiskScore: 'low',
+          scope3CoveragePercent: 80,
+          supplierEngagementPercent: 72
         },
         samsung: {
           revenueMillions: 244200,
@@ -136,7 +183,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 35,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'medium'
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 65,
+          supplierEngagementPercent: 60
         },
         bp: {
           revenueMillions: 164200,
@@ -145,7 +194,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 25,
           sbtiStatus: 'approved',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'high'
+          climateRiskScore: 'high',
+          scope3CoveragePercent: 55,
+          supplierEngagementPercent: 48
         },
         shell: {
           revenueMillions: 261500,
@@ -154,7 +205,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 20,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2050,
-          climateRiskScore: 'high'
+          climateRiskScore: 'high',
+          scope3CoveragePercent: 50,
+          supplierEngagementPercent: 45
         },
         nike: {
           revenueMillions: 51200,
@@ -163,7 +216,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 90,
           sbtiStatus: 'approved',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'low'
+          climateRiskScore: 'low',
+          scope3CoveragePercent: 92,
+          supplierEngagementPercent: 85
         },
         unilever: {
           revenueMillions: 64300,
@@ -172,7 +227,9 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 65,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2030,
-          climateRiskScore: 'medium'
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 88,
+          supplierEngagementPercent: 78
         },
         nestle: {
           revenueMillions: 94400,
@@ -181,7 +238,65 @@ export const useClimateIntelligence = (companyId: string) => {
           fleetElectrification: 55,
           sbtiStatus: 'committed',
           netZeroTargetYear: 2050,
-          climateRiskScore: 'medium'
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 82,
+          supplierEngagementPercent: 70
+        },
+        // New companies
+        techcorp: {
+          revenueMillions: 45000,
+          renewableEnergyPercent: 95,
+          energyEfficiencyImprovement: 48,
+          fleetElectrification: 85,
+          sbtiStatus: 'approved',
+          netZeroTargetYear: 2028,
+          climateRiskScore: 'low',
+          scope3CoveragePercent: 90,
+          supplierEngagementPercent: 88
+        },
+        manufacturingplus: {
+          revenueMillions: 180000,
+          renewableEnergyPercent: 55,
+          energyEfficiencyImprovement: 25,
+          fleetElectrification: 40,
+          sbtiStatus: 'committed',
+          netZeroTargetYear: 2035,
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 60,
+          supplierEngagementPercent: 55
+        },
+        energytransition: {
+          revenueMillions: 320000,
+          renewableEnergyPercent: 60,
+          energyEfficiencyImprovement: 30,
+          fleetElectrification: 35,
+          sbtiStatus: 'committed',
+          netZeroTargetYear: 2040,
+          climateRiskScore: 'high',
+          scope3CoveragePercent: 65,
+          supplierEngagementPercent: 52
+        },
+        consumergoods: {
+          revenueMillions: 95000,
+          renewableEnergyPercent: 78,
+          energyEfficiencyImprovement: 35,
+          fleetElectrification: 70,
+          sbtiStatus: 'approved',
+          netZeroTargetYear: 2032,
+          climateRiskScore: 'low',
+          scope3CoveragePercent: 90,
+          supplierEngagementPercent: 82
+        },
+        healthcare: {
+          revenueMillions: 72000,
+          renewableEnergyPercent: 70,
+          energyEfficiencyImprovement: 32,
+          fleetElectrification: 60,
+          sbtiStatus: 'committed',
+          netZeroTargetYear: 2030,
+          climateRiskScore: 'medium',
+          scope3CoveragePercent: 75,
+          supplierEngagementPercent: 68
         }
       };
 
@@ -190,25 +305,125 @@ export const useClimateIntelligence = (companyId: string) => {
       
       // Get company info from existing data
       const company = companies?.find(c => c.id === companyId);
-      const totalEmissions = company?.total_emissions || 3500;
+      const totalEmissions = company?.total_emissions || (() => {
+        // Define emissions for new companies
+        const newCompanyEmissions: Record<string, number> = {
+          techcorp: 25000,
+          manufacturingplus: 250000,
+          energytransition: 500000,
+          consumergoods: 120000,
+          healthcare: 85000
+        };
+        return newCompanyEmissions[companyId] || 3500;
+      })();
       
       console.log('Company data found:', company);
       console.log('Total emissions:', totalEmissions);
-      
-      // Calculate climate metrics
+
+      // Calculate industry benchmarks by sector
+      const getIndustryBenchmarks = (sector: string) => {
+        const sectorAverages: Record<string, any> = {
+          technology: { carbonIntensity: 12, renewableEnergy: 78, scope3Coverage: 85, energyEfficiency: 38, supplierEngagement: 75 },
+          automotive: { carbonIntensity: 45, renewableEnergy: 58, scope3Coverage: 72, energyEfficiency: 32, supplierEngagement: 65 },
+          energy: { carbonIntensity: 180, renewableEnergy: 48, scope3Coverage: 58, energyEfficiency: 28, supplierEngagement: 50 },
+          manufacturing: { carbonIntensity: 85, renewableEnergy: 52, scope3Coverage: 65, energyEfficiency: 30, supplierEngagement: 58 },
+          consumer: { carbonIntensity: 35, renewableEnergy: 65, scope3Coverage: 80, energyEfficiency: 35, supplierEngagement: 72 },
+          healthcare: { carbonIntensity: 25, renewableEnergy: 62, scope3Coverage: 70, energyEfficiency: 30, supplierEngagement: 65 }
+        };
+        
+        return sectorAverages[sector.toLowerCase()] || sectorAverages.technology;
+      };
+
+      const sectorName = company?.sector?.toLowerCase() || 'technology';
+      const industryAvg = getIndustryBenchmarks(sectorName);
+      const carbonIntensity = Math.round((totalEmissions / data.revenueMillions) * 1000000);
+
+      // Calculate climate metrics with enhanced data
       const climateMetrics: ClimateMetrics = {
         temperatureAlignment: data.netZeroTargetYear <= 2030 ? '1.5°C Aligned' : '2°C Pathway',
         netZeroProgress: Math.min(95, ((2050 - data.netZeroTargetYear) / (2050 - 2020)) * 100),
         sbtiStatus: data.sbtiStatus,
         climateRiskScore: data.climateRiskScore,
         totalEmissions,
-        carbonIntensity: Math.round((totalEmissions / data.revenueMillions) * 1000000),
+        carbonIntensity,
         renewableEnergy: data.renewableEnergyPercent,
         avoidedEmissions: Math.round(totalEmissions * (data.energyEfficiencyImprovement / 100)),
         carbonCostExposure: Math.round(totalEmissions * 85), // $85/tCO2e
         climateInvestment: Math.round(data.revenueMillions * 0.02), // 2% of revenue
         averageROI: 12.5,
-        greenRevenue: Math.round(data.revenueMillions * 0.15) // 15% green revenue
+        greenRevenue: Math.round(data.revenueMillions * 0.15), // 15% green revenue
+        scope3Coverage: data.scope3CoveragePercent,
+        energyEfficiency: data.energyEfficiencyImprovement,
+        supplierEngagement: data.supplierEngagementPercent,
+        industryBenchmark: {
+          carbonIntensity: {
+            value: industryAvg.carbonIntensity,
+            status: carbonIntensity < industryAvg.carbonIntensity ? 'below' : carbonIntensity > industryAvg.carbonIntensity * 1.1 ? 'above' : 'at'
+          },
+          renewableEnergy: {
+            value: industryAvg.renewableEnergy,
+            status: data.renewableEnergyPercent > industryAvg.renewableEnergy ? 'above' : data.renewableEnergyPercent < industryAvg.renewableEnergy * 0.9 ? 'below' : 'at'
+          },
+          scope3Coverage: {
+            value: industryAvg.scope3Coverage,
+            status: data.scope3CoveragePercent > industryAvg.scope3Coverage ? 'above' : data.scope3CoveragePercent < industryAvg.scope3Coverage * 0.9 ? 'below' : 'at'
+          },
+          energyEfficiency: {
+            value: industryAvg.energyEfficiency,
+            status: data.energyEfficiencyImprovement > industryAvg.energyEfficiency ? 'above' : data.energyEfficiencyImprovement < industryAvg.energyEfficiency * 0.8 ? 'below' : 'at'
+          },
+          supplierEngagement: {
+            value: industryAvg.supplierEngagement,
+            status: data.supplierEngagementPercent > industryAvg.supplierEngagement ? 'above' : data.supplierEngagementPercent < industryAvg.supplierEngagement * 0.9 ? 'below' : 'at'
+          }
+        },
+        alerts: {
+          carbonIntensity: carbonIntensity > industryAvg.carbonIntensity * 1.2 ? 'critical' : carbonIntensity > industryAvg.carbonIntensity * 1.1 ? 'warning' : 'good',
+          scope3Coverage: data.scope3CoveragePercent < 60 ? 'critical' : data.scope3CoveragePercent < 75 ? 'warning' : 'good',
+          renewableEnergy: data.renewableEnergyPercent < 40 ? 'critical' : data.renewableEnergyPercent < 60 ? 'warning' : 'good',
+          energyEfficiency: data.energyEfficiencyImprovement < 20 ? 'critical' : data.energyEfficiencyImprovement < 30 ? 'warning' : 'good',
+          supplierEngagement: data.supplierEngagementPercent < 50 ? 'critical' : data.supplierEngagementPercent < 70 ? 'warning' : 'good'
+        }
+      };
+
+      // Generate priority actions based on performance gaps
+      const generatePriorityActions = (metrics: ClimateMetrics, data: CompanyClimateData): PriorityAction[] => {
+        const actions: PriorityAction[] = [];
+
+        if (metrics.alerts.carbonIntensity !== 'good') {
+          actions.push({
+            id: '1',
+            title: 'Reduce Carbon Intensity',
+            description: `Current intensity is ${metrics.carbonIntensity} tCO2e/$M vs industry avg of ${metrics.industryBenchmark.carbonIntensity.value}. Focus on energy efficiency and renewable transition.`,
+            impact: 'high',
+            effort: 'medium',
+            category: 'Emissions'
+          });
+        }
+
+        if (metrics.alerts.scope3Coverage !== 'good') {
+          actions.push({
+            id: '2',
+            title: 'Expand Scope 3 Measurement',
+            description: `Only ${metrics.scope3Coverage}% of supply chain emissions tracked. Target 85%+ coverage for comprehensive climate strategy.`,
+            impact: 'high',
+            effort: 'high',
+            category: 'Supply Chain'
+          });
+        }
+
+        if (metrics.alerts.supplierEngagement !== 'good') {
+          actions.push({
+            id: '3',
+            title: 'Accelerate Supplier Engagement',
+            description: `${metrics.supplierEngagement}% suppliers engaged vs 75%+ target. Implement supplier climate requirements and incentives.`,
+            impact: 'medium',
+            effort: 'medium',
+            category: 'Partnerships'
+          });
+        }
+
+        return actions.slice(0, 3); // Return top 3 actions
       };
 
       // Generate sector-appropriate carbon projects
@@ -250,7 +465,7 @@ export const useClimateIntelligence = (companyId: string) => {
         ];
 
         // Add sector-specific projects
-        if (['bp', 'shell'].includes(companyId)) {
+        if (['bp', 'shell', 'energytransition'].includes(companyId)) {
           baseProjects.push({
             id: '4',
             name: 'Carbon Capture & Storage',
@@ -278,14 +493,30 @@ export const useClimateIntelligence = (companyId: string) => {
           });
         }
 
+        if (['techcorp', 'apple', 'microsoft', 'google'].includes(companyId)) {
+          baseProjects.push({
+            id: '4',
+            name: 'Data Center Optimization',
+            type: 'efficiency',
+            status: 'active',
+            investment: Math.round(data.revenueMillions * 0.010),
+            annualReduction: Math.round(totalEmissions * 0.22),
+            paybackPeriod: 6.2,
+            roi: 15.8,
+            description: 'AI-powered cooling and server efficiency improvements'
+          });
+        }
+
         return baseProjects;
       };
 
       const carbonProjects = generateCarbonProjects(companyId, data);
+      const priorityActions = generatePriorityActions(climateMetrics, data);
 
       const result = {
         climateMetrics,
         carbonProjects,
+        priorityActions,
         company: {
           ...company,
           ...data

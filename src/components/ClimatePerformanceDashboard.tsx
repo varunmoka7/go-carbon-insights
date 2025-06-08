@@ -16,6 +16,10 @@ import {
   Factory
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
+import MetricTooltip from './MetricTooltip';
+import IndustryBenchmarkIndicator from './IndustryBenchmarkIndicator';
+import PriorityActionsPanel from './PriorityActionsPanel';
+import MetricAlertIcon from './MetricAlertIcon';
 
 interface ClimateMetrics {
   temperatureAlignment: string;
@@ -30,6 +34,23 @@ interface ClimateMetrics {
   climateInvestment: number;
   averageROI: number;
   greenRevenue: number;
+  scope3Coverage: number;
+  energyEfficiency: number;
+  supplierEngagement: number;
+  industryBenchmark: {
+    carbonIntensity: { value: number; status: 'above' | 'at' | 'below' };
+    renewableEnergy: { value: number; status: 'above' | 'at' | 'below' };
+    scope3Coverage: { value: number; status: 'above' | 'at' | 'below' };
+    energyEfficiency: { value: number; status: 'above' | 'at' | 'below' };
+    supplierEngagement: { value: number; status: 'above' | 'at' | 'below' };
+  };
+  alerts: {
+    carbonIntensity: 'critical' | 'warning' | 'trending' | 'good';
+    scope3Coverage: 'critical' | 'warning' | 'trending' | 'good';
+    renewableEnergy: 'critical' | 'warning' | 'trending' | 'good';
+    energyEfficiency: 'critical' | 'warning' | 'trending' | 'good';
+    supplierEngagement: 'critical' | 'warning' | 'trending' | 'good';
+  };
 }
 
 interface CarbonProject {
@@ -44,13 +65,23 @@ interface CarbonProject {
   description: string;
 }
 
+interface PriorityAction {
+  id: string;
+  title: string;
+  description: string;
+  impact: 'high' | 'medium' | 'low';
+  effort: 'low' | 'medium' | 'high';
+  category: string;
+}
+
 interface Props {
   climateMetrics: ClimateMetrics;
   carbonProjects: CarbonProject[];
+  priorityActions: PriorityAction[];
   companyName: string;
 }
 
-const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyName }: Props) => {
+const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, priorityActions, companyName }: Props) => {
   const pathwayData = [
     { year: 2020, actual: climateMetrics.totalEmissions * 1.2, target: climateMetrics.totalEmissions * 1.2 },
     { year: 2021, actual: climateMetrics.totalEmissions * 1.1, target: climateMetrics.totalEmissions * 1.15 },
@@ -77,6 +108,15 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
       case 'medium': return 'secondary';
       case 'high': return 'destructive';
       default: return 'outline';
+    }
+  };
+
+  const getProgressBarColor = (alert: string) => {
+    switch (alert) {
+      case 'critical': return 'bg-red-500';
+      case 'warning': return 'bg-yellow-500';
+      case 'trending': return 'bg-orange-500';
+      default: return 'bg-green-500';
     }
   };
 
@@ -109,12 +149,18 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
         </div>
       </div>
 
+      {/* Priority Actions Panel */}
+      <PriorityActionsPanel actions={priorityActions} />
+
       {/* Strategic Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {/* Row 1: Emissions Intelligence */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Emissions</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Total Emissions
+              <MetricTooltip metric="Total Emissions" />
+            </CardTitle>
             <Building2 className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
@@ -127,33 +173,62 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Carbon Intensity</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Carbon Intensity
+              <MetricTooltip metric="Carbon Intensity" />
+              <MetricAlertIcon alert={climateMetrics.alerts.carbonIntensity} metricName="Carbon Intensity" />
+            </CardTitle>
             <Activity className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{climateMetrics.carbonIntensity}</div>
             <p className="text-xs text-muted-foreground">tCO2e per $M revenue</p>
-            <Progress value={60} className="mt-2" />
-            <p className="text-xs text-blue-600 mt-1">Improving efficiency</p>
+            <div className="mt-2">
+              <Progress 
+                value={Math.max(0, Math.min(100, 100 - (climateMetrics.carbonIntensity / climateMetrics.industryBenchmark.carbonIntensity.value) * 50))} 
+                className="mb-2"
+                style={{ '--progress-foreground': getProgressBarColor(climateMetrics.alerts.carbonIntensity) } as React.CSSProperties}
+              />
+              <IndustryBenchmarkIndicator 
+                status={climateMetrics.industryBenchmark.carbonIntensity.status}
+                className="text-xs"
+              />
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Scope 3 Coverage</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Scope 3 Coverage
+              <MetricTooltip metric="Scope 3 Coverage" />
+              <MetricAlertIcon alert={climateMetrics.alerts.scope3Coverage} metricName="Scope 3 Coverage" />
+            </CardTitle>
             <Target className="h-4 w-4 text-purple-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">85%</div>
+            <div className="text-2xl font-bold">{climateMetrics.scope3Coverage}%</div>
             <p className="text-xs text-muted-foreground">Supply chain mapped</p>
-            <Progress value={85} className="mt-2" />
-            <p className="text-xs text-green-600 mt-1">Above target coverage</p>
+            <div className="mt-2">
+              <Progress 
+                value={climateMetrics.scope3Coverage} 
+                className="mb-2"
+                style={{ '--progress-foreground': getProgressBarColor(climateMetrics.alerts.scope3Coverage) } as React.CSSProperties}
+              />
+              <IndustryBenchmarkIndicator 
+                status={climateMetrics.industryBenchmark.scope3Coverage.status}
+                className="text-xs"
+              />
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avoided Emissions</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Avoided Emissions
+              <MetricTooltip metric="Avoided Emissions" />
+            </CardTitle>
             <Shield className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
@@ -167,33 +242,62 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
         {/* Row 2: Carbon Levers Performance */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Renewable Energy</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Renewable Energy
+              <MetricTooltip metric="Renewable Energy" />
+              <MetricAlertIcon alert={climateMetrics.alerts.renewableEnergy} metricName="Renewable Energy" />
+            </CardTitle>
             <Leaf className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{climateMetrics.renewableEnergy}%</div>
             <p className="text-xs text-muted-foreground">Clean electricity</p>
-            <Progress value={climateMetrics.renewableEnergy} className="mt-2" />
-            <p className="text-xs text-green-600 mt-1">2030 target: 100%</p>
+            <div className="mt-2">
+              <Progress 
+                value={climateMetrics.renewableEnergy} 
+                className="mb-2"
+                style={{ '--progress-foreground': getProgressBarColor(climateMetrics.alerts.renewableEnergy) } as React.CSSProperties}
+              />
+              <IndustryBenchmarkIndicator 
+                status={climateMetrics.industryBenchmark.renewableEnergy.status}
+                className="text-xs"
+              />
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Energy Efficiency</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Energy Efficiency
+              <MetricTooltip metric="Energy Efficiency" />
+              <MetricAlertIcon alert={climateMetrics.alerts.energyEfficiency} metricName="Energy Efficiency" />
+            </CardTitle>
             <Zap className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">32%</div>
+            <div className="text-2xl font-bold">{climateMetrics.energyEfficiency}%</div>
             <p className="text-xs text-muted-foreground">Improvement since 2020</p>
-            <Progress value={80} className="mt-2" />
-            <p className="text-xs text-blue-600 mt-1">Strong progress</p>
+            <div className="mt-2">
+              <Progress 
+                value={Math.min(100, (climateMetrics.energyEfficiency / 50) * 100)} 
+                className="mb-2"
+                style={{ '--progress-foreground': getProgressBarColor(climateMetrics.alerts.energyEfficiency) } as React.CSSProperties}
+              />
+              <IndustryBenchmarkIndicator 
+                status={climateMetrics.industryBenchmark.energyEfficiency.status}
+                className="text-xs"
+              />
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Fleet Electrification</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Fleet Electrification
+              <MetricTooltip metric="Fleet Electrification" />
+            </CardTitle>
             <Factory className="h-4 w-4 text-purple-600" />
           </CardHeader>
           <CardContent>
@@ -206,21 +310,37 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Supplier Engagement</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Supplier Engagement
+              <MetricTooltip metric="Supplier Engagement" />
+              <MetricAlertIcon alert={climateMetrics.alerts.supplierEngagement} metricName="Supplier Engagement" />
+            </CardTitle>
             <Award className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">74%</div>
+            <div className="text-2xl font-bold">{climateMetrics.supplierEngagement}%</div>
             <p className="text-xs text-muted-foreground">With targets set</p>
-            <Progress value={74} className="mt-2" />
-            <p className="text-xs text-orange-600 mt-1">Expanding program</p>
+            <div className="mt-2">
+              <Progress 
+                value={climateMetrics.supplierEngagement} 
+                className="mb-2"
+                style={{ '--progress-foreground': getProgressBarColor(climateMetrics.alerts.supplierEngagement) } as React.CSSProperties}
+              />
+              <IndustryBenchmarkIndicator 
+                status={climateMetrics.industryBenchmark.supplierEngagement.status}
+                className="text-xs"
+              />
+            </div>
           </CardContent>
         </Card>
 
         {/* Row 3: Financial Climate Impact */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Carbon Cost Exposure</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Carbon Cost Exposure
+              <MetricTooltip metric="Carbon Cost Exposure" />
+            </CardTitle>
             <DollarSign className="h-4 w-4 text-red-600" />
           </CardHeader>
           <CardContent>
@@ -233,7 +353,10 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Climate Investment</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Climate Investment
+              <MetricTooltip metric="Climate Investment" />
+            </CardTitle>
             <TrendingUp className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
@@ -246,7 +369,10 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Average Project ROI</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Average Project ROI
+              <MetricTooltip metric="Average Project ROI" />
+            </CardTitle>
             <Activity className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
@@ -259,7 +385,10 @@ const ClimatePerformanceDashboard = ({ climateMetrics, carbonProjects, companyNa
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Green Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              Green Revenue
+              <MetricTooltip metric="Green Revenue" />
+            </CardTitle>
             <Leaf className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
