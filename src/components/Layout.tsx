@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu, ChevronDown } from 'lucide-react';
@@ -41,15 +40,18 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { name: 'Decarbonization', href: '/decarbonization', icon: Target },
   ];
 
-  // Footer organization with 5 logical columns
+  const isActive = (href: string) => location.pathname === href;
+  const isTrackingActive = () => ['/tracking', '/scope1', '/scope2', '/scope3'].includes(location.pathname);
+
+  // Reorganized footer sections with improved structure
   const footerSections = {
     platform: {
       title: 'Platform',
       links: [
         { name: 'About Us', href: '/about' },
         { name: 'Dashboard', href: '/dashboard' },
-        { name: 'Contact', href: '/contact' },
         { name: 'Methodology', href: '/methodology' },
+        { name: 'Contact', href: '/contact' },
       ]
     },
     tracking: {
@@ -65,33 +67,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       title: 'Analytics & Planning',
       links: [
         { name: 'Reports', href: '/reports' },
-        { name: 'Decarbonization', href: '/decarbonization' },
-        { name: 'Benchmarking', href: '/dashboard' },
         { name: 'Analysis', href: '/analysis' },
+        { name: 'Benchmarking', href: '/dashboard' },
+        { name: 'Decarbonization', href: '/decarbonization' },
       ]
     },
     resources: {
-      title: 'Resources',
+      title: 'Resources & Support',
       links: [
-        { name: 'Reference', href: '/reference' },
         { name: 'Documentation', href: '/methodology' },
+        { name: 'Reference', href: '/reference' },
         { name: 'Support', href: '/contact' },
-        { name: 'Funding', href: '/funding' },
-      ]
-    },
-    company: {
-      title: 'Company',
-      links: [
-        { name: 'About Us', href: '/about' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'Profile', href: '/profile' },
         { name: 'Privacy Policy', href: '/about' },
       ]
     }
   };
-
-  const isActive = (href: string) => location.pathname === href;
-  const isTrackingActive = () => ['/tracking', '/scope1', '/scope2', '/scope3'].includes(location.pathname);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -261,33 +251,83 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </main>
 
-      {/* Footer - Reorganized with 5 logical columns */}
+      {/* Enhanced Footer */}
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {Object.entries(footerSections).map(([key, section]) => (
-              <div key={key}>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  {section.title}
-                </h3>
-                <div className="space-y-2">
-                  {section.links.map((link) => (
-                    <Link
-                      key={link.name}
-                      to={link.href}
-                      className="block text-sm text-gray-600 dark:text-gray-300 hover:text-teal-600 transition-colors"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Main Footer Content */}
+          <div className="py-12">
+            {/* Footer Header with Logo */}
+            <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <Logo size="medium" className="rounded-lg" />
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      GoCarbonTracker
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                      Accelerating global supply chain decarbonization
+                    </p>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">
+                  <p>Building the future of climate transparency</p>
                 </div>
               </div>
-            ))}
-          </div>
-          <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              © 2024 GoCarbonTracker. All rights reserved.
-            </p>
+            </div>
+
+            {/* Footer Links Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+              {Object.entries(footerSections).map(([key, section]) => (
+                <div key={key} className="space-y-4">
+                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">
+                    {section.title}
+                  </h4>
+                  <ul className="space-y-3">
+                    {section.links.map((link) => (
+                      <li key={link.name}>
+                        <Link
+                          to={link.href}
+                          className="text-sm text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-200 hover:underline"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Additional Footer Info */}
+            <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
+                  <span>© 2024 GoCarbonTracker. All rights reserved.</span>
+                  <span className="hidden sm:inline">•</span>
+                  <span>Committed to climate transparency and action</span>
+                </div>
+                
+                {/* Social Media Placeholder Section */}
+                <div className="flex items-center gap-4">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    Follow our mission:
+                  </span>
+                  <div className="flex gap-2">
+                    {/* Placeholder for future social media links */}
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                      <span className="text-xs text-gray-400">•</span>
+                    </div>
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                      <span className="text-xs text-gray-400">•</span>
+                    </div>
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                      <span className="text-xs text-gray-400">•</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
