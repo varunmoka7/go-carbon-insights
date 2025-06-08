@@ -1,20 +1,23 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, Factory, Truck, Fuel, Zap } from 'lucide-react';
+import { ArrowLeft, Factory, Truck, Fuel, Zap, TrendingUp, Users, Building, DollarSign, Award, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, ReferenceLine } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCompanies } from '@/hooks/useCompanies';
-import { useScope1Data } from '@/hooks/useScope1Data';
+import { useEnhancedScope1Data } from '@/hooks/useEnhancedScope1Data';
+import EnhancedMetricCard from '@/components/EnhancedMetricCard';
+import BenchmarkingSection from '@/components/BenchmarkingSection';
 
 const Scope1 = () => {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const [selectedYear, setSelectedYear] = useState('2024');
   const { data: companies } = useCompanies();
-  const { data: scope1Data, isLoading } = useScope1Data(selectedCompany);
+  const { data: enhancedData, isLoading } = useEnhancedScope1Data(selectedCompany);
 
   const sourceIcons = {
     'Natural Gas': <Fuel className="h-4 w-4" />,
@@ -28,30 +31,32 @@ const Scope1 = () => {
   if (isLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center">Loading Scope 1 data...</div>
+        <div className="text-center">Loading enhanced Scope 1 data...</div>
       </div>
     );
   }
 
-  const trendData = scope1Data?.trendData || [];
+  if (!enhancedData) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center text-red-600">Failed to load Scope 1 data</div>
+      </div>
+    );
+  }
+
+  const { trendData, sourceData, sourceDataByYear, benchmarkData, insights } = enhancedData;
   
   // Get year-specific source data
   const getSourceDataForYear = (year: string) => {
-    const yearData = trendData.find(item => item.year.toString() === year);
-    if (!yearData) return [];
-    
-    // Check if sourceDataByYear exists, otherwise fallback to sourceData
-    if (scope1Data?.sourceDataByYear && scope1Data.sourceDataByYear[year]) {
-      return scope1Data.sourceDataByYear[year];
-    }
-    
-    return scope1Data?.sourceData || [];
+    return sourceDataByYear[year] || sourceData;
   };
 
-  const sourceData = getSourceDataForYear(selectedYear).map(item => ({
+  const currentSourceData = getSourceDataForYear(selectedYear).map(item => ({
     ...item,
     icon: sourceIcons[item.source as keyof typeof sourceIcons] || <Factory className="h-4 w-4" />
   }));
+
+  const selectedCompanyData = companies?.find(c => c.id === selectedCompany);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -70,7 +75,7 @@ const Scope1 = () => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Scope 1 Emissions Analysis</h1>
-        <p className="text-lg text-gray-600 mb-6">Direct emissions from owned or controlled sources</p>
+        <p className="text-lg text-gray-600 mb-6">Direct emissions from owned or controlled sources with comprehensive benchmarking</p>
         
         {/* Company Selection */}
         <div className="flex items-center space-x-4">
@@ -90,11 +95,65 @@ const Scope1 = () => {
         </div>
       </div>
 
-      {/* Emissions Trend Chart */}
+      {/* KPI Metrics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <EnhancedMetricCard
+          title="Emissions Intensity"
+          value={benchmarkData.emissionsIntensity}
+          unit="tCO2e per $M"
+          subtitle="Revenue-based efficiency"
+          benchmarkStatus={benchmarkData.performanceIndicators.intensityVsAvg}
+          icon={<TrendingUp className="h-4 w-4" />}
+        />
+        
+        <EnhancedMetricCard
+          title="Per Employee"
+          value={benchmarkData.perEmployee}
+          unit="tCO2e per employee"
+          subtitle="Workforce efficiency"
+          benchmarkStatus={benchmarkData.performanceIndicators.employeeVsAvg}
+          icon={<Users className="h-4 w-4" />}
+        />
+        
+        <EnhancedMetricCard
+          title="Facility Efficiency"
+          value={benchmarkData.facilityEfficiency}
+          unit="tCO2e per sq ft"
+          subtitle="Space utilization efficiency"
+          benchmarkStatus={benchmarkData.performanceIndicators.efficiencyVsAvg}
+          icon={<Building className="h-4 w-4" />}
+        />
+        
+        <EnhancedMetricCard
+          title="Industry Rank"
+          value={`${benchmarkData.industryRank} of ${benchmarkData.totalInSector}`}
+          subtitle={`${selectedCompanyData?.sector || 'Industry'} companies`}
+          icon={<Award className="h-4 w-4" />}
+        />
+        
+        <EnhancedMetricCard
+          title="Annual Reduction"
+          value={benchmarkData.annualReduction}
+          unit="%"
+          subtitle="Year-over-year improvement"
+          trend={benchmarkData.annualReduction > 0 ? 'up' : 'down'}
+          change={benchmarkData.annualReduction}
+          icon={<BarChart3 className="h-4 w-4" />}
+        />
+        
+        <EnhancedMetricCard
+          title="Carbon Cost Exposure"
+          value={`$${benchmarkData.carbonCostExposure.toLocaleString()}`}
+          subtitle="Annual carbon pricing impact"
+          icon={<DollarSign className="h-4 w-4" />}
+        />
+      </div>
+
+      {/* Enhanced Emissions Trend Chart */}
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-gray-900">Scope 1 Emissions Trend</CardTitle>
-          <CardDescription>Historical direct emissions data showing year-over-year progress</CardDescription>
+          <CardTitle className="text-2xl font-bold text-gray-900">Scope 1 Emissions Trend with Industry Benchmark</CardTitle>
+          <CardDescription>Historical direct emissions vs industry average with percentile ranking</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
@@ -102,25 +161,54 @@ const Scope1 = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="year" />
               <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value) => [`${value} tCO2e`, 'Scope 1 Emissions']} />
+              <Tooltip 
+                formatter={(value, name) => {
+                  const labels = {
+                    emissions: 'Company Emissions',
+                    industryAverage: 'Industry Average',
+                    percentileRank: 'Percentile Rank'
+                  };
+                  return [`${value}${name === 'percentileRank' ? 'th' : ' tCO2e'}`, labels[name as keyof typeof labels]];
+                }}
+              />
               <Line 
                 type="monotone" 
                 dataKey="emissions" 
                 stroke="#dc2626" 
                 strokeWidth={3}
                 dot={{ fill: '#dc2626', r: 6 }}
+                name="emissions"
+              />
+              <Line 
+                type="monotone" 
+                dataKey="industryAverage" 
+                stroke="#94a3b8" 
+                strokeWidth={2}
+                strokeDasharray="5 5"
+                dot={{ fill: '#94a3b8', r: 4 }}
+                name="industryAverage"
               />
             </LineChart>
           </ResponsiveContainer>
+          
+          {/* Performance Summary */}
+          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-medium">Performance Summary:</span>
+              <span className="text-gray-600">
+                Currently ranking in the {trendData[trendData.length - 1]?.percentileRank || 50}th percentile of {selectedCompanyData?.sector || 'industry'} companies
+              </span>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
-      {/* Emissions by Source */}
+      {/* Enhanced Emissions by Source */}
       <Card className="mb-8">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="text-2xl font-bold text-gray-900">Emissions by Source</CardTitle>
-            <CardDescription>Breakdown of direct emissions by emission source category for {selectedYear}</CardDescription>
+            <CardTitle className="text-2xl font-bold text-gray-900">Enhanced Emissions by Source</CardTitle>
+            <CardDescription>Detailed breakdown with industry benchmarks and efficiency metrics for {selectedYear}</CardDescription>
           </div>
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-32">
@@ -137,7 +225,7 @@ const Scope1 = () => {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={sourceData}>
+            <BarChart data={currentSourceData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis 
                 dataKey="source" 
@@ -146,21 +234,44 @@ const Scope1 = () => {
                 height={100}
               />
               <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+              <Tooltip 
+                formatter={(value, name, props) => [
+                  `${value} tCO2e (${props.payload.percentage}%)`,
+                  'Emissions'
+                ]}
+                labelFormatter={(label) => `Source: ${label}`}
+              />
               <Bar dataKey="emissions" fill="#dc2626" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
           
-          {/* Source Legend */}
-          <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {sourceData.map((item, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                  {item.icon}
+          {/* Enhanced Source Metrics */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {currentSourceData.map((item, index) => (
+              <div key={index} className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-800">{item.source}</div>
+                    <div className="text-xs text-gray-600">{Math.round(item.emissions)} tCO2e ({item.percentage}%)</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-sm font-semibold text-gray-800">{item.source}</div>
-                  <div className="text-xs text-gray-600">{Math.round(item.emissions)} tCO2e</div>
+                
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Industry Range:</span>
+                    <span className="font-medium">{item.industryTypicalRange.min}-{item.industryTypicalRange.max}%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Efficiency Metric:</span>
+                    <span className="font-medium">{item.efficiencyMetric}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Cost/tonne:</span>
+                    <span className="font-medium">${item.costPerTonne}</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -168,60 +279,76 @@ const Scope1 = () => {
         </CardContent>
       </Card>
 
-      {/* Key Insights */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl font-bold text-gray-900">Key Insights & Recommendations</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-800">Performance Highlights</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">
-                    {trendData.length >= 2 ? 
-                      `${Math.round(((trendData[0].emissions - trendData[trendData.length - 1].emissions) / trendData[0].emissions * 100))}% reduction in direct emissions over ${trendData.length - 1} years` :
-                      'Tracking direct emissions progress'
-                    }
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Significant progress in fuel efficiency improvements</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">
-                    {sourceData.length > 0 ? 
-                      `${sourceData[0]?.source} remains the largest emission source in ${selectedYear}` :
-                      'Monitoring emission source distribution'
-                    }
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-800">Next Steps</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-teal-600 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Transition to renewable heating systems</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-teal-600 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Electrify vehicle fleet operations</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-teal-600 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Implement advanced refrigerant management</span>
-                </li>
-              </ul>
-            </div>
+      {/* Tabbed Content for Benchmarking and Insights */}
+      <Tabs defaultValue="benchmarking" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="benchmarking">Industry Benchmarking</TabsTrigger>
+          <TabsTrigger value="insights">Performance Insights</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="benchmarking">
+          <BenchmarkingSection 
+            benchmarkData={benchmarkData}
+            companyName={selectedCompanyData?.name || 'Company'}
+            sector={selectedCompanyData?.sector || 'Industry'}
+          />
+        </TabsContent>
+        
+        <TabsContent value="insights">
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Performance vs Peers */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-bold text-gray-900">Performance vs Peers</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {insights.performanceVsPeers.map((insight, index) => (
+                    <li key={index} className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-teal-500 rounded-full mt-2"></div>
+                      <span className="text-sm text-gray-600">{insight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+            
+            {/* Improvement Opportunities */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-bold text-gray-900">Improvement Opportunities</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {insights.improvementOpportunities.map((opportunity, index) => (
+                    <li key={index} className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                      <span className="text-sm text-gray-600">{opportunity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+            
+            {/* Cost-Benefit Highlights */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-bold text-gray-900">Cost-Benefit Analysis</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {insights.costBenefitHighlights.map((highlight, index) => (
+                    <li key={index} className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                      <span className="text-sm text-gray-600">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           </div>
-        </CardContent>
-      </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
