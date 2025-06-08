@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote, Factory, Zap, Globe, TreePine, Building, Recycle, AlertCircle } from 'lucide-react';
@@ -126,11 +125,16 @@ const Landing = () => {
         <div className="relative max-w-7xl mx-auto text-center">
           {/* Logo with Animation */}
           <div className="flex justify-center mb-8">
-            <div className="flex items-center space-x-3 animate-fade-in">
-              <div className="relative">
-                <Logo size="large" className="h-16 w-auto animate-pulse" />
+            <div className="flex flex-col items-center space-y-2 animate-fade-in">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <Logo size="large" className="h-16 w-auto animate-pulse" />
+                </div>
+                <span className="text-3xl font-bold text-gray-900">GoCarbonTracker</span>
               </div>
-              <span className="text-3xl font-bold text-gray-900">GoCarbonTracker</span>
+              <span className="text-lg text-gray-600 font-medium">
+                Accelerating global supply chain decarbonization
+              </span>
             </div>
           </div>
 

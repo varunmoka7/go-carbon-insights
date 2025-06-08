@@ -91,10 +91,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-8">
               <Link to="/home" className="flex items-center gap-2">
-                <Logo size="medium" className="rounded-lg" />
-                <span className="text-xl font-bold text-gray-900 dark:text-white">
-                  GoCarbonTracker
-                </span>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <Logo size="medium" className="rounded-lg" />
+                    <span className="text-xl font-bold text-gray-900 dark:text-white">
+                      GoCarbonTracker
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-600 dark:text-gray-400 ml-8 hidden sm:block">
+                    Accelerating global supply chain decarbonization
+                  </span>
+                </div>
               </Link>
               
               {/* Desktop Navigation - Simplified to 5 core items */}
