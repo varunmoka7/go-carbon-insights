@@ -19,11 +19,19 @@ const Scope1 = () => {
   const { data: companies } = useCompanies();
   const { data: enhancedData, isLoading } = useEnhancedScope1Data(selectedCompany);
 
-  const sourceIcons = {
-    'Natural Gas': <Fuel className="h-4 w-4" />,
-    'Diesel Fuel': <Truck className="h-4 w-4" />,
-    'Company Vehicles': <Truck className="h-4 w-4" />,
-    'Refrigerants': <Zap className="h-4 w-4" />
+  const getIconForType = (iconType: 'fuel' | 'truck' | 'zap' | 'factory') => {
+    switch (iconType) {
+      case 'fuel':
+        return <Fuel className="h-4 w-4" />;
+      case 'truck':
+        return <Truck className="h-4 w-4" />;
+      case 'zap':
+        return <Zap className="h-4 w-4" />;
+      case 'factory':
+        return <Factory className="h-4 w-4" />;
+      default:
+        return <Factory className="h-4 w-4" />;
+    }
   };
 
   const availableYears = ['2019', '2020', '2021', '2022', '2023', '2024'];
@@ -53,7 +61,7 @@ const Scope1 = () => {
 
   const currentSourceData = getSourceDataForYear(selectedYear).map(item => ({
     ...item,
-    icon: sourceIcons[item.source as keyof typeof sourceIcons] || <Factory className="h-4 w-4" />
+    icon: getIconForType(item.iconType)
   }));
 
   const selectedCompanyData = companies?.find(c => c.id === selectedCompany);

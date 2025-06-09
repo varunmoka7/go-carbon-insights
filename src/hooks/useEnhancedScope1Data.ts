@@ -2,7 +2,6 @@
 import { useScope1Data } from './useScope1Data';
 import { useIndustryBenchmarking } from './useIndustryBenchmarking';
 import { getCompanyById } from '@/data/enhancedMockData';
-import { Fuel, Truck, Zap, Factory } from 'lucide-react';
 
 interface EnhancedSourceData {
   source: string;
@@ -11,7 +10,7 @@ interface EnhancedSourceData {
   industryTypicalRange: { min: number; max: number };
   efficiencyMetric: number;
   costPerTonne: number;
-  icon: React.ReactNode;
+  iconType: 'fuel' | 'truck' | 'zap' | 'factory';
 }
 
 interface BenchmarkTrendData {
@@ -51,25 +50,25 @@ export const useEnhancedScope1Data = (companyId: string) => {
         typical: { min: 35, max: 55 },
         efficiency: emissions / (company.revenue * 0.8),
         costPerTonne: 45 + Math.random() * 15,
-        icon: <Fuel className="h-4 w-4" />
+        iconType: 'fuel'
       },
       'Diesel Fuel': {
         typical: { min: 20, max: 40 },
         efficiency: emissions / (company.employees * 0.1),
         costPerTonne: 55 + Math.random() * 20,
-        icon: <Truck className="h-4 w-4" />
+        iconType: 'truck'
       },
       'Company Vehicles': {
         typical: { min: 15, max: 30 },
         efficiency: emissions / (company.employees * 0.05),
         costPerTonne: 65 + Math.random() * 25,
-        icon: <Truck className="h-4 w-4" />
+        iconType: 'truck'
       },
       'Refrigerants': {
         typical: { min: 5, max: 15 },
         efficiency: emissions / (company.revenue * 0.2),
         costPerTonne: 85 + Math.random() * 35,
-        icon: <Zap className="h-4 w-4" />
+        iconType: 'zap'
       }
     };
 
@@ -77,7 +76,7 @@ export const useEnhancedScope1Data = (companyId: string) => {
       typical: { min: 10, max: 25 }, 
       efficiency: 1, 
       costPerTonne: 50,
-      icon: <Factory className="h-4 w-4" />
+      iconType: 'factory'
     };
     
     return {
@@ -85,7 +84,7 @@ export const useEnhancedScope1Data = (companyId: string) => {
       industryTypicalRange: metrics.typical,
       efficiencyMetric: Math.round(metrics.efficiency * 100) / 100,
       costPerTonne: Math.round(metrics.costPerTonne),
-      icon: metrics.icon
+      iconType: metrics.iconType
     };
   };
 
