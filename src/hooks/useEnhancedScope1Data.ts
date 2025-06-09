@@ -2,6 +2,7 @@
 import { useScope1Data } from './useScope1Data';
 import { useIndustryBenchmarking } from './useIndustryBenchmarking';
 import { getCompanyById } from '@/data/enhancedMockData';
+import { Fuel, Truck, Zap, Factory } from 'lucide-react';
 
 interface EnhancedSourceData {
   source: string;
@@ -48,33 +49,43 @@ export const useEnhancedScope1Data = (companyId: string) => {
     const sourceRanges: Record<string, any> = {
       'Natural Gas': {
         typical: { min: 35, max: 55 },
-        efficiency: emissions / (company.revenue * 0.8), // efficiency per revenue
-        costPerTonne: 45 + Math.random() * 15
+        efficiency: emissions / (company.revenue * 0.8),
+        costPerTonne: 45 + Math.random() * 15,
+        icon: <Fuel className="h-4 w-4" />
       },
       'Diesel Fuel': {
         typical: { min: 20, max: 40 },
         efficiency: emissions / (company.employees * 0.1),
-        costPerTonne: 55 + Math.random() * 20
+        costPerTonne: 55 + Math.random() * 20,
+        icon: <Truck className="h-4 w-4" />
       },
       'Company Vehicles': {
         typical: { min: 15, max: 30 },
         efficiency: emissions / (company.employees * 0.05),
-        costPerTonne: 65 + Math.random() * 25
+        costPerTonne: 65 + Math.random() * 25,
+        icon: <Truck className="h-4 w-4" />
       },
       'Refrigerants': {
         typical: { min: 5, max: 15 },
         efficiency: emissions / (company.revenue * 0.2),
-        costPerTonne: 85 + Math.random() * 35
+        costPerTonne: 85 + Math.random() * 35,
+        icon: <Zap className="h-4 w-4" />
       }
     };
 
-    const metrics = sourceRanges[source] || { typical: { min: 10, max: 25 }, efficiency: 1, costPerTonne: 50 };
+    const metrics = sourceRanges[source] || { 
+      typical: { min: 10, max: 25 }, 
+      efficiency: 1, 
+      costPerTonne: 50,
+      icon: <Factory className="h-4 w-4" />
+    };
     
     return {
       percentage: Math.round(percentage * 10) / 10,
       industryTypicalRange: metrics.typical,
       efficiencyMetric: Math.round(metrics.efficiency * 100) / 100,
-      costPerTonne: Math.round(metrics.costPerTonne)
+      costPerTonne: Math.round(metrics.costPerTonne),
+      icon: metrics.icon
     };
   };
 
@@ -107,11 +118,13 @@ export const useEnhancedScope1Data = (companyId: string) => {
   // Enhanced source data by year
   const enhancedSourceDataByYear: Record<string, EnhancedSourceData[]> = {};
   Object.entries(scope1Data.sourceDataByYear || {}).forEach(([year, sources]) => {
-    const total = sources.reduce((sum, s) => sum + s.emissions, 0);
-    enhancedSourceDataByYear[year] = sources.map(item => {
-      const metrics = getSourceMetrics(item.source, item.emissions, total);
-      return { ...item, ...metrics };
-    });
+    if (Array.isArray(sources)) {
+      const total = sources.reduce((sum, s) => sum + s.emissions, 0);
+      enhancedSourceDataByYear[year] = sources.map(item => {
+        const metrics = getSourceMetrics(item.source, item.emissions, total);
+        return { ...item, ...metrics };
+      });
+    }
   });
 
   // Generate insights based on performance data
