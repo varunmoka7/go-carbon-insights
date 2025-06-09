@@ -1,4 +1,3 @@
-
 import { useSupabaseScope2Data } from './useSupabaseScope2';
 import { getCompanyById } from '@/data/companyMockData';
 
