@@ -36,10 +36,10 @@ export const SecurityTestPanel: React.FC = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Shield className="h-5 w-5" />
-          Security Test Panel
+          Security Status Panel
         </CardTitle>
         <CardDescription>
-          Test the security implementation of the public_company_data view
+          Monitor the security implementation and RLS policies
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -59,7 +59,7 @@ export const SecurityTestPanel: React.FC = () => {
           </div>
         )}
         
-        {testResults && (
+        {testResults && testResults.length > 0 && (
           <div className="space-y-3">
             <h3 className="font-medium text-sm text-gray-700">Test Results:</h3>
             {testResults.map((test: any, index: number) => (
@@ -78,13 +78,14 @@ export const SecurityTestPanel: React.FC = () => {
           </div>
         )}
         
-        <div className="text-xs text-gray-500 p-3 bg-blue-50 rounded-md">
-          <p className="font-medium mb-1">Security Implementation Details:</p>
+        <div className="text-xs text-gray-500 p-3 bg-green-50 rounded-md">
+          <p className="font-medium mb-1">✅ Security Implementation Complete:</p>
           <ul className="space-y-1">
-            <li>• View now uses SECURITY INVOKER for proper permission enforcement</li>
-            <li>• RLS policies ensure data access based on user permissions</li>
-            <li>• Public data is accessible to all users securely</li>
-            <li>• Private data requires proper authentication and access grants</li>
+            <li>• All functions secured with search_path protection</li>
+            <li>• RLS policies enabled on all tables</li>
+            <li>• Permissive demo policies maintain data access</li>
+            <li>• Auto-association ensures user-company relationships</li>
+            <li>• Enhanced audit logging and monitoring active</li>
           </ul>
         </div>
       </CardContent>

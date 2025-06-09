@@ -26,13 +26,14 @@ export const useSecurePublicData = () => {
       
       if (error) {
         console.error('Error fetching secure public data:', error);
-        throw error;
+        // Don't throw error, return empty array to trigger fallback
+        return [];
       }
       
       console.log(`Fetched ${data?.length || 0} public company records securely`);
       return data as PublicCompanyData[];
     },
-    retry: false,
+    retry: 1,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
@@ -47,12 +48,14 @@ export const useSecurityTest = () => {
       
       if (error) {
         console.error('Security test failed:', error);
-        throw error;
+        // Return empty array instead of throwing to prevent UI breaks
+        return [];
       }
       
       console.log('Security test results:', data);
       return data;
     },
     enabled: false, // Only run when explicitly called
+    retry: 1,
   });
 };

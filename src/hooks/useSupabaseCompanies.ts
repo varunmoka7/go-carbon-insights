@@ -11,38 +11,41 @@ export const useSupabaseCompanies = () => {
     queryFn: async () => {
       console.log('Fetching companies from Supabase with enhanced security...');
       
-      // Try to fetch companies from the secure public view first
+      // First try to fetch from the secure public view (no auth required)
       const { data: publicData, error: publicError } = await supabase
         .from('public_company_data')
         .select('*')
         .order('name');
       
-      if (!publicError && publicData) {
+      if (!publicError && publicData && publicData.length > 0) {
         console.log(`Successfully fetched ${publicData.length} companies from secure public view`);
         return publicData;
       }
       
-      // Fallback to direct companies table access for authenticated users
+      // If authenticated, try direct access to companies table with permissive RLS
       if (user?.id) {
         const { data, error } = await supabase
           .from('companies')
           .select('*')
           .order('name');
         
-        if (error) {
-          console.log('Supabase companies query failed (expected with RLS):', error.message);
-          return [];
+        if (!error && data) {
+          console.log(`Successfully fetched ${data.length} companies from direct access`);
+          return data;
         }
         
-        console.log(`Successfully fetched ${data?.length || 0} companies from direct access`);
-        return data || [];
+        if (error) {
+          console.log('Companies query with auth failed:', error.message);
+        }
       }
       
-      console.log('No access to companies data, returning empty array');
+      // If no user or database access fails, return empty array to trigger mock data fallback
+      console.log('Returning empty array to trigger mock data fallback');
       return [];
     },
-    enabled: true, // Always try to fetch
-    retry: false, // Don't retry on RLS failures
+    enabled: true,
+    retry: 1, // Only retry once to avoid excessive requests
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
 
@@ -58,6 +61,7 @@ export const useSupabaseCompany = (companyId: string) => {
 
       console.log(`Fetching company ${companyId} from Supabase with enhanced security...`);
 
+      // Try to fetch company data with permissive RLS policies
       const { data: company, error: companyError } = await supabase
         .from('companies')
         .select('*')
@@ -65,52 +69,48 @@ export const useSupabaseCompany = (companyId: string) => {
         .single();
       
       if (companyError) {
-        console.log('Supabase company query failed (expected with RLS):', companyError.message);
+        console.log('Company query failed, falling back to mock data:', companyError.message);
         return null;
       }
 
-      // Try to fetch emissions data - will respect RLS policies
-      const { data: emissionsData, error: emissionsError } = await supabase
-        .from('emissions_data')
-        .select('*')
-        .eq('company_id', companyId)
-        .order('year');
+      // Fetch associated data with permissive policies
+      const [emissionsResult, sbtiResult, frameworksResult, benchmarksResult] = await Promise.allSettled([
+        supabase
+          .from('emissions_data')
+          .select('*')
+          .eq('company_id', companyId)
+          .order('year'),
+        supabase
+          .from('sbti_targets')
+          .select('*')
+          .eq('company_id', companyId)
+          .maybeSingle(),
+        supabase
+          .from('frameworks_compliance')
+          .select('*')
+          .eq('company_id', companyId),
+        supabase
+          .from('company_benchmarks')
+          .select('*')
+          .eq('company_id', companyId)
+          .eq('is_public_data', true)
+      ]);
 
-      if (emissionsError) {
-        console.log('Emissions data access controlled by RLS:', emissionsError.message);
-      }
+      // Extract data from settled promises
+      const emissionsData = emissionsResult.status === 'fulfilled' && !emissionsResult.value.error 
+        ? emissionsResult.value.data : [];
+      const sbtiTarget = sbtiResult.status === 'fulfilled' && !sbtiResult.value.error 
+        ? sbtiResult.value.data : null;
+      const frameworks = frameworksResult.status === 'fulfilled' && !frameworksResult.value.error 
+        ? frameworksResult.value.data : [];
+      const benchmarks = benchmarksResult.status === 'fulfilled' && !benchmarksResult.value.error 
+        ? benchmarksResult.value.data : [];
 
-      // Try to fetch SBTi targets with RLS respect
-      const { data: sbtiTarget, error: sbtiError } = await supabase
-        .from('sbti_targets')
-        .select('*')
-        .eq('company_id', companyId)
-        .maybeSingle();
-
-      if (sbtiError) {
-        console.log('SBTi data access controlled by RLS:', sbtiError.message);
-      }
-
-      // Try to fetch frameworks compliance with RLS respect
-      const { data: frameworks, error: frameworksError } = await supabase
-        .from('frameworks_compliance')
-        .select('*')
-        .eq('company_id', companyId);
-
-      if (frameworksError) {
-        console.log('Frameworks data access controlled by RLS:', frameworksError.message);
-      }
-
-      // Fetch public benchmark data (should always work due to public access)
-      const { data: benchmarks, error: benchmarksError } = await supabase
-        .from('company_benchmarks')
-        .select('*')
-        .eq('company_id', companyId)
-        .eq('is_public_data', true);
-
-      if (benchmarksError) {
-        console.log('Public benchmarks access error:', benchmarksError.message);
-      }
+      // Log results for debugging
+      console.log(`Emissions data: ${emissionsData?.length || 0} records`);
+      console.log(`SBTi targets: ${sbtiTarget ? 'Found' : 'None'}`);
+      console.log(`Frameworks: ${frameworks?.length || 0} records`);
+      console.log(`Benchmarks: ${benchmarks?.length || 0} records`);
 
       return {
         ...company,
@@ -124,7 +124,7 @@ export const useSupabaseCompany = (companyId: string) => {
             emissionsData[emissionsData.length - 1].scope2 + 
             emissionsData[emissionsData.length - 1].scope3
           : 0,
-        // Add mock data for properties not in database yet (fallback for missing data)
+        // Preserve fallback data for missing properties
         topCarbonFootprints: company?.top_carbon_footprints || [
           'Manufacturing Operations',
           'Supply Chain Transport', 
@@ -137,6 +137,7 @@ export const useSupabaseCompany = (companyId: string) => {
       };
     },
     enabled: !!companyId,
-    retry: false, // Don't retry on RLS failures
+    retry: 1,
+    staleTime: 5 * 60 * 1000,
   });
 };
