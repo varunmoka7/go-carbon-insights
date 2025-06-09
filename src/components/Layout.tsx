@@ -13,6 +13,8 @@ import Logo from '@/components/ui/Logo';
 import GlobalSearch from './GlobalSearch';
 import Breadcrumb from './Breadcrumb';
 import LogoutButton from './LogoutButton';
+import ScrollToTop from './ScrollToTop';
+import PageTransition from './PageTransition';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -85,6 +87,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Scroll to top component - invisible but functional */}
+      <ScrollToTop />
+
       {/* Top Navigation Bar */}
       <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -250,12 +255,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Content with Page Transitions */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Breadcrumb />
-        <div role="main" aria-label="Main content">
-          {children}
-        </div>
+        <PageTransition>
+          <div role="main" aria-label="Main content">
+            {children}
+          </div>
+        </PageTransition>
       </main>
 
       {/* Enhanced Footer */}
