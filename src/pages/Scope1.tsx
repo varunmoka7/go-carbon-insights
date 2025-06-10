@@ -14,10 +14,10 @@ import BenchmarkingSection from '@/components/BenchmarkingSection';
 
 const Scope1 = () => {
   const navigate = useNavigate();
-  const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const [selectedCompany, setSelectedCompany] = useState('apple'); // Changed from 'techcorp' to valid company ID
   const [selectedYear, setSelectedYear] = useState('2024');
   const { data: companies } = useCompanies();
-  const { data: enhancedData, isLoading } = useEnhancedScope1Data(selectedCompany);
+  const { data: enhancedData, isLoading, error } = useEnhancedScope1Data(selectedCompany);
 
   const getIconForType = (iconType: 'fuel' | 'truck' | 'zap' | 'factory') => {
     switch (iconType) {
@@ -44,10 +44,29 @@ const Scope1 = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center">
+          <div className="text-red-600 mb-4">Error loading Scope 1 data: {error.message}</div>
+          <Button onClick={() => window.location.reload()} variant="outline">
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   if (!enhancedData) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center text-red-600">Failed to load Scope 1 data</div>
+        <div className="text-center">
+          <div className="text-red-600 mb-4">No Scope 1 data available for the selected company</div>
+          <div className="text-gray-600 mb-4">Please try selecting a different company from the dropdown above.</div>
+          <Button onClick={() => navigate('/dashboard')} variant="outline">
+            Return to Dashboard
+          </Button>
+        </div>
       </div>
     );
   }
