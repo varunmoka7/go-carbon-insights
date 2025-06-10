@@ -133,17 +133,23 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
       ((company.emissionsData[0].scope2 - item.scope2) / company.emissionsData[0].scope2) * 100 : 0
   }));
 
-  // Generate energy KPIs
+  // Generate energy KPIs with proper status types
+  const getKPIStatus = (value: number, threshold: number): 'good' | 'average' | 'poor' => {
+    if (value > threshold * 1.2) return 'good';
+    if (value < threshold * 0.8) return 'poor';
+    return 'average';
+  };
+
   const energyKPIs = {
     gridCarbonIntensity: {
       value: 0.42,
       unit: 'kg CO2/MWh',
       industryAvg: 0.55,
-      status: 'good' as const
+      status: 'good'
     },
     renewableEnergyPercent: {
       value: company.renewable_energy_percentage,
-      status: (company.renewable_energy_percentage > 70 ? 'good' : 'average') as const,
+      status: (company.renewable_energy_percentage > 70 ? 'good' : 'average'),
       target: 100
     },
     energyIntensity: {
@@ -160,11 +166,11 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     annualReduction: {
       value: Math.round(((company.emissionsData[0].scope2 - latestEmissions.scope2) / company.emissionsData[0].scope2) * 100 * 10) / 10,
       target: 5,
-      status: 'good' as const
+      status: 'good'
     },
     carbonCostExposure: {
       value: latestEmissions.scope2 * 50, // $50 per tonne
-      trend: 'decreasing' as const
+      trend: 'decreasing'
     }
   };
 
@@ -176,12 +182,18 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     regionalRank: Math.floor(Math.random() * 5) + 1
   };
 
-  // Generate regional data with proper types
+  // Generate regional data with proper status types
+  const getGridStatus = (intensity: number): 'good' | 'average' | 'poor' => {
+    if (intensity < 0.4) return 'good';
+    if (intensity > 0.6) return 'poor';
+    return 'average';
+  };
+
   const regionalData = [
     {
       region: 'North America',
       gridIntensity: 0.45,
-      gridStatus: 'average' as const,
+      gridStatus: getGridStatus(0.45),
       consumptionPercent: 45,
       renewablePercent: 35,
       renewableProgress: 35,
@@ -193,7 +205,7 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     {
       region: 'Europe',
       gridIntensity: 0.32,
-      gridStatus: 'good' as const,
+      gridStatus: getGridStatus(0.32),
       consumptionPercent: 30,
       renewablePercent: 65,
       renewableProgress: 65,
@@ -205,7 +217,7 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     {
       region: 'Asia Pacific',
       gridIntensity: 0.65,
-      gridStatus: 'poor' as const,
+      gridStatus: getGridStatus(0.65),
       consumptionPercent: 25,
       renewablePercent: 25,
       renewableProgress: 25,
