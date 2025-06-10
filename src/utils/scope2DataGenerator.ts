@@ -139,11 +139,11 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
       value: 0.42,
       unit: 'kg CO2/MWh',
       industryAvg: 0.55,
-      status: 'good'
+      status: 'good' as const
     },
     renewableEnergyPercent: {
       value: company.renewable_energy_percentage,
-      status: company.renewable_energy_percentage > 70 ? 'good' : 'average',
+      status: (company.renewable_energy_percentage > 70 ? 'good' : 'average') as const,
       target: 100
     },
     energyIntensity: {
@@ -160,11 +160,11 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     annualReduction: {
       value: Math.round(((company.emissionsData[0].scope2 - latestEmissions.scope2) / company.emissionsData[0].scope2) * 100 * 10) / 10,
       target: 5,
-      status: 'good'
+      status: 'good' as const
     },
     carbonCostExposure: {
       value: latestEmissions.scope2 * 50, // $50 per tonne
-      trend: 'decreasing'
+      trend: 'decreasing' as const
     }
   };
 
@@ -176,31 +176,43 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     regionalRank: Math.floor(Math.random() * 5) + 1
   };
 
-  // Generate regional data
+  // Generate regional data with proper types
   const regionalData = [
     {
       region: 'North America',
       gridIntensity: 0.45,
+      gridStatus: 'average' as const,
+      consumptionPercent: 45,
       renewablePercent: 35,
+      renewableProgress: 35,
       emissions: Math.round(latestEmissions.scope2 * 0.45),
       efficiency: 'High',
-      opportunities: ['Solar PPAs', 'Wind procurement', 'Battery storage']
+      opportunities: ['Solar PPAs', 'Wind procurement', 'Battery storage'],
+      achievements: ['15% renewable increase', '20% efficiency gains']
     },
     {
       region: 'Europe',
       gridIntensity: 0.32,
+      gridStatus: 'good' as const,
+      consumptionPercent: 30,
       renewablePercent: 65,
+      renewableProgress: 65,
       emissions: Math.round(latestEmissions.scope2 * 0.30),
       efficiency: 'Very High',
-      opportunities: ['Offshore wind', 'Green hydrogen', 'Heat pumps']
+      opportunities: ['Offshore wind', 'Green hydrogen', 'Heat pumps'],
+      achievements: ['50% renewable energy', '30% carbon reduction']
     },
     {
       region: 'Asia Pacific',
       gridIntensity: 0.65,
+      gridStatus: 'poor' as const,
+      consumptionPercent: 25,
       renewablePercent: 25,
+      renewableProgress: 25,
       emissions: Math.round(latestEmissions.scope2 * 0.25),
       efficiency: 'Medium',
-      opportunities: ['Solar expansion', 'Energy storage', 'Grid modernization']
+      opportunities: ['Solar expansion', 'Energy storage', 'Grid modernization'],
+      achievements: ['10% renewable growth', 'Grid efficiency improvements']
     }
   ];
 

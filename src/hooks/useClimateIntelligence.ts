@@ -16,6 +16,10 @@ interface ClimateMetrics {
   carbonOffset: number;
   energyEfficiency: number;
   supplyChainEmissions: number;
+  carbonCostExposure: number;
+  climateInvestment: number;
+  averageROI: number;
+  greenRevenue: number;
 }
 
 interface CarbonProject {
@@ -38,7 +42,7 @@ interface PriorityAction {
   action: string;
   title: string;
   description: string;
-  impact: string;
+  impact: "high" | "medium" | "low";
   timeline: string;
   investment: string;
   roi: string;
@@ -248,7 +252,7 @@ export const useClimateIntelligence = (companyId: string) => {
             action: 'Accelerate renewable energy procurement',
             title: 'Renewable Energy Acceleration',
             description: 'Fast-track renewable energy procurement through PPAs and on-site generation',
-            impact: 'High',
+            impact: 'high' as const,
             timeline: '1-2 years',
             investment: '$10-25M',
             roi: '4-6 years',
@@ -260,7 +264,7 @@ export const useClimateIntelligence = (companyId: string) => {
             action: 'Implement energy efficiency measures',
             title: 'Energy Efficiency Program',
             description: 'Comprehensive energy efficiency improvements across facilities and operations',
-            impact: 'Medium',
+            impact: 'medium' as const,
             timeline: '6-18 months',
             investment: '$5-15M',
             roi: '2-4 years',
@@ -272,7 +276,7 @@ export const useClimateIntelligence = (companyId: string) => {
             action: 'Engage top suppliers on emission targets',
             title: 'Supplier Engagement Initiative',
             description: 'Strategic supplier engagement program to reduce scope 3 emissions',
-            impact: 'Very High',
+            impact: 'high' as const,
             timeline: '2-3 years',
             investment: '$20-50M',
             roi: '5-8 years',
@@ -284,7 +288,7 @@ export const useClimateIntelligence = (companyId: string) => {
             action: 'Invest in low-carbon alternatives',
             title: 'Low-Carbon Technology Investment',
             description: 'R&D investment in breakthrough low-carbon technologies and processes',
-            impact: 'High',
+            impact: 'high' as const,
             timeline: '3-5 years',
             investment: '$30-100M',
             roi: '6-10 years',
@@ -318,7 +322,11 @@ export const useClimateIntelligence = (companyId: string) => {
           avoidedEmissions: Math.round(totalFirst - totalCurrent),
           carbonOffset: Math.round(totalCurrent * 0.03),
           energyEfficiency: 85,
-          supplyChainEmissions: latestEmissions.scope3
+          supplyChainEmissions: latestEmissions.scope3,
+          carbonCostExposure: Math.round(totalCurrent * 50), // $50 per tonne
+          climateInvestment: Math.round(company.revenue * 0.02), // 2% of revenue
+          averageROI: 15.2,
+          greenRevenue: Math.round(company.revenue * 0.35) // 35% green revenue
         },
         carbonProjects: generateCarbonProjects(),
         priorityActions: generatePriorityActions()
