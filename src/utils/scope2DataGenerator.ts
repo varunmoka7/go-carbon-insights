@@ -133,6 +133,77 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
       ((company.emissionsData[0].scope2 - item.scope2) / company.emissionsData[0].scope2) * 100 : 0
   }));
 
+  // Generate energy KPIs
+  const energyKPIs = {
+    gridCarbonIntensity: {
+      value: 0.42,
+      unit: 'kg CO2/MWh',
+      industryAvg: 0.55,
+      status: 'good'
+    },
+    renewableEnergyPercent: {
+      value: company.renewable_energy_percentage,
+      status: company.renewable_energy_percentage > 70 ? 'good' : 'average',
+      target: 100
+    },
+    energyIntensity: {
+      value: Math.round((latestEmissions.scope2 / company.revenue) * 1000),
+      unit: 'kWh/$1000 revenue',
+      rank: Math.floor(Math.random() * 10) + 1,
+      total: 20
+    },
+    industryRank: {
+      position: Math.floor(Math.random() * 8) + 1,
+      total: 20,
+      sector: company.sector
+    },
+    annualReduction: {
+      value: Math.round(((company.emissionsData[0].scope2 - latestEmissions.scope2) / company.emissionsData[0].scope2) * 100 * 10) / 10,
+      target: 5,
+      status: 'good'
+    },
+    carbonCostExposure: {
+      value: latestEmissions.scope2 * 50, // $50 per tonne
+      trend: 'decreasing'
+    }
+  };
+
+  // Generate benchmarking data
+  const benchmarking = {
+    efficiencyRank: Math.floor(Math.random() * 10) + 1,
+    intensityPercentile: Math.floor(Math.random() * 30) + 70,
+    renewableRank: Math.floor(Math.random() * 8) + 1,
+    regionalRank: Math.floor(Math.random() * 5) + 1
+  };
+
+  // Generate regional data
+  const regionalData = [
+    {
+      region: 'North America',
+      gridIntensity: 0.45,
+      renewablePercent: 35,
+      emissions: Math.round(latestEmissions.scope2 * 0.45),
+      efficiency: 'High',
+      opportunities: ['Solar PPAs', 'Wind procurement', 'Battery storage']
+    },
+    {
+      region: 'Europe',
+      gridIntensity: 0.32,
+      renewablePercent: 65,
+      emissions: Math.round(latestEmissions.scope2 * 0.30),
+      efficiency: 'Very High',
+      opportunities: ['Offshore wind', 'Green hydrogen', 'Heat pumps']
+    },
+    {
+      region: 'Asia Pacific',
+      gridIntensity: 0.65,
+      renewablePercent: 25,
+      emissions: Math.round(latestEmissions.scope2 * 0.25),
+      efficiency: 'Medium',
+      opportunities: ['Solar expansion', 'Energy storage', 'Grid modernization']
+    }
+  ];
+
   return {
     company: {
       id: company.id,
@@ -156,6 +227,9 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     locationDataByYear,
     renewableTargets,
     efficiencyData,
+    energyKPIs,
+    benchmarking,
+    regionalData,
     insights: {
       keyFindings: [
         `${company.renewable_energy_percentage}% renewable energy in current operations`,
@@ -163,14 +237,36 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
         company.sector === 'Technology' ? 'Leading in data center efficiency' : 'Focusing on manufacturing efficiency'
       ],
       opportunities: [
-        'Power Purchase Agreements (PPAs) for renewable energy',
-        'Energy efficiency upgrades in facilities',
-        'Battery storage for grid optimization'
+        {
+          title: 'Power Purchase Agreements (PPAs)',
+          impact: 'High',
+          description: 'Long-term renewable energy contracts for cost stability'
+        },
+        {
+          title: 'Energy efficiency upgrades',
+          impact: 'Medium',
+          description: 'HVAC and lighting system improvements'
+        },
+        {
+          title: 'Battery storage integration',
+          impact: 'Medium',
+          description: 'Grid optimization and demand management'
+        }
       ],
       challenges: [
         'Grid dependency in high-carbon regions',
         'Renewable energy intermittency',
         'Capital investment for infrastructure'
+      ],
+      marketLocationExplanation: {
+        marketBased: 'Reflects actual energy procurement choices and renewable energy certificates',
+        locationBased: 'Based on average grid emission factors for operational locations',
+        impact: `Market-based approach shows ${Math.round(((latestEmissions.scope2 * 1.15 - latestEmissions.scope2) / (latestEmissions.scope2 * 1.15)) * 100)}% lower emissions due to clean energy investments`
+      },
+      highlights: [
+        `${company.renewable_energy_percentage}% renewable energy portfolio`,
+        `${Math.round(((company.emissionsData[0].scope2 - latestEmissions.scope2) / company.emissionsData[0].scope2) * 100)}% scope 2 reduction achieved`,
+        'Industry-leading energy efficiency initiatives'
       ]
     }
   };

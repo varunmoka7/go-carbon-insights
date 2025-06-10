@@ -10,9 +10,9 @@ export interface IndustryBenchmarkData {
   annualReduction: number;
   carbonCostExposure: number;
   performanceIndicators: {
-    intensityVsAvg: 'above' | 'below' | 'average';
-    employeeVsAvg: 'above' | 'below' | 'average';
-    efficiencyVsAvg: 'above' | 'below' | 'average';
+    intensityVsAvg: 'above' | 'below' | 'at';
+    employeeVsAvg: 'above' | 'below' | 'at';
+    efficiencyVsAvg: 'above' | 'below' | 'at';
   };
 }
 
@@ -30,9 +30,9 @@ export const useIndustryBenchmarking = (companyId: string): IndustryBenchmarkDat
       annualReduction: 5.5,
       carbonCostExposure: 125000,
       performanceIndicators: {
-        intensityVsAvg: 'average',
-        employeeVsAvg: 'average',
-        efficiencyVsAvg: 'average'
+        intensityVsAvg: 'at',
+        employeeVsAvg: 'at',
+        efficiencyVsAvg: 'at'
       }
     };
   }
@@ -84,12 +84,12 @@ export const useIndustryBenchmarking = (companyId: string): IndustryBenchmarkDat
   const carbonPrice = 50; // $50 per tonne CO2e
   const carbonCostExposure = (latestEmissions.scope1 + latestEmissions.scope2) * carbonPrice;
 
-  // Performance indicators
-  const getPerformanceIndicator = (value: number, avg: number) => {
+  // Performance indicators with correct types
+  const getPerformanceIndicator = (value: number, avg: number): 'above' | 'below' | 'at' => {
     const threshold = 0.1; // 10% threshold
     if (value < avg * (1 - threshold)) return 'above'; // Lower emissions = better performance
     if (value > avg * (1 + threshold)) return 'below';
-    return 'average';
+    return 'at';
   };
 
   return {

@@ -42,9 +42,66 @@ export interface EnhancedScope2Data {
     energyIntensity: number;
     improvementRate: number;
   }>;
+  energyKPIs: {
+    gridCarbonIntensity: {
+      value: number;
+      unit: string;
+      industryAvg: number;
+      status: string;
+    };
+    renewableEnergyPercent: {
+      value: number;
+      status: string;
+      target: number;
+    };
+    energyIntensity: {
+      value: number;
+      unit: string;
+      rank: number;
+      total: number;
+    };
+    industryRank: {
+      position: number;
+      total: number;
+      sector: string;
+    };
+    annualReduction: {
+      value: number;
+      target: number;
+      status: string;
+    };
+    carbonCostExposure: {
+      value: number;
+      trend: string;
+    };
+  };
+  benchmarking: {
+    efficiencyRank: number;
+    intensityPercentile: number;
+    renewableRank: number;
+    regionalRank: number;
+  };
+  regionalData: Array<{
+    region: string;
+    gridIntensity: number;
+    renewablePercent: number;
+    emissions: number;
+    efficiency: string;
+    opportunities: string[];
+  }>;
   insights: {
     keyFindings: string[];
-    opportunities: string[];
+    opportunities: Array<{
+      title: string;
+      impact: string;
+      description: string;
+    }>;
     challenges: string[];
+    marketLocationExplanation: {
+      marketBased: string;
+      locationBased: string;
+      impact: string;
+    };
+    highlights: string[];
   };
 }

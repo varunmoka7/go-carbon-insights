@@ -9,6 +9,13 @@ interface ClimateMetrics {
   sbtiStatus: string;
   renewableEnergy: number;
   carbonCredits: number;
+  temperatureAlignment: number;
+  climateRiskScore: string;
+  totalEmissions: number;
+  avoidedEmissions: number;
+  carbonOffset: number;
+  energyEfficiency: number;
+  supplyChainEmissions: number;
 }
 
 interface CarbonProject {
@@ -19,15 +26,23 @@ interface CarbonProject {
   impact: number;
   timeline: string;
   investment: number;
+  annualReduction: number;
+  paybackPeriod: number;
+  roi: number;
+  description: string;
 }
 
 interface PriorityAction {
+  id: string;
   category: string;
   action: string;
+  title: string;
+  description: string;
   impact: string;
   timeline: string;
   investment: string;
   roi: string;
+  effort: string;
 }
 
 interface ClimateIntelligenceData {
@@ -142,7 +157,11 @@ export const useClimateIntelligence = (companyId: string) => {
             status: 'In Progress',
             impact: Math.round(totalCurrent * 0.15),
             timeline: '2024-2027',
-            investment: 25000000
+            investment: 25000000,
+            annualReduction: 12,
+            paybackPeriod: 5.2,
+            roi: 18.5,
+            description: 'Comprehensive transition to renewable energy sources across all facilities'
           },
           {
             id: '2',
@@ -151,7 +170,11 @@ export const useClimateIntelligence = (companyId: string) => {
             status: 'Planning',
             impact: Math.round(totalCurrent * 0.25),
             timeline: '2025-2030',
-            investment: 45000000
+            investment: 45000000,
+            annualReduction: 20,
+            paybackPeriod: 7.8,
+            roi: 15.2,
+            description: 'Comprehensive supplier engagement and decarbonization program'
           },
           {
             id: '3',
@@ -160,7 +183,11 @@ export const useClimateIntelligence = (companyId: string) => {
             status: 'Research',
             impact: Math.round(totalCurrent * 0.08),
             timeline: '2026-2035',
-            investment: 15000000
+            investment: 15000000,
+            annualReduction: 8,
+            paybackPeriod: 12.5,
+            roi: 8.7,
+            description: 'Investment in direct air capture and nature-based solutions'
           }
         ];
 
@@ -173,7 +200,11 @@ export const useClimateIntelligence = (companyId: string) => {
             status: 'In Progress',
             impact: Math.round(totalCurrent * 0.12),
             timeline: '2024-2026',
-            investment: 30000000
+            investment: 30000000,
+            annualReduction: 15,
+            paybackPeriod: 4.2,
+            roi: 22.1,
+            description: 'Energy-efficient cooling and renewable-powered data center infrastructure'
           });
         } else if (company.sector === 'Automotive') {
           baseProjects.push({
@@ -183,7 +214,11 @@ export const useClimateIntelligence = (companyId: string) => {
             status: 'In Progress',
             impact: Math.round(totalCurrent * 0.20),
             timeline: '2024-2028',
-            investment: 75000000
+            investment: 75000000,
+            annualReduction: 25,
+            paybackPeriod: 6.5,
+            roi: 16.8,
+            description: 'Development of next-generation electric vehicle manufacturing capabilities'
           });
         } else if (company.sector === 'Energy') {
           baseProjects.push({
@@ -193,7 +228,11 @@ export const useClimateIntelligence = (companyId: string) => {
             status: 'Planning',
             impact: Math.round(totalCurrent * 0.30),
             timeline: '2025-2035',
-            investment: 120000000
+            investment: 120000000,
+            annualReduction: 35,
+            paybackPeriod: 15.2,
+            roi: 12.4,
+            description: 'Large-scale carbon capture, utilization, and storage infrastructure'
           });
         }
 
@@ -204,36 +243,52 @@ export const useClimateIntelligence = (companyId: string) => {
       const generatePriorityActions = (): PriorityAction[] => {
         return [
           {
+            id: '1',
             category: 'Energy',
             action: 'Accelerate renewable energy procurement',
+            title: 'Renewable Energy Acceleration',
+            description: 'Fast-track renewable energy procurement through PPAs and on-site generation',
             impact: 'High',
             timeline: '1-2 years',
             investment: '$10-25M',
-            roi: '4-6 years'
+            roi: '4-6 years',
+            effort: 'Medium'
           },
           {
+            id: '2',
             category: 'Operations',
             action: 'Implement energy efficiency measures',
+            title: 'Energy Efficiency Program',
+            description: 'Comprehensive energy efficiency improvements across facilities and operations',
             impact: 'Medium',
             timeline: '6-18 months',
             investment: '$5-15M',
-            roi: '2-4 years'
+            roi: '2-4 years',
+            effort: 'Low'
           },
           {
+            id: '3',
             category: 'Supply Chain',
             action: 'Engage top suppliers on emission targets',
+            title: 'Supplier Engagement Initiative',
+            description: 'Strategic supplier engagement program to reduce scope 3 emissions',
             impact: 'Very High',
             timeline: '2-3 years',
             investment: '$20-50M',
-            roi: '5-8 years'
+            roi: '5-8 years',
+            effort: 'High'
           },
           {
+            id: '4',
             category: 'Technology',
             action: 'Invest in low-carbon alternatives',
+            title: 'Low-Carbon Technology Investment',
+            description: 'R&D investment in breakthrough low-carbon technologies and processes',
             impact: 'High',
             timeline: '3-5 years',
             investment: '$30-100M',
-            roi: '6-10 years'
+            roi: '6-10 years',
+            effort: 'Very High'
           }
         ];
       };
@@ -256,7 +311,14 @@ export const useClimateIntelligence = (companyId: string) => {
           netZeroProgress: Math.round(netZeroProgress),
           sbtiStatus: sectorData.sbtiStatus,
           renewableEnergy: sectorData.renewablePercent,
-          carbonCredits: Math.round(totalCurrent * 0.05) // 5% of emissions as credits
+          carbonCredits: Math.round(totalCurrent * 0.05), // 5% of emissions as credits
+          temperatureAlignment: 1.8,
+          climateRiskScore: sectorData.climateRisk,
+          totalEmissions: totalCurrent,
+          avoidedEmissions: Math.round(totalFirst - totalCurrent),
+          carbonOffset: Math.round(totalCurrent * 0.03),
+          energyEfficiency: 85,
+          supplyChainEmissions: latestEmissions.scope3
         },
         carbonProjects: generateCarbonProjects(),
         priorityActions: generatePriorityActions()
