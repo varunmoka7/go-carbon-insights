@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import { getCompanyById } from '@/data/companyMockData';
 
@@ -22,8 +21,20 @@ interface ClimateMetrics {
   greenRevenue: number;
   scope3Coverage: number;
   supplierEngagement: number;
-  industryBenchmark: string;
-  alerts: string[];
+  industryBenchmark: {
+    carbonIntensity: { value: number; status: 'above' | 'at' | 'below' };
+    renewableEnergy: { value: number; status: 'above' | 'at' | 'below' };
+    scope3Coverage: { value: number; status: 'above' | 'at' | 'below' };
+    energyEfficiency: { value: number; status: 'above' | 'at' | 'below' };
+    supplierEngagement: { value: number; status: 'above' | 'at' | 'below' };
+  };
+  alerts: {
+    carbonIntensity: 'critical' | 'warning' | 'trending' | 'good';
+    scope3Coverage: 'critical' | 'warning' | 'trending' | 'good';
+    renewableEnergy: 'critical' | 'warning' | 'trending' | 'good';
+    energyEfficiency: 'critical' | 'warning' | 'trending' | 'good';
+    supplierEngagement: 'critical' | 'warning' | 'trending' | 'good';
+  };
 }
 
 interface CarbonProject {
@@ -333,8 +344,20 @@ export const useClimateIntelligence = (companyId: string) => {
           greenRevenue: Math.round(company.revenue * 0.35), // 35% green revenue
           scope3Coverage: 85,
           supplierEngagement: 74,
-          industryBenchmark: 'good',
-          alerts: ['Renewable energy target achieved', 'Supply chain assessment pending']
+          industryBenchmark: {
+            carbonIntensity: { value: carbonIntensity * 1.2, status: 'below' as const },
+            renewableEnergy: { value: sectorData.renewablePercent * 0.8, status: 'above' as const },
+            scope3Coverage: { value: 70, status: 'above' as const },
+            energyEfficiency: { value: 75, status: 'above' as const },
+            supplierEngagement: { value: 65, status: 'above' as const }
+          },
+          alerts: {
+            carbonIntensity: 'good' as const,
+            scope3Coverage: 'trending' as const,
+            renewableEnergy: 'good' as const,
+            energyEfficiency: 'good' as const,
+            supplierEngagement: 'warning' as const
+          }
         },
         carbonProjects: generateCarbonProjects(),
         priorityActions: generatePriorityActions()
