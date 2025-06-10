@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowLeft, Zap, Thermometer, Snowflake, BarChart3, Target, DollarSign, TrendingUp, Award, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -109,14 +110,14 @@ const Scope2 = () => {
               value={energyKPIs.gridCarbonIntensity.value}
               unit={energyKPIs.gridCarbonIntensity.unit}
               subtitle={`Industry avg: ${energyKPIs.gridCarbonIntensity.industryAvg} kg CO2/MWh`}
-              status={energyKPIs.gridCarbonIntensity.status}
+              status={energyKPIs.gridCarbonIntensity.status as "good" | "average" | "poor"}
               icon={<BarChart3 className="h-4 w-4" />}
             />
             <EnergyKPICard
               title="Renewable Energy %"
               value={energyKPIs.renewableEnergyPercent.value}
               unit="% of total electricity"
-              status={energyKPIs.renewableEnergyPercent.status}
+              status={energyKPIs.renewableEnergyPercent.status as "good" | "average" | "poor"}
               progress={energyKPIs.renewableEnergyPercent.value}
               target={energyKPIs.renewableEnergyPercent.target}
               icon={<Zap className="h-4 w-4" />}
@@ -126,14 +127,14 @@ const Scope2 = () => {
               value={energyKPIs.energyIntensity.value}
               unit={energyKPIs.energyIntensity.unit}
               subtitle={`Rank ${energyKPIs.energyIntensity.rank} of ${energyKPIs.energyIntensity.total}`}
-              status="average"
+              status={"average" as const}
               icon={<Target className="h-4 w-4" />}
             />
             <EnergyKPICard
               title="Industry Energy Rank"
               value={`${energyKPIs.industryRank.position} of ${energyKPIs.industryRank.total}`}
               subtitle={`in ${energyKPIs.industryRank.sector}`}
-              status={energyKPIs.industryRank.position <= energyKPIs.industryRank.total / 3 ? 'good' : 'average'}
+              status={energyKPIs.industryRank.position <= energyKPIs.industryRank.total / 3 ? "good" as const : "average" as const}
               icon={<Award className="h-4 w-4" />}
             />
             <EnergyKPICard
@@ -141,7 +142,7 @@ const Scope2 = () => {
               value={energyKPIs.annualReduction.value}
               unit="% decrease YoY"
               subtitle={`Target: ${energyKPIs.annualReduction.target}%`}
-              status={energyKPIs.annualReduction.status}
+              status={energyKPIs.annualReduction.status as "good" | "average" | "poor"}
               trend={energyKPIs.annualReduction.value > 0 ? 'down' : 'up'}
               icon={<TrendingUp className="h-4 w-4" />}
             />
@@ -149,7 +150,7 @@ const Scope2 = () => {
               title="Carbon Cost Exposure"
               value={`$${(energyKPIs.carbonCostExposure.value / 1000).toFixed(0)}K`}
               subtitle="estimated annual impact"
-              status={energyKPIs.carbonCostExposure.trend === 'decreasing' ? 'good' : 'average'}
+              status={energyKPIs.carbonCostExposure.trend === 'decreasing' ? "good" as const : "average" as const}
               trend={energyKPIs.carbonCostExposure.trend === 'increasing' ? 'up' : energyKPIs.carbonCostExposure.trend === 'decreasing' ? 'down' : 'stable'}
               icon={<DollarSign className="h-4 w-4" />}
             />
@@ -258,7 +259,16 @@ const Scope2 = () => {
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {regionalData.map((region, index) => (
-            <RegionalEnergyCard key={index} {...region} />
+            <RegionalEnergyCard 
+              key={index} 
+              region={region.region}
+              gridIntensity={region.gridIntensity}
+              gridStatus={region.gridStatus}
+              consumptionPercent={region.consumptionPercent}
+              renewableProgress={region.renewableProgress}
+              opportunities={region.opportunities}
+              achievements={region.achievements}
+            />
           ))}
         </div>
       </div>
