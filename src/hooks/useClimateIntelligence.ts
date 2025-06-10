@@ -9,7 +9,7 @@ interface ClimateMetrics {
   sbtiStatus: string;
   renewableEnergy: number;
   carbonCredits: number;
-  temperatureAlignment: number;
+  temperatureAlignment: string;
   climateRiskScore: string;
   totalEmissions: number;
   avoidedEmissions: number;
@@ -320,7 +320,7 @@ export const useClimateIntelligence = (companyId: string) => {
           sbtiStatus: sectorData.sbtiStatus,
           renewableEnergy: sectorData.renewablePercent,
           carbonCredits: Math.round(totalCurrent * 0.05), // 5% of emissions as credits
-          temperatureAlignment: 1.8,
+          temperatureAlignment: '1.8°C',
           climateRiskScore: sectorData.climateRisk,
           totalEmissions: totalCurrent,
           avoidedEmissions: Math.round(totalFirst - totalCurrent),

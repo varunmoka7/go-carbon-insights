@@ -145,11 +145,11 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
       value: 0.42,
       unit: 'kg CO2/MWh',
       industryAvg: 0.55,
-      status: 'good'
+      status: 'good' as const
     },
     renewableEnergyPercent: {
       value: company.renewable_energy_percentage,
-      status: (company.renewable_energy_percentage > 70 ? 'good' : 'average'),
+      status: (company.renewable_energy_percentage > 70 ? 'good' : 'average') as 'good' | 'average' | 'poor',
       target: 100
     },
     energyIntensity: {
@@ -166,11 +166,11 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     annualReduction: {
       value: Math.round(((company.emissionsData[0].scope2 - latestEmissions.scope2) / company.emissionsData[0].scope2) * 100 * 10) / 10,
       target: 5,
-      status: 'good'
+      status: 'good' as const
     },
     carbonCostExposure: {
       value: latestEmissions.scope2 * 50, // $50 per tonne
-      trend: 'decreasing'
+      trend: 'decreasing' as const
     }
   };
 
