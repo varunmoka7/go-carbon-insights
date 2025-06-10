@@ -1,8 +1,7 @@
 
 import { useSupabaseScope2Data } from './useSupabaseScope2';
-import { getCompanyById } from '@/data/companyMockData';
-import { EnhancedScope2Data } from '@/types/scope2Types';
 import { generateScope2MockData } from '@/utils/scope2DataGenerator';
+import { getCompanyById } from '@/data/companyMockData';
 
 export const useEnhancedScope2Data = (companyId: string) => {
   const supabaseQuery = useSupabaseScope2Data(companyId);
@@ -18,11 +17,14 @@ export const useEnhancedScope2Data = (companyId: string) => {
     };
   }
 
+  // Always return generated mock data for now
+  const mockData = generateScope2MockData(companyId);
+  
   return {
-    data: generateScope2MockData(company),
+    data: mockData,
     isLoading: supabaseQuery.isLoading,
     error: supabaseQuery.error
   };
 };
 
-export type { EnhancedScope2Data };
+export type { EnhancedScope2Data } from '@/types/scope2Types';

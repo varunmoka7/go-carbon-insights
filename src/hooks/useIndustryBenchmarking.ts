@@ -1,19 +1,7 @@
 
-import { useMemo } from 'react';
-import { getCompanyById } from '@/data/enhancedMockData';
+import { getCompanyById, getCompaniesBySector } from '@/data/companyMockData';
 
-interface IndustryBenchmark {
-  sector: string;
-  totalCompanies: number;
-  avgEmissionsIntensity: number;
-  medianEmissionsIntensity: number;
-  avgPerEmployee: number;
-  avgFacilityEfficiency: number;
-  avgReduction: number;
-  carbonCostRange: { min: number; max: number };
-}
-
-interface CompanyBenchmarkData {
+export interface IndustryBenchmarkData {
   emissionsIntensity: number;
   perEmployee: number;
   facilityEfficiency: number;
@@ -22,128 +10,100 @@ interface CompanyBenchmarkData {
   annualReduction: number;
   carbonCostExposure: number;
   performanceIndicators: {
-    intensityVsAvg: 'above' | 'at' | 'below';
-    employeeVsAvg: 'above' | 'at' | 'below';
-    efficiencyVsAvg: 'above' | 'at' | 'below';
+    intensityVsAvg: 'above' | 'below' | 'average';
+    employeeVsAvg: 'above' | 'below' | 'average';
+    efficiencyVsAvg: 'above' | 'below' | 'average';
   };
 }
 
-const industryBenchmarks: Record<string, IndustryBenchmark> = {
-  'Technology': {
-    sector: 'Technology',
-    totalCompanies: 45,
-    avgEmissionsIntensity: 11.5,
-    medianEmissionsIntensity: 10.2,
-    avgPerEmployee: 5.2,
-    avgFacilityEfficiency: 0.8,
-    avgReduction: 8.5,
-    carbonCostRange: { min: 150, max: 450 }
-  },
-  'Manufacturing': {
-    sector: 'Manufacturing',
-    totalCompanies: 78,
-    avgEmissionsIntensity: 47.5,
-    medianEmissionsIntensity: 45.2,
-    avgPerEmployee: 20.1,
-    avgFacilityEfficiency: 2.1,
-    avgReduction: 6.2,
-    carbonCostRange: { min: 800, max: 2500 }
-  },
-  'Energy': {
-    sector: 'Energy',
-    totalCompanies: 32,
-    avgEmissionsIntensity: 1200.5,
-    medianEmissionsIntensity: 1150.0,
-    avgPerEmployee: 85.4,
-    avgFacilityEfficiency: 12.5,
-    avgReduction: 3.8,
-    carbonCostRange: { min: 15000, max: 85000 }
-  },
-  'Retail': {
-    sector: 'Retail',
-    totalCompanies: 52,
-    avgEmissionsIntensity: 24.3,
-    medianEmissionsIntensity: 22.8,
-    avgPerEmployee: 11.2,
-    avgFacilityEfficiency: 1.4,
-    avgReduction: 7.1,
-    carbonCostRange: { min: 400, max: 1200 }
-  },
-  'Consumer Goods': {
-    sector: 'Consumer Goods',
-    totalCompanies: 38,
-    avgEmissionsIntensity: 165.8,
-    medianEmissionsIntensity: 158.2,
-    avgPerEmployee: 15.6,
-    avgFacilityEfficiency: 1.8,
-    avgReduction: 5.9,
-    carbonCostRange: { min: 600, max: 1800 }
-  },
-  'Aerospace': {
-    sector: 'Aerospace',
-    totalCompanies: 28,
-    avgEmissionsIntensity: 385.2,
-    medianEmissionsIntensity: 370.8,
-    avgPerEmployee: 28.5,
-    avgFacilityEfficiency: 3.2,
-    avgReduction: 4.5,
-    carbonCostRange: { min: 2500, max: 8500 }
-  }
-};
-
-export const useIndustryBenchmarking = (companyId: string): CompanyBenchmarkData | null => {
-  return useMemo(() => {
-    const company = getCompanyById(companyId);
-    if (!company) return null;
-
-    const benchmark = industryBenchmarks[company.sector];
-    if (!benchmark) return null;
-
-    // Calculate company-specific metrics
-    const emissionsIntensity = company.emissionsIntensity;
-    const perEmployee = company.totalEmissions / (company.employees / 1000); // tCO2e per employee
-    const facilityEfficiency = company.totalEmissions / (company.revenue * 100); // tCO2e per sq ft estimate
-    
-    // Calculate industry rank (based on emissions intensity performance)
-    const rankPosition = Math.floor(
-      (emissionsIntensity / benchmark.avgEmissionsIntensity) * benchmark.totalCompanies * 0.6 +
-      Math.random() * benchmark.totalCompanies * 0.4
-    );
-    const industryRank = Math.max(1, Math.min(benchmark.totalCompanies, rankPosition));
-
-    // Calculate annual reduction based on historical data
-    const recentEmissions = company.emissionsData.slice(-2);
-    const annualReduction = recentEmissions.length >= 2 
-      ? ((recentEmissions[0].scope1 + recentEmissions[0].scope2 + recentEmissions[0].scope3 - 
-          recentEmissions[1].scope1 - recentEmissions[1].scope2 - recentEmissions[1].scope3) /
-         (recentEmissions[0].scope1 + recentEmissions[0].scope2 + recentEmissions[0].scope3)) * 100
-      : 0;
-
-    // Calculate carbon cost exposure
-    const carbonCostExposure = Math.floor(
-      company.totalEmissions * (benchmark.carbonCostRange.min + 
-      Math.random() * (benchmark.carbonCostRange.max - benchmark.carbonCostRange.min)) / 1000
-    );
-
-    // Performance indicators
-    const performanceIndicators = {
-      intensityVsAvg: emissionsIntensity < benchmark.avgEmissionsIntensity * 0.9 ? 'above' as const :
-                     emissionsIntensity > benchmark.avgEmissionsIntensity * 1.1 ? 'below' as const : 'at' as const,
-      employeeVsAvg: perEmployee < benchmark.avgPerEmployee * 0.9 ? 'above' as const :
-                    perEmployee > benchmark.avgPerEmployee * 1.1 ? 'below' as const : 'at' as const,
-      efficiencyVsAvg: facilityEfficiency < benchmark.avgFacilityEfficiency * 0.9 ? 'above' as const :
-                      facilityEfficiency > benchmark.avgFacilityEfficiency * 1.1 ? 'below' as const : 'at' as const,
-    };
-
+export const useIndustryBenchmarking = (companyId: string): IndustryBenchmarkData => {
+  const company = getCompanyById(companyId);
+  
+  if (!company) {
+    // Return default benchmark data
     return {
-      emissionsIntensity: Math.round(emissionsIntensity * 10) / 10,
-      perEmployee: Math.round(perEmployee * 10) / 10,
-      facilityEfficiency: Math.round(facilityEfficiency * 100) / 100,
-      industryRank,
-      totalInSector: benchmark.totalCompanies,
-      annualReduction: Math.round(Math.abs(annualReduction) * 10) / 10,
-      carbonCostExposure,
-      performanceIndicators
+      emissionsIntensity: 50,
+      perEmployee: 15,
+      facilityEfficiency: 0.8,
+      industryRank: 5,
+      totalInSector: 10,
+      annualReduction: 5.5,
+      carbonCostExposure: 125000,
+      performanceIndicators: {
+        intensityVsAvg: 'average',
+        employeeVsAvg: 'average',
+        efficiencyVsAvg: 'average'
+      }
     };
-  }, [companyId]);
+  }
+
+  const sectorCompanies = getCompaniesBySector(company.sector);
+  const latestEmissions = company.emissionsData[company.emissionsData.length - 1];
+  const firstEmissions = company.emissionsData[0];
+
+  // Calculate company metrics
+  const companyIntensity = (latestEmissions.scope1 + latestEmissions.scope2 + latestEmissions.scope3) / company.revenue;
+  const companyPerEmployee = (latestEmissions.scope1 + latestEmissions.scope2 + latestEmissions.scope3) / company.employees;
+  const companyFacilityEfficiency = latestEmissions.scope1 / (company.revenue * 0.001); // Simplified facility efficiency
+
+  // Calculate industry averages
+  const industryIntensities = sectorCompanies.map(c => {
+    const latest = c.emissionsData[c.emissionsData.length - 1];
+    return (latest.scope1 + latest.scope2 + latest.scope3) / c.revenue;
+  });
+  
+  const industryPerEmployee = sectorCompanies.map(c => {
+    const latest = c.emissionsData[c.emissionsData.length - 1];
+    return (latest.scope1 + latest.scope2 + latest.scope3) / c.employees;
+  });
+
+  const avgIntensity = industryIntensities.reduce((a, b) => a + b, 0) / industryIntensities.length;
+  const avgPerEmployee = industryPerEmployee.reduce((a, b) => a + b, 0) / industryPerEmployee.length;
+
+  // Calculate ranking
+  const sortedByIntensity = sectorCompanies
+    .map(c => {
+      const latest = c.emissionsData[c.emissionsData.length - 1];
+      return {
+        id: c.id,
+        intensity: (latest.scope1 + latest.scope2 + latest.scope3) / c.revenue
+      };
+    })
+    .sort((a, b) => a.intensity - b.intensity);
+
+  const companyRank = sortedByIntensity.findIndex(c => c.id === company.id) + 1;
+
+  // Calculate annual reduction rate
+  const totalFirst = firstEmissions.scope1 + firstEmissions.scope2 + firstEmissions.scope3;
+  const totalLatest = latestEmissions.scope1 + latestEmissions.scope2 + latestEmissions.scope3;
+  const yearsSpan = latestEmissions.year - firstEmissions.year;
+  const annualReduction = yearsSpan > 0 ? 
+    (Math.pow(totalLatest / totalFirst, 1 / yearsSpan) - 1) * -100 : 0;
+
+  // Carbon cost exposure (simplified calculation)
+  const carbonPrice = 50; // $50 per tonne CO2e
+  const carbonCostExposure = (latestEmissions.scope1 + latestEmissions.scope2) * carbonPrice;
+
+  // Performance indicators
+  const getPerformanceIndicator = (value: number, avg: number) => {
+    const threshold = 0.1; // 10% threshold
+    if (value < avg * (1 - threshold)) return 'above'; // Lower emissions = better performance
+    if (value > avg * (1 + threshold)) return 'below';
+    return 'average';
+  };
+
+  return {
+    emissionsIntensity: Math.round(companyIntensity * 10) / 10,
+    perEmployee: Math.round(companyPerEmployee * 10) / 10,
+    facilityEfficiency: Math.round(companyFacilityEfficiency * 100) / 100,
+    industryRank: companyRank,
+    totalInSector: sectorCompanies.length,
+    annualReduction: Math.round(annualReduction * 10) / 10,
+    carbonCostExposure: Math.round(carbonCostExposure),
+    performanceIndicators: {
+      intensityVsAvg: getPerformanceIndicator(companyIntensity, avgIntensity),
+      employeeVsAvg: getPerformanceIndicator(companyPerEmployee, avgPerEmployee),
+      efficiencyVsAvg: getPerformanceIndicator(companyFacilityEfficiency, avgIntensity * 1000)
+    }
+  };
 };

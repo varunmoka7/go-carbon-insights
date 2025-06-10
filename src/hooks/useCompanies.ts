@@ -1,3 +1,4 @@
+
 import { useQuery } from '@tanstack/react-query';
 
 export interface Company {
@@ -16,17 +17,17 @@ export const useCompanies = () => {
   return useQuery({
     queryKey: ['companies'],
     queryFn: async (): Promise<Company[]> => {
-      // Enhanced mock data with 5 new companies
+      // Standardized list of 20 companies with complete data
       const companies: Company[] = [
         {
           id: 'apple',
           name: 'Apple Inc.',
           industry: 'Technology',
           sector: 'Technology',
-          total_emissions: 11500,
-          scope1_emissions: 95,
-          scope2_emissions: 1200,
-          scope3_emissions: 10205,
+          total_emissions: 22000,
+          scope1_emissions: 1700,
+          scope2_emissions: 3300,
+          scope3_emissions: 12400,
           description: 'Technology company focused on consumer electronics and services'
         },
         {
@@ -34,10 +35,10 @@ export const useCompanies = () => {
           name: 'Microsoft Corporation',
           industry: 'Technology',
           sector: 'Technology',
-          total_emissions: 9800,
-          scope1_emissions: 150,
-          scope2_emissions: 1800,
-          scope3_emissions: 7850,
+          total_emissions: 18000,
+          scope1_emissions: 1300,
+          scope2_emissions: 2200,
+          scope3_emissions: 10500,
           description: 'Global technology corporation developing software and cloud services'
         },
         {
@@ -45,32 +46,21 @@ export const useCompanies = () => {
           name: 'Alphabet Inc. (Google)',
           industry: 'Technology',
           sector: 'Technology',
-          total_emissions: 13200,
-          scope1_emissions: 200,
-          scope2_emissions: 2100,
-          scope3_emissions: 10900,
+          total_emissions: 35000,
+          scope1_emissions: 2500,
+          scope2_emissions: 4800,
+          scope3_emissions: 17700,
           description: 'Multinational technology conglomerate specializing in Internet services'
-        },
-        {
-          id: 'tesla',
-          name: 'Tesla Inc.',
-          industry: 'Automotive',
-          sector: 'Automotive',
-          total_emissions: 8500,
-          scope1_emissions: 1200,
-          scope2_emissions: 800,
-          scope3_emissions: 6500,
-          description: 'Electric vehicle and clean energy company'
         },
         {
           id: 'amazon',
           name: 'Amazon.com Inc.',
           industry: 'E-commerce',
-          sector: 'Consumer',
-          total_emissions: 71540,
-          scope1_emissions: 15200,
-          scope2_emissions: 5800,
-          scope3_emissions: 50540,
+          sector: 'Technology',
+          total_emissions: 85000,
+          scope1_emissions: 6900,
+          scope2_emissions: 13800,
+          scope3_emissions: 48000,
           description: 'Multinational technology and e-commerce company'
         },
         {
@@ -78,21 +68,54 @@ export const useCompanies = () => {
           name: 'Meta Platforms Inc.',
           industry: 'Technology',
           sector: 'Technology',
-          total_emissions: 7300,
-          scope1_emissions: 100,
-          scope2_emissions: 1400,
-          scope3_emissions: 5800,
+          total_emissions: 16000,
+          scope1_emissions: 1350,
+          scope2_emissions: 2600,
+          scope3_emissions: 9550,
           description: 'Social media and technology company'
+        },
+        {
+          id: 'samsung',
+          name: 'Samsung Electronics',
+          industry: 'Technology',
+          sector: 'Technology',
+          total_emissions: 48000,
+          scope1_emissions: 3800,
+          scope2_emissions: 7200,
+          scope3_emissions: 27000,
+          description: 'South Korean multinational electronics corporation'
+        },
+        {
+          id: 'tesla',
+          name: 'Tesla Inc.',
+          industry: 'Automotive',
+          sector: 'Automotive',
+          total_emissions: 11150,
+          scope1_emissions: 1050,
+          scope2_emissions: 2000,
+          scope3_emissions: 8100,
+          description: 'Electric vehicle and clean energy company'
+        },
+        {
+          id: 'toyota',
+          name: 'Toyota Motor Corporation',
+          industry: 'Automotive',
+          sector: 'Automotive',
+          total_emissions: 45000,
+          scope1_emissions: 3500,
+          scope2_emissions: 7000,
+          scope3_emissions: 24500,
+          description: 'Japanese multinational automotive manufacturer'
         },
         {
           id: 'bmw',
           name: 'BMW Group',
           industry: 'Automotive',
           sector: 'Automotive',
-          total_emissions: 78500,
-          scope1_emissions: 25200,
-          scope2_emissions: 8500,
-          scope3_emissions: 44800,
+          total_emissions: 65000,
+          scope1_emissions: 5000,
+          scope2_emissions: 9000,
+          scope3_emissions: 31000,
           description: 'German multinational automotive manufacturing company'
         },
         {
@@ -100,43 +123,21 @@ export const useCompanies = () => {
           name: 'Volkswagen Group',
           industry: 'Automotive',
           sector: 'Automotive',
-          total_emissions: 125000,
-          scope1_emissions: 45000,
-          scope2_emissions: 12000,
-          scope3_emissions: 68000,
+          total_emissions: 85000,
+          scope1_emissions: 6500,
+          scope2_emissions: 12300,
+          scope3_emissions: 41200,
           description: 'German multinational automotive manufacturing company'
-        },
-        {
-          id: 'toyota',
-          name: 'Toyota Motor Corporation',
-          industry: 'Automotive',
-          sector: 'Automotive',
-          total_emissions: 95000,
-          scope1_emissions: 35000,
-          scope2_emissions: 10000,
-          scope3_emissions: 50000,
-          description: 'Japanese multinational automotive manufacturer'
-        },
-        {
-          id: 'samsung',
-          name: 'Samsung Electronics',
-          industry: 'Technology',
-          sector: 'Technology',
-          total_emissions: 14200,
-          scope1_emissions: 500,
-          scope2_emissions: 2800,
-          scope3_emissions: 10900,
-          description: 'South Korean multinational electronics corporation'
         },
         {
           id: 'bp',
           name: 'BP plc',
           industry: 'Energy',
           sector: 'Energy',
-          total_emissions: 415000,
-          scope1_emissions: 180000,
-          scope2_emissions: 35000,
-          scope3_emissions: 200000,
+          total_emissions: 420000,
+          scope1_emissions: 185000,
+          scope2_emissions: 37000,
+          scope3_emissions: 148000,
           description: 'British multinational oil and gas company'
         },
         {
@@ -144,21 +145,32 @@ export const useCompanies = () => {
           name: 'Shell plc',
           industry: 'Energy',
           sector: 'Energy',
-          total_emissions: 1380000,
-          scope1_emissions: 580000,
-          scope2_emissions: 120000,
-          scope3_emissions: 680000,
+          total_emissions: 650000,
+          scope1_emissions: 290000,
+          scope2_emissions: 58000,
+          scope3_emissions: 232000,
           description: 'British multinational oil and gas company'
+        },
+        {
+          id: 'exxonmobil',
+          name: 'ExxonMobil',
+          industry: 'Energy',
+          sector: 'Energy',
+          total_emissions: 560000,
+          scope1_emissions: 255000,
+          scope2_emissions: 51000,
+          scope3_emissions: 204000,
+          description: 'American multinational oil and gas corporation'
         },
         {
           id: 'nike',
           name: 'Nike Inc.',
           industry: 'Consumer Goods',
           sector: 'Consumer',
-          total_emissions: 12800,
-          scope1_emissions: 300,
-          scope2_emissions: 1200,
-          scope3_emissions: 11300,
+          total_emissions: 14500,
+          scope1_emissions: 1250,
+          scope2_emissions: 2400,
+          scope3_emissions: 8850,
           description: 'American multinational corporation specializing in footwear and apparel'
         },
         {
@@ -166,10 +178,10 @@ export const useCompanies = () => {
           name: 'Unilever plc',
           industry: 'Consumer Goods',
           sector: 'Consumer',
-          total_emissions: 54000,
-          scope1_emissions: 8000,
-          scope2_emissions: 4500,
-          scope3_emissions: 41500,
+          total_emissions: 22000,
+          scope1_emissions: 1700,
+          scope2_emissions: 3300,
+          scope3_emissions: 12400,
           description: 'British multinational consumer goods company'
         },
         {
@@ -183,61 +195,49 @@ export const useCompanies = () => {
           scope3_emissions: 65500,
           description: 'Swiss multinational food and drink processing conglomerate'
         },
-        // New companies
         {
-          id: 'techcorp',
-          name: 'TechCorp Global',
-          industry: 'Technology',
-          sector: 'Technology',
-          total_emissions: 25000,
-          scope1_emissions: 2000,
-          scope2_emissions: 3000,
-          scope3_emissions: 20000,
-          description: 'Global technology company focused on AI and cloud computing solutions'
+          id: 'walmart',
+          name: 'Walmart Inc.',
+          industry: 'Retail',
+          sector: 'Consumer',
+          total_emissions: 28000,
+          scope1_emissions: 2300,
+          scope2_emissions: 4200,
+          scope3_emissions: 17500,
+          description: 'American multinational retail corporation'
         },
         {
-          id: 'manufacturingplus',
-          name: 'ManufacturingPlus Inc',
-          industry: 'Manufacturing',
-          sector: 'Manufacturing',
-          total_emissions: 250000,
-          scope1_emissions: 85000,
-          scope2_emissions: 25000,
-          scope3_emissions: 140000,
-          description: 'Industrial manufacturing company specializing in advanced materials'
-        },
-        {
-          id: 'energytransition',
-          name: 'EnergyTransition Ltd',
-          industry: 'Energy',
-          sector: 'Energy',
-          total_emissions: 500000,
-          scope1_emissions: 200000,
-          scope2_emissions: 50000,
-          scope3_emissions: 250000,
-          description: 'Energy company transitioning from fossil fuels to renewable sources'
-        },
-        {
-          id: 'consumergoods',
-          name: 'ConsumerGoods Co',
+          id: 'procter_gamble',
+          name: 'Procter & Gamble',
           industry: 'Consumer Goods',
           sector: 'Consumer',
-          total_emissions: 120000,
-          scope1_emissions: 15000,
-          scope2_emissions: 8000,
-          scope3_emissions: 97000,
-          description: 'Consumer goods company focused on sustainable products'
+          total_emissions: 35000,
+          scope1_emissions: 2800,
+          scope2_emissions: 5200,
+          scope3_emissions: 22000,
+          description: 'American multinational consumer goods corporation'
         },
         {
-          id: 'healthcare',
-          name: 'HealthCare Systems',
+          id: 'coca_cola',
+          name: 'The Coca-Cola Company',
+          industry: 'Food & Beverage',
+          sector: 'Consumer',
+          total_emissions: 45000,
+          scope1_emissions: 3600,
+          scope2_emissions: 6500,
+          scope3_emissions: 28900,
+          description: 'American multinational beverage corporation'
+        },
+        {
+          id: 'johnson_johnson',
+          name: 'Johnson & Johnson',
           industry: 'Healthcare',
           sector: 'Healthcare',
-          total_emissions: 85000,
-          scope1_emissions: 12000,
-          scope2_emissions: 10000,
-          scope3_emissions: 63000,
-          description: 'Healthcare systems company providing medical equipment and services'
+          total_emissions: 32000,
+          scope1_emissions: 2560,
+          scope2_emissions: 4800,
+          scope3_emissions: 20640,
+          description: 'American multinational pharmaceutical and medical technologies corporation'
         }
       ];
 
