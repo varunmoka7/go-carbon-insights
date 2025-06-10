@@ -1034,4 +1034,39 @@ export const enhancedCompanies: EnhancedCompany[] = [
       { year: 2021, scope1: 1350, scope2: 2600, scope3: 9550 },
       { year: 2022, scope1: 1300, scope2: 2500, scope3: 9200 },
       { year: 2023, scope1: 1250, scope2: 2400, scope3: 8850 },
-      {
+      { year: 2024, scope1: 1250, scope2: 2400, scope3: 8850 }
+    ],
+    topCarbonFootprints: ['Manufacturing operations', 'Global supply chain', 'Retail operations'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'B+' }
+    ],
+    carbonCredits: 28000,
+    materialityScore: 7.9,
+    supplierDecarbonization: 68
+  },
+  {
+    id: 'unilever',
+    name: 'Unilever plc',
+    sector: 'Consumer Goods',
+    industry: 'Personal Care & Food',
+    description: 'British-Dutch multinational consumer goods company',
+    headquarters: 'London, United Kingdom',
+    employees: 190000,
+    revenue: 62.0,
+    marketCap: 140.0,
+    totalEmissions: 22000,
+    emissionsIntensity: 354.8,
+    carbonFootprint: 22000,
+    energyConsumption: 45000,
+    wasteGenerated: 680,
+    renewableEnergyPercentage: 58,
+    waterUsage: 280,
+    sustainabilityRating: 'B+',
+    sbtiCommitted: true,
+    netZeroTarget: 2039,
+    keyInitiatives: ['Sustainable living brands', 'Regenerative agriculture', 'Circular economy'],
+    challenges: ['Supply chain complexity', 'Packaging waste', 'Water scarcity'],
+    opportunities:
