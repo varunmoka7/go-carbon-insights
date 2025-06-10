@@ -182,7 +182,7 @@ export const generateScope2MockData = (companyId: string): EnhancedScope2Data | 
     regionalRank: Math.floor(Math.random() * 5) + 1
   };
 
-  // Generate regional data with proper status types
+  // Generate regional data with proper status types and all required properties
   const getGridStatus = (intensity: number): 'good' | 'average' | 'poor' => {
     if (intensity < 0.4) return 'good';
     if (intensity > 0.6) return 'poor';
