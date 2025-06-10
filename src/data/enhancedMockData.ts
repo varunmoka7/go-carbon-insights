@@ -1,4 +1,3 @@
-
 export interface Framework {
   name: string;
   status: 'Implemented' | 'In Progress' | 'Planned' | 'Not Started';
@@ -600,39 +599,439 @@ export const enhancedCompanies: EnhancedCompany[] = [
     carbonCredits: 18000,
     materialityScore: 6.8,
     supplierDecarbonization: 42
-  }
-];
+  },
 
-// Helper functions for data processing
-export const getCompanyById = (id: string): EnhancedCompany | undefined => {
-  return enhancedCompanies.find(company => company.id === id);
-};
+  // Technology Sector - Additional Companies
+  {
+    id: 'apple',
+    name: 'Apple Inc.',
+    sector: 'Technology',
+    industry: 'Consumer Electronics',
+    description: 'American multinational technology company designing consumer electronics and software',
+    headquarters: 'Cupertino, California, USA',
+    employees: 164000,
+    revenue: 394.3,
+    marketCap: 3000.0,
+    totalEmissions: 22000,
+    emissionsIntensity: 55.8,
+    carbonFootprint: 22000,
+    energyConsumption: 55000,
+    wasteGenerated: 520,
+    renewableEnergyPercentage: 95,
+    waterUsage: 220,
+    sustainabilityRating: 'A',
+    sbtiCommitted: true,
+    netZeroTarget: 2030,
+    keyInitiatives: ['Carbon neutral by 2030', '100% renewable energy', 'Product lifecycle optimization'],
+    challenges: ['Supply chain complexity', 'Customer product lifecycle', 'Material sourcing'],
+    opportunities: ['Circular design', 'Renewable energy expansion', 'Supply chain transformation'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 2200, scope2: 4300, scope3: 15500 },
+      { year: 2020, scope1: 2100, scope2: 4100, scope3: 14800 },
+      { year: 2021, scope1: 2000, scope2: 3900, scope3: 14200 },
+      { year: 2022, scope1: 1900, scope2: 3700, scope3: 13600 },
+      { year: 2023, scope1: 1800, scope2: 3500, scope3: 13000 },
+      { year: 2024, scope1: 1700, scope2: 3300, scope3: 12400 }
+    ],
+    topCarbonFootprints: ['Product manufacturing', 'Supply chain logistics', 'Data centers'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'A' }
+    ],
+    carbonCredits: 95000,
+    materialityScore: 9.5,
+    supplierDecarbonization: 88
+  },
+  {
+    id: 'google',
+    name: 'Alphabet Inc. (Google)',
+    sector: 'Technology',
+    industry: 'Internet Services',
+    description: 'American multinational conglomerate focused on internet services and AI',
+    headquarters: 'Mountain View, California, USA',
+    employees: 190000,
+    revenue: 307.4,
+    marketCap: 2100.0,
+    totalEmissions: 35000,
+    emissionsIntensity: 113.8,
+    carbonFootprint: 35000,
+    energyConsumption: 85000,
+    wasteGenerated: 680,
+    renewableEnergyPercentage: 90,
+    waterUsage: 380,
+    sustainabilityRating: 'A-',
+    sbtiCommitted: true,
+    netZeroTarget: 2030,
+    keyInitiatives: ['Carbon neutrality', 'AI for climate', 'Circular economy'],
+    challenges: ['Data center growth', 'Global operations scale', 'Hardware lifecycle'],
+    opportunities: ['AI optimization', 'Renewable energy innovation', 'Climate solutions'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 3500, scope2: 6800, scope3: 24700 },
+      { year: 2020, scope1: 3300, scope2: 6400, scope3: 23300 },
+      { year: 2021, scope1: 3100, scope2: 6000, scope3: 21900 },
+      { year: 2022, scope1: 2900, scope2: 5600, scope3: 20500 },
+      { year: 2023, scope1: 2700, scope2: 5200, scope3: 19100 },
+      { year: 2024, scope1: 2500, scope2: 4800, scope3: 17700 }
+    ],
+    topCarbonFootprints: ['Data center operations', 'Cloud infrastructure', 'Hardware manufacturing'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'A' }
+    ],
+    carbonCredits: 75000,
+    materialityScore: 9.1,
+    supplierDecarbonization: 82
+  },
+  {
+    id: 'meta',
+    name: 'Meta Platforms Inc.',
+    sector: 'Technology',
+    industry: 'Social Media',
+    description: 'American technology conglomerate focused on social media and virtual reality',
+    headquarters: 'Menlo Park, California, USA',
+    employees: 77000,
+    revenue: 134.9,
+    marketCap: 900.0,
+    totalEmissions: 16000,
+    emissionsIntensity: 118.6,
+    carbonFootprint: 16000,
+    energyConsumption: 38000,
+    wasteGenerated: 320,
+    renewableEnergyPercentage: 78,
+    waterUsage: 185,
+    sustainabilityRating: 'B+',
+    sbtiCommitted: true,
+    netZeroTarget: 2030,
+    keyInitiatives: ['Net zero operations', 'Renewable energy', 'Sustainable data centers'],
+    challenges: ['Data center energy growth', 'Global expansion', 'Hardware requirements'],
+    opportunities: ['VR efficiency innovation', 'Clean energy infrastructure', 'Remote work optimization'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 1600, scope2: 3100, scope3: 11300 },
+      { year: 2020, scope1: 1550, scope2: 3000, scope3: 10950 },
+      { year: 2021, scope1: 1500, scope2: 2900, scope3: 10600 },
+      { year: 2022, scope1: 1450, scope2: 2800, scope3: 10250 },
+      { year: 2023, scope1: 1400, scope2: 2700, scope3: 9900 },
+      { year: 2024, scope1: 1350, scope2: 2600, scope3: 9550 }
+    ],
+    topCarbonFootprints: ['Data center operations', 'Office facilities', 'Employee travel'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'In Progress' },
+      { name: 'CDP', status: 'Implemented', score: 'B+' }
+    ],
+    carbonCredits: 42000,
+    materialityScore: 8.3,
+    supplierDecarbonization: 71
+  },
+  {
+    id: 'samsung',
+    name: 'Samsung Electronics',
+    sector: 'Technology',
+    industry: 'Electronics Manufacturing',
+    description: 'South Korean multinational electronics corporation',
+    headquarters: 'Suwon, South Korea',
+    employees: 267000,
+    revenue: 244.2,
+    marketCap: 380.0,
+    totalEmissions: 48000,
+    emissionsIntensity: 196.6,
+    carbonFootprint: 48000,
+    energyConsumption: 95000,
+    wasteGenerated: 980,
+    renewableEnergyPercentage: 55,
+    waterUsage: 420,
+    sustainabilityRating: 'B',
+    sbtiCommitted: true,
+    netZeroTarget: 2050,
+    keyInitiatives: ['RE100 commitment', 'Eco-conscious products', 'Circular economy'],
+    challenges: ['Manufacturing energy intensity', 'Global supply chain', 'Product lifecycle'],
+    opportunities: ['Renewable energy expansion', 'Energy-efficient manufacturing', 'Product recycling'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 4800, scope2: 9200, scope3: 34000 },
+      { year: 2020, scope1: 4600, scope2: 8800, scope3: 32600 },
+      { year: 2021, scope1: 4400, scope2: 8400, scope3: 31200 },
+      { year: 2022, scope1: 4200, scope2: 8000, scope3: 29800 },
+      { year: 2023, scope1: 4000, scope2: 7600, scope3: 28400 },
+      { year: 2024, scope1: 3800, scope2: 7200, scope3: 27000 }
+    ],
+    topCarbonFootprints: ['Semiconductor manufacturing', 'Display production', 'Global logistics'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'In Progress' },
+      { name: 'TCFD', status: 'Implemented' }
+    ],
+    carbonCredits: 28000,
+    materialityScore: 7.1,
+    supplierDecarbonization: 52
+  },
 
-export const getCompaniesBySector = (sector: string): EnhancedCompany[] => {
-  return enhancedCompanies.filter(company => company.sector === sector);
-};
+  // Automotive Sector - Additional Companies
+  {
+    id: 'bmw',
+    name: 'BMW Group',
+    sector: 'Manufacturing',
+    industry: 'Automotive',
+    description: 'German multinational automotive manufacturer of luxury vehicles',
+    headquarters: 'Munich, Germany',
+    employees: 149000,
+    revenue: 142.6,
+    marketCap: 58.0,
+    totalEmissions: 65000,
+    emissionsIntensity: 455.8,
+    carbonFootprint: 65000,
+    energyConsumption: 125000,
+    wasteGenerated: 1800,
+    renewableEnergyPercentage: 68,
+    waterUsage: 520,
+    sustainabilityRating: 'B+',
+    sbtiCommitted: true,
+    netZeroTarget: 2050,
+    keyInitiatives: ['Electric mobility', 'Circular economy', 'Sustainable supply chain'],
+    challenges: ['ICE to EV transition', 'Battery supply chain', 'Manufacturing transformation'],
+    opportunities: ['Electric vehicle leadership', 'Sustainable materials', 'Digital services'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 6500, scope2: 12500, scope3: 46000 },
+      { year: 2020, scope1: 6200, scope2: 11800, scope3: 43000 },
+      { year: 2021, scope1: 5900, scope2: 11100, scope3: 40000 },
+      { year: 2022, scope1: 5600, scope2: 10400, scope3: 37000 },
+      { year: 2023, scope1: 5300, scope2: 9700, scope3: 34000 },
+      { year: 2024, scope1: 5000, scope2: 9000, scope3: 31000 }
+    ],
+    topCarbonFootprints: ['Vehicle manufacturing', 'Steel and aluminum production', 'Supplier operations'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'B+' }
+    ],
+    carbonCredits: 38000,
+    materialityScore: 7.8,
+    supplierDecarbonization: 64
+  },
+  {
+    id: 'volkswagen',
+    name: 'Volkswagen Group',
+    sector: 'Manufacturing',
+    industry: 'Automotive',
+    description: 'German multinational automotive manufacturing corporation',
+    headquarters: 'Wolfsburg, Germany',
+    employees: 672000,
+    revenue: 279.2,
+    marketCap: 82.0,
+    totalEmissions: 85000,
+    emissionsIntensity: 304.5,
+    carbonFootprint: 85000,
+    energyConsumption: 165000,
+    wasteGenerated: 2400,
+    waterUsage: 680,
+    renewableEnergyPercentage: 62,
+    sustainabilityRating: 'B',
+    sbtiCommitted: true,
+    netZeroTarget: 2050,
+    keyInitiatives: ['Way to Zero strategy', 'Electric transformation', 'Sustainable production'],
+    challenges: ['Fleet electrification', 'Manufacturing decarbonization', 'Supply chain complexity'],
+    opportunities: ['Electric vehicle mass market', 'Battery technology', 'Mobility services'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 8500, scope2: 16300, scope3: 60200 },
+      { year: 2020, scope1: 8100, scope2: 15500, scope3: 56400 },
+      { year: 2021, scope1: 7700, scope2: 14700, scope3: 52600 },
+      { year: 2022, scope1: 7300, scope2: 13900, scope3: 48800 },
+      { year: 2023, scope1: 6900, scope2: 13100, scope3: 45000 },
+      { year: 2024, scope1: 6500, scope2: 12300, scope3: 41200 }
+    ],
+    topCarbonFootprints: ['Vehicle production', 'Material extraction', 'Global supply chain'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'B' }
+    ],
+    carbonCredits: 52000,
+    materialityScore: 7.5,
+    supplierDecarbonization: 58
+  },
 
-export const getTopEmitters = (limit: number = 10): EnhancedCompany[] => {
-  return enhancedCompanies
-    .sort((a, b) => b.totalEmissions - a.totalEmissions)
-    .slice(0, limit);
-};
+  // Energy Sector - Additional Companies
+  {
+    id: 'bp',
+    name: 'BP plc',
+    sector: 'Energy',
+    industry: 'Oil & Gas',
+    description: 'British multinational oil and gas company',
+    headquarters: 'London, United Kingdom',
+    employees: 66800,
+    revenue: 241.4,
+    marketCap: 95.0,
+    totalEmissions: 420000,
+    emissionsIntensity: 1740.1,
+    carbonFootprint: 420000,
+    energyConsumption: 580000,
+    wasteGenerated: 8500,
+    renewableEnergyPercentage: 25,
+    waterUsage: 1800,
+    sustainabilityRating: 'C+',
+    sbtiCommitted: false,
+    netZeroTarget: 2050,
+    keyInitiatives: ['Net zero ambition', 'Renewable energy investment', 'Low carbon transition'],
+    challenges: ['Energy transition', 'Stranded assets', 'Operational emissions'],
+    opportunities: ['Offshore wind', 'Hydrogen production', 'CCUS technology'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 210000, scope2: 42000, scope3: 168000 },
+      { year: 2020, scope1: 205000, scope2: 41000, scope3: 164000 },
+      { year: 2021, scope1: 200000, scope2: 40000, scope3: 160000 },
+      { year: 2022, scope1: 195000, scope2: 39000, scope3: 156000 },
+      { year: 2023, scope1: 190000, scope2: 38000, scope3: 152000 },
+      { year: 2024, scope1: 185000, scope2: 37000, scope3: 148000 }
+    ],
+    topCarbonFootprints: ['Oil and gas extraction', 'Refining operations', 'Transportation'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'C+' }
+    ],
+    carbonCredits: 8000,
+    materialityScore: 6.8,
+    supplierDecarbonization: 28
+  },
+  {
+    id: 'shell',
+    name: 'Shell plc',
+    sector: 'Energy',
+    industry: 'Oil & Gas',
+    description: 'British-Dutch multinational oil and gas company',
+    headquarters: 'London, United Kingdom',
+    employees: 93000,
+    revenue: 386.2,
+    marketCap: 220.0,
+    totalEmissions: 650000,
+    emissionsIntensity: 1683.1,
+    carbonFootprint: 650000,
+    energyConsumption: 850000,
+    wasteGenerated: 12000,
+    renewableEnergyPercentage: 18,
+    waterUsage: 2400,
+    sustainabilityRating: 'C',
+    sbtiCommitted: false,
+    netZeroTarget: 2050,
+    keyInitiatives: ['Powering Progress strategy', 'Nature-based solutions', 'Energy transition'],
+    challenges: ['Scope 3 emissions', 'Energy transition pace', 'Investment allocation'],
+    opportunities: ['LNG expansion', 'Renewable power', 'Carbon capture'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 325000, scope2: 65000, scope3: 260000 },
+      { year: 2020, scope1: 318000, scope2: 63600, scope3: 254400 },
+      { year: 2021, scope1: 311000, scope2: 62200, scope3: 248800 },
+      { year: 2022, scope1: 304000, scope2: 60800, scope3: 243200 },
+      { year: 2023, scope1: 297000, scope2: 59400, scope3: 237600 },
+      { year: 2024, scope1: 290000, scope2: 58000, scope3: 232000 }
+    ],
+    topCarbonFootprints: ['Upstream operations', 'LNG processing', 'Chemical production'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'C' }
+    ],
+    carbonCredits: 12000,
+    materialityScore: 6.2,
+    supplierDecarbonization: 22
+  },
+  {
+    id: 'energytransition',
+    name: 'EnergyTransition Ltd',
+    sector: 'Energy',
+    industry: 'Renewable Energy',
+    description: 'Clean energy company focused on renewable power generation',
+    headquarters: 'Copenhagen, Denmark',
+    employees: 8500,
+    revenue: 15.2,
+    marketCap: 45.0,
+    totalEmissions: 8500,
+    emissionsIntensity: 559.2,
+    carbonFootprint: 8500,
+    energyConsumption: 22000,
+    wasteGenerated: 180,
+    renewableEnergyPercentage: 95,
+    waterUsage: 95,
+    sustainabilityRating: 'A+',
+    sbtiCommitted: true,
+    netZeroTarget: 2025,
+    keyInitiatives: ['100% renewable portfolio', 'Green hydrogen', 'Energy storage'],
+    challenges: ['Grid integration', 'Intermittency management', 'Technology scaling'],
+    opportunities: ['Offshore wind expansion', 'Energy storage solutions', 'Green hydrogen'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 850, scope2: 1600, scope3: 6050 },
+      { year: 2020, scope1: 800, scope2: 1500, scope3: 5700 },
+      { year: 2021, scope1: 750, scope2: 1400, scope3: 5350 },
+      { year: 2022, scope1: 700, scope2: 1300, scope3: 5000 },
+      { year: 2023, scope1: 650, scope2: 1200, scope3: 4650 },
+      { year: 2024, scope1: 600, scope2: 1100, scope3: 4300 }
+    ],
+    topCarbonFootprints: ['Construction activities', 'Maintenance operations', 'Supply chain'],
+    frameworks: [
+      { name: 'GRI', status: 'Implemented' },
+      { name: 'SASB', status: 'Implemented' },
+      { name: 'TCFD', status: 'Implemented' },
+      { name: 'CDP', status: 'Implemented', score: 'A+' }
+    ],
+    carbonCredits: 85000,
+    materialityScore: 9.8,
+    supplierDecarbonization: 92
+  },
 
-export const getTopPerformers = (limit: number = 10): EnhancedCompany[] => {
-  const ratingOrder = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F'];
-  return enhancedCompanies
-    .sort((a, b) => ratingOrder.indexOf(a.sustainabilityRating) - ratingOrder.indexOf(b.sustainabilityRating))
-    .slice(0, limit);
-};
-
-export const getSectorBreakdown = () => {
-  const sectors = [...new Set(enhancedCompanies.map(c => c.sector))];
-  return sectors.map(sector => ({
-    sector,
-    companies: getCompaniesBySector(sector).length,
-    totalEmissions: getCompaniesBySector(sector).reduce((sum, c) => sum + c.totalEmissions, 0),
-    avgSustainabilityRating: getCompaniesBySector(sector)[0]?.sustainabilityRating || 'C'
-  }));
-};
-
-export default enhancedCompanies;
+  // Consumer/Retail Sector - Additional Companies
+  {
+    id: 'nike',
+    name: 'Nike Inc.',
+    sector: 'Consumer Goods',
+    industry: 'Apparel & Footwear',
+    description: 'American multinational corporation focused on athletic footwear and apparel',
+    headquarters: 'Beaverton, Oregon, USA',
+    employees: 83700,
+    revenue: 51.2,
+    marketCap: 180.0,
+    totalEmissions: 14500,
+    emissionsIntensity: 283.2,
+    carbonFootprint: 14500,
+    energyConsumption: 28000,
+    wasteGenerated: 420,
+    renewableEnergyPercentage: 72,
+    waterUsage: 185,
+    sustainabilityRating: 'B+',
+    sbtiCommitted: true,
+    netZeroTarget: 2050,
+    keyInitiatives: ['Move to Zero', 'Circular design', 'Sustainable materials'],
+    challenges: ['Supply chain complexity', 'Material sourcing', 'Manufacturing emissions'],
+    opportunities: ['Circular economy', 'Renewable materials', 'Direct-to-consumer'],
+    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
+    lastUpdated: '2024-01-15',
+    emissionsData: [
+      { year: 2019, scope1: 1450, scope2: 2800, scope3: 10250 },
+      { year: 2020, scope1: 1400, scope2: 2700, scope3: 9900 },
+      { year: 2021, scope1: 1350, scope2: 2600, scope3: 9550 },
+      { year: 2022, scope1: 1300, scope2: 2500, scope3: 9200 },
+      { year: 2023, scope1: 1250, scope2: 2400, scope3: 8850 },
+      {
