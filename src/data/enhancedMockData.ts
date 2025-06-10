@@ -156,8 +156,6 @@ export const enhancedCompanies: EnhancedCompany[] = [
     materialityScore: 6.8,
     supplierDecarbonization: 32
   },
-
-  // Technology Sector
   {
     id: 'amazon',
     name: 'Amazon',
@@ -349,8 +347,6 @@ export const enhancedCompanies: EnhancedCompany[] = [
     materialityScore: 8.8,
     supplierDecarbonization: 68
   },
-
-  // Manufacturing - Automotive
   {
     id: 'toyota',
     name: 'Toyota',
@@ -389,14 +385,12 @@ export const enhancedCompanies: EnhancedCompany[] = [
       { name: 'GRI', status: 'Implemented' },
       { name: 'SASB', status: 'Implemented' },
       { name: 'TCFD', status: 'Implemented' },
-      { name: 'CDP', status: 'Implemented', score: 'B' }
+      { name: 'CDP', status: 'Implemented', score: 'B+' }
     ],
     carbonCredits: 45000,
     materialityScore: 7.5,
     supplierDecarbonization: 58
   },
-
-  // Retail
   {
     id: 'walmart',
     name: 'Walmart',
@@ -441,167 +435,50 @@ export const enhancedCompanies: EnhancedCompany[] = [
     materialityScore: 7.8,
     supplierDecarbonization: 62
   },
-
-  // Add the original companies to maintain compatibility
   {
-    id: 'techcorp',
-    name: 'TechCorp Solutions',
-    sector: 'Technology',
-    industry: 'Software Development',
-    description: 'Leading software development company focusing on cloud solutions',
-    headquarters: 'San Francisco, California, USA',
-    employees: 5200,
-    revenue: 2.8,
-    marketCap: 15.0,
-    totalEmissions: 3100,
-    emissionsIntensity: 1107.1,
-    carbonFootprint: 3100,
-    energyConsumption: 12450,
-    wasteGenerated: 245,
-    renewableEnergyPercentage: 75,
-    waterUsage: 85,
-    sustainabilityRating: 'A-',
-    sbtiCommitted: true,
-    netZeroTarget: 2050,
-    keyInitiatives: ['100% renewable energy', 'Green software development', 'Remote work optimization'],
-    challenges: ['Data center efficiency', 'Employee commuting', 'Supply chain visibility'],
-    opportunities: ['Carbon-neutral cloud services', 'Sustainable software practices', 'Digital transformation'],
-    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15',
-    emissionsData: [
-      { year: 2019, scope1: 550, scope2: 1200, scope3: 8250 },
-      { year: 2020, scope1: 520, scope2: 1150, scope3: 7830 },
-      { year: 2021, scope1: 480, scope2: 1100, scope3: 7420 },
-      { year: 2022, scope1: 450, scope2: 1050, scope3: 7000 },
-      { year: 2023, scope1: 420, scope2: 1000, scope3: 6580 },
-      { year: 2024, scope1: 390, scope2: 950, scope3: 6160 }
-    ],
-    topCarbonFootprints: ['Cloud infrastructure', 'Employee commuting', 'Business travel'],
-    sbtiTargets: {
-      description: 'Achieve net-zero emissions across all operations by 2050 with interim targets',
-      nearTermTarget: '50% reduction by 2030',
-      longTermTarget: 'Net-zero by 2050',
-      baselineYear: 2019,
-      targetYear: 2050,
-      validationStatus: 'Targets Approved',
-      scope1Reduction: 50,
-      scope3Reduction: 42
-    },
-    sbtiProgress: 58,
-    frameworks: [
-      { name: 'GRI', status: 'Implemented' },
-      { name: 'SASB', status: 'Implemented' },
-      { name: 'TCFD', status: 'Implemented' },
-      { name: 'CDP', status: 'Implemented', score: 'A-' }
-    ],
-    pathwayData: [
-      { year: 2019, emissions: 10000, target: 10000 },
-      { year: 2020, emissions: 9500, target: 9500 },
-      { year: 2021, emissions: 9000, target: 9000 },
-      { year: 2022, emissions: 8500, target: 8500 },
-      { year: 2023, emissions: 8000, target: 8000 },
-      { year: 2024, emissions: 7500, target: 7500 },
-      { year: 2030, emissions: 5000, target: 5000 },
-      { year: 2050, emissions: 0, target: 0 }
-    ],
-    carbonCredits: 12000,
-    materialityScore: 8.2,
-    supplierDecarbonization: 75
-  },
-
-  // Consumer Goods
-  {
-    id: 'nestle',
-    name: 'Nestle',
+    id: 'unilever',
+    name: 'Unilever plc',
     sector: 'Consumer Goods',
-    industry: 'Food & Beverage',
-    description: 'Swiss multinational food and drink corporation',
-    headquarters: 'Vevey, Switzerland',
-    employees: 273000,
-    revenue: 94.4,
-    marketCap: 320.0,
-    totalEmissions: 18000,
-    emissionsIntensity: 190.7,
-    carbonFootprint: 18000,
-    energyConsumption: 48000,
-    wasteGenerated: 850,
-    renewableEnergyPercentage: 48,
-    waterUsage: 1200,
+    industry: 'Personal Care & Food',
+    description: 'British-Dutch multinational consumer goods company',
+    headquarters: 'London, United Kingdom',
+    employees: 190000,
+    revenue: 62.0,
+    marketCap: 140.0,
+    totalEmissions: 22000,
+    emissionsIntensity: 354.8,
+    carbonFootprint: 22000,
+    energyConsumption: 45000,
+    wasteGenerated: 680,
+    renewableEnergyPercentage: 58,
+    waterUsage: 280,
     sustainabilityRating: 'B+',
     sbtiCommitted: true,
-    netZeroTarget: 2050,
-    keyInitiatives: ['Regenerative agriculture', 'Sustainable packaging', 'Water stewardship'],
-    challenges: ['Agricultural supply chain', 'Packaging waste', 'Water scarcity'],
-    opportunities: ['Plant-based products', 'Circular packaging', 'Climate-smart agriculture'],
+    netZeroTarget: 2039,
+    keyInitiatives: ['Sustainable living brands', 'Regenerative agriculture', 'Circular economy'],
+    challenges: ['Supply chain complexity', 'Packaging waste', 'Water scarcity'],
+    opportunities: ['Sustainable product innovation', 'Circular packaging', 'Digital transformation'],
     reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
     lastUpdated: '2024-01-15',
     emissionsData: [
-      { year: 2019, scope1: 1800, scope2: 3400, scope3: 12800 },
-      { year: 2020, scope1: 1750, scope2: 3300, scope3: 12500 },
-      { year: 2021, scope1: 1700, scope2: 3200, scope3: 12200 },
-      { year: 2022, scope1: 1650, scope2: 3100, scope3: 11900 },
-      { year: 2023, scope1: 1600, scope2: 3000, scope3: 11600 },
-      { year: 2024, scope1: 1550, scope2: 2900, scope3: 11300 }
+      { year: 2019, scope1: 2200, scope2: 4300, scope3: 15500 },
+      { year: 2020, scope1: 2100, scope2: 4100, scope3: 14800 },
+      { year: 2021, scope1: 2000, scope2: 3900, scope3: 14200 },
+      { year: 2022, scope1: 1900, scope2: 3700, scope3: 13600 },
+      { year: 2023, scope1: 1800, scope2: 3500, scope3: 13000 },
+      { year: 2024, scope1: 1700, scope2: 3300, scope3: 12400 }
     ],
-    topCarbonFootprints: ['Agricultural supply chain', 'Manufacturing operations', 'Packaging materials'],
+    topCarbonFootprints: ['Supply chain operations', 'Manufacturing processes', 'Product packaging'],
     frameworks: [
       { name: 'GRI', status: 'Implemented' },
       { name: 'SASB', status: 'Implemented' },
       { name: 'TCFD', status: 'Implemented' },
-      { name: 'CDP', status: 'Implemented', score: 'B' }
+      { name: 'CDP', status: 'Implemented', score: 'B+' }
     ],
     carbonCredits: 35000,
-    materialityScore: 7.2,
-    supplierDecarbonization: 55
+    materialityScore: 7.5,
+    supplierDecarbonization: 68
   },
-
-  // Aerospace
-  {
-    id: 'boeing',
-    name: 'Boeing',
-    sector: 'Manufacturing',
-    industry: 'Aerospace',
-    description: 'American multinational aerospace corporation',
-    headquarters: 'Chicago, Illinois, USA',
-    employees: 156000,
-    revenue: 66.6,
-    marketCap: 140.0,
-    totalEmissions: 28000,
-    emissionsIntensity: 420.4,
-    carbonFootprint: 28000,
-    energyConsumption: 45000,
-    wasteGenerated: 850,
-    renewableEnergyPercentage: 35,
-    waterUsage: 320,
-    sustainabilityRating: 'B-',
-    sbtiCommitted: true,
-    netZeroTarget: 2050,
-    keyInitiatives: ['Sustainable aviation fuels', 'Efficient aircraft design', 'Manufacturing optimization'],
-    challenges: ['Aviation industry emissions', 'Long product lifecycles', 'Customer operations'],
-    opportunities: ['Electric aircraft', 'Sustainable aviation fuels', 'Advanced materials'],
-    reportingFrameworks: ['GRI', 'SASB', 'TCFD', 'CDP'],
-    lastUpdated: '2024-01-15',
-    emissionsData: [
-      { year: 2019, scope1: 2800, scope2: 5200, scope3: 20000 },
-      { year: 2020, scope1: 2600, scope2: 4800, scope3: 18500 },
-      { year: 2021, scope1: 2400, scope2: 4400, scope3: 17000 },
-      { year: 2022, scope1: 2500, scope2: 4600, scope3: 17800 },
-      { year: 2023, scope1: 2300, scope2: 4200, scope3: 16500 },
-      { year: 2024, scope1: 2200, scope2: 4000, scope3: 16000 }
-    ],
-    topCarbonFootprints: ['Aircraft manufacturing', 'Material processing', 'Supply chain logistics'],
-    frameworks: [
-      { name: 'GRI', status: 'Implemented' },
-      { name: 'SASB', status: 'Implemented' },
-      { name: 'TCFD', status: 'Implemented' },
-      { name: 'CDP', status: 'In Progress' }
-    ],
-    carbonCredits: 18000,
-    materialityScore: 6.8,
-    supplierDecarbonization: 42
-  },
-
-  // Technology Sector - Additional Companies
   {
     id: 'apple',
     name: 'Apple Inc.',
@@ -777,8 +654,6 @@ export const enhancedCompanies: EnhancedCompany[] = [
     materialityScore: 7.1,
     supplierDecarbonization: 52
   },
-
-  // Automotive Sector - Additional Companies
   {
     id: 'bmw',
     name: 'BMW Group',
@@ -867,8 +742,6 @@ export const enhancedCompanies: EnhancedCompany[] = [
     materialityScore: 7.5,
     supplierDecarbonization: 58
   },
-
-  // Energy Sector - Additional Companies
   {
     id: 'bp',
     name: 'BP plc',
@@ -1001,8 +874,6 @@ export const enhancedCompanies: EnhancedCompany[] = [
     materialityScore: 9.8,
     supplierDecarbonization: 92
   },
-
-  // Consumer/Retail Sector - Additional Companies
   {
     id: 'nike',
     name: 'Nike Inc.',
@@ -1047,26 +918,38 @@ export const enhancedCompanies: EnhancedCompany[] = [
     materialityScore: 7.9,
     supplierDecarbonization: 68
   },
-  {
-    id: 'unilever',
-    name: 'Unilever plc',
-    sector: 'Consumer Goods',
-    industry: 'Personal Care & Food',
-    description: 'British-Dutch multinational consumer goods company',
-    headquarters: 'London, United Kingdom',
-    employees: 190000,
-    revenue: 62.0,
-    marketCap: 140.0,
-    totalEmissions: 22000,
-    emissionsIntensity: 354.8,
-    carbonFootprint: 22000,
-    energyConsumption: 45000,
-    wasteGenerated: 680,
-    renewableEnergyPercentage: 58,
-    waterUsage: 280,
-    sustainabilityRating: 'B+',
-    sbtiCommitted: true,
-    netZeroTarget: 2039,
-    keyInitiatives: ['Sustainable living brands', 'Regenerative agriculture', 'Circular economy'],
-    challenges: ['Supply chain complexity', 'Packaging waste', 'Water scarcity'],
-    opportunities:
+];
+
+// Helper functions for data processing
+export const getCompanyById = (id: string): EnhancedCompany | undefined => {
+  return enhancedCompanies.find(company => company.id === id);
+};
+
+export const getCompaniesBySector = (sector: string): EnhancedCompany[] => {
+  return enhancedCompanies.filter(company => company.sector === sector);
+};
+
+export const getTopEmitters = (limit: number = 10): EnhancedCompany[] => {
+  return enhancedCompanies
+    .sort((a, b) => b.totalEmissions - a.totalEmissions)
+    .slice(0, limit);
+};
+
+export const getTopPerformers = (limit: number = 10): EnhancedCompany[] => {
+  const ratingOrder = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F'];
+  return enhancedCompanies
+    .sort((a, b) => ratingOrder.indexOf(a.sustainabilityRating) - ratingOrder.indexOf(b.sustainabilityRating))
+    .slice(0, limit);
+};
+
+export const getSectorBreakdown = () => {
+  const sectors = [...new Set(enhancedCompanies.map(c => c.sector))];
+  return sectors.map(sector => ({
+    sector,
+    companies: getCompaniesBySector(sector).length,
+    totalEmissions: getCompaniesBySector(sector).reduce((sum, c) => sum + c.totalEmissions, 0),
+    avgSustainabilityRating: getCompaniesBySector(sector)[0]?.sustainabilityRating || 'C'
+  }));
+};
+
+export default enhancedCompanies;
