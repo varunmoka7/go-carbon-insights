@@ -12,36 +12,84 @@ interface Company {
   }>;
 }
 
+// Company-specific data variations to ensure uniqueness
+const companyVariations: Record<string, {
+  gridIntensityBase: number;
+  renewableBase: number;
+  intensityBase: number;
+  rankBase: number;
+  reductionBase: number;
+  costBase: number;
+}> = {
+  'techcorp': { gridIntensityBase: 420, renewableBase: 85, intensityBase: 12, rankBase: 3, reductionBase: 8.5, costBase: 2200000 },
+  'apple': { gridIntensityBase: 380, renewableBase: 95, intensityBase: 8, rankBase: 1, reductionBase: 12, costBase: 1800000 },
+  'microsoft': { gridIntensityBase: 410, renewableBase: 88, intensityBase: 10, rankBase: 2, reductionBase: 9.5, costBase: 2000000 },
+  'alphabet': { gridIntensityBase: 390, renewableBase: 92, intensityBase: 9, rankBase: 2, reductionBase: 11, costBase: 1900000 },
+  'tesla': { gridIntensityBase: 350, renewableBase: 78, intensityBase: 15, rankBase: 8, reductionBase: 7, costBase: 2500000 },
+  'amazon': { gridIntensityBase: 450, renewableBase: 65, intensityBase: 18, rankBase: 12, reductionBase: 6, costBase: 3200000 },
+  'meta': { gridIntensityBase: 425, renewableBase: 70, intensityBase: 11, rankBase: 7, reductionBase: 8, costBase: 2100000 },
+  'samsung': { gridIntensityBase: 480, renewableBase: 55, intensityBase: 22, rankBase: 18, reductionBase: 5, costBase: 2800000 },
+  'bmw': { gridIntensityBase: 520, renewableBase: 68, intensityBase: 28, rankBase: 8, reductionBase: 6.5, costBase: 3500000 },
+  'volkswagen': { gridIntensityBase: 540, renewableBase: 62, intensityBase: 32, rankBase: 12, reductionBase: 5.5, costBase: 3800000 },
+  'toyota': { gridIntensityBase: 510, renewableBase: 58, intensityBase: 30, rankBase: 10, reductionBase: 6, costBase: 3600000 },
+  'bp': { gridIntensityBase: 480, renewableBase: 45, intensityBase: 25, rankBase: 15, reductionBase: 4, costBase: 4200000 },
+  'shell': { gridIntensityBase: 500, renewableBase: 40, intensityBase: 28, rankBase: 18, reductionBase: 3.5, costBase: 4500000 },
+  'energy-transition': { gridIntensityBase: 320, renewableBase: 85, intensityBase: 15, rankBase: 2, reductionBase: 15, costBase: 1500000 },
+  'nike': { gridIntensityBase: 460, renewableBase: 72, intensityBase: 16, rankBase: 8, reductionBase: 7.5, costBase: 2400000 },
+  'unilever': { gridIntensityBase: 440, renewableBase: 78, intensityBase: 14, rankBase: 5, reductionBase: 9, costBase: 2200000 },
+  'nestle': { gridIntensityBase: 470, renewableBase: 65, intensityBase: 18, rankBase: 12, reductionBase: 6.5, costBase: 2600000 },
+  'consumer-goods': { gridIntensityBase: 490, renewableBase: 58, intensityBase: 20, rankBase: 15, reductionBase: 5.5, costBase: 2800000 },
+  'manufacturing': { gridIntensityBase: 550, renewableBase: 48, intensityBase: 35, rankBase: 20, reductionBase: 4.5, costBase: 4000000 },
+  'healthcare': { gridIntensityBase: 420, renewableBase: 65, intensityBase: 22, rankBase: 10, reductionBase: 7, costBase: 2700000 },
+};
+
+// Fallback for companies not in the variations list
+const getCompanyVariation = (companyId: string) => {
+  const variation = companyVariations[companyId.toLowerCase()];
+  if (variation) return variation;
+  
+  // Generate consistent fallback based on company ID
+  const hash = companyId.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+  return {
+    gridIntensityBase: 400 + (hash % 200),
+    renewableBase: 50 + (hash % 40),
+    intensityBase: 10 + (hash % 25),
+    rankBase: 1 + (hash % 25),
+    reductionBase: 3 + (hash % 10),
+    costBase: 2000000 + (hash % 3000000)
+  };
+};
+
 export const generateScope2MockData = (company: Company): EnhancedScope2Data => {
   const latestScope2 = company.emissionsData[company.emissionsData.length - 1]?.scope2 || 20000;
   
-  // Simple company-specific variations using company ID hash
-  const companyHash = company.id.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
-  const seed = companyHash % 100;
-  
-  // Base values with company-specific variations
-  const baseGridIntensity = 450 + (seed * 2);
-  const baseRenewablePercent = 60 + (seed % 30);
-  const baseEnergyIntensity = 15 + (seed % 20);
-  const baseRank = Math.max(1, (seed % 50) + 1);
-  const baseReduction = 5 + (seed % 8);
-  const baseCostExposure = 2000000 + (seed * 50000);
+  // Get company-specific base values
+  const variation = getCompanyVariation(company.id);
   
   // Apply industry multipliers
   const multiplier = getIndustryMultiplier(company.industry);
   
-  const gridIntensity = Math.round(baseGridIntensity * multiplier.grid);
-  const renewablePercent = Math.min(95, Math.round(baseRenewablePercent * multiplier.renewable));
-  const energyIntensity = Math.round((baseEnergyIntensity * multiplier.intensity) * 100) / 100;
-  const costExposure = Math.round(baseCostExposure * multiplier.cost);
+  // Calculate final values
+  const gridIntensity = Math.round(variation.gridIntensityBase * multiplier.grid);
+  const renewablePercent = Math.min(95, Math.round(variation.renewableBase * multiplier.renewable));
+  const energyIntensity = Math.round((variation.intensityBase * multiplier.intensity) * 100) / 100;
+  const costExposure = Math.round(variation.costBase * multiplier.cost);
   
-  // Generate trend data
-  const trendData = company.emissionsData.map(item => ({
-    year: item.year,
-    emissions: item.scope2,
-    marketBased: item.scope2,
-    locationBased: Math.round(item.scope2 * 1.15)
-  }));
+  // Generate comprehensive trend data
+  const trendData = company.emissionsData.length > 0 
+    ? company.emissionsData.map(item => ({
+        year: item.year,
+        emissions: item.scope2,
+        marketBased: item.scope2,
+        locationBased: Math.round(item.scope2 * 1.15)
+      }))
+    : [
+        { year: 2020, emissions: Math.round(latestScope2 * 1.2), marketBased: Math.round(latestScope2 * 1.2), locationBased: Math.round(latestScope2 * 1.38) },
+        { year: 2021, emissions: Math.round(latestScope2 * 1.1), marketBased: Math.round(latestScope2 * 1.1), locationBased: Math.round(latestScope2 * 1.27) },
+        { year: 2022, emissions: Math.round(latestScope2 * 1.05), marketBased: Math.round(latestScope2 * 1.05), locationBased: Math.round(latestScope2 * 1.21) },
+        { year: 2023, emissions: latestScope2, marketBased: latestScope2, locationBased: Math.round(latestScope2 * 1.15) },
+        { year: 2024, emissions: Math.round(latestScope2 * 0.92), marketBased: Math.round(latestScope2 * 0.92), locationBased: Math.round(latestScope2 * 1.06) }
+      ];
 
   // Source data distribution
   const sourceData = [
@@ -50,7 +98,7 @@ export const generateScope2MockData = (company: Company): EnhancedScope2Data => 
     { source: 'Cooling', emissions: Math.round(latestScope2 * 0.1) }
   ];
 
-  // Location data
+  // Location data with regional variations
   const locationData = [
     { 
       location: 'North America', 
@@ -72,15 +120,50 @@ export const generateScope2MockData = (company: Company): EnhancedScope2Data => 
     }
   ];
 
-  const totalCompanies = 45;
-  const sectorName = company.industry.toLowerCase() + ' companies';
+  // Generate year-over-year data for sources and locations
+  const sourceDataByYear: Record<string, any[]> = {};
+  const locationDataByYear: Record<string, any[]> = {};
+  
+  [2020, 2021, 2022, 2023, 2024].forEach(year => {
+    const yearMultiplier = year === 2020 ? 1.2 : year === 2021 ? 1.1 : year === 2022 ? 1.05 : year === 2023 ? 1.0 : 0.92;
+    
+    sourceDataByYear[year.toString()] = sourceData.map(source => ({
+      ...source,
+      emissions: Math.round(source.emissions * yearMultiplier)
+    }));
+    
+    locationDataByYear[year.toString()] = locationData.map(location => ({
+      ...location,
+      emissions: Math.round(location.emissions * yearMultiplier)
+    }));
+  });
+
+  // Industry-specific totals and sectors
+  const getTotalCompanies = (industry: string) => {
+    if (industry.toLowerCase().includes('tech') || industry.toLowerCase().includes('software')) return 45;
+    if (industry.toLowerCase().includes('automotive')) return 35;
+    if (industry.toLowerCase().includes('energy') || industry.toLowerCase().includes('oil')) return 28;
+    if (industry.toLowerCase().includes('consumer') || industry.toLowerCase().includes('retail')) return 52;
+    if (industry.toLowerCase().includes('manufacturing')) return 38;
+    if (industry.toLowerCase().includes('healthcare')) return 32;
+    return 40;
+  };
+
+  const totalCompanies = getTotalCompanies(company.industry);
+  const sectorName = company.industry.toLowerCase().includes('tech') ? 'technology companies' :
+                    company.industry.toLowerCase().includes('automotive') ? 'automotive companies' :
+                    company.industry.toLowerCase().includes('energy') ? 'energy companies' :
+                    company.industry.toLowerCase().includes('consumer') ? 'consumer goods companies' :
+                    company.industry.toLowerCase().includes('manufacturing') ? 'manufacturing companies' :
+                    company.industry.toLowerCase().includes('healthcare') ? 'healthcare companies' :
+                    'industry companies';
 
   return {
     trendData,
     sourceData,
     locationData,
-    sourceDataByYear: {},
-    locationDataByYear: {},
+    sourceDataByYear,
+    locationDataByYear,
     energyKPIs: {
       gridCarbonIntensity: {
         value: gridIntensity,
@@ -96,29 +179,29 @@ export const generateScope2MockData = (company: Company): EnhancedScope2Data => 
       energyIntensity: {
         value: energyIntensity,
         unit: 'MWh per $M revenue',
-        rank: baseRank,
+        rank: variation.rankBase,
         total: totalCompanies
       },
       industryRank: {
-        position: baseRank,
+        position: variation.rankBase,
         total: totalCompanies,
         sector: sectorName
       },
       annualReduction: {
-        value: baseReduction,
+        value: variation.reductionBase,
         target: 10,
-        status: baseReduction > 8 ? 'good' : baseReduction > 5 ? 'average' : 'poor'
+        status: variation.reductionBase > 8 ? 'good' : variation.reductionBase > 5 ? 'average' : 'poor'
       },
       carbonCostExposure: {
         value: costExposure,
-        trend: ['increasing', 'decreasing', 'stable'][seed % 3] as 'increasing' | 'decreasing' | 'stable'
+        trend: variation.reductionBase > 7 ? 'decreasing' : variation.reductionBase > 4 ? 'stable' : 'increasing'
       }
     },
     benchmarking: {
-      efficiencyRank: Math.floor((seed * 1.2) % totalCompanies) + 1,
-      intensityPercentile: Math.floor((seed * 0.8) % 100) + 1,
-      renewableRank: Math.floor((seed * 1.5) % totalCompanies) + 1,
-      regionalRank: Math.floor((seed * 0.6) % 20) + 1
+      efficiencyRank: Math.max(1, variation.rankBase + 2),
+      intensityPercentile: Math.min(99, Math.max(1, Math.round((variation.rankBase / totalCompanies) * 100))),
+      renewableRank: Math.max(1, renewablePercent > 80 ? variation.rankBase - 2 : variation.rankBase + 3),
+      regionalRank: Math.max(1, Math.min(20, variation.rankBase))
     },
     regionalData: [
       {
