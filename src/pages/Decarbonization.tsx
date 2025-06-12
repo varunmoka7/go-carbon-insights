@@ -4,9 +4,13 @@ import { Target, TrendingDown, Calendar, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useCompanies } from '@/hooks/useCompanies';
 import DecarbonizationStrategy from '@/components/DecarbonizationStrategy';
+import Scope3StrategyOverview from '@/components/Scope3StrategyOverview';
+import FinancialInvestmentTracker from '@/components/FinancialInvestmentTracker';
+import MeasurementVerificationSystem from '@/components/MeasurementVerificationSystem';
 
 const Decarbonization = () => {
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
@@ -69,7 +73,7 @@ const Decarbonization = () => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Decarbonization Strategy</h1>
-        <p className="text-lg text-gray-600 mb-6">Science-based targets and reduction pathways</p>
+        <p className="text-lg text-gray-600 mb-6">Science-based targets and comprehensive Scope 3 frameworks</p>
         
         <div className="flex items-center space-x-4">
           <label className="text-sm font-medium text-gray-700">Company:</label>
@@ -88,7 +92,7 @@ const Decarbonization = () => {
         </div>
       </div>
 
-      {/* Key Metrics */}
+      {/* Key Metrics - Preserved from original */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -135,7 +139,7 @@ const Decarbonization = () => {
         </Card>
       </div>
 
-      {/* Decarbonization Pathway */}
+      {/* Science-Based Decarbonization Pathway - Preserved from original */}
       <Card className="mb-8">
         <CardHeader>
           <CardTitle>Science-Based Decarbonization Pathway</CardTitle>
@@ -185,11 +189,34 @@ const Decarbonization = () => {
         </CardContent>
       </Card>
 
-      {/* Decarbonization Strategies */}
-      <DecarbonizationStrategy strategies={strategies} />
+      {/* Enhanced Strategy Framework Tabs */}
+      <Tabs defaultValue="overview" className="mb-8">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="overview">Strategy Overview</TabsTrigger>
+          <TabsTrigger value="measurement">Measurement & KPIs</TabsTrigger>
+          <TabsTrigger value="financial">Financial Investment</TabsTrigger>
+          <TabsTrigger value="traditional">Traditional Strategies</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="overview">
+          <Scope3StrategyOverview companyId={selectedCompany} />
+        </TabsContent>
+        
+        <TabsContent value="measurement">
+          <MeasurementVerificationSystem />
+        </TabsContent>
+        
+        <TabsContent value="financial">
+          <FinancialInvestmentTracker />
+        </TabsContent>
+        
+        <TabsContent value="traditional">
+          <DecarbonizationStrategy strategies={strategies} />
+        </TabsContent>
+      </Tabs>
 
-      {/* Progress Summary */}
-      <Card className="mt-8">
+      {/* Progress Summary - Preserved from original */}
+      <Card>
         <CardHeader>
           <CardTitle>Progress Summary</CardTitle>
         </CardHeader>
@@ -208,11 +235,11 @@ const Decarbonization = () => {
                 </li>
                 <li className="flex items-start space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
-                  <span className="text-gray-600">Energy efficiency program completed</span>
+                  <span className="text-gray-600">Comprehensive Scope 3 framework implemented</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
-                  <span className="text-gray-600">Renewable energy transition in progress</span>
+                  <span className="text-gray-600">Advanced measurement and verification systems active</span>
                 </li>
               </ul>
             </div>
@@ -221,15 +248,15 @@ const Decarbonization = () => {
               <ul className="space-y-2">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Complete renewable energy transition by 2025</span>
+                  <span className="text-gray-600">Complete supplier engagement program rollout</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Begin fleet electrification program in 2026</span>
+                  <span className="text-gray-600">Launch circular supply chain transformation</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span className="text-gray-600">Launch supplier engagement initiative in 2027</span>
+                  <span className="text-gray-600">Deploy blockchain verification systems</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
