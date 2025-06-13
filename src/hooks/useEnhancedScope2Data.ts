@@ -1,30 +1,30 @@
 
-import { useSupabaseScope2Data } from './useSupabaseScope2';
-import { generateScope2MockData } from '@/utils/scope2DataGenerator';
-import { getCompanyById } from '@/data/companyMockData';
+import { useState, useEffect } from 'react';
+import { generateScope2Data, getScope2Trends } from '@/utils/scope2DataGenerator';
 
-export const useEnhancedScope2Data = (companyId: string) => {
-  const supabaseQuery = useSupabaseScope2Data(companyId);
-  
-  // Get company data
-  const company = getCompanyById(companyId);
-  
-  if (!company) {
-    return {
-      data: null,
-      isLoading: supabaseQuery.isLoading,
-      error: supabaseQuery.error || new Error('Company not found')
+export const useEnhancedScope2Data = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const scope2Data = generateScope2Data();
+        const trends = getScope2Trends();
+        
+        setData({
+          ...scope2Data,
+          trends
+        });
+      } catch (error) {
+        console.error('Error loading Scope 2 data:', error);
+      } finally {
+        setLoading(false);
+      }
     };
-  }
 
-  // Always return generated mock data for now
-  const mockData = generateScope2MockData(companyId);
-  
-  return {
-    data: mockData,
-    isLoading: supabaseQuery.isLoading,
-    error: supabaseQuery.error
-  };
+    loadData();
+  }, []);
+
+  return { data, loading };
 };
-
-export type { EnhancedScope2Data } from '@/types/scope2Types';

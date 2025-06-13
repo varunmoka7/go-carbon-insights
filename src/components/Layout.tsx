@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu, ChevronDown } from 'lucide-react';
@@ -12,6 +13,7 @@ import {
 import Logo from '@/components/ui/Logo';
 import GlobalSearch from './GlobalSearch';
 import Breadcrumb from './Breadcrumb';
+import BackButton from './BackButton';
 import LogoutButton from './LogoutButton';
 import ScrollToTop from './ScrollToTop';
 import PageTransition from './PageTransition';
@@ -257,6 +259,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Main Content with Page Transitions */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Global Back Button - positioned at top-left */}
+        <div className="mb-4">
+          <BackButton 
+            variant="ghost" 
+            size="sm"
+            className="mb-2"
+          />
+        </div>
+        
         <Breadcrumb />
         <PageTransition>
           <div role="main" aria-label="Main content">
