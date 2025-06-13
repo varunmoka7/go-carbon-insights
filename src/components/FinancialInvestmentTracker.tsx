@@ -55,8 +55,8 @@ const FinancialInvestmentTracker = () => {
                   ))}
                 </Pie>
                 <Tooltip 
-                  formatter={(value, name) => [
-                    `$${investmentAllocation.find(item => item.name === name)?.amount.toLocaleString()}`,
+                  formatter={(value: any, name: any) => [
+                    `$${investmentAllocation.find(item => item.name === name)?.amount.toLocaleString() || '0'}`,
                     'Investment'
                   ]}
                 />
@@ -91,10 +91,10 @@ const FinancialInvestmentTracker = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="timeframe" />
                 <YAxis 
-                  tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
+                  tickFormatter={(value: number) => `$${(value / 1000000).toFixed(1)}M`}
                 />
                 <Tooltip 
-                  formatter={(value) => [`$${(value / 1000000).toFixed(1)}M`, '']}
+                  formatter={(value: number) => [`$${(value / 1000000).toFixed(1)}M`, '']}
                 />
                 <Line 
                   type="monotone" 
@@ -134,9 +134,9 @@ const FinancialInvestmentTracker = () => {
             <BarChart data={quarterlySpending}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="quarter" />
-              <YAxis tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`} />
+              <YAxis tickFormatter={(value: number) => `$${(value / 1000000).toFixed(1)}M`} />
               <Tooltip 
-                formatter={(value) => [`$${(value / 1000000).toFixed(1)}M`, '']}
+                formatter={(value: number) => [`$${(value / 1000000).toFixed(1)}M`, '']}
               />
               <Bar dataKey="budget" fill="#94a3b8" name="Budget" />
               <Bar dataKey="actual" fill="#14b8a6" name="Actual Spending" />
