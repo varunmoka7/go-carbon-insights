@@ -10,7 +10,7 @@
     "description": "Open source developer and sustainability advocate building carbon emissions tracking solutions for global supply chain transparency and decarbonization.",
     "webpageUrl": {
       "url": "https://gocarbontracker.net",
-      "wellKnown": "https://gocarbontracker.net/.well-known/funding-manifest-urls"
+      "wellKnown": "https://raw.githubusercontent.com/varunmoka7/go-carbon-insights/main/.well-known/funding-manifest-urls"
     }
   },
   "projects": [
@@ -24,7 +24,7 @@
       },
       "repositoryUrl": {
         "url": "https://github.com/varunmoka7/go-carbon-insights",
-        "wellKnown": "https://github.com/varunmoka7/go-carbon-insights/blob/main/.well-known/funding-manifest-urls"
+        "wellKnown": "https://raw.githubusercontent.com/varunmoka7/go-carbon-insights/main/.well-known/funding-manifest-urls"
       },
       "licenses": [
         "spdx:MIT"
