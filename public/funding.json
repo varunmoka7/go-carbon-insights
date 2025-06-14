@@ -23,8 +23,8 @@
         "wellKnown": "https://gocarbontracker.net/.well-known/funding-manifest-urls"
       },
       "repositoryUrl": {
-        "url": "https://github.com/gocarbontracker/platform",
-        "wellKnown": "https://github.com/gocarbontracker/platform/blob/main/.well-known/funding-manifest-urls"
+        "url": "https://github.com/varunmoka7/go-carbon-insights",
+        "wellKnown": "https://github.com/varunmoka7/go-carbon-insights/blob/main/.well-known/funding-manifest-urls"
       },
       "licenses": [
         "spdx:MIT"
@@ -171,5 +171,5 @@
     "linkedin": "https://www.linkedin.com/in/varunmoka7"
   },
   "createdAt": "2025-06-14T21:53:59Z",
-  "updatedAt": "2025-06-15T00:30:20Z"
+  "updatedAt": "2025-06-15T00:47:33Z"
 }
