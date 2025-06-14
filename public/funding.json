@@ -6,26 +6,28 @@
     "role": "maintainer",
     "name": "Varun Moka",
     "email": "varunmoka7@gmail.com",
-    "phone": "4915566176170",
+    "phone": "+4915566176170",
     "description": "Open source developer and sustainability advocate building carbon emissions tracking solutions for global supply chain transparency and decarbonization.",
     "webpageUrl": {
-      "url": "https://gocarbontracker.net",
-      "wellKnown": "/.well-known/funding-manifest-urls"
+      "url": "https://gocarbontracker.com",
+      "wellKnown": "https://gocarbontracker.com/.well-known/funding-manifest-urls"
     }
   },
-  "project": {
-    "name": "GoCarbonTracker",
-    "description": "Premium B2B consulting services (Scope 3 emissions, LCA, double materiality assessments, decarbonization strategies) fund a completely free educational platform, creating a sustainable bridge between professional sustainability and public climate education",
-    "webpageUrl": {
-      "url": "https://gocarbontracker.com",
-      "wellKnown": ""
-    },
-    "repositoryUrl": {
-      "url": "https://github.com/gocarbontracker/platform",
-      "wellKnown": ""
-    },
-    "license": "MIT"
-  },
+  "projects": [
+    {
+      "name": "GoCarbonTracker",
+      "description": "Premium B2B consulting services (Scope 3 emissions, LCA, double materiality assessments, decarbonization strategies) fund a completely free educational platform, creating a sustainable bridge between professional sustainability and public climate education",
+      "webpageUrl": {
+        "url": "https://gocarbontracker.com",
+        "wellKnown": "https://gocarbontracker.com/.well-known/funding-manifest-urls"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/gocarbontracker/platform",
+        "wellKnown": "https://github.com/gocarbontracker/platform/blob/main/.well-known/funding-manifest-urls"
+      },
+      "license": "spdx:MIT"
+    }
+  ],
   "funding": {
     "amount": {
       "currency": "EUR",
@@ -49,7 +51,7 @@
         "description": "Free educational modules, teacher dashboards, mobile learning app, multilingual content, community forums"
       },
       {
-        "category": "Operations & Growth", 
+        "category": "Operations & Growth",
         "percentage": 12,
         "description": "Infrastructure, team expansion, consulting expertise, client relationship management"
       }
@@ -139,8 +141,16 @@
     }
   },
   "technical": {
-    "stack": ["React", "TypeScript", "Tailwind CSS", "Supabase", "Vite"],
-    "platforms": ["Web"],
+    "stack": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "Vite"
+    ],
+    "platforms": [
+      "Web"
+    ],
     "deployment": "Vercel/Netlify with Supabase backend",
     "testing": "Jest, React Testing Library",
     "cicd": "GitHub Actions"
@@ -178,6 +188,6 @@
     "email": "moka@gocarbontracker.com",
     "linkedin": "https://www.linkedin.com/in/varunmoka7"
   },
-  "createdAt": "2024-06-04T00:00:00Z",
-  "updatedAt": "2024-06-04T00:00:00Z"
+  "createdAt": "2025-06-14T21:52:34Z",
+  "updatedAt": "2025-06-14T21:52:34Z"
 }
