@@ -1,0 +1,68 @@
+
+{
+  "$schema": "https://floss.fund/schema/v1.0.0/funding.schema.json#",
+  "version": "v1.0.0",
+  "entity": {
+    "type": "individual",
+    "role": "maintainer",
+    "name": "Varun Moka",
+    "email": "varunmoka7@gmail.com",
+    "phone": "+4915566176170",
+    "description": "A climate-tech advocate dedicated to enhancing transparency in corporate sustainability. My focus is on developing robust tools to track carbon footprints across complex supply chains, moving beyond conventional ESG metrics. I believe current reporting often fails to capture the full scope of environmental impact, and I aim to provide a more accurate and holistic view for organizations and the public alike.",
+    "webpageUrl": {
+      "url": "https://gocarbontracker.net/",
+      "wellKnown": "https://gocarbontracker.net/.well-known/funding-manifest-urls"
+    }
+  },
+  "projects": [
+    {
+      "guid": "gocarbontracker-v1",
+      "name": "GoCarbonTracker",
+      "description": "GoCarbonTracker is an open-source platform that aggregates and analyzes sustainability data from diverse sources, including corporate ESG reports, third-party data providers, and Science Based Targets initiative (SBTi) commitments. It provides a comprehensive view of an organization's supply chain carbon footprint, categorized by industry for relevant benchmarking. The primary goal is to empower the public, especially a younger, climate-conscious demographic, to easily access and understand the true environmental impact of corporations, fostering accountability and driving progress towards genuine net-zero goals.",
+      "webpageUrl": {
+        "url": "https://gocarbontracker.net/",
+        "wellKnown": "https://gocarbontracker.net/.well-known/funding-manifest-urls"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/varunmoka7/go-carbon-insights",
+        "wellKnown": ""
+      },
+      "licenses": [
+        "spdx:MIT"
+      ],
+      "tags": [
+        "Climate-tech",
+        "ESG",
+        "Supply-Chain",
+        "Carbon-Footprint",
+        "Open-Data",
+        "Sustainability"
+      ]
+    }
+  ],
+  "funding": {
+    "channels": [
+      {
+        "guid": "contact-for-funding",
+        "type": "bank",
+        "address": "For funding details, please contact me directly at varunmoka7@gmail.com.",
+        "description": "Direct contact for bank transfer details or other funding arrangements."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "early-starter-plan",
+        "status": "active",
+        "name": "Early Starter Plan",
+        "description": "This monthly funding will support the foundational development of GoCarbonTracker. It will cover essential costs such as cloud hosting for the platform, data acquisition from third-party sources, and allow for dedicated development time to build the core features and data aggregation engine.",
+        "amount": 2000,
+        "currency": "USD",
+        "frequency": "monthly",
+        "channels": [
+          "contact-for-funding"
+        ]
+      }
+    ],
+    "history": []
+  }
+}
