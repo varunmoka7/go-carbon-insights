@@ -25,7 +25,7 @@
       },
       "repositoryUrl": {
         "url": "https://github.com/varunmoka7/go-carbon-insights",
-        "wellKnown": ""
+        "wellKnown": "https://github.com/varunmoka7/go-carbon-insights/blob/main/.well-known/funding-manifest-urls"
       },
       "licenses": [
         "spdx:MIT"
