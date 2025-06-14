@@ -24,8 +24,8 @@
         "wellKnown": "https://gocarbontracker.com/.well-known/funding-manifest-urls"
       },
       "repositoryUrl": {
-        "url": "https://github.com/gocarbontracker/platform",
-        "wellKnown": "https://github.com/gocarbontracker/platform/blob/main/.well-known/funding-manifest-urls"
+        "url": "https://github.com/varunmoka7/go-carbon-insights",
+        "wellKnown": "https://github.com/varunmoka7/go-carbon-insights/blob/main/.well-known/funding-manifest-urls"
       },
       "licenses": [
         "spdx:MIT"
