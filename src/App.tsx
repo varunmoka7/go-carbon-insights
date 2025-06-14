@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,16 +32,39 @@ const App = () => {
   // Check if the current path is for static files that should not be handled by React Router
   const isStaticFile = () => {
     const path = window.location.pathname;
-    return path === '/funding.json' || 
-           path.startsWith('/.well-known/') ||
-           path.endsWith('.json') ||
-           path.endsWith('.txt') ||
-           path.endsWith('.xml');
+    console.log('Checking path:', path); // Debug log
+    
+    // Check for .well-known paths first (most important)
+    if (path.startsWith('/.well-known/')) {
+      console.log('Detected .well-known path, redirecting to static file');
+      return true;
+    }
+    
+    // Check for funding.json
+    if (path === '/funding.json') {
+      console.log('Detected funding.json, redirecting to static file');
+      return true;
+    }
+    
+    // Other static file extensions
+    if (path.endsWith('.json') || 
+        path.endsWith('.txt') || 
+        path.endsWith('.xml') ||
+        path.endsWith('.ico') ||
+        path.endsWith('.png') ||
+        path.endsWith('.jpg') ||
+        path.endsWith('.svg')) {
+      console.log('Detected static file extension, redirecting to static file');
+      return true;
+    }
+    
+    return false;
   };
 
   // If it's a static file request, don't render the React app
   if (isStaticFile()) {
-    // Let the server handle the static file
+    console.log('Static file detected, reloading to serve static content');
+    // Force a hard reload to let the server handle the static file
     window.location.reload();
     return null;
   }
