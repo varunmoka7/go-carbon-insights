@@ -2,9 +2,9 @@
 # Netlify redirects file
 # Serve static files directly, don't redirect to React app
 
-# Serve .well-known directory as static files with proper content type
-/.well-known/funding-manifest-urls /.well-known/funding-manifest-urls 200
-/.well-known/* /.well-known/:splat 200
+# Serve .well-known directory as static files with proper content type (HIGHEST PRIORITY)
+/.well-known/funding-manifest-urls /.well-known/funding-manifest-urls 200!
+/.well-known/* /.well-known/:splat 200!
 
 # Serve funding.json as static file
 /funding.json /funding.json 200
