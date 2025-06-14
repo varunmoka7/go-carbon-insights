@@ -1,0 +1,12 @@
+
+# Netlify redirects file
+# Serve static files directly, don't redirect to React app
+
+# Serve funding.json as static file
+/funding.json /funding.json 200
+
+# Serve .well-known directory as static files
+/.well-known/* /.well-known/:splat 200
+
+# All other routes go to React app (SPA)
+/* /index.html 200

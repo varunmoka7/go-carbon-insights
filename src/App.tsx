@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import Layout from "./components/Layout";
@@ -29,103 +29,123 @@ import FloatingActionButton from "./components/FloatingActionButton";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/about" element={
-                <Layout>
-                  <About />
-                </Layout>
-              } />
-              <Route path="/contact" element={
-                <Layout>
-                  <Contact />
-                </Layout>
-              } />
-              {/* Funding route disabled for demo mode */}
-              {/* <Route path="/funding" element={
-                <Layout>
-                  <Funding />
-                </Layout>
-              } /> */}
-              {/* Demo mode: All pages accessible without authentication */}
-              <Route path="/home" element={
-                <Layout>
-                  <Home />
-                </Layout>
-              } />
-              <Route path="/dashboard" element={
-                <Layout>
-                  <Dashboard />
-                </Layout>
-              } />
-              <Route path="/tracking" element={
-                <Layout>
-                  <Tracking />
-                </Layout>
-              } />
-              <Route path="/scope1" element={
-                <Layout>
-                  <Scope1 />
-                </Layout>
-              } />
-              <Route path="/scope2" element={
-                <Layout>
-                  <Scope2 />
-                </Layout>
-              } />
-              <Route path="/scope3" element={
-                <Layout>
-                  <Scope3 />
-                </Layout>
-              } />
-              <Route path="/decarbonization" element={
-                <Layout>
-                  <Decarbonization />
-                </Layout>
-              } />
-              <Route path="/profile" element={
-                <Layout>
-                  <Profile />
-                </Layout>
-              } />
-              <Route path="/reports" element={
-                <Layout>
-                  <Reports />
-                </Layout>
-              } />
-              <Route path="/analysis" element={
-                <Layout>
-                  <Analysis />
-                </Layout>
-              } />
-              <Route path="/methodology" element={
-                <Layout>
-                  <Methodology />
-                </Layout>
-              } />
-              <Route path="/reference" element={
-                <Layout>
-                  <Reference />
-                </Layout>
-              } />
-              <Route path="*" element={<Landing />} />
-            </Routes>
-            <AccessibilityPanel />
-            <FloatingActionButton />
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Check if the current path is for static files that should not be handled by React Router
+  const isStaticFile = () => {
+    const path = window.location.pathname;
+    return path === '/funding.json' || 
+           path.startsWith('/.well-known/') ||
+           path.endsWith('.json') ||
+           path.endsWith('.txt') ||
+           path.endsWith('.xml');
+  };
+
+  // If it's a static file request, don't render the React app
+  if (isStaticFile()) {
+    // Let the server handle the static file
+    window.location.reload();
+    return null;
+  }
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/about" element={
+                  <Layout>
+                    <About />
+                  </Layout>
+                } />
+                <Route path="/contact" element={
+                  <Layout>
+                    <Contact />
+                  </Layout>
+                } />
+                {/* Funding route disabled for demo mode */}
+                {/* <Route path="/funding" element={
+                  <Layout>
+                    <Funding />
+                  </Layout>
+                } /> */}
+                {/* Demo mode: All pages accessible without authentication */}
+                <Route path="/home" element={
+                  <Layout>
+                    <Home />
+                  </Layout>
+                } />
+                <Route path="/dashboard" element={
+                  <Layout>
+                    <Dashboard />
+                  </Layout>
+                } />
+                <Route path="/tracking" element={
+                  <Layout>
+                    <Tracking />
+                  </Layout>
+                } />
+                <Route path="/scope1" element={
+                  <Layout>
+                    <Scope1 />
+                  </Layout>
+                } />
+                <Route path="/scope2" element={
+                  <Layout>
+                    <Scope2 />
+                  </Layout>
+                } />
+                <Route path="/scope3" element={
+                  <Layout>
+                    <Scope3 />
+                  </Layout>
+                } />
+                <Route path="/decarbonization" element={
+                  <Layout>
+                    <Decarbonization />
+                  </Layout>
+                } />
+                <Route path="/profile" element={
+                  <Layout>
+                    <Profile />
+                  </Layout>
+                } />
+                <Route path="/reports" element={
+                  <Layout>
+                    <Reports />
+                  </Layout>
+                } />
+                <Route path="/analysis" element={
+                  <Layout>
+                    <Analysis />
+                  </Layout>
+                } />
+                <Route path="/methodology" element={
+                  <Layout>
+                    <Methodology />
+                  </Layout>
+                } />
+                <Route path="/reference" element={
+                  <Layout>
+                    <Reference />
+                  </Layout>
+                } />
+                {/* Only catch-all for undefined app routes, not static files */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+              <AccessibilityPanel />
+              <FloatingActionButton />
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
