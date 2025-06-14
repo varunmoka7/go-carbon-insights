@@ -26,15 +26,42 @@
         "url": "https://github.com/gocarbontracker/platform",
         "wellKnown": "https://github.com/gocarbontracker/platform/blob/main/.well-known/funding-manifest-urls"
       },
-      "license": "spdx:MIT"
+      "licenses": [
+        "spdx:MIT"
+      ],
+      "tags": [
+        "Climate-tech",
+        "ESG",
+        "Supply-Chain",
+        "Carbon-Footprint",
+        "Open-Data",
+        "Sustainability"
+      ]
     }
   ],
   "funding": {
-    "amount": {
-      "currency": "EUR",
-      "monthly": 2000,
-      "max": 5000
-    },
+    "channels": [
+      {
+        "guid": "contact-for-funding",
+        "type": "bank",
+        "address": "varunmoka7@gmail.com",
+        "description": "Please contact me for bank transfer details or other funding arrangements."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "monthly-sponsorship-2k",
+        "status": "active",
+        "name": "Monthly Sponsorship",
+        "description": "Your recurring support helps cover operational costs and allows for dedicated part-time development of the platform.",
+        "amount": 2000,
+        "currency": "EUR",
+        "frequency": "monthly",
+        "channels": [
+          "contact-for-funding"
+        ]
+      }
+    ],
     "description": "Seeking monthly support to cover operational costs and allow for dedicated, part-time development of the GoCarbonTracker platform. This funding enables us to maintain the core software, improve supplier-level tracking tools, and continue building out the free educational components.",
     "useOfFunds": [
       {
@@ -140,9 +167,9 @@
   ],
   "contact": {
     "founder": "Varun Moka",
-    "email": "moka@gocarbontracker.com",
+    "email": "varunmoka7@gmail.com",
     "linkedin": "https://www.linkedin.com/in/varunmoka7"
   },
   "createdAt": "2025-06-14T21:53:59Z",
-  "updatedAt": "2025-06-14T21:57:51Z"
+  "updatedAt": "2025-06-15T00:09:07Z"
 }
