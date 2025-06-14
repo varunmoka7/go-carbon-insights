@@ -9,8 +9,8 @@
     "phone": "+4915566176170",
     "description": "Open source developer and sustainability advocate building carbon emissions tracking solutions for global supply chain transparency and decarbonization.",
     "webpageUrl": {
-      "url": "https://gocarbontracker.com",
-      "wellKnown": "https://gocarbontracker.com/.well-known/funding-manifest-urls"
+      "url": "https://gocarbontracker.net",
+      "wellKnown": "https://gocarbontracker.net/.well-known/funding-manifest-urls"
     }
   },
   "projects": [
@@ -19,8 +19,8 @@
       "name": "GoCarbonTracker",
       "description": "Building a B2B software platform that provides companies with the tools to measure and decarbonize emissions at the supplier and product level. This platform of sustainable solutions is funded by our premium consulting services (Scope 3, LCA), creating a sustainable bridge between professional sustainability services and a free educational platform for the public.",
       "webpageUrl": {
-        "url": "https://gocarbontracker.com",
-        "wellKnown": "https://gocarbontracker.com/.well-known/funding-manifest-urls"
+        "url": "https://gocarbontracker.net",
+        "wellKnown": "https://gocarbontracker.net/.well-known/funding-manifest-urls"
       },
       "repositoryUrl": {
         "url": "https://github.com/gocarbontracker/platform",
@@ -158,11 +158,11 @@
   "references": [
     {
       "name": "Platform Demo",
-      "url": "https://gocarbontracker.com/demo"
+      "url": "https://gocarbontracker.net/demo"
     },
     {
       "name": "Educational Framework",
-      "url": "https://gocarbontracker.com/education"
+      "url": "https://gocarbontracker.net/education"
     }
   ],
   "contact": {
@@ -171,5 +171,5 @@
     "linkedin": "https://www.linkedin.com/in/varunmoka7"
   },
   "createdAt": "2025-06-14T21:53:59Z",
-  "updatedAt": "2025-06-15T00:09:07Z"
+  "updatedAt": "2025-06-15T00:30:20Z"
 }
