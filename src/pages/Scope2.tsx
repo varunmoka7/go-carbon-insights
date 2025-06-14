@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCompanies } from '@/hooks/useCompanies';
 import { useEnhancedScope2Data } from '@/hooks/useEnhancedScope2Data';
+import { useScope2Data } from '@/hooks/useScope2Data';
 import EnergyKPICard from '@/components/EnergyKPICard';
 import RegionalEnergyCard from '@/components/RegionalEnergyCard';
 
@@ -16,7 +17,8 @@ const Scope2 = () => {
   const [selectedCompany, setSelectedCompany] = useState('techcorp');
   const [selectedYear, setSelectedYear] = useState('2024');
   const { data: companies } = useCompanies();
-  const { data: scope2Data, isLoading } = useEnhancedScope2Data(selectedCompany);
+  const { data: enhancedData, isLoading: enhancedLoading } = useEnhancedScope2Data(selectedCompany);
+  const { data: scope2Data, isLoading: scope2Loading } = useScope2Data(selectedCompany);
 
   const sourceIcons = {
     'Purchased Electricity': <Zap className="h-4 w-4" />,
@@ -26,7 +28,7 @@ const Scope2 = () => {
 
   const availableYears = ['2019', '2020', '2021', '2022', '2023', '2024'];
 
-  if (isLoading) {
+  if (enhancedLoading || scope2Loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center">Loading Scope 2 data...</div>
@@ -35,10 +37,10 @@ const Scope2 = () => {
   }
 
   const trendData = scope2Data?.trendData || [];
-  const energyKPIs = scope2Data?.energyKPIs;
-  const benchmarking = scope2Data?.benchmarking;
-  const regionalData = scope2Data?.regionalData || [];
-  const insights = scope2Data?.insights;
+  const energyKPIs = enhancedData?.energyKPIs;
+  const benchmarking = enhancedData?.benchmarking;
+  const regionalData = enhancedData?.regionalData || [];
+  const insights = enhancedData?.insights;
   
   // Get year-specific data with proper fallbacks
   const getSourceDataForYear = (year: string) => {
@@ -66,18 +68,6 @@ const Scope2 = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Back Button */}
-      <div className="mb-6">
-        <Button
-          variant="ghost"
-          onClick={() => navigate(-1)}
-          className="flex items-center space-x-2 text-gray-600 hover:text-teal-600"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span>Back</span>
-        </Button>
-      </div>
-
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Scope 2 Energy Intelligence</h1>
@@ -274,7 +264,7 @@ const Scope2 = () => {
       </div>
 
       {/* Emissions by Source */}
-      <Card>
+      <Card className="mb-8">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-xl font-bold text-gray-900">Emissions by Source</CardTitle>
@@ -325,7 +315,7 @@ const Scope2 = () => {
       </Card>
 
       {/* Emissions by Location */}
-      <Card>
+      <Card className="mb-8">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-xl font-bold text-gray-900">Emissions by Location</CardTitle>
