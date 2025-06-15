@@ -1,4 +1,3 @@
-
 {
   "$schema": "https://fundingjson.org/schema/funding.schema.json",
   "version": "v1",
@@ -10,7 +9,7 @@
     "phone": "+4915566176170",
     "description": "Open source developer and sustainability advocate building carbon emissions tracking solutions for global supply chain transparency and decarbonization.",
     "webpageUrl": {
-      "url": "https://gocarbontracker.net",
+      "url": "https://github.com/varunmoka7/go-carbon-insights",
       "wellKnown": "https://github.com/varunmoka7/go-carbon-insights/blob/main/.well-known/funding-manifest-urls"
     }
   },
@@ -20,7 +19,7 @@
       "name": "GoCarbonTracker",
       "description": "Building a B2B software platform that provides companies with the tools to measure and decarbonize emissions at the supplier and product level. This platform of sustainable solutions is funded by our premium consulting services (Scope 3, LCA), creating a sustainable bridge between professional sustainability services and a free educational platform for the public.",
       "webpageUrl": {
-        "url": "https://gocarbontracker.net",
+        "url": "https://github.com/varunmoka7/go-carbon-insights",
         "wellKnown": "https://github.com/varunmoka7/go-carbon-insights/blob/main/.well-known/funding-manifest-urls"
       },
       "repositoryUrl": {
