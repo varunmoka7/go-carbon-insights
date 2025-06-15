@@ -20,7 +20,7 @@
       "description": "Building a B2B software platform that provides companies with the tools to measure and decarbonize emissions at the supplier and product level. This platform of sustainable solutions is funded by our premium consulting services (Scope 3, LCA), creating a sustainable bridge between professional sustainability services and a free educational platform for the public.",
       "webpageUrl": {
         "url": "https://gocarbontracker.net",
-        "wellKnown": "https://gocarbontracker.net/.well-known/funding-manifest-urls"
+        "wellKnown": "https://raw.githubusercontent.com/varunmoka7/go-carbon-insights/main/.well-known/funding-manifest-urls"
       },
       "repositoryUrl": {
         "url": "https://github.com/varunmoka7/go-carbon-insights",
