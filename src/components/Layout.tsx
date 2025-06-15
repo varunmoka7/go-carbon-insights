@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu, ChevronDown } from 'lucide-react';
@@ -42,6 +41,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       ]
     },
     { name: 'Decarbonization', href: '/decarbonization', icon: Target },
+    { name: 'Donate', href: '/donate', icon: Users },
   ];
 
   const isActive = (href: string) => location.pathname === href;
@@ -56,6 +56,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { name: 'Dashboard', href: '/dashboard' },
         { name: 'Methodology', href: '/methodology' },
         { name: 'Contact', href: '/contact' },
+        { name: 'Donate', href: '/donate' },
       ]
     },
     tracking: {
@@ -83,6 +84,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { name: 'Reference', href: '/reference' },
         { name: 'Support', href: '/contact' },
         { name: 'Privacy Policy', href: '/about' },
+        { name: 'Donate', href: '/donate' },
       ]
     }
   };

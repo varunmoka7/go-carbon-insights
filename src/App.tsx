@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +22,7 @@ import Reports from "./pages/Reports";
 import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Donate from "./pages/Donate";
 // import Funding from "./pages/Funding"; // Disabled for demo mode
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
@@ -49,6 +49,11 @@ const App = () => {
                 <Route path="/contact" element={
                   <Layout>
                     <Contact />
+                  </Layout>
+                } />
+                <Route path="/donate" element={
+                  <Layout>
+                    <Donate />
                   </Layout>
                 } />
                 {/* Funding route disabled for demo mode */}
