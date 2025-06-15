@@ -6,7 +6,7 @@
 /.well-known/funding-manifest-urls /.well-known/funding-manifest-urls 200!
 /.well-known/* /.well-known/:splat 200!
 
-# Serve funding.json as static file
+# Serve funding.json as static file from root
 /funding.json /funding.json 200
 
 # All other routes go to React app (SPA)
