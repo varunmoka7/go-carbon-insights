@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { DonationProvider } from "./contexts/DonationContext";
+import { SidebarProvider } from "./contexts/SidebarContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -23,7 +25,6 @@ import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Donate from "./pages/Donate";
-// import Funding from "./pages/Funding"; // Disabled for demo mode
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 
@@ -34,102 +35,100 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/about" element={
-                  <Layout>
-                    <About />
-                  </Layout>
-                } />
-                <Route path="/contact" element={
-                  <Layout>
-                    <Contact />
-                  </Layout>
-                } />
-                <Route path="/donate" element={
-                  <Layout>
-                    <Donate />
-                  </Layout>
-                } />
-                {/* Funding route disabled for demo mode */}
-                {/* <Route path="/funding" element={
-                  <Layout>
-                    <Funding />
-                  </Layout>
-                } /> */}
-                {/* Demo mode: All pages accessible without authentication */}
-                <Route path="/home" element={
-                  <Layout>
-                    <Home />
-                  </Layout>
-                } />
-                <Route path="/dashboard" element={
-                  <Layout>
-                    <Dashboard />
-                  </Layout>
-                } />
-                <Route path="/tracking" element={
-                  <Layout>
-                    <Tracking />
-                  </Layout>
-                } />
-                <Route path="/scope1" element={
-                  <Layout>
-                    <Scope1 />
-                  </Layout>
-                } />
-                <Route path="/scope2" element={
-                  <Layout>
-                    <Scope2 />
-                  </Layout>
-                } />
-                <Route path="/scope3" element={
-                  <Layout>
-                    <Scope3 />
-                  </Layout>
-                } />
-                <Route path="/decarbonization" element={
-                  <Layout>
-                    <Decarbonization />
-                  </Layout>
-                } />
-                <Route path="/profile" element={
-                  <Layout>
-                    <Profile />
-                  </Layout>
-                } />
-                <Route path="/reports" element={
-                  <Layout>
-                    <Reports />
-                  </Layout>
-                } />
-                <Route path="/analysis" element={
-                  <Layout>
-                    <Analysis />
-                  </Layout>
-                } />
-                <Route path="/methodology" element={
-                  <Layout>
-                    <Methodology />
-                  </Layout>
-                } />
-                <Route path="/reference" element={
-                  <Layout>
-                    <Reference />
-                  </Layout>
-                } />
-                {/* Only catch-all for undefined app routes, not static files */}
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-              <AccessibilityPanel />
-              <FloatingActionButton />
-            </BrowserRouter>
-          </TooltipProvider>
+          <DonationProvider>
+            <SidebarProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/about" element={
+                      <Layout>
+                        <About />
+                      </Layout>
+                    } />
+                    <Route path="/contact" element={
+                      <Layout>
+                        <Contact />
+                      </Layout>
+                    } />
+                    <Route path="/donate" element={
+                      <Layout>
+                        <Donate />
+                      </Layout>
+                    } />
+                    {/* Demo mode: All pages accessible without authentication */}
+                    <Route path="/home" element={
+                      <Layout>
+                        <Home />
+                      </Layout>
+                    } />
+                    <Route path="/dashboard" element={
+                      <Layout>
+                        <Dashboard />
+                      </Layout>
+                    } />
+                    <Route path="/tracking" element={
+                      <Layout>
+                        <Tracking />
+                      </Layout>
+                    } />
+                    <Route path="/scope1" element={
+                      <Layout>
+                        <Scope1 />
+                      </Layout>
+                    } />
+                    <Route path="/scope2" element={
+                      <Layout>
+                        <Scope2 />
+                      </Layout>
+                    } />
+                    <Route path="/scope3" element={
+                      <Layout>
+                        <Scope3 />
+                      </Layout>
+                    } />
+                    <Route path="/decarbonization" element={
+                      <Layout>
+                        <Decarbonization />
+                      </Layout>
+                    } />
+                    <Route path="/profile" element={
+                      <Layout>
+                        <Profile />
+                      </Layout>
+                    } />
+                    <Route path="/reports" element={
+                      <Layout>
+                        <Reports />
+                      </Layout>
+                    } />
+                    <Route path="/analysis" element={
+                      <Layout>
+                        <Analysis />
+                      </Layout>
+                    } />
+                    <Route path="/methodology" element={
+                      <Layout>
+                        <Methodology />
+                      </Layout>
+                    } />
+                    <Route path="/reference" element={
+                      <Layout>
+                        <Reference />
+                      </Layout>
+                    } />
+                    {/* Only catch-all for undefined app routes, not static files */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                  <AccessibilityPanel />
+                  <FloatingActionButton />
+                </BrowserRouter>
+              </TooltipProvider>
+            </SidebarProvider>
+          </DonationProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>

@@ -16,14 +16,28 @@ import BackButton from './BackButton';
 import LogoutButton from './LogoutButton';
 import ScrollToTop from './ScrollToTop';
 import PageTransition from './PageTransition';
+import Sidebar from './Sidebar';
+import SidebarTrigger from './SidebarTrigger';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const { isDarkMode } = useTheme();
   const { user } = useAuth();
+  const { isMobile, isCollapsed } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Check if we should show sidebar (exclude landing and auth pages)
+  const showSidebar = !['/'].includes(location.pathname);
+
+  // Calculate main content margin based on sidebar state
+  const getMainContentMargin = () => {
+    if (!showSidebar) return '';
+    if (isMobile) return '';
+    return isCollapsed ? 'ml-16' : 'ml-72';
+  };
 
   // Simplified main navigation (5 core items + search + profile)
   const mainNavigation = [
@@ -94,83 +108,94 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* Scroll to top component - invisible but functional */}
       <ScrollToTop />
 
+      {/* Sidebar */}
+      {showSidebar && <Sidebar />}
+
       {/* Top Navigation Bar */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+      <header className={`bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 transition-all duration-300 ${getMainContentMargin()}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-8">
-              <Link to="/home" className="flex items-center gap-2">
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2">
-                    <Logo size="medium" className="rounded-lg" />
-                    <span className="text-xl font-bold text-gray-900 dark:text-white">
-                      GoCarbonTracker
+              {/* Mobile sidebar trigger */}
+              {showSidebar && <SidebarTrigger />}
+              
+              {/* Logo - only show when sidebar is hidden */}
+              {!showSidebar && (
+                <Link to="/home" className="flex items-center gap-2">
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2">
+                      <Logo size="medium" className="rounded-lg" />
+                      <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        GoCarbonTracker
+                      </span>
+                    </div>
+                    <span className="text-xs text-gray-600 dark:text-gray-400 ml-8 hidden sm:block">
+                      Accelerating global supply chain decarbonization
                     </span>
                   </div>
-                  <span className="text-xs text-gray-600 dark:text-gray-400 ml-8 hidden sm:block">
-                    Accelerating global supply chain decarbonization
-                  </span>
-                </div>
-              </Link>
+                </Link>
+              )}
               
-              {/* Desktop Navigation - Simplified to 5 core items */}
-              <nav className="hidden lg:flex items-center space-x-1">
-                {mainNavigation.map((item) => {
-                  const Icon = item.icon;
-                  
-                  if (item.dropdown) {
-                    return (
-                      <DropdownMenu key={item.name}>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
-                              isTrackingActive()
-                                ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300'
-                                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
-                            }`}
-                          >
-                            <Icon className="h-4 w-4" />
-                            {item.name}
-                            <ChevronDown className="h-3 w-3" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" className="w-56">
-                          {item.dropdown.map((subItem) => (
-                            <DropdownMenuItem key={subItem.name} asChild>
-                              <Link 
-                                to={subItem.href}
-                                className={`w-full ${
-                                  isActive(subItem.href) 
-                                    ? 'bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300' 
-                                    : ''
-                                }`}
-                              >
-                                {subItem.name}
-                              </Link>
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    );
-                  }
+              {/* Desktop Navigation - hide when sidebar is present */}
+              {!showSidebar && (
+                <nav className="hidden lg:flex items-center space-x-1">
+                  {mainNavigation.map((item) => {
+                    const Icon = item.icon;
+                    
+                    if (item.dropdown) {
+                      return (
+                        <DropdownMenu key={item.name}>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                                isTrackingActive()
+                                  ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300'
+                                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+                              }`}
+                            >
+                              <Icon className="h-4 w-4" />
+                              {item.name}
+                              <ChevronDown className="h-3 w-3" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="start" className="w-56">
+                            {item.dropdown.map((subItem) => (
+                              <DropdownMenuItem key={subItem.name} asChild>
+                                <Link 
+                                  to={subItem.href}
+                                  className={`w-full ${
+                                    isActive(subItem.href) 
+                                      ? 'bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300' 
+                                      : ''
+                                  }`}
+                                >
+                                  {subItem.name}
+                                </Link>
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      );
+                    }
 
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        isActive(item.href)
-                          ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300'
-                          : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 inline mr-2" />
-                      {item.name}
-                    </Link>
-                  );
-                })}
-              </nav>
+                    return (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                          isActive(item.href)
+                            ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300'
+                            : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+                        }`}
+                      >
+                        <Icon className="h-4 w-4 inline mr-2" />
+                        {item.name}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              )}
             </div>
 
             <div className="flex items-center gap-4">
@@ -192,19 +217,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               )}
 
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="lg:hidden"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                <Menu className="h-4 w-4" />
-              </Button>
+              {!showSidebar && (
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="lg:hidden"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                  <Menu className="h-4 w-4" />
+                </Button>
+              )}
             </div>
           </div>
 
-          {/* Mobile Navigation Menu */}
-          {mobileMenuOpen && (
+          {/* Mobile Navigation Menu - only show when no sidebar */}
+          {!showSidebar && mobileMenuOpen && (
             <div className="lg:hidden border-t border-gray-200 dark:border-gray-700 py-4">
               <div className="space-y-2">
                 {mainNavigation.map((item) => {
@@ -260,7 +287,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </header>
 
       {/* Main Content with Page Transitions */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300 ${getMainContentMargin()}`}>
         {/* Global Back Button - positioned at top-left */}
         <div className="mb-4">
           <BackButton 
@@ -279,7 +306,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </main>
 
       {/* Enhanced Footer */}
-      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
+      <footer className={`bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16 transition-all duration-300 ${getMainContentMargin()}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Main Footer Content */}
           <div className="py-12">
