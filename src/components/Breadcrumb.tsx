@@ -14,8 +14,7 @@ const Breadcrumb = () => {
     scope2: 'Scope 2 Emissions',
     scope3: 'Scope 3 Emissions',
     decarbonization: 'Decarbonization',
-    reports: 'Reports',
-    analysis: 'Analysis',
+    'reports-analytics': 'Reports & Analytics',
     methodology: 'Methodology',
     reference: 'Reference',
     profile: 'Profile'

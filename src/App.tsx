@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,10 +18,9 @@ import Scope3 from "./pages/Scope3";
 import Decarbonization from "./pages/Decarbonization";
 import Profile from "./pages/Profile";
 import Landing from "./pages/Landing";
-import Analysis from "./pages/Analysis";
+import ReportsAnalytics from "./pages/ReportsAnalytics";
 import Methodology from "./pages/Methodology";
 import Reference from "./pages/Reference";
-import Reports from "./pages/Reports";
 import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -100,14 +100,9 @@ const App = () => {
                         <Profile />
                       </Layout>
                     } />
-                    <Route path="/reports" element={
+                    <Route path="/reports-analytics" element={
                       <Layout>
-                        <Reports />
-                      </Layout>
-                    } />
-                    <Route path="/analysis" element={
-                      <Layout>
-                        <Analysis />
+                        <ReportsAnalytics />
                       </Layout>
                     } />
                     <Route path="/methodology" element={
@@ -120,6 +115,9 @@ const App = () => {
                         <Reference />
                       </Layout>
                     } />
+                    {/* Redirect old routes to new combined page */}
+                    <Route path="/reports" element={<Navigate to="/reports-analytics" replace />} />
+                    <Route path="/analysis" element={<Navigate to="/reports-analytics" replace />} />
                     {/* Only catch-all for undefined app routes, not static files */}
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>

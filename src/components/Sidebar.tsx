@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -9,7 +8,6 @@ import {
   Truck, 
   Target, 
   FileText, 
-  TrendingUp,
   ChevronLeft,
   ChevronRight,
   Users
@@ -31,8 +29,7 @@ const navigationItems: NavigationItem[] = [
   { name: 'Scope 1', href: '/scope1', icon: Factory, description: 'Direct emissions' },
   { name: 'Scope 2', href: '/scope2', icon: Zap, description: 'Energy emissions' },
   { name: 'Scope 3', href: '/scope3', icon: Truck, description: 'Value chain emissions' },
-  { name: 'Analysis', href: '/analysis', icon: TrendingUp, description: 'Performance analysis' },
-  { name: 'Reports', href: '/reports', icon: FileText, description: 'Generate reports' },
+  { name: 'Reports & Analytics', href: '/reports-analytics', icon: FileText, description: 'Reports & analysis' },
   { name: 'Decarbonization', href: '/decarbonization', icon: Target, description: 'Strategy planning' },
   { name: 'Donate', href: '/donate', icon: Users, description: 'Support our mission' },
 ];
