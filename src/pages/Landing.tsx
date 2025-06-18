@@ -1,6 +1,7 @@
+
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote, Factory, Zap, Globe, TreePine, Building, Recycle, AlertCircle } from 'lucide-react';
+import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote, Factory, Zap, Globe, TreePine, Building, Recycle, AlertCircle, Database, Network, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
@@ -133,60 +134,61 @@ const Landing = () => {
                 <span className="text-3xl font-bold text-gray-900">GoCarbonTracker</span>
               </div>
               <span className="text-lg text-gray-600 font-medium">
-                Accelerating global supply chain decarbonization
+                Global Supply Chain Emissions Intelligence Platform
               </span>
             </div>
           </div>
 
           {/* Enhanced Main Heading */}
           <h1 className="text-4xl md:text-7xl font-bold text-gray-900 mb-8 animate-fade-in">
-            <span className="block animate-slide-in-right">Stop Guessing About</span>
-            <span className="block text-teal-600 animate-slide-in-right delay-300">Your Carbon Impact</span>
-            <span className="block animate-slide-in-right delay-500">Start Leading Your Industry</span>
+            <span className="block animate-slide-in-right">The GPS of</span>
+            <span className="block text-teal-600 animate-slide-in-right delay-300">Corporate Carbon</span>
+            <span className="block animate-slide-in-right delay-500">Emissions</span>
           </h1>
 
           {/* Enhanced Subtitle with Mission Focus */}
           <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-700 font-medium">
-            Democratizing carbon emissions data worldwide. We track <span className="text-teal-600 font-bold">Scope 1, 2, and 3 emissions</span> across 
-            organizations to identify industry hotspots, enable science-based targets, and create a collaborative platform 
-            where companies and experts share <span className="text-green-600 font-bold">decarbonization knowledge</span>.
+            Navigate the complex landscape of global supply chain emissions with precision. Our platform delivers 
+            <span className="text-teal-600 font-bold"> granular industry benchmarking</span>, identifies critical emission hotspots, 
+            and connects you with a <span className="text-green-600 font-bold">collaborative expert network</span> driving 
+            real decarbonization outcomes across all sectors.
           </p>
 
           {/* Updated CTA Buttons - Demo Mode */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in delay-1000">
             <Link to="/home">
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl group border-2 border-teal-600">
-                Explore Demo
+                Explore Platform
                 <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link to="/tracking">
               <Button variant="outline" size="lg" className="border-3 border-teal-600 text-teal-700 hover:bg-teal-50 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                Learn About Carbon Tracking
+                View Emissions Intelligence
               </Button>
             </Link>
           </div>
 
-          {/* Mission Statement */}
+          {/* Platform Capabilities */}
           <div className="mt-12 animate-fade-in delay-1200">
-            <p className="text-sm text-gray-600 mb-4 font-medium">Our Mission:</p>
-            <div className="text-gray-700 text-lg font-medium max-w-3xl mx-auto">
-              Creating transparency to identify emission hotspots and solutions through collaborative decarbonization
+            <p className="text-sm text-gray-600 mb-4 font-medium">Platform Capabilities:</p>
+            <div className="text-gray-700 text-lg font-medium max-w-4xl mx-auto">
+              Granular supply chain tracking • Industry-specific benchmarking • Global emissions database • Expert collaboration network
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 animate-fade-in delay-1200">
             <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/50 transition-all">
-              <div className="text-5xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">70%+</div>
-              <div className="text-gray-700 font-medium">Supply Chain Emissions</div>
+              <div className="text-5xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">15K+</div>
+              <div className="text-gray-700 font-medium">Global Companies Tracked</div>
             </div>
             <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/50 transition-all">
-              <div className="text-5xl font-bold text-green-600 mb-2 group-hover:scale-110 transition-transform">3</div>
-              <div className="text-gray-700 font-medium">Emission Scopes Tracked</div>
+              <div className="text-5xl font-bold text-green-600 mb-2 group-hover:scale-110 transition-transform">50+</div>
+              <div className="text-gray-700 font-medium">Industry Sectors Covered</div>
             </div>
             <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/50 transition-all">
-              <div className="text-5xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">∞</div>
-              <div className="text-gray-700 font-medium">Collaboration Potential</div>
+              <div className="text-5xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">500+</div>
+              <div className="text-gray-700 font-medium">Expert Network Members</div>
             </div>
           </div>
         </div>
@@ -274,12 +276,12 @@ const Landing = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-5xl font-bold text-gray-900 mb-8">
-                Why Companies Should Choose Carbon Tracking
+                Why Choose GoCarbonTracker?
               </h2>
               <p className="text-xl text-gray-700 mb-10 font-medium leading-relaxed">
-                The shift toward sustainable business practices isn't just about environmental responsibility—it's about 
-                future-proofing your business, meeting regulatory requirements, and maintaining competitive advantage 
-                in an increasingly carbon-conscious world.
+                As the definitive platform for supply chain carbon intelligence, we provide unparalleled visibility 
+                into global emissions patterns, industry-specific benchmarking, and access to the world's largest 
+                collaborative network of decarbonization experts driving measurable climate outcomes.
               </p>
               <div className="space-y-6">
                 {whyTrackingMatters.map((reason, index) => (
@@ -316,27 +318,27 @@ const Landing = () => {
       <div className="py-20 bg-gradient-to-r from-teal-600 to-green-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl font-bold text-white mb-6">
-            Ready to Lead Through Transparency?
+            Ready to Navigate Your Carbon Future?
           </h2>
           <p className="text-xl text-teal-100 mb-10 font-medium leading-relaxed">
-            Join the movement toward collaborative decarbonization. Help identify industry emission hotspots, 
-            share knowledge with experts, and implement science-based reduction strategies that create 
-            real environmental impact through collective action.
+            Join the world's most comprehensive supply chain emissions intelligence platform. Access granular 
+            industry benchmarking, identify critical hotspots, and collaborate with leading experts to implement 
+            science-based decarbonization strategies that deliver measurable climate impact.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link to="/home">
               <Button size="lg" variant="secondary" className="bg-white text-teal-600 hover:bg-gray-100 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                Explore Demo
+                Start Tracking Now
               </Button>
             </Link>
             <Link to="/methodology">
               <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-teal-600 px-10 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105">
-                Learn Our Methodology
+                Explore Our Intelligence
               </Button>
             </Link>
           </div>
           <p className="text-teal-100 mt-6 text-sm">
-            ✓ Open platform for transparency  ✓ Science-based methodologies  ✓ Collaborative knowledge sharing
+            ✓ Global emissions database  ✓ Industry-specific benchmarking  ✓ Expert collaboration network
           </p>
         </div>
       </div>
