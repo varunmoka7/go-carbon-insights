@@ -1,4 +1,3 @@
-
 /**
  * Utility functions to remove Lovable branding elements
  * This ensures a clean, professional appearance for production deployment
@@ -126,7 +125,7 @@ class BrandingRemovalService {
       null
     );
 
-    const nodesToRemove: Node[] = [];
+    const elementsToRemove: Element[] = [];
     let node: Node | null;
 
     while ((node = walker.nextNode())) {
@@ -139,7 +138,7 @@ class BrandingRemovalService {
         let parent = node.parentElement;
         while (parent && parent !== document.body) {
           if (this.shouldRemoveElement(parent)) {
-            nodesToRemove.push(parent);
+            elementsToRemove.push(parent);
             break;
           }
           parent = parent.parentElement;
@@ -147,9 +146,9 @@ class BrandingRemovalService {
       }
     }
 
-    nodesToRemove.forEach(node => {
-      console.log('Removing element with branding text:', node);
-      node.remove();
+    elementsToRemove.forEach(element => {
+      console.log('Removing element with branding text:', element);
+      element.remove();
     });
   }
 
