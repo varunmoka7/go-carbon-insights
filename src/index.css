@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -276,4 +277,73 @@ kbd {
 
 .dark .sidebar-scroll::-webkit-scrollbar-thumb {
   background: theme('colors.gray.600');
+}
+
+/* ==========================================================================
+   LOVABLE BRANDING REMOVAL - GLOBAL CSS STYLES
+   ========================================================================== */
+
+/* Hide any Lovable badges, buttons, or branding elements */
+[class*="lovable"],
+[id*="lovable"],
+[class*="gptengineer"],
+[id*="gptengineer"],
+[class*="edit-with"],
+[class*="badge"]:not(.badge):not([class*="ui-badge"]):not([class*="status-badge"]):not([class*="metric-badge"]),
+[data-lovable],
+[data-gptengineer],
+iframe[src*="lovable"],
+iframe[src*="gptengineer"],
+div[style*="position: fixed"][style*="bottom"],
+div[style*="position: fixed"][style*="right"],
+a[href*="lovable.dev"],
+a[href*="gptengineer.com"],
+button:has-text("Edit with Lovable"),
+div:has-text("Edit with Lovable"),
+span:has-text("Edit with Lovable"),
+[aria-label*="Edit with Lovable"],
+[title*="Edit with Lovable"],
+[alt*="Edit with Lovable"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  z-index: -1 !important;
+}
+
+/* Hide fixed positioned elements in bottom-right corner that could be branding */
+div[style*="position: fixed"][style*="bottom: 20px"],
+div[style*="position: fixed"][style*="bottom: 16px"],
+div[style*="position: fixed"][style*="bottom: 24px"],
+div[style*="position: fixed"][style*="right: 20px"],
+div[style*="position: fixed"][style*="right: 16px"],
+div[style*="position: fixed"][style*="right: 24px"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Additional safety selectors for dynamic content */
+[class*="floating-badge"],
+[class*="edit-button"],
+[class*="lovable-watermark"],
+[class*="branding-badge"],
+.fixed.bottom-4.right-4,
+.fixed.bottom-5.right-5,
+.fixed.bottom-6.right-6 {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Prevent any element containing "Edit with" text from showing */
+*:contains("Edit with Lovable"),
+*:contains("Made with Lovable"),
+*:contains("Built with Lovable") {
+  display: none !important;
+  visibility: hidden !important;
 }

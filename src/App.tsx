@@ -28,6 +28,9 @@ import Donate from "./pages/Donate";
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 
+// Import branding removal utility
+import "./utils/brandingRemoval";
+
 const queryClient = new QueryClient();
 
 const App = () => {
