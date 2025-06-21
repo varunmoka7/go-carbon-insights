@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,9 +29,6 @@ import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 import NavigationDebugger from "./components/NavigationDebugger";
 import NavigationLoader from "./components/NavigationLoader";
-
-// Import branding removal utility
-import "./utils/brandingRemoval";
 
 const queryClient = new QueryClient();
 
@@ -140,3 +138,4 @@ const App = () => {
 };
 
 export default App;
+
