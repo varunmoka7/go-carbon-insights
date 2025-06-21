@@ -34,7 +34,7 @@ const Breadcrumb = () => {
         const displayName = breadcrumbNames[pathname] || pathname.charAt(0).toUpperCase() + pathname.slice(1);
 
         return (
-          <React.Fragment key={pathname}>
+          <div key={pathname} className="flex items-center space-x-2">
             <ChevronRight className="h-4 w-4" />
             {isLast ? (
               <span className="text-foreground font-medium">{displayName}</span>
@@ -43,7 +43,7 @@ const Breadcrumb = () => {
                 {displayName}
               </Link>
             )}
-          </React.Fragment>
+          </div>
         );
       })}
     </nav>

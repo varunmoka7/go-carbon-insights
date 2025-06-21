@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +26,8 @@ import Contact from "./pages/Contact";
 import Donate from "./pages/Donate";
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
+import NavigationDebugger from "./components/NavigationDebugger";
+import NavigationLoader from "./components/NavigationLoader";
 
 // Import branding removal utility
 import "./utils/brandingRemoval";
@@ -44,6 +45,8 @@ const App = () => {
                 <Toaster />
                 <Sonner />
                 <BrowserRouter>
+                  <NavigationDebugger />
+                  <NavigationLoader />
                   <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/auth" element={<Auth />} />

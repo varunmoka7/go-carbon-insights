@@ -1,27 +1,16 @@
-
-import React, { useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { BarChart, Target, FileText, TrendingDown, CheckCircle, Users, ArrowRight, Star, Quote, Factory, Zap, Globe, TreePine, Building, Recycle, AlertCircle, Database, Network, TrendingUp } from 'lucide-react';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BarChart, Target, FileText, TrendingDown, ArrowRight, Users, Globe, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useToast } from '@/hooks/use-toast';
-import Logo from '@/components/ui/Logo';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Landing = () => {
-  const [searchParams] = useSearchParams();
-  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  // Handle email verification success
-  useEffect(() => {
-    if (searchParams.get('verified') === 'true') {
-      toast({
-        title: "Email Verified Successfully!",
-        description: "Your email has been verified. You can now sign in to your account.",
-      });
-      // Clear the URL parameter
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
-  }, [searchParams, toast]);
+  const handleExplorePlatform = () => {
+    console.log('🚀 Explore Platform button clicked');
+    navigate('/home');
+  };
 
   const features = [
     {
@@ -101,7 +90,7 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-green-50 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-green-50">
       {/* Demo Mode Notice */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
