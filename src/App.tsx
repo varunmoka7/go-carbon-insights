@@ -74,6 +74,16 @@ const App = () => {
                         <Dashboard />
                       </Layout>
                     } />
+                    <Route path="/industry-analysis" element={
+                      <Layout>
+                        <IndustryAnalysis />
+                      </Layout>
+                    } />
+                    <Route path="/industry-analysis/plastic-packaging" element={
+                      <Layout>
+                        <PlasticPackaging />
+                      </Layout>
+                    } />
                     <Route path="/tracking" element={
                       <Layout>
                         <Tracking />
@@ -138,4 +148,3 @@ const App = () => {
 };
 
 export default App;
-

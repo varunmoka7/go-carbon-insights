@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -10,7 +11,8 @@ import {
   FileText, 
   ChevronLeft,
   ChevronRight,
-  Users
+  Users,
+  Building
 } from 'lucide-react';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { Button } from '@/components/ui/button';
@@ -26,6 +28,7 @@ interface NavigationItem {
 const navigationItems: NavigationItem[] = [
   { name: 'Home', href: '/home', icon: Home, description: 'Dashboard overview' },
   { name: 'Dashboard', href: '/dashboard', icon: BarChart, description: 'Analytics & insights' },
+  { name: 'Industry Analysis', href: '/industry-analysis', icon: Building, description: 'Sector-specific analysis' },
   { name: 'Scope 1', href: '/scope1', icon: Factory, description: 'Direct emissions' },
   { name: 'Scope 2', href: '/scope2', icon: Zap, description: 'Energy emissions' },
   { name: 'Scope 3', href: '/scope3', icon: Truck, description: 'Value chain emissions' },
@@ -38,7 +41,12 @@ const Sidebar: React.FC = () => {
   const { isOpen, isMobile, isCollapsed, close, setCollapsed } = useSidebar();
   const location = useLocation();
 
-  const isActive = (href: string) => location.pathname === href;
+  const isActive = (href: string) => {
+    if (href === '/industry-analysis') {
+      return location.pathname === href || location.pathname.startsWith('/industry-analysis/');
+    }
+    return location.pathname === href;
+  };
 
   const handleBackdropClick = () => {
     if (isMobile) {
