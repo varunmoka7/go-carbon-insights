@@ -160,74 +160,129 @@ const IndustryAnalysis = () => {
           const SectorIcon = getSectorIcon(sector.id);
           const isClickable = sector.status === 'live';
           
-          const CardComponent = isClickable ? Link : 'div';
-          const cardProps = isClickable ? { to: sector.route! } : {};
-
           return (
-            <CardComponent key={sector.id} {...cardProps}>
-              <Card className={`h-full transition-all duration-300 ${
-                isClickable 
-                  ? 'hover:shadow-lg hover:-translate-y-1 cursor-pointer' 
-                  : 'cursor-default'
-              }`}>
-                <CardHeader className="space-y-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-900/30 dark:to-teal-800/30 rounded-lg flex items-center justify-center">
-                        <SectorIcon className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+            <div key={sector.id}>
+              {isClickable ? (
+                <Link to={sector.route!}>
+                  <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+                    <CardHeader className="space-y-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-900/30 dark:to-teal-800/30 rounded-lg flex items-center justify-center">
+                            <SectorIcon className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+                          </div>
+                          <div>
+                            <Badge className={`${getStatusColor(sector.status)} border flex items-center gap-1`}>
+                              {getStatusIcon(sector.status)}
+                              {sector.statusBadge}
+                            </Badge>
+                          </div>
+                        </div>
+                        <ChevronRight className="h-5 w-5 text-gray-400" />
                       </div>
+                      
                       <div>
-                        <Badge className={`${getStatusColor(sector.status)} border flex items-center gap-1`}>
-                          {getStatusIcon(sector.status)}
-                          {sector.statusBadge}
-                        </Badge>
+                        <CardTitle className="text-lg mb-2">{sector.title}</CardTitle>
+                        <CardDescription>{sector.description}</CardDescription>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Impact</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">{sector.impact}</div>
+                        </div>
+                        
+                        <div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Key Challenge</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">{sector.keyChallenge}</div>
+                        </div>
+                        
+                        <div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Companies Tracked</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">{sector.companiesTracked}</div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">Primary Metrics</div>
+                        <div className="flex flex-wrap gap-1">
+                          {sector.primaryMetrics.slice(0, 3).map((metric, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              {metric}
+                            </Badge>
+                          ))}
+                          {sector.primaryMetrics.length > 3 && (
+                            <Badge variant="secondary" className="text-xs">
+                              +{sector.primaryMetrics.length - 3} more
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ) : (
+                <Card className="h-full transition-all duration-300 cursor-default">
+                  <CardHeader className="space-y-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-900/30 dark:to-teal-800/30 rounded-lg flex items-center justify-center">
+                          <SectorIcon className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+                        </div>
+                        <div>
+                          <Badge className={`${getStatusColor(sector.status)} border flex items-center gap-1`}>
+                            {getStatusIcon(sector.status)}
+                            {sector.statusBadge}
+                          </Badge>
+                        </div>
                       </div>
                     </div>
-                    {isClickable && <ChevronRight className="h-5 w-5 text-gray-400" />}
-                  </div>
-                  
-                  <div>
-                    <CardTitle className="text-lg mb-2">{sector.title}</CardTitle>
-                    <CardDescription>{sector.description}</CardDescription>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Impact</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">{sector.impact}</div>
-                    </div>
                     
                     <div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Key Challenge</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">{sector.keyChallenge}</div>
+                      <CardTitle className="text-lg mb-2">{sector.title}</CardTitle>
+                      <CardDescription>{sector.description}</CardDescription>
                     </div>
-                    
-                    <div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Companies Tracked</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">{sector.companiesTracked}</div>
-                    </div>
-                  </div>
+                  </CardHeader>
 
-                  <div>
-                    <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">Primary Metrics</div>
-                    <div className="flex flex-wrap gap-1">
-                      {sector.primaryMetrics.slice(0, 3).map((metric, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
-                          {metric}
-                        </Badge>
-                      ))}
-                      {sector.primaryMetrics.length > 3 && (
-                        <Badge variant="secondary" className="text-xs">
-                          +{sector.primaryMetrics.length - 3} more
-                        </Badge>
-                      )}
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Impact</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">{sector.impact}</div>
+                      </div>
+                      
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Key Challenge</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">{sector.keyChallenge}</div>
+                      </div>
+                      
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Companies Tracked</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">{sector.companiesTracked}</div>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </CardComponent>
+
+                    <div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">Primary Metrics</div>
+                      <div className="flex flex-wrap gap-1">
+                        {sector.primaryMetrics.slice(0, 3).map((metric, index) => (
+                          <Badge key={index} variant="secondary" className="text-xs">
+                            {metric}
+                          </Badge>
+                        ))}
+                        {sector.primaryMetrics.length > 3 && (
+                          <Badge variant="secondary" className="text-xs">
+                            +{sector.primaryMetrics.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           );
         })}
       </div>

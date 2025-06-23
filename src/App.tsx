@@ -25,6 +25,8 @@ import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Donate from "./pages/Donate";
+import IndustryAnalysis from "./pages/IndustryAnalysis";
+import PlasticPackaging from "./pages/PlasticPackaging";
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 import NavigationDebugger from "./components/NavigationDebugger";
