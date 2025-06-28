@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Building, 
   TrendingUp, 
@@ -32,6 +33,7 @@ import {
 
 const IndustryAnalysis = () => {
   const [filterStatus, setFilterStatus] = useState<'all' | 'live' | 'coming-soon' | 'planned'>('all');
+  const { t } = useTranslation();
 
   const filteredSectors = sectorsData.filter(sector => 
     filterStatus === 'all' || sector.status === filterStatus
@@ -73,11 +75,10 @@ const IndustryAnalysis = () => {
       <div className="text-center space-y-6">
         <div className="space-y-2">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
-            Industry-Specific Analysis
+            {t('industry:title')}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
-            Deep-dive into sector-specific environmental impacts and benchmark leading companies 
-            across entire value chains using science-based metrics
+            {t('industry:subtitle')}
           </p>
         </div>
 
@@ -88,7 +89,7 @@ const IndustryAnalysis = () => {
               {industryGlobalStats.globalGHGEmissions}
             </div>
             <div className="text-sm font-medium text-red-700 dark:text-red-300">
-              Global GHG Emissions
+              {t('industry:globalGHGEmissions')}
             </div>
           </div>
           <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 p-6 rounded-xl border border-amber-200 dark:border-amber-800">
@@ -96,7 +97,7 @@ const IndustryAnalysis = () => {
               {industryGlobalStats.keyIndustryContributors}
             </div>
             <div className="text-sm font-medium text-amber-700 dark:text-amber-300">
-              Key Industry Contributors
+              {t('industry:keyIndustryContributors')}
             </div>
           </div>
           <div className="bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900/20 dark:to-teal-800/20 p-6 rounded-xl border border-teal-200 dark:border-teal-800">
@@ -104,7 +105,7 @@ const IndustryAnalysis = () => {
               {industryGlobalStats.companiesTracked}
             </div>
             <div className="text-sm font-medium text-teal-700 dark:text-teal-300">
-              Companies Tracked
+              {t('industry:companiesTracked')}
             </div>
           </div>
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
@@ -112,7 +113,7 @@ const IndustryAnalysis = () => {
               {industryGlobalStats.sectorCoverage}
             </div>
             <div className="text-sm font-medium text-blue-700 dark:text-blue-300">
-              Sector Coverage
+              {t('industry:sectorCoverage')}
             </div>
           </div>
         </div>
@@ -126,7 +127,7 @@ const IndustryAnalysis = () => {
           className="flex items-center gap-2"
         >
           <Filter className="h-4 w-4" />
-          All Sectors
+          {t('industry:filters.allSectors')}
         </Button>
         <Button
           variant={filterStatus === 'live' ? 'default' : 'outline'}
@@ -134,7 +135,7 @@ const IndustryAnalysis = () => {
           className="flex items-center gap-2"
         >
           <Play className="h-4 w-4" />
-          Live Analysis
+          {t('industry:filters.liveAnalysis')}
         </Button>
         <Button
           variant={filterStatus === 'coming-soon' ? 'default' : 'outline'}
@@ -142,7 +143,7 @@ const IndustryAnalysis = () => {
           className="flex items-center gap-2"
         >
           <Clock className="h-4 w-4" />
-          Coming Soon
+          {t('industry:filters.comingSoon')}
         </Button>
         <Button
           variant={filterStatus === 'planned' ? 'default' : 'outline'}
@@ -150,7 +151,7 @@ const IndustryAnalysis = () => {
           className="flex items-center gap-2"
         >
           <Calendar className="h-4 w-4" />
-          Planned
+          {t('industry:filters.planned')}
         </Button>
       </div>
 
@@ -160,129 +161,82 @@ const IndustryAnalysis = () => {
           const SectorIcon = getSectorIcon(sector.id);
           const isClickable = sector.status === 'live';
           
-          return (
-            <div key={sector.id}>
-              {isClickable ? (
-                <Link to={sector.route!}>
+          const CardWrapper = ({ children }: { children: React.ReactNode }) => {
+            if (isClickable && sector.route) {
+              return (
+                <Link to={sector.route}>
                   <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-                    <CardHeader className="space-y-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-900/30 dark:to-teal-800/30 rounded-lg flex items-center justify-center">
-                            <SectorIcon className="h-6 w-6 text-teal-600 dark:text-teal-400" />
-                          </div>
-                          <div>
-                            <Badge className={`${getStatusColor(sector.status)} border flex items-center gap-1`}>
-                              {getStatusIcon(sector.status)}
-                              {sector.statusBadge}
-                            </Badge>
-                          </div>
-                        </div>
-                        <ChevronRight className="h-5 w-5 text-gray-400" />
-                      </div>
-                      
-                      <div>
-                        <CardTitle className="text-lg mb-2">{sector.title}</CardTitle>
-                        <CardDescription>{sector.description}</CardDescription>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-4">
-                      <div className="space-y-3">
-                        <div>
-                          <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Impact</div>
-                          <div className="text-sm text-gray-600 dark:text-gray-300">{sector.impact}</div>
-                        </div>
-                        
-                        <div>
-                          <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Key Challenge</div>
-                          <div className="text-sm text-gray-600 dark:text-gray-300">{sector.keyChallenge}</div>
-                        </div>
-                        
-                        <div>
-                          <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Companies Tracked</div>
-                          <div className="text-sm text-gray-600 dark:text-gray-300">{sector.companiesTracked}</div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">Primary Metrics</div>
-                        <div className="flex flex-wrap gap-1">
-                          {sector.primaryMetrics.slice(0, 3).map((metric, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {metric}
-                            </Badge>
-                          ))}
-                          {sector.primaryMetrics.length > 3 && (
-                            <Badge variant="secondary" className="text-xs">
-                              +{sector.primaryMetrics.length - 3} more
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
+                    {children}
                   </Card>
                 </Link>
-              ) : (
-                <Card className="h-full transition-all duration-300 cursor-default">
-                  <CardHeader className="space-y-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-900/30 dark:to-teal-800/30 rounded-lg flex items-center justify-center">
-                          <SectorIcon className="h-6 w-6 text-teal-600 dark:text-teal-400" />
-                        </div>
-                        <div>
-                          <Badge className={`${getStatusColor(sector.status)} border flex items-center gap-1`}>
-                            {getStatusIcon(sector.status)}
-                            {sector.statusBadge}
-                          </Badge>
-                        </div>
-                      </div>
+              );
+            }
+            return (
+              <Card className="h-full transition-all duration-300 cursor-default">
+                {children}
+              </Card>
+            );
+          };
+          
+          return (
+            <CardWrapper key={sector.id}>
+              <CardHeader className="space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-900/30 dark:to-teal-800/30 rounded-lg flex items-center justify-center">
+                      <SectorIcon className="h-6 w-6 text-teal-600 dark:text-teal-400" />
                     </div>
-                    
                     <div>
-                      <CardTitle className="text-lg mb-2">{sector.title}</CardTitle>
-                      <CardDescription>{sector.description}</CardDescription>
+                      <Badge className={`${getStatusColor(sector.status)} border flex items-center gap-1`}>
+                        {getStatusIcon(sector.status)}
+                        {t(`industry:status.${sector.status}`) || sector.statusBadge}
+                      </Badge>
                     </div>
-                  </CardHeader>
+                  </div>
+                  {isClickable && <ChevronRight className="h-5 w-5 text-gray-400" />}
+                </div>
+                
+                <div>
+                  <CardTitle className="text-lg mb-2">{sector.title}</CardTitle>
+                  <CardDescription>{sector.description}</CardDescription>
+                </div>
+              </CardHeader>
 
-                  <CardContent className="space-y-4">
-                    <div className="space-y-3">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Impact</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300">{sector.impact}</div>
-                      </div>
-                      
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Key Challenge</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300">{sector.keyChallenge}</div>
-                      </div>
-                      
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Companies Tracked</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300">{sector.companiesTracked}</div>
-                      </div>
-                    </div>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div>
+                    <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Impact</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">{sector.impact}</div>
+                  </div>
+                  
+                  <div>
+                    <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">Key Challenge</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">{sector.keyChallenge}</div>
+                  </div>
+                  
+                  <div>
+                    <div className="text-sm font-medium text-gray-900 dark:text-white mb-1">{t('industry:companiesTracked')}</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">{sector.companiesTracked}</div>
+                  </div>
+                </div>
 
-                    <div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">Primary Metrics</div>
-                      <div className="flex flex-wrap gap-1">
-                        {sector.primaryMetrics.slice(0, 3).map((metric, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            {metric}
-                          </Badge>
-                        ))}
-                        {sector.primaryMetrics.length > 3 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{sector.primaryMetrics.length - 3} more
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">Primary Metrics</div>
+                  <div className="flex flex-wrap gap-1">
+                    {sector.primaryMetrics.slice(0, 3).map((metric, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
+                        {metric}
+                      </Badge>
+                    ))}
+                    {sector.primaryMetrics.length > 3 && (
+                      <Badge variant="secondary" className="text-xs">
+                        +{sector.primaryMetrics.length - 3} more
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </CardWrapper>
           );
         })}
       </div>
@@ -291,11 +245,10 @@ const IndustryAnalysis = () => {
       <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Development Roadmap
+            {t('industry:roadmap.title')}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Track our progress in expanding sector coverage and building comprehensive 
-            industry analysis capabilities
+            {t('industry:roadmap.subtitle')}
           </p>
         </div>
 
@@ -305,7 +258,7 @@ const IndustryAnalysis = () => {
               {developmentRoadmap.liveSectors}
             </div>
             <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Live Sectors
+              {t('industry:roadmap.liveSectors')}
             </div>
           </div>
           <div className="text-center">
@@ -313,7 +266,7 @@ const IndustryAnalysis = () => {
               {developmentRoadmap.inDevelopment}
             </div>
             <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              In Development
+              {t('industry:roadmap.inDevelopment')}
             </div>
           </div>
           <div className="text-center">
@@ -321,7 +274,7 @@ const IndustryAnalysis = () => {
               {developmentRoadmap.planned}
             </div>
             <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Planned Sectors
+              {t('industry:roadmap.planned')}
             </div>
           </div>
         </div>

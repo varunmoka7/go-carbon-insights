@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +10,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import Logo from '@/components/ui/Logo';
 import GlobalSearch from './GlobalSearch';
@@ -18,6 +21,7 @@ import ScrollToTop from './ScrollToTop';
 import PageTransition from './PageTransition';
 import Sidebar from './Sidebar';
 import SidebarTrigger from './SidebarTrigger';
+import LanguageSwitcher from './LanguageSwitcher';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSidebar } from '@/contexts/SidebarContext';
@@ -28,6 +32,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
   const { isMobile, isCollapsed } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   // Check if we should show sidebar (exclude landing and auth pages)
   const showSidebar = !['/'].includes(location.pathname);
@@ -41,21 +46,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   // Simplified main navigation (5 core items + search + profile)
   const mainNavigation = [
-    { name: 'Home', href: '/home', icon: Home },
-    { name: 'Dashboard', href: '/dashboard', icon: BarChart },
+    { name: t('navigation:home'), href: '/home', icon: Home },
+    { name: t('navigation:dashboard'), href: '/dashboard', icon: BarChart },
     { 
-      name: 'Tracking', 
+      name: t('navigation:tracking'), 
       href: '/tracking', 
       icon: Target,
       dropdown: [
-        { name: 'Tracking Overview', href: '/tracking' },
-        { name: 'Scope 1 Emissions', href: '/scope1' },
-        { name: 'Scope 2 Emissions', href: '/scope2' },
-        { name: 'Scope 3 Emissions', href: '/scope3' },
+        { name: t('navigation:tracking'), href: '/tracking' },
+        { name: t('navigation:scope1'), href: '/scope1' },
+        { name: t('navigation:scope2'), href: '/scope2' },
+        { name: t('navigation:scope3'), href: '/scope3' },
       ]
     },
-    { name: 'Decarbonization', href: '/decarbonization', icon: Target },
-    { name: 'Donate', href: '/donate', icon: Users },
+    { name: t('navigation:decarbonization'), href: '/decarbonization', icon: Target },
+    { name: t('navigation:donate'), href: '/donate', icon: Users },
   ];
 
   const isActive = (href: string) => location.pathname === href;
@@ -66,20 +71,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     platform: {
       title: 'Platform',
       links: [
-        { name: 'About Us', href: '/about' },
-        { name: 'Dashboard', href: '/dashboard' },
-        { name: 'Methodology', href: '/methodology' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'Donate', href: '/donate' },
+        { name: t('navigation:about'), href: '/about' },
+        { name: t('navigation:dashboard'), href: '/dashboard' },
+        { name: t('navigation:methodology'), href: '/methodology' },
+        { name: t('navigation:contact'), href: '/contact' },
+        { name: t('navigation:donate'), href: '/donate' },
       ]
     },
     tracking: {
       title: 'Emissions Tracking',
       links: [
-        { name: 'Scope 1 Emissions', href: '/scope1' },
-        { name: 'Scope 2 Emissions', href: '/scope2' },
-        { name: 'Scope 3 Emissions', href: '/scope3' },
-        { name: 'Tracking Overview', href: '/tracking' },
+        { name: t('scopes:scope1.title'), href: '/scope1' },
+        { name: t('scopes:scope2.title'), href: '/scope2' },
+        { name: t('scopes:scope3.title'), href: '/scope3' },
+        { name: t('navigation:tracking'), href: '/tracking' },
       ]
     },
     analytics: {
@@ -88,17 +93,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { name: 'Reports', href: '/reports' },
         { name: 'Analysis', href: '/analysis' },
         { name: 'Benchmarking', href: '/dashboard' },
-        { name: 'Decarbonization', href: '/decarbonization' },
+        { name: t('navigation:decarbonization'), href: '/decarbonization' },
       ]
     },
     resources: {
       title: 'Resources & Support',
       links: [
         { name: 'Documentation', href: '/methodology' },
-        { name: 'Reference', href: '/reference' },
+        { name: t('navigation:reference'), href: '/reference' },
         { name: 'Support', href: '/contact' },
         { name: 'Privacy Policy', href: '/about' },
-        { name: 'Donate', href: '/donate' },
+        { name: t('navigation:donate'), href: '/donate' },
       ]
     }
   };
@@ -207,6 +212,22 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   3
                 </Badge>
               </Button>
+
+              {/* Settings dropdown with language switcher */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuItem asChild>
+                    <div className="w-full">
+                      <LanguageSwitcher />
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
               {user && (
                 <div className="flex items-center gap-3">

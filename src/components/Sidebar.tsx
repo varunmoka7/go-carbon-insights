@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Home, 
   BarChart, 
@@ -25,21 +26,22 @@ interface NavigationItem {
   description?: string;
 }
 
-const navigationItems: NavigationItem[] = [
-  { name: 'Home', href: '/home', icon: Home, description: 'Dashboard overview' },
-  { name: 'Dashboard', href: '/dashboard', icon: BarChart, description: 'Analytics & insights' },
-  { name: 'Industry Analysis', href: '/industry-analysis', icon: Building, description: 'Sector-specific analysis' },
-  { name: 'Scope 1', href: '/scope1', icon: Factory, description: 'Direct emissions' },
-  { name: 'Scope 2', href: '/scope2', icon: Zap, description: 'Energy emissions' },
-  { name: 'Scope 3', href: '/scope3', icon: Truck, description: 'Value chain emissions' },
-  { name: 'Reports & Analytics', href: '/reports-analytics', icon: FileText, description: 'Reports & analysis' },
-  { name: 'Decarbonization', href: '/decarbonization', icon: Target, description: 'Strategy planning' },
-  { name: 'Donate', href: '/donate', icon: Users, description: 'Support our mission' },
-];
-
 const Sidebar: React.FC = () => {
   const { isOpen, isMobile, isCollapsed, close, setCollapsed } = useSidebar();
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const navigationItems: NavigationItem[] = [
+    { name: t('navigation:home'), href: '/home', icon: Home, description: t('dashboard:overview') },
+    { name: t('navigation:dashboard'), href: '/dashboard', icon: BarChart, description: t('dashboard:analytics') },
+    { name: t('navigation:industryAnalysis'), href: '/industry-analysis', icon: Building, description: 'Sector-specific analysis' },
+    { name: t('scopes:scope1.title'), href: '/scope1', icon: Factory, description: t('scopes:scope1.description') },
+    { name: t('scopes:scope2.title'), href: '/scope2', icon: Zap, description: t('scopes:scope2.description') },
+    { name: t('scopes:scope3.title'), href: '/scope3', icon: Truck, description: t('scopes:scope3.description') },
+    { name: t('navigation:reportsAnalytics'), href: '/reports-analytics', icon: FileText, description: 'Reports & analysis' },
+    { name: t('navigation:decarbonization'), href: '/decarbonization', icon: Target, description: 'Strategy planning' },
+    { name: t('navigation:donate'), href: '/donate', icon: Users, description: 'Support our mission' },
+  ];
 
   const isActive = (href: string) => {
     if (href === '/industry-analysis') {
