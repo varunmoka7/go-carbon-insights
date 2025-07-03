@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, Zap, Thermometer, Snowflake, BarChart3, Target, DollarSign, TrendingUp, Award, Globe } from 'lucide-react';
+import { ArrowLeft, Zap, Thermometer, Snowflake, BarChart3, Target, DollarSign, TrendingUp, Award, Globe, Server, Building, Cpu, Factory, Truck, Archive, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend, RadialBarChart, RadialBar, Treemap } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,16 +14,75 @@ import RegionalEnergyCard from '@/components/RegionalEnergyCard';
 
 const Scope2 = () => {
   const navigate = useNavigate();
-  const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const [selectedCompany, setSelectedCompany] = useState('apple');
   const [selectedYear, setSelectedYear] = useState('2024');
   const { data: companies } = useCompanies();
   const { data: enhancedData, isLoading: enhancedLoading } = useEnhancedScope2Data(selectedCompany);
   const { data: scope2Data, isLoading: scope2Loading } = useScope2Data(selectedCompany);
 
-  const sourceIcons = {
-    'Purchased Electricity': <Zap className="h-4 w-4" />,
-    'Steam & Heating': <Thermometer className="h-4 w-4" />,
-    'Cooling': <Snowflake className="h-4 w-4" />
+  const getSourceIcon = (source: string) => {
+    const iconMap: Record<string, JSX.Element> = {
+      // Technology sources
+      'Data Center Electricity': <Server className="h-4 w-4" />,
+      'Office Buildings': <Building className="h-4 w-4" />,
+      'Cooling Systems': <Snowflake className="h-4 w-4" />,
+      'Server Infrastructure': <Cpu className="h-4 w-4" />,
+      
+      // E-commerce sources
+      'Warehouse Operations': <Archive className="h-4 w-4" />,
+      'Distribution Centers': <Truck className="h-4 w-4" />,
+      'Automated Systems': <Cpu className="h-4 w-4" />,
+      'Climate Control': <Thermometer className="h-4 w-4" />,
+      
+      // Automotive sources
+      'Manufacturing Lines': <Factory className="h-4 w-4" />,
+      'Paint & Finishing': <Factory className="h-4 w-4" />,
+      'Assembly Operations': <Factory className="h-4 w-4" />,
+      'Quality Testing': <BarChart3 className="h-4 w-4" />,
+      
+      // Energy sources
+      'Processing Facilities': <Factory className="h-4 w-4" />,
+      'Control Systems': <Cpu className="h-4 w-4" />,
+      'Pumping Stations': <Factory className="h-4 w-4" />,
+      'Administrative Buildings': <Building className="h-4 w-4" />,
+      
+      // Consumer Goods sources
+      'Production Lines': <Factory className="h-4 w-4" />,
+      'Packaging Operations': <Archive className="h-4 w-4" />,
+      'Quality Control': <BarChart3 className="h-4 w-4" />,
+      'Warehouse Lighting': <Zap className="h-4 w-4" />,
+      
+      // Food & Beverage sources
+      'Processing Equipment': <Factory className="h-4 w-4" />,
+      'Refrigeration Systems': <Snowflake className="h-4 w-4" />,
+      'Packaging Lines': <Archive className="h-4 w-4" />,
+      'Facility Operations': <Building className="h-4 w-4" />,
+      
+      // Retail sources
+      'Store Operations': <Building className="h-4 w-4" />,
+      'Refrigeration Units': <Snowflake className="h-4 w-4" />,
+      'Lighting Systems': <Zap className="h-4 w-4" />,
+      'Security Systems': <Shield className="h-4 w-4" />,
+      
+      // Healthcare sources
+      'Medical Equipment': <BarChart3 className="h-4 w-4" />,
+      'HVAC Systems': <Thermometer className="h-4 w-4" />,
+      'Laboratory Operations': <Factory className="h-4 w-4" />,
+      'Administrative Areas': <Building className="h-4 w-4" />,
+      
+      // Default sources
+      'Primary Operations': <Factory className="h-4 w-4" />,
+      'Support Systems': <Cpu className="h-4 w-4" />,
+      'Facilities Management': <Building className="h-4 w-4" />,
+      'Administrative Functions': <Building className="h-4 w-4" />,
+      
+      // Legacy sources
+      'Purchased Electricity': <Zap className="h-4 w-4" />,
+      'Steam & Heating': <Thermometer className="h-4 w-4" />,
+      'Cooling': <Snowflake className="h-4 w-4" />
+    };
+    
+    return iconMap[source] || <Zap className="h-4 w-4" />;
   };
 
   const availableYears = ['2019', '2020', '2021', '2022', '2023', '2024'];
@@ -59,7 +118,7 @@ const Scope2 = () => {
 
   const sourceData = getSourceDataForYear(selectedYear).map(item => ({
     ...item,
-    icon: sourceIcons[item.source as keyof typeof sourceIcons] || <Zap className="h-4 w-4" />
+    icon: getSourceIcon(item.source)
   }));
   const locationData = getLocationDataForYear(selectedYear);
 
@@ -284,29 +343,67 @@ const Scope2 = () => {
           </Select>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={sourceData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="source" />
-              <YAxis />
-              <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
-              <Bar dataKey="emissions" radius={[4, 4, 0, 0]}>
-                {sourceData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={sourceColors[index % sourceColors.length]} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Bar Chart Visualization */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Energy Consumption by Source</h4>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={sourceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="source" 
+                    angle={-45}
+                    textAnchor="end"
+                    height={100}
+                    fontSize={12}
+                  />
+                  <YAxis />
+                  <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+                  <Bar dataKey="emissions" radius={[4, 4, 0, 0]}>
+                    {sourceData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={sourceColors[index % sourceColors.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            
+            {/* Horizontal Bar Chart */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Source Comparison</h4>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={sourceData} layout="horizontal">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis dataKey="source" type="category" width={120} fontSize={11} />
+                  <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+                  <Bar dataKey="emissions" radius={[0, 4, 4, 0]}>
+                    {sourceData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={sourceColors[index % sourceColors.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
           
-          <div className="mt-4 grid grid-cols-1 gap-2">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-2">
             {sourceData.map((item, index) => (
-              <div key={index} className="flex items-center space-x-3 p-2 bg-gray-50 rounded">
-                <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
+              <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                <div 
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white"
+                  style={{ backgroundColor: sourceColors[index % sourceColors.length] }}
+                >
                   {item.icon}
                 </div>
                 <div className="flex-1">
                   <span className="text-sm font-medium text-gray-800">{item.source}</span>
-                  <span className="text-xs text-gray-600 ml-2">{Math.round(item.emissions)} tCO2e</span>
+                  <div className="text-xs text-gray-600">{Math.round(item.emissions).toLocaleString()} tCO2e</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm font-semibold text-gray-900">
+                    {((item.emissions / sourceData.reduce((sum, s) => sum + s.emissions, 0)) * 100).toFixed(1)}%
+                  </div>
                 </div>
               </div>
             ))}
@@ -335,32 +432,65 @@ const Scope2 = () => {
           </Select>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={locationData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                dataKey="emissions"
-                label={({ location, percentage }) => `${location}: ${percentage}`}
-              >
-                {locationData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={locationColors[index % locationColors.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Radial Chart Visualization */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Regional Distribution</h4>
+              <ResponsiveContainer width="100%" height={300}>
+                <RadialBarChart cx="50%" cy="50%" innerRadius="20%" outerRadius="90%" data={locationData.map((item, index) => ({
+                  ...item,
+                  fill: locationColors[index % locationColors.length]
+                }))}>
+                  <RadialBar dataKey="emissions" cornerRadius={5} fill="#8884d8" />
+                  <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+                  <Legend />
+                </RadialBarChart>
+              </ResponsiveContainer>
+            </div>
+            
+            {/* Traditional Pie Chart */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Emission Share by Location</h4>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={locationData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    dataKey="emissions"
+                    label={({ location, percentage }) => `${location}: ${percentage}`}
+                  >
+                    {locationData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={locationColors[index % locationColors.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => [`${value} tCO2e`, 'Emissions']} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
           
-          <div className="mt-4 space-y-2">
+          <div className="mt-6 space-y-3">
             {locationData.map((item, index) => (
-              <div key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                <span className="text-sm font-medium text-gray-800">{item.location}</span>
+              <div key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg border">
+                <div className="flex items-center space-x-3">
+                  <div 
+                    className="w-4 h-4 rounded-full"
+                    style={{ backgroundColor: locationColors[index % locationColors.length] }}
+                  />
+                  <div>
+                    <span className="text-sm font-medium text-gray-800">{item.location}</span>
+                    <div className="text-xs text-gray-500">Regional Operations</div>
+                  </div>
+                </div>
                 <div className="text-right">
-                  <div className="text-sm font-semibold">{Math.round(item.emissions)} tCO2e</div>
-                  <div className="text-xs text-green-600">
+                  <div className="text-sm font-semibold">{Math.round(item.emissions).toLocaleString()} tCO2e</div>
+                  <div className="text-xs text-green-600 font-medium">
                     {item.renewablePercent} renewable
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {item.percentage} of total
                   </div>
                 </div>
               </div>

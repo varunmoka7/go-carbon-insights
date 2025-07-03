@@ -26,102 +26,135 @@ export const useScope2Data = (companyId: string) => {
         const year = yearData.year.toString();
         const totalScope2 = yearData.scope2;
         
-        // Industry-specific source distributions
+        
+        // Enhanced industry-specific source distributions with more varied sources
         const getSourceDistribution = () => {
           switch (company.industry) {
             case 'Technology':
               return {
-                'Purchased Electricity': 0.75,
-                'Steam & Heating': 0.15,
-                'Cooling': 0.10
+                'Data Center Electricity': 0.55,
+                'Office Buildings': 0.20,
+                'Cooling Systems': 0.15,
+                'Server Infrastructure': 0.10
               };
-            case 'Manufacturing':
+            case 'E-commerce':
               return {
-                'Purchased Electricity': 0.60,
-                'Steam & Heating': 0.30,
-                'Cooling': 0.10
+                'Warehouse Operations': 0.45,
+                'Distribution Centers': 0.25,
+                'Automated Systems': 0.20,
+                'Climate Control': 0.10
               };
-            case 'Transportation':
+            case 'Automotive':
               return {
-                'Purchased Electricity': 0.50,
-                'Steam & Heating': 0.25,
-                'Cooling': 0.25
+                'Manufacturing Lines': 0.50,
+                'Paint & Finishing': 0.20,
+                'Assembly Operations': 0.18,
+                'Quality Testing': 0.12
               };
             case 'Energy':
               return {
-                'Purchased Electricity': 0.40,
-                'Steam & Heating': 0.35,
-                'Cooling': 0.25
+                'Processing Facilities': 0.40,
+                'Control Systems': 0.25,
+                'Pumping Stations': 0.20,
+                'Administrative Buildings': 0.15
+              };
+            case 'Consumer Goods':
+              return {
+                'Production Lines': 0.40,
+                'Packaging Operations': 0.25,
+                'Quality Control': 0.20,
+                'Warehouse Lighting': 0.15
+              };
+            case 'Food & Beverage':
+              return {
+                'Processing Equipment': 0.35,
+                'Refrigeration Systems': 0.30,
+                'Packaging Lines': 0.20,
+                'Facility Operations': 0.15
               };
             case 'Retail':
               return {
-                'Purchased Electricity': 0.65,
-                'Steam & Heating': 0.20,
-                'Cooling': 0.15
+                'Store Operations': 0.50,
+                'Refrigeration Units': 0.25,
+                'Lighting Systems': 0.15,
+                'Security Systems': 0.10
               };
-            case 'Agriculture':
+            case 'Healthcare':
               return {
-                'Purchased Electricity': 0.55,
-                'Steam & Heating': 0.25,
-                'Cooling': 0.20
+                'Medical Equipment': 0.35,
+                'HVAC Systems': 0.25,
+                'Laboratory Operations': 0.25,
+                'Administrative Areas': 0.15
               };
             default:
               return {
-                'Purchased Electricity': 0.70,
-                'Steam & Heating': 0.20,
-                'Cooling': 0.10
+                'Primary Operations': 0.50,
+                'Support Systems': 0.25,
+                'Facilities Management': 0.15,
+                'Administrative Functions': 0.10
               };
           }
         };
 
         const sourceDistribution = getSourceDistribution();
         
-        sourceDataByYear[year] = [
-          { 
-            source: 'Purchased Electricity', 
-            emissions: Math.round(totalScope2 * sourceDistribution['Purchased Electricity']) 
-          },
-          { 
-            source: 'Steam & Heating', 
-            emissions: Math.round(totalScope2 * sourceDistribution['Steam & Heating']) 
-          },
-          { 
-            source: 'Cooling', 
-            emissions: Math.round(totalScope2 * sourceDistribution['Cooling']) 
-          }
-        ];
+        sourceDataByYear[year] = Object.entries(sourceDistribution).map(([source, percentage]) => ({
+          source,
+          emissions: Math.round(totalScope2 * percentage)
+        }));
 
-        // Location data with year-over-year renewable energy improvements
+        // Enhanced location data with more diverse regions based on company headquarters
         const renewableImprovement = (2024 - yearData.year) * 2; // 2% improvement per year
         const baseRenewable = company.renewable_energy_percentage || 65;
         
         const getLocationData = () => {
-          const renewableByRegion = {
-            'North America': Math.max(20, baseRenewable - renewableImprovement),
-            'Europe': Math.max(30, (baseRenewable - renewableImprovement) + 15),
-            'Asia Pacific': Math.max(15, (baseRenewable - renewableImprovement) - 20)
+          // Get company-specific regional distribution
+          const getRegionalDistribution = () => {
+            if (company.headquarters.includes('USA') || company.headquarters.includes('United States')) {
+              return {
+                'United States': { percentage: 0.60, renewable: baseRenewable - renewableImprovement },
+                'Canada': { percentage: 0.15, renewable: (baseRenewable - renewableImprovement) + 20 },
+                'Mexico': { percentage: 0.15, renewable: (baseRenewable - renewableImprovement) - 10 },
+                'Other Americas': { percentage: 0.10, renewable: (baseRenewable - renewableImprovement) + 5 }
+              };
+            } else if (company.headquarters.includes('Germany') || company.headquarters.includes('United Kingdom') || company.headquarters.includes('London')) {
+              return {
+                'Germany': { percentage: 0.35, renewable: (baseRenewable - renewableImprovement) + 25 },
+                'United Kingdom': { percentage: 0.25, renewable: (baseRenewable - renewableImprovement) + 15 },
+                'France': { percentage: 0.20, renewable: (baseRenewable - renewableImprovement) + 30 },
+                'Other Europe': { percentage: 0.20, renewable: (baseRenewable - renewableImprovement) + 10 }
+              };
+            } else if (company.headquarters.includes('Japan') || company.headquarters.includes('Korea') || company.headquarters.includes('China')) {
+              return {
+                'Japan': { percentage: 0.30, renewable: (baseRenewable - renewableImprovement) - 15 },
+                'South Korea': { percentage: 0.25, renewable: (baseRenewable - renewableImprovement) - 20 },
+                'China': { percentage: 0.25, renewable: (baseRenewable - renewableImprovement) - 25 },
+                'Other Asia': { percentage: 0.20, renewable: (baseRenewable - renewableImprovement) - 10 }
+              };
+            } else if (company.headquarters.includes('Saudi Arabia')) {
+              return {
+                'Saudi Arabia': { percentage: 0.45, renewable: Math.max(5, (baseRenewable - renewableImprovement) - 50) },
+                'UAE': { percentage: 0.25, renewable: (baseRenewable - renewableImprovement) - 30 },
+                'Qatar': { percentage: 0.15, renewable: (baseRenewable - renewableImprovement) - 40 },
+                'Other Middle East': { percentage: 0.15, renewable: (baseRenewable - renewableImprovement) - 35 }
+              };
+            } else {
+              return {
+                'North America': { percentage: 0.45, renewable: baseRenewable - renewableImprovement },
+                'Europe': { percentage: 0.30, renewable: (baseRenewable - renewableImprovement) + 15 },
+                'Asia Pacific': { percentage: 0.25, renewable: (baseRenewable - renewableImprovement) - 20 }
+              };
+            }
           };
 
-          return [
-            { 
-              location: 'North America', 
-              emissions: Math.round(totalScope2 * 0.45), 
-              percentage: '45%', 
-              renewablePercent: `${Math.min(95, renewableByRegion['North America'])}%` 
-            },
-            { 
-              location: 'Europe', 
-              emissions: Math.round(totalScope2 * 0.30), 
-              percentage: '30%', 
-              renewablePercent: `${Math.min(95, renewableByRegion['Europe'])}%` 
-            },
-            { 
-              location: 'Asia Pacific', 
-              emissions: Math.round(totalScope2 * 0.25), 
-              percentage: '25%', 
-              renewablePercent: `${Math.min(95, renewableByRegion['Asia Pacific'])}%` 
-            }
-          ];
+          const regionalData = getRegionalDistribution();
+          
+          return Object.entries(regionalData).map(([location, data]) => ({
+            location,
+            emissions: Math.round(totalScope2 * data.percentage),
+            percentage: `${Math.round(data.percentage * 100)}%`,
+            renewablePercent: `${Math.max(5, Math.min(95, data.renewable))}%`
+          }));
         };
 
         locationDataByYear[year] = getLocationData();
@@ -133,84 +166,125 @@ export const useScope2Data = (companyId: string) => {
     const { sourceDataByYear, locationDataByYear } = generateYearSpecificData();
     const latestScope2 = company.emissionsData[company.emissionsData.length - 1]?.scope2 || 20000;
 
-    // Industry-specific source distributions for latest year
+    // Enhanced source distribution for latest year
     const getSourceDistribution = () => {
       switch (company.industry) {
         case 'Technology':
           return {
-            'Purchased Electricity': 0.75,
-            'Steam & Heating': 0.15,
-            'Cooling': 0.10
+            'Data Center Electricity': 0.55,
+            'Office Buildings': 0.20,
+            'Cooling Systems': 0.15,
+            'Server Infrastructure': 0.10
           };
-        case 'Manufacturing':
+        case 'E-commerce':
           return {
-            'Purchased Electricity': 0.60,
-            'Steam & Heating': 0.30,
-            'Cooling': 0.10
+            'Warehouse Operations': 0.45,
+            'Distribution Centers': 0.25,
+            'Automated Systems': 0.20,
+            'Climate Control': 0.10
           };
-        case 'Transportation':
+        case 'Automotive':
           return {
-            'Purchased Electricity': 0.50,
-            'Steam & Heating': 0.25,
-            'Cooling': 0.25
+            'Manufacturing Lines': 0.50,
+            'Paint & Finishing': 0.20,
+            'Assembly Operations': 0.18,
+            'Quality Testing': 0.12
           };
         case 'Energy':
           return {
-            'Purchased Electricity': 0.40,
-            'Steam & Heating': 0.35,
-            'Cooling': 0.25
+            'Processing Facilities': 0.40,
+            'Control Systems': 0.25,
+            'Pumping Stations': 0.20,
+            'Administrative Buildings': 0.15
+          };
+        case 'Consumer Goods':
+          return {
+            'Production Lines': 0.40,
+            'Packaging Operations': 0.25,
+            'Quality Control': 0.20,
+            'Warehouse Lighting': 0.15
+          };
+        case 'Food & Beverage':
+          return {
+            'Processing Equipment': 0.35,
+            'Refrigeration Systems': 0.30,
+            'Packaging Lines': 0.20,
+            'Facility Operations': 0.15
           };
         case 'Retail':
           return {
-            'Purchased Electricity': 0.65,
-            'Steam & Heating': 0.20,
-            'Cooling': 0.15
+            'Store Operations': 0.50,
+            'Refrigeration Units': 0.25,
+            'Lighting Systems': 0.15,
+            'Security Systems': 0.10
           };
-        case 'Agriculture':
+        case 'Healthcare':
           return {
-            'Purchased Electricity': 0.55,
-            'Steam & Heating': 0.25,
-            'Cooling': 0.20
+            'Medical Equipment': 0.35,
+            'HVAC Systems': 0.25,
+            'Laboratory Operations': 0.25,
+            'Administrative Areas': 0.15
           };
         default:
           return {
-            'Purchased Electricity': 0.70,
-            'Steam & Heating': 0.20,
-            'Cooling': 0.10
+            'Primary Operations': 0.50,
+            'Support Systems': 0.25,
+            'Facilities Management': 0.15,
+            'Administrative Functions': 0.10
           };
       }
     };
 
     const sourceDistribution = getSourceDistribution();
     
-    // Generate location-based data based on company type
+    // Enhanced location-based data for current year
     const getLocationData = () => {
-      const renewableByRegion = {
-        'North America': company.renewable_energy_percentage || 65,
-        'Europe': (company.renewable_energy_percentage || 65) + 15,
-        'Asia Pacific': (company.renewable_energy_percentage || 65) - 20
+      const getRegionalDistribution = () => {
+        if (company.headquarters.includes('USA') || company.headquarters.includes('United States')) {
+          return {
+            'United States': { percentage: 0.60, renewable: company.renewable_energy_percentage || 65 },
+            'Canada': { percentage: 0.15, renewable: (company.renewable_energy_percentage || 65) + 20 },
+            'Mexico': { percentage: 0.15, renewable: (company.renewable_energy_percentage || 65) - 10 },
+            'Other Americas': { percentage: 0.10, renewable: (company.renewable_energy_percentage || 65) + 5 }
+          };
+        } else if (company.headquarters.includes('Germany') || company.headquarters.includes('United Kingdom') || company.headquarters.includes('London')) {
+          return {
+            'Germany': { percentage: 0.35, renewable: (company.renewable_energy_percentage || 65) + 25 },
+            'United Kingdom': { percentage: 0.25, renewable: (company.renewable_energy_percentage || 65) + 15 },
+            'France': { percentage: 0.20, renewable: (company.renewable_energy_percentage || 65) + 30 },
+            'Other Europe': { percentage: 0.20, renewable: (company.renewable_energy_percentage || 65) + 10 }
+          };
+        } else if (company.headquarters.includes('Japan') || company.headquarters.includes('Korea') || company.headquarters.includes('China')) {
+          return {
+            'Japan': { percentage: 0.30, renewable: (company.renewable_energy_percentage || 65) - 15 },
+            'South Korea': { percentage: 0.25, renewable: (company.renewable_energy_percentage || 65) - 20 },
+            'China': { percentage: 0.25, renewable: (company.renewable_energy_percentage || 65) - 25 },
+            'Other Asia': { percentage: 0.20, renewable: (company.renewable_energy_percentage || 65) - 10 }
+          };
+        } else if (company.headquarters.includes('Saudi Arabia')) {
+          return {
+            'Saudi Arabia': { percentage: 0.45, renewable: Math.max(5, (company.renewable_energy_percentage || 65) - 50) },
+            'UAE': { percentage: 0.25, renewable: (company.renewable_energy_percentage || 65) - 30 },
+            'Qatar': { percentage: 0.15, renewable: (company.renewable_energy_percentage || 65) - 40 },
+            'Other Middle East': { percentage: 0.15, renewable: (company.renewable_energy_percentage || 65) - 35 }
+          };
+        } else {
+          return {
+            'North America': { percentage: 0.45, renewable: company.renewable_energy_percentage || 65 },
+            'Europe': { percentage: 0.30, renewable: (company.renewable_energy_percentage || 65) + 15 },
+            'Asia Pacific': { percentage: 0.25, renewable: (company.renewable_energy_percentage || 65) - 20 }
+          };
+        }
       };
 
-      return [
-        { 
-          location: 'North America', 
-          emissions: Math.round(latestScope2 * 0.45), 
-          percentage: '45%', 
-          renewablePercent: `${renewableByRegion['North America']}%` 
-        },
-        { 
-          location: 'Europe', 
-          emissions: Math.round(latestScope2 * 0.30), 
-          percentage: '30%', 
-          renewablePercent: `${Math.min(95, renewableByRegion['Europe'])}%` 
-        },
-        { 
-          location: 'Asia Pacific', 
-          emissions: Math.round(latestScope2 * 0.25), 
-          percentage: '25%', 
-          renewablePercent: `${Math.max(25, renewableByRegion['Asia Pacific'])}%` 
-        }
-      ];
+      const regionalData = getRegionalDistribution();
+      
+      return Object.entries(regionalData).map(([location, data]) => ({
+        location,
+        emissions: Math.round(latestScope2 * data.percentage),
+        percentage: `${Math.round(data.percentage * 100)}%`,
+        renewablePercent: `${Math.max(5, Math.min(95, data.renewable))}%`
+      }));
     };
 
     return {
@@ -221,20 +295,10 @@ export const useScope2Data = (companyId: string) => {
           marketBased: item.scope2,
           locationBased: Math.round(item.scope2 * 1.15)
         })),
-        sourceData: [
-          { 
-            source: 'Purchased Electricity', 
-            emissions: Math.round(latestScope2 * sourceDistribution['Purchased Electricity']) 
-          },
-          { 
-            source: 'Steam & Heating', 
-            emissions: Math.round(latestScope2 * sourceDistribution['Steam & Heating']) 
-          },
-          { 
-            source: 'Cooling', 
-            emissions: Math.round(latestScope2 * sourceDistribution['Cooling']) 
-          }
-        ],
+        sourceData: Object.entries(sourceDistribution).map(([source, percentage]) => ({
+          source,
+          emissions: Math.round(latestScope2 * percentage)
+        })),
         locationData: getLocationData(),
         sourceDataByYear,
         locationDataByYear
