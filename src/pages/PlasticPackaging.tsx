@@ -23,6 +23,12 @@ import {
   kpiDefinitions,
   categoryPerformanceData
 } from '@/data/enhancedPlasticPackagingData';
+import { 
+  plasticPackagingCompanies,
+  plasticPackagingKPIs,
+  valueChainData,
+  benchmarkData
+} from '@/data/plasticPackagingData';
 import EnhancedCompanyCard from '@/components/EnhancedCompanyCard';
 import CategoryKPIOverview from '@/components/CategoryKPIOverview';
 import PlasticKPICard from '@/components/PlasticKPICard';
