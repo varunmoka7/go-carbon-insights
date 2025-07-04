@@ -18,11 +18,14 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
-  plasticPackagingCompanies, 
-  plasticPackagingKPIs, 
-  valueChainData,
-  benchmarkData
-} from '@/data/plasticPackagingData';
+  enhancedPlasticCompanies, 
+  globalPlasticKPIs,
+  kpiDefinitions,
+  categoryPerformanceData
+} from '@/data/enhancedPlasticPackagingData';
+import EnhancedCompanyCard from '@/components/EnhancedCompanyCard';
+import CategoryKPIOverview from '@/components/CategoryKPIOverview';
+import PlasticKPICard from '@/components/PlasticKPICard';
 
 const PlasticPackaging = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'producer' | 'converter' | 'brand' | 'waste-management'>('all');
