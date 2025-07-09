@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell, CartesianGrid } from 'recharts';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface DistributionChartsProps {
   archetypeChartData: Array<{ name: string; value: number }>;
@@ -31,12 +32,16 @@ const SECTOR_COLORS = [
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     const data = payload[0];
-    const percentage = ((data.value / data.payload.total) * 100).toFixed(1);
+    const total = data.payload.total || 1;
+    const percentage = ((data.value / total) * 100).toFixed(1);
     return (
-      <div className="bg-background border rounded-lg p-3 shadow-lg">
-        <p className="font-medium">{label}</p>
-        <p className="text-sm text-muted-foreground">
-          {data.value} industries ({percentage}%)
+      <div className="bg-background border border-border rounded-lg p-3 shadow-lg z-50">
+        <p className="font-semibold text-sm">{label}</p>
+        <p className="text-sm text-primary font-medium">
+          {data.value} {data.value === 1 ? 'industry' : 'industries'}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          {percentage}% of total
         </p>
       </div>
     );
@@ -44,12 +49,67 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
+// Custom label renderer for horizontal bars
+const renderCustomizedLabel = (props: any) => {
+  const { x, y, width, height, value } = props;
+  const radius = 10;
+
+  return (
+    <g>
+      <text 
+        x={x + width + 8} 
+        y={y + height / 2} 
+        fill="hsl(var(--foreground))" 
+        textAnchor="start" 
+        dominantBaseline="middle"
+        fontSize="12"
+        fontWeight="500"
+      >
+        {value}
+      </text>
+    </g>
+  );
+};
+
+// Truncate long names for better display
+const truncateName = (name: string, maxLength: number = 15) => {
+  if (name.length <= maxLength) return name;
+  return name.substring(0, maxLength - 3) + '...';
+};
+
 export const DistributionCharts = ({ archetypeChartData, sectorChartData }: DistributionChartsProps) => {
+  // Loading state
+  if (!archetypeChartData.length || !sectorChartData.length) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <Card className="rounded-xl shadow-sm">
+          <CardHeader className="pb-4">
+            <Skeleton className="h-6 w-64" />
+            <Skeleton className="h-4 w-48" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-60 w-full" />
+          </CardContent>
+        </Card>
+        <Card className="rounded-xl shadow-sm">
+          <CardHeader className="pb-4">
+            <Skeleton className="h-6 w-64" />
+            <Skeleton className="h-4 w-48" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-60 w-full" />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   // Sort archetype data by value for better visualization
   const sortedArchetypeData = [...archetypeChartData]
     .sort((a, b) => b.value - a.value)
     .map(item => ({
       ...item,
+      displayName: truncateName(item.name, 18),
       total: archetypeChartData.reduce((sum, d) => sum + d.value, 0)
     }));
 
@@ -59,39 +119,55 @@ export const DistributionCharts = ({ archetypeChartData, sectorChartData }: Dist
     .slice(0, 8) // Show top 8 sectors
     .map(item => ({
       ...item,
+      displayName: truncateName(item.name, 12),
       total: sectorChartData.reduce((sum, d) => sum + d.value, 0)
     }));
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <Card className="rounded-xl shadow-sm">
+      {/* Emissions Archetype Distribution Chart */}
+      <Card className="rounded-xl shadow-sm border border-border/50">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold">Emissions Archetype Distribution</CardTitle>
-          <p className="text-sm text-muted-foreground">Industry count by emission pattern</p>
+          <CardTitle className="text-xl font-semibold text-foreground">
+            Emissions Archetype Distribution
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Industry count by emission pattern
+          </p>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={240}>
+          <ResponsiveContainer width="100%" height={300}>
             <BarChart 
               data={sortedArchetypeData} 
               layout="horizontal"
-              margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
+              margin={{ top: 10, right: 50, left: 120, bottom: 10 }}
             >
-              <XAxis type="number" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+              <XAxis 
+                type="number" 
+                fontSize={13} 
+                tickFormatter={(value) => Math.round(value).toString()}
+                stroke="hsl(var(--muted-foreground))"
+                domain={[0, 'dataMax']}
+              />
               <YAxis 
                 type="category" 
-                dataKey="name" 
-                fontSize={11} 
-                width={75}
-                tick={{ fontSize: 10 }}
+                dataKey="displayName" 
+                fontSize={12} 
+                width={115}
+                stroke="hsl(var(--muted-foreground))"
+                tick={{ fontSize: 11 }}
+                interval={0}
               />
               <Tooltip content={<CustomTooltip />} />
               <Bar 
                 dataKey="value" 
-                radius={[0, 4, 4, 0]}
+                radius={[0, 6, 6, 0]}
+                label={renderCustomizedLabel}
               >
                 {sortedArchetypeData.map((entry, index) => (
                   <Cell 
-                    key={`cell-${index}`} 
+                    key={`archetype-cell-${index}`} 
                     fill={ARCHETYPE_COLORS[entry.name] || 'hsl(var(--primary))'}
                   />
                 ))}
@@ -101,34 +177,47 @@ export const DistributionCharts = ({ archetypeChartData, sectorChartData }: Dist
         </CardContent>
       </Card>
 
-      <Card className="rounded-xl shadow-sm">
+      {/* Sector Distribution Chart */}
+      <Card className="rounded-xl shadow-sm border border-border/50">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold">Top Sectors by Industry Count</CardTitle>
-          <p className="text-sm text-muted-foreground">Most represented sectors</p>
+          <CardTitle className="text-xl font-semibold text-foreground">
+            Top Sectors by Industry Count
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Top sectors by number of industries classified
+          </p>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={240}>
+          <ResponsiveContainer width="100%" height={300}>
             <BarChart 
               data={sortedSectorData}
-              margin={{ top: 5, right: 30, left: 5, bottom: 5 }}
+              margin={{ top: 10, right: 30, left: 10, bottom: 80 }}
             >
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
               <XAxis 
-                dataKey="name" 
-                fontSize={10} 
+                dataKey="displayName" 
+                fontSize={11} 
                 angle={-45}
                 textAnchor="end"
-                height={60}
+                height={75}
                 interval={0}
+                stroke="hsl(var(--muted-foreground))"
+                tick={{ fontSize: 10 }}
               />
-              <YAxis fontSize={12} />
+              <YAxis 
+                fontSize={13} 
+                stroke="hsl(var(--muted-foreground))"
+                tickFormatter={(value) => Math.round(value).toString()}
+                domain={[0, 'dataMax']}
+              />
               <Tooltip content={<CustomTooltip />} />
               <Bar 
                 dataKey="value" 
-                radius={[4, 4, 0, 0]}
+                radius={[6, 6, 0, 0]}
               >
                 {sortedSectorData.map((entry, index) => (
                   <Cell 
-                    key={`cell-${index}`} 
+                    key={`sector-cell-${index}`} 
                     fill={SECTOR_COLORS[index % SECTOR_COLORS.length]}
                   />
                 ))}
