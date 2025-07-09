@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      archetype_configurations: {
+        Row: {
+          archetype_name: Database["public"]["Enums"]["emissions_archetype"]
+          benchmarking_considerations: string | null
+          created_at: string
+          id: string
+          key_scope3_categories: string[] | null
+          reporting_complexity: string
+          scope1_priority: number
+          scope2_priority: number
+          scope3_priority: number
+          typical_hotspots: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          archetype_name: Database["public"]["Enums"]["emissions_archetype"]
+          benchmarking_considerations?: string | null
+          created_at?: string
+          id?: string
+          key_scope3_categories?: string[] | null
+          reporting_complexity?: string
+          scope1_priority?: number
+          scope2_priority?: number
+          scope3_priority?: number
+          typical_hotspots?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          archetype_name?: Database["public"]["Enums"]["emissions_archetype"]
+          benchmarking_considerations?: string | null
+          created_at?: string
+          id?: string
+          key_scope3_categories?: string[] | null
+          reporting_complexity?: string
+          scope1_priority?: number
+          scope2_priority?: number
+          scope3_priority?: number
+          typical_hotspots?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string
@@ -237,6 +279,44 @@ export type Database = {
           },
         ]
       }
+      company_industries: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          industry_id: string
+          percentage_allocation: number | null
+          relationship_type: string
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          industry_id: string
+          percentage_allocation?: number | null
+          relationship_type?: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          industry_id?: string
+          percentage_allocation?: number | null
+          relationship_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_industries_industry_id_fkey"
+            columns: ["industry_id"]
+            isOneToOne: false
+            referencedRelation: "industry_taxonomy"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       emissions_data: {
         Row: {
           company_id: string | null
@@ -326,6 +406,118 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      industry_tag_assignments: {
+        Row: {
+          assigned_by: string | null
+          created_at: string
+          id: string
+          industry_id: string
+          tag_id: string
+        }
+        Insert: {
+          assigned_by?: string | null
+          created_at?: string
+          id?: string
+          industry_id: string
+          tag_id: string
+        }
+        Update: {
+          assigned_by?: string | null
+          created_at?: string
+          id?: string
+          industry_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "industry_tag_assignments_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "industry_tag_assignments_industry_id_fkey"
+            columns: ["industry_id"]
+            isOneToOne: false
+            referencedRelation: "industry_taxonomy"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "industry_tag_assignments_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "industry_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      industry_tags: {
+        Row: {
+          color_code: string | null
+          created_at: string
+          description: string | null
+          id: string
+          tag_category: string
+          tag_name: string
+        }
+        Insert: {
+          color_code?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          tag_category?: string
+          tag_name: string
+        }
+        Update: {
+          color_code?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          tag_category?: string
+          tag_name?: string
+        }
+        Relationships: []
+      }
+      industry_taxonomy: {
+        Row: {
+          cdp_category: string | null
+          created_at: string
+          description: string | null
+          emissions_archetype: Database["public"]["Enums"]["emissions_archetype"]
+          ghg_protocol_alignment: string | null
+          id: string
+          industry: string
+          sbti_pathway: string | null
+          sector: string
+          updated_at: string
+        }
+        Insert: {
+          cdp_category?: string | null
+          created_at?: string
+          description?: string | null
+          emissions_archetype: Database["public"]["Enums"]["emissions_archetype"]
+          ghg_protocol_alignment?: string | null
+          id?: string
+          industry: string
+          sbti_pathway?: string | null
+          sector: string
+          updated_at?: string
+        }
+        Update: {
+          cdp_category?: string | null
+          created_at?: string
+          description?: string | null
+          emissions_archetype?: Database["public"]["Enums"]["emissions_archetype"]
+          ghg_protocol_alignment?: string | null
+          id?: string
+          industry?: string
+          sbti_pathway?: string | null
+          sector?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       sbti_pathway_data: {
         Row: {
@@ -582,6 +774,50 @@ export type Database = {
           },
         ]
       }
+      taxonomy_audit_log: {
+        Row: {
+          action: string
+          change_reason: string | null
+          changed_by: string | null
+          created_at: string
+          id: string
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string
+          table_name: string
+        }
+        Insert: {
+          action: string
+          change_reason?: string | null
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id: string
+          table_name: string
+        }
+        Update: {
+          action?: string
+          change_reason?: string | null
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string
+          table_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "taxonomy_audit_log_changed_by_fkey"
+            columns: ["changed_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_company_access: {
         Row: {
           access_level: string
@@ -744,7 +980,14 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      emissions_archetype:
+        | "Operational Emitter"
+        | "Upstream-heavy"
+        | "Use-phase Dominant"
+        | "Scope 2-heavy"
+        | "Financed Emissions"
+        | "Lifecycle-dependent"
+        | "Offset-focused"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -871,6 +1114,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      emissions_archetype: [
+        "Operational Emitter",
+        "Upstream-heavy",
+        "Use-phase Dominant",
+        "Scope 2-heavy",
+        "Financed Emissions",
+        "Lifecycle-dependent",
+        "Offset-focused",
+      ],
+    },
   },
 } as const
