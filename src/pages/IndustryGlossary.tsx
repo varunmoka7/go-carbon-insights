@@ -184,7 +184,7 @@ const IndustryGlossary = () => {
       <div className="min-h-screen bg-background">
         {/* PHASE 1: Summary Header Panel */}
         <div className="border-b bg-muted/30">
-          <div className="container mx-auto px-6 py-8">
+          <div className="container mx-auto px-6 pt-4 pb-8">
             <div className="space-y-6">
               <div className="space-y-2">
                 <h1 className="text-4xl font-bold tracking-tight">Industry Glossary</h1>
