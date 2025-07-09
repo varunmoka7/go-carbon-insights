@@ -16,7 +16,7 @@ export type Database = {
     Tables: {
       archetype_configurations: {
         Row: {
-          archetype_name: Database["public"]["Enums"]["emissions_archetype"]
+          archetype_name: string
           benchmarking_considerations: string | null
           created_at: string
           id: string
@@ -29,7 +29,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          archetype_name: Database["public"]["Enums"]["emissions_archetype"]
+          archetype_name: string
           benchmarking_considerations?: string | null
           created_at?: string
           id?: string
@@ -42,7 +42,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          archetype_name?: Database["public"]["Enums"]["emissions_archetype"]
+          archetype_name?: string
           benchmarking_considerations?: string | null
           created_at?: string
           id?: string
