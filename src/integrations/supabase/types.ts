@@ -317,6 +317,21 @@ export type Database = {
           },
         ]
       }
+      emissions_archetypes: {
+        Row: {
+          id: number
+          name: string | null
+        }
+        Insert: {
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          id?: number
+          name?: string | null
+        }
+        Relationships: []
+      }
       emissions_data: {
         Row: {
           company_id: string | null
@@ -485,7 +500,7 @@ export type Database = {
           cdp_category: string | null
           created_at: string
           description: string | null
-          emissions_archetype: Database["public"]["Enums"]["emissions_archetype"]
+          emissions_archetype: string
           ghg_protocol_alignment: string | null
           id: string
           industry: string
@@ -497,7 +512,7 @@ export type Database = {
           cdp_category?: string | null
           created_at?: string
           description?: string | null
-          emissions_archetype: Database["public"]["Enums"]["emissions_archetype"]
+          emissions_archetype: string
           ghg_protocol_alignment?: string | null
           id?: string
           industry: string
@@ -509,7 +524,7 @@ export type Database = {
           cdp_category?: string | null
           created_at?: string
           description?: string | null
-          emissions_archetype?: Database["public"]["Enums"]["emissions_archetype"]
+          emissions_archetype?: string
           ghg_protocol_alignment?: string | null
           id?: string
           industry?: string
