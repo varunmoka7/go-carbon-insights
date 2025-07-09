@@ -27,6 +27,7 @@ import Contact from "./pages/Contact";
 import Donate from "./pages/Donate";
 import IndustryAnalysis from "./pages/IndustryAnalysis";
 import PlasticPackaging from "./pages/PlasticPackaging";
+import IndustryTaxonomy from "./pages/IndustryTaxonomy";
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 import NavigationDebugger from "./components/NavigationDebugger";
@@ -84,6 +85,11 @@ const App = () => {
                     <Route path="/industry-analysis/plastic-packaging" element={
                       <Layout>
                         <PlasticPackaging />
+                      </Layout>
+                    } />
+                    <Route path="/industry-taxonomy" element={
+                      <Layout>
+                        <IndustryTaxonomy />
                       </Layout>
                     } />
                     <Route path="/tracking" element={
