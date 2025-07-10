@@ -1,4 +1,5 @@
-import { InteractiveKPIDashboard } from './InteractiveKPIDashboard';
+import { ProfessionalMetricsCards } from './ProfessionalMetricsCards';
+import { TabbedAnalytics } from './TabbedAnalytics';
 
 interface IndustryGlossaryHeaderProps {
   stats: {
@@ -21,11 +22,11 @@ export const IndustryGlossaryHeader = ({ stats, taxonomyData }: IndustryGlossary
             </p>
           </div>
 
-          {/* Interactive KPI Dashboard */}
-          <InteractiveKPIDashboard 
-            stats={stats} 
-            taxonomyData={taxonomyData}
-          />
+          {/* Professional Metrics Cards */}
+          <ProfessionalMetricsCards stats={stats} />
+          
+          {/* Tabbed Analytics Section */}
+          <TabbedAnalytics taxonomyData={taxonomyData} />
         </div>
       </div>
     </div>
