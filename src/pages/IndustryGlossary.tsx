@@ -6,8 +6,7 @@ import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 // Import refactored components
-import { KPISummaryCards } from '@/components/industry-glossary/KPISummaryCards';
-import { DistributionCharts } from '@/components/industry-glossary/DistributionCharts';
+import { InteractiveKPIDashboard } from '@/components/industry-glossary/InteractiveKPIDashboard';
 import { FilterPanel } from '@/components/industry-glossary/FilterPanel';
 import { GridView } from '@/components/industry-glossary/GridView';
 import { GroupedView } from '@/components/industry-glossary/GroupedView';
@@ -73,26 +72,6 @@ const IndustryGlossary = () => {
     };
   }, [taxonomyData]);
 
-  // Chart data for archetype distribution
-  const archetypeChartData = useMemo(() => {
-    if (!taxonomyData) return [];
-    const counts: Record<string, number> = {};
-    taxonomyData.forEach(item => {
-      counts[item.emissions_archetype] = (counts[item.emissions_archetype] || 0) + 1;
-    });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
-  }, [taxonomyData]);
-
-  // Sector distribution for pie chart
-  const sectorChartData = useMemo(() => {
-    if (!taxonomyData) return [];
-    const counts: Record<string, number> = {};
-    taxonomyData.forEach(item => {
-      counts[item.sector] = (counts[item.sector] || 0) + 1;
-    });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
-  }, [taxonomyData]);
-
   // Group by sector for organized display
   const groupedData = useMemo(() => {
     const groups: Record<string, typeof filteredData> = {};
@@ -105,8 +84,6 @@ const IndustryGlossary = () => {
     return groups;
   }, [filteredData]);
 
-  // Color palette for charts
-  const CHART_COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--muted))', '#8884d8', '#82ca9d', '#ffc658', '#ff7300'];
 
   // Clear all filters
   const clearFilters = () => {
@@ -193,13 +170,10 @@ const IndustryGlossary = () => {
                 </p>
               </div>
 
-              {/* KPI Cards */}
-              <KPISummaryCards stats={stats} />
-
-              {/* PHASE 2: Visual Charts */}
-              <DistributionCharts 
-                archetypeChartData={archetypeChartData}
-                sectorChartData={sectorChartData}
+              {/* Interactive KPI Dashboard */}
+              <InteractiveKPIDashboard 
+                stats={stats} 
+                taxonomyData={taxonomyData || []}
               />
             </div>
           </div>
