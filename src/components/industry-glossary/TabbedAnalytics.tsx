@@ -1,14 +1,74 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { 
+  Crown, 
+  TrendingUp, 
+  Zap, 
+  BarChart3, 
+  Trophy, 
+  Target 
+} from 'lucide-react';
 
 interface TabbedAnalyticsProps {
   taxonomyData: any[];
 }
 
 export const TabbedAnalytics = ({ taxonomyData }: TabbedAnalyticsProps) => {
-  // Mock data as specified in requirements
+  // Key insights data (replace confusing charts with clear takeaways)
+  const keyInsights = [
+    {
+      id: 'most-common',
+      title: 'Most Common',
+      value: 'Scope 2-Heavy',
+      subtitle: '18% of industries',
+      insight: 'Primarily manufacturing & energy sectors',
+      color: 'blue',
+      icon: 'Crown',
+      trend: '+2% vs last year'
+    },
+    {
+      id: 'fastest-growing',
+      title: 'Fastest Growing',
+      value: 'Financial Emissions',
+      subtitle: '+22% this year',
+      insight: 'New banking regulations driving growth',
+      color: 'green',
+      icon: 'TrendingUp',
+      trend: 'Up from 12% last year'
+    },
+    {
+      id: 'emerging-focus',
+      title: 'Emerging Focus',
+      value: 'Operational Efficiency',
+      subtitle: '16% adoption',
+      insight: 'Tech sector leading adoption',
+      color: 'purple',
+      icon: 'Zap',
+      trend: '4 new industries added'
+    }
+  ];
+
+  // Ranking data (much clearer than bar charts)
+  const archetypeRankings = [
+    { name: 'Scope 2-Heavy', value: 18, companies: 33, color: '#3b82f6', growth: '+2%' },
+    { name: 'Operational Efficiency', value: 16, companies: 29, color: '#8b5cf6', growth: '+5%' },
+    { name: 'Financial Emissions', value: 15, companies: 28, color: '#10b981', growth: '+22%' },
+    { name: 'Transport Intensive', value: 14, companies: 26, color: '#f59e0b', growth: '+1%' },
+    { name: 'Upstream-Heavy', value: 13, companies: 24, color: '#ef4444', growth: '-1%' }
+  ];
+
+  const sectorRankings = [
+    { name: 'Manufacturing', companies: 35, complianceScore: 87, trend: 'up', growth: '+3' },
+    { name: 'IT & Technology', companies: 28, complianceScore: 93, trend: 'up', growth: '+5' },
+    { name: 'Energy & Utilities', companies: 22, complianceScore: 78, trend: 'stable', growth: '+1' },
+    { name: 'Financial Services', companies: 18, complianceScore: 89, trend: 'up', growth: '+4' },
+    { name: 'Transportation', companies: 16, complianceScore: 72, trend: 'down', growth: '-1' },
+    { name: 'Healthcare', companies: 14, complianceScore: 85, trend: 'up', growth: '+2' }
+  ];
+
   const emissionsArchetypesData = [
     { name: 'Financial Emissions', value: 15, color: '#FF6B6B' },
     { name: 'Scope 2-heavy', value: 18, color: '#4ECDC4' },
@@ -20,29 +80,172 @@ export const TabbedAnalytics = ({ taxonomyData }: TabbedAnalyticsProps) => {
     { name: 'Offset-focused', value: 4, color: '#5F27CD' }
   ];
 
-  const sectorsAnalyticsData = [
-    { name: 'Manufacturing', companies: 35, avgEmissions: 2840, scopeAlignment: 3 },
-    { name: 'IT & Tech', companies: 28, avgEmissions: 890, scopeAlignment: 3 },
-    { name: 'Energy', companies: 22, avgEmissions: 4200, scopeAlignment: 3 },
-    { name: 'Financial', companies: 18, avgEmissions: 320, scopeAlignment: 3 },
-    { name: 'Transport', companies: 16, avgEmissions: 1950, scopeAlignment: 2 },
-    { name: 'Healthcare', companies: 14, avgEmissions: 750, scopeAlignment: 2 },
-    { name: 'Retail', companies: 12, avgEmissions: 580, scopeAlignment: 2 },
-    { name: 'Construction', companies: 10, avgEmissions: 1200, scopeAlignment: 1 }
-  ];
+  const InsightCard = ({ insight }: { insight: any }) => {
+    const iconMap = {
+      Crown: Crown,
+      TrendingUp: TrendingUp,
+      Zap: Zap
+    };
+    const IconComponent = iconMap[insight.icon as keyof typeof iconMap];
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-          <p className="font-medium">{label}</p>
-          <p className="text-blue-600">
-            {`${payload[0].dataKey}: ${payload[0].value}`}
-          </p>
-        </div>
-      );
-    }
-    return null;
+    const colorClasses = {
+      blue: 'border-l-blue-500 bg-blue-50',
+      green: 'border-l-green-500 bg-green-50',
+      purple: 'border-l-purple-500 bg-purple-50'
+    };
+
+    return (
+      <Card className={`border-l-4 ${colorClasses[insight.color as keyof typeof colorClasses]} hover:shadow-lg transition-all duration-200`}>
+        <CardContent className="p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className={`p-2 rounded-lg ${insight.color === 'blue' ? 'bg-blue-100' : insight.color === 'green' ? 'bg-green-100' : 'bg-purple-100'}`}>
+                <IconComponent className={`h-5 w-5 ${insight.color === 'blue' ? 'text-blue-600' : insight.color === 'green' ? 'text-green-600' : 'text-purple-600'}`} />
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-gray-600">{insight.title}</h3>
+                <div className="text-2xl font-bold text-gray-900">{insight.value}</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">{insight.subtitle}</span>
+              <Badge variant="secondary" className="text-xs">
+                {insight.trend}
+              </Badge>
+            </div>
+            <p className="text-xs text-gray-500 italic">
+              💡 {insight.insight}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  const VisualRankingList = ({ data, title, subtitle, valueLabel = "companies" }: { data: any[]; title: string; subtitle?: string; valueLabel?: string }) => {
+    const maxValue = Math.max(...data.map(item => item.companies || item.value));
+    
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-5 w-5" />
+            {title}
+          </CardTitle>
+          {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {data.map((item, index) => (
+              <div key={item.name} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                {/* Rank Badge */}
+                <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-bold text-gray-600">#{index + 1}</span>
+                </div>
+                
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-semibold text-gray-900 truncate">{item.name}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">
+                        {item.companies || item.value} {valueLabel}
+                      </span>
+                      {item.growth && (
+                        <Badge 
+                          variant={item.growth.startsWith('+') ? 'default' : 'secondary'} 
+                          className="text-xs"
+                        >
+                          {item.growth}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="h-2 rounded-full transition-all duration-700 ease-out"
+                      style={{ 
+                        width: `${((item.companies || item.value) / maxValue) * 100}%`,
+                        backgroundColor: item.color || '#3b82f6'
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Additional info for sectors */}
+                  {item.complianceScore && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <span className="text-xs text-gray-500">Compliance:</span>
+                      <span className={`text-xs font-semibold ${
+                        item.complianceScore >= 85 ? 'text-green-600' :
+                        item.complianceScore >= 70 ? 'text-yellow-600' : 'text-red-600'
+                      }`}>
+                        {item.complianceScore}%
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  const PerformanceSummaryCards = ({ sectors }: { sectors: any[] }) => {
+    const topPerformer = sectors.reduce((prev, current) => 
+      (prev.complianceScore > current.complianceScore) ? prev : current
+    );
+    
+    const fastestGrowing = sectors.reduce((prev, current) => 
+      (parseInt(prev.growth) > parseInt(current.growth)) ? prev : current
+    );
+    
+    const avgCompliance = Math.round(
+      sectors.reduce((sum, sector) => sum + sector.complianceScore, 0) / sectors.length
+    );
+
+    return (
+      <div className="space-y-4">
+        <Card className="border-l-4 border-l-green-500">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 mb-2">
+              <Trophy className="h-5 w-5 text-green-600" />
+              <span className="text-sm font-medium text-gray-600">Top Performer</span>
+            </div>
+            <div className="text-xl font-bold text-gray-900">{topPerformer.name}</div>
+            <div className="text-sm text-green-600">{topPerformer.complianceScore}% compliance</div>
+          </CardContent>
+        </Card>
+        
+        <Card className="border-l-4 border-l-blue-500">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 mb-2">
+              <TrendingUp className="h-5 w-5 text-blue-600" />
+              <span className="text-sm font-medium text-gray-600">Fastest Growing</span>
+            </div>
+            <div className="text-xl font-bold text-gray-900">{fastestGrowing.name}</div>
+            <div className="text-sm text-blue-600">{fastestGrowing.growth} companies added</div>
+          </CardContent>
+        </Card>
+        
+        <Card className="border-l-4 border-l-purple-500">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 mb-2">
+              <Target className="h-5 w-5 text-purple-600" />
+              <span className="text-sm font-medium text-gray-600">Avg Compliance</span>
+            </div>
+            <div className="text-xl font-bold text-gray-900">{avgCompliance}%</div>
+            <div className="text-sm text-purple-600">Across all sectors</div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   };
 
   return (
@@ -56,110 +259,39 @@ export const TabbedAnalytics = ({ taxonomyData }: TabbedAnalyticsProps) => {
 
         {/* Industries Overview Tab */}
         <TabsContent value="industries" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">Industry Count by Emissions Archetype</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={emissionsArchetypesData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="name" 
-                      angle={-45} 
-                      textAnchor="end" 
-                      height={80}
-                      fontSize={12}
-                      interval={0}
-                    />
-                    <YAxis fontSize={12} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="value" fill="#4F46E5" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">Top Sectors by Industry Count</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={sectorsAnalyticsData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="name" 
-                      angle={-45} 
-                      textAnchor="end" 
-                      height={80}
-                      fontSize={12}
-                      interval={0}
-                    />
-                    <YAxis fontSize={12} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="companies" fill="#059669" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
+          {/* Insight Cards - Replace first bar chart */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {keyInsights.map(insight => (
+              <InsightCard key={insight.id} insight={insight} />
+            ))}
           </div>
+          
+          {/* Visual Rankings - Replace second bar chart */}
+          <VisualRankingList 
+            data={archetypeRankings}
+            title="Archetype Rankings"
+            subtitle="Most common emissions archetypes by industry count"
+            valueLabel="industries"
+          />
         </TabsContent>
 
         {/* Sectors Analytics Tab */}
         <TabsContent value="sectors" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">Top Sectors by Industry Count</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={sectorsAnalyticsData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="name" 
-                      angle={-45} 
-                      textAnchor="end" 
-                      height={80}
-                      fontSize={12}
-                      interval={0}
-                    />
-                    <YAxis fontSize={12} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="companies" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">GHG Protocol Scope Coverage</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={sectorsAnalyticsData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="name" 
-                      angle={-45} 
-                      textAnchor="end" 
-                      height={80}
-                      fontSize={12}
-                      interval={0}
-                    />
-                    <YAxis domain={[0, 3]} fontSize={12} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="scopeAlignment" fill="#1F2937" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-                <p className="text-xs text-gray-600 mt-2">
-                  Coverage score: 3 = All scopes aligned, 0 = No alignment
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Main Rankings - Replace bar charts */}
+            <div className="lg:col-span-2">
+              <VisualRankingList 
+                data={sectorRankings}
+                title="Sector Performance Rankings"
+                subtitle="Ranked by company count and compliance scores"
+                valueLabel="companies"
+              />
+            </div>
+            
+            {/* Summary Cards - New addition */}
+            <div>
+              <PerformanceSummaryCards sectors={sectorRankings} />
+            </div>
           </div>
         </TabsContent>
 
