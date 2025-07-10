@@ -69,7 +69,7 @@ export const InteractiveKPIDashboard = ({ stats, taxonomyData }: InteractiveKPID
   return (
     <div className="space-y-6">
       {/* Interactive KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {kpiItems.map((item) => {
           const Icon = item.icon;
           const isSelected = selectedKPI === item.id;
@@ -83,19 +83,17 @@ export const InteractiveKPIDashboard = ({ stats, taxonomyData }: InteractiveKPID
               }`}
               onClick={() => setSelectedKPI(item.id)}
             >
-              <Card className={`w-full border-2 rounded-xl shadow-sm transition-all duration-200 ${
+               <Card className={`w-full min-h-[280px] border-2 rounded-xl shadow-sm transition-all duration-200 ${
                 isSelected 
                   ? `${item.borderColor} ring-2 ring-${item.color}/20 shadow-md` 
                   : `${item.borderColor} hover:shadow-md`
-              }`}>
-                <CardContent className="p-6">
+               }`}>
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between">
                     <div className="text-left">
                       <p className="text-sm font-medium text-muted-foreground">{item.label}</p>
-                      <p className={`text-3xl font-bold ${item.textColor}`}>{item.value}</p>
-                      {isSelected && (
-                        <p className="text-xs text-muted-foreground mt-1">Click to view analytics</p>
-                      )}
+                      <p className={`text-xl font-semibold ${item.textColor}`}>{item.value}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Click to view analytics</p>
                     </div>
                     <div className={`h-12 w-12 rounded-lg ${item.bgColor} flex items-center justify-center ${
                       isSelected ? 'ring-2 ring-offset-2 ring-' + item.color + '/30' : ''

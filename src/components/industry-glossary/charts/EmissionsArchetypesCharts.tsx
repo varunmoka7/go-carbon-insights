@@ -7,23 +7,24 @@ interface EmissionsArchetypesChartsProps {
   taxonomyData: any[];
 }
 
-// Enhanced archetype color mapping
+// Design System Color Palette for Emissions Archetypes
 const ARCHETYPE_COLORS: Record<string, string> = {
-  'Lifecycle-dependent': 'hsl(217, 91%, 60%)', // Blue
-  'Scope 2-heavy': 'hsl(25, 95%, 53%)', // Orange
-  'Use-phase Dominant': 'hsl(142, 76%, 36%)', // Green
-  'Financed Emissions': 'hsl(262, 83%, 58%)', // Purple
-  'Operational Emitter': 'hsl(0, 84%, 60%)', // Red
+  'Lifecycle-dependent': 'hsl(217, 91%, 60%)', // Blue #2563EB
+  'Scope 2-heavy': 'hsl(25, 95%, 53%)', // Orange #F59E0B
+  'Use-phase Dominant': 'hsl(142, 76%, 36%)', // Green #10B981
+  'Financed Emissions': 'hsl(262, 83%, 58%)', // Purple #8B5CF6
+  'Operational Emitter': 'hsl(348, 83%, 47%)', // Red #E11D48
   'Upstream-heavy': 'hsl(45, 93%, 47%)', // Yellow
   'Offset-focused': 'hsl(200, 98%, 39%)', // Cyan
 };
 
+// Design System Color Palette for SBTi Pathways
 const PATHWAY_COLORS = [
-  'hsl(217, 91%, 60%)', // Blue
-  'hsl(142, 76%, 36%)', // Green
-  'hsl(25, 95%, 53%)', // Orange
-  'hsl(262, 83%, 58%)', // Purple
-  'hsl(0, 84%, 60%)', // Red
+  'hsl(217, 91%, 60%)', // Blue #2563EB
+  'hsl(142, 76%, 36%)', // Green #10B981
+  'hsl(25, 95%, 53%)', // Orange #F59E0B
+  'hsl(262, 83%, 58%)', // Purple #8B5CF6
+  'hsl(348, 83%, 47%)', // Red #E11D48
   'hsl(45, 93%, 47%)', // Yellow
 ];
 
@@ -31,9 +32,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     const data = payload[0];
     return (
-      <div className="bg-background border border-border rounded-lg p-3 shadow-lg z-50">
-        <p className="font-semibold text-sm">{label}</p>
-        <p className="text-sm text-primary font-medium">
+      <div className="bg-background border border-border rounded-lg p-3 shadow-lg z-50 pointer-events-none">
+        <p className="font-semibold text-sm leading-snug">{label}</p>
+        <p className="text-sm text-primary font-medium leading-snug">
           {data.value} {data.value === 1 ? 'industry' : 'industries'}
         </p>
       </div>
@@ -45,10 +46,10 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 const StackedTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-background border border-border rounded-lg p-3 shadow-lg z-50">
-        <p className="font-semibold text-sm">{label}</p>
+      <div className="bg-background border border-border rounded-lg p-3 shadow-lg z-50 pointer-events-none">
+        <p className="font-semibold text-sm leading-snug">{label}</p>
         {payload.map((entry: any, index: number) => (
-          <p key={index} className="text-sm" style={{ color: entry.color }}>
+          <p key={index} className="text-sm leading-snug" style={{ color: entry.color }}>
             {entry.dataKey}: {entry.value} industries
           </p>
         ))}
@@ -122,15 +123,17 @@ export const EmissionsArchetypesCharts = ({ taxonomyData }: EmissionsArchetypesC
   // Loading state
   if (!taxonomyData || taxonomyData.length === 0) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {Array.from({ length: 2 }).map((_, i) => (
-          <Card key={i} className="rounded-xl shadow-sm">
+          <Card key={i} className="rounded-xl shadow-sm border border-border/50">
             <CardHeader className="pb-4">
               <Skeleton className="h-6 w-64" />
               <Skeleton className="h-4 w-48" />
             </CardHeader>
             <CardContent>
-              <Skeleton className="h-60 w-full" />
+              <div className="text-center text-sm text-muted-foreground py-8">
+                ⚠️ Chart failed to load – backend linkage incomplete
+              </div>
             </CardContent>
           </Card>
         ))}
@@ -139,14 +142,14 @@ export const EmissionsArchetypesCharts = ({ taxonomyData }: EmissionsArchetypesC
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
       {/* Chart 1: Horizontal Bar – Industries per Archetype */}
       <Card className="rounded-xl shadow-sm border border-border/50">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-semibold text-foreground">
-            Industries per Emissions Archetype
+          <CardTitle className="text-lg font-semibold">
+            #Industries per Archetype
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground leading-snug">
             Total industry count by emission pattern category
           </p>
         </CardHeader>
@@ -194,11 +197,11 @@ export const EmissionsArchetypesCharts = ({ taxonomyData }: EmissionsArchetypesC
       {/* Chart 2: Stacked Bar – Archetypes vs SBTi Pathways */}
       <Card className="rounded-xl shadow-sm border border-border/50">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-semibold text-foreground">
-            Archetypes vs SBTi Pathways
+          <CardTitle className="text-lg font-semibold">
+            SBTi Pathways per Archetype
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Pathway distribution breakdown by emission archetype
+          <p className="text-sm text-muted-foreground leading-snug">
+            SBTi Pathways per archetype
           </p>
         </CardHeader>
         <CardContent>
