@@ -34,6 +34,7 @@ const Sidebar: React.FC = () => {
   const navigationItems: NavigationItem[] = [
     { name: t('navigation:home'), href: '/home', icon: Home, description: t('dashboard:overview') },
     { name: t('navigation:dashboard'), href: '/dashboard', icon: BarChart, description: t('dashboard:analytics') },
+    { name: 'Emission Tracking', href: '/tracking', icon: Factory, description: 'Corporate carbon footprints' },
     { name: 'Industry Glossary', href: '/industry-glossary', icon: Building, description: 'ESG industry taxonomy' },
     { name: t('navigation:industryAnalysis'), href: '/industry-analysis', icon: Building, description: 'Sector-specific analysis' },
     { name: t('scopes:scope1.title'), href: '/scope1', icon: Factory, description: t('scopes:scope1.description') },

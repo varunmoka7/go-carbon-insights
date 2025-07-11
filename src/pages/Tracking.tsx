@@ -5,7 +5,7 @@ import GlobalStatsCards from '@/components/GlobalStatsCards';
 import SectorBreakdownChart from '@/components/SectorBreakdownChart';
 import GrowthTimelineChart from '@/components/GrowthTimelineChart';
 import CompanyLocationsMap from '@/components/CompanyLocationsMap';
-import FeaturedCompaniesGrid from '@/components/FeaturedCompaniesGrid';
+import EnhancedFeaturedCompaniesTable from '@/components/EnhancedFeaturedCompaniesTable';
 import DataQualityMetrics from '@/components/DataQualityMetrics';
 import PlatformImpactMetrics from '@/components/PlatformImpactMetrics';
 import { Globe, Target, TrendingUp } from 'lucide-react';
@@ -61,7 +61,7 @@ const Tracking = () => {
 
       {/* Featured Companies */}
       <div className="mb-12">
-        <FeaturedCompaniesGrid />
+        <EnhancedFeaturedCompaniesTable />
       </div>
 
       {/* Platform Impact Metrics */}
