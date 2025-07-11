@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, MessageSquare, Clock, Pin } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import ExpertBadge from './ExpertBadge';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Topic {
   id: string;
@@ -36,6 +37,42 @@ interface TopicsListProps {
 }
 
 const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
+  const [localTopics, setLocalTopics] = useState<Topic[]>(topics);
+  const [viewedTopics, setViewedTopics] = useState<Set<string>>(new Set());
+
+  // Update local topics when props change
+  useEffect(() => {
+    setLocalTopics(topics);
+  }, [topics]);
+
+  // Set up real-time subscription for topic updates
+  useEffect(() => {
+    const channel = supabase
+      .channel('topic-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'community_topics'
+        },
+        (payload) => {
+          setLocalTopics(prev => 
+            prev.map(topic => 
+              topic.id === payload.new.id 
+                ? { ...topic, view_count: payload.new.view_count, reply_count: payload.new.reply_count }
+                : topic
+            )
+          );
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -48,8 +85,46 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
     return date.toLocaleDateString();
   };
 
+  // Increment view count with session-based debouncing
+  const handleTopicView = async (topicId: string) => {
+    // Check if already viewed in this session
+    if (viewedTopics.has(topicId)) {
+      onTopicSelect(topicId);
+      return;
+    }
+
+    try {
+      // Call the database function to increment views
+      const { data, error } = await supabase.rpc('increment_topic_views', {
+        topic_uuid: topicId
+      });
+
+      if (error) {
+        console.error('Error incrementing view count:', error);
+      } else if (data && typeof data === 'object' && 'success' in data && data.success) {
+        // Mark as viewed in this session
+        setViewedTopics(prev => new Set([...prev, topicId]));
+        
+        // Update local state immediately
+        const responseData = data as { success: boolean; view_count: number };
+        setLocalTopics(prev => 
+          prev.map(topic => 
+            topic.id === topicId 
+              ? { ...topic, view_count: responseData.view_count }
+              : topic
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error incrementing view count:', error);
+    }
+
+    // Continue with topic selection
+    onTopicSelect(topicId);
+  };
+
   // Filter for varun_moka_gct posts (knowledge base content)
-  const expertTopics = topics.filter(topic => 
+  const expertTopics = localTopics.filter(topic => 
     topic.author?.username === 'varun_moka' || 
     topic.author?.username === 'varun_moka_gct'
   );
@@ -88,7 +163,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
           <Card
             key={topic.id}
             className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-gray-100 hover:border-emerald-300 hover:-translate-y-1 bg-white"
-            onClick={() => onTopicSelect(topic.id)}
+            onClick={() => handleTopicView(topic.id)}
           >
             <CardContent className="p-4">
               <div className="space-y-4">
@@ -160,17 +235,17 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-4 text-gray-500">
-                    <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-4 text-right font-montserrat text-emerald-600">
+                    <div className="flex items-center gap-1 hover:text-emerald-700 transition-colors">
                       <Eye className="h-4 w-4" />
-                      <span className="text-sm">{topic.view_count}</span>
+                      <span className="text-sm font-medium">{topic.view_count}</span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 hover:text-emerald-700 transition-colors">
                       <MessageSquare className="h-4 w-4" />
-                      <span className="text-sm">{topic.reply_count}</span>
+                      <span className="text-sm font-medium">{topic.reply_count}</span>
                     </div>
                     {topic.last_reply_at && (
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition-colors">
                         <Clock className="h-4 w-4" />
                         <span className="text-sm">{formatTimeAgo(topic.last_reply_at)}</span>
                       </div>

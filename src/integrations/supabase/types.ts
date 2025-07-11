@@ -1204,6 +1204,10 @@ export type Database = {
         Args: { user_uuid: string }
         Returns: string
       }
+      increment_topic_views: {
+        Args: { topic_uuid: string }
+        Returns: Json
+      }
       test_view_security: {
         Args: Record<PropertyKey, never>
         Returns: {
