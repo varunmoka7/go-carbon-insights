@@ -1,81 +1,118 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { useIndustryTaxonomy } from '@/hooks/useIndustryTaxonomy';
+import sectorEmissions from '@/data/sources/sector-emissions-sources.json';
 
-// Placeholder for sticky sidebar
-const Sidebar = () => (
-  <aside className="emission-tracking-sidebar fixed left-0 top-0 h-full w-56 bg-[#F5F5DC] shadow-lg p-6 z-10">
-    <h2 className="text-[#2E7D32] font-bold text-lg mb-4">Filters</h2>
-    {/* Add filter controls here */}
-    <div className="mt-8 text-xs text-gray-500">Sustainability Sidebar</div>
-  </aside>
+// --- Hero Section ---
+const HeroSection = () => (
+  <section className="bg-gradient-to-r from-green-200 to-blue-100 py-12 text-center">
+    <h1 className="text-4xl font-bold mb-2">Global Sector Emissions Intelligence</h1>
+    <p className="text-lg max-w-2xl mx-auto">
+      Explore emissions data and decarbonization trends across major sectors and their industries. Track Scope 1, 2, and 3 emissions, benchmark sectors, and discover actionable insights for a net zero future.
+    </p>
+  </section>
 );
 
-// Placeholder for header
-const Header = () => (
-  <header className="emission-tracking-header w-full py-8 px-8 bg-gradient-to-r from-[#2E7D32] to-[#4FC3F7] text-white shadow-md flex flex-col items-center mb-8">
-    <h1 className="text-3xl font-extrabold tracking-tight mb-2">Track Your Path to Net Zero</h1>
-    <p className="text-lg opacity-90">Sustainability-Themed Emission Tracking</p>
-  </header>
-);
-
-// Placeholder for card widget
-const StatCard = ({ title, value, accent }: { title: string, value: string, accent: string }) => (
-  <div className={`emission-tracking-card bg-white rounded-xl shadow-md p-6 flex flex-col items-center justify-center transition-transform hover:scale-105 border-t-4 ${accent} animate-fade-in`}>
-    <div className="text-2xl font-bold mb-2">{value}</div>
-    <div className="text-sm text-gray-700">{title}</div>
+// --- Sector Card ---
+const SectorCard = ({ sector, isTopEmitter }: { sector: any, isTopEmitter: boolean }) => (
+  <div className={`bg-white rounded-xl shadow p-6 flex flex-col gap-2 border-t-4 ${isTopEmitter ? 'border-red-500' : 'border-blue-300'} hover:shadow-lg transition relative`}>
+    {isTopEmitter && <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">Top Emitter</span>}
+    <div className="flex justify-between items-center">
+      <h3 className="text-xl font-bold">{sector.sector}</h3>
+      <span className="text-xs px-2 py-1 rounded" style={{ background: sector.color, color: '#fff' }}>{sector.percentage}%</span>
+    </div>
+    <div className="text-gray-600 text-sm">Total Emissions: <span className="font-semibold">{sector.absolute}</span></div>
+    <div className="flex flex-wrap gap-2 text-xs mt-2">
+      {sector.subcategories?.map((sub: any) => (
+        <span key={sub.name} className="bg-gray-100 text-gray-700 px-2 py-1 rounded">{sub.name}: {sub.value}</span>
+      ))}
+    </div>
+    <div className="mt-2">
+      <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="h-2 rounded-full" style={{ width: `${sector.percentage}%`, background: sector.color }}></div>
+      </div>
+    </div>
+    <button className="mt-2 bg-[#FFCA28] text-[#2E7D32] px-4 py-1 rounded font-semibold hover:bg-yellow-300 transition">View Details</button>
   </div>
 );
 
-// Placeholder for chart
-const EmissionChart = () => (
-  <div className="emission-tracking-chart bg-[#F5F5DC] rounded-xl shadow p-6 flex flex-col items-center justify-center min-h-[250px] animate-fade-in">
-    <div className="text-[#2E7D32] font-semibold mb-2">Emission Trends</div>
-    {/* Chart.js chart will go here */}
-    <div className="text-gray-400">[Interactive Line Chart Placeholder]</div>
-  </div>
+// --- Scope Education Panel ---
+const ScopeEducationPanel = () => (
+  <section className="my-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="bg-green-100 rounded-xl p-6 text-center">
+      <h4 className="font-bold mb-2">Scope 1</h4>
+      <p>Direct emissions from owned or controlled sources (e.g., fuel combustion, process emissions).</p>
+    </div>
+    <div className="bg-blue-100 rounded-xl p-6 text-center">
+      <h4 className="font-bold mb-2">Scope 2</h4>
+      <p>Indirect emissions from the generation of purchased electricity, steam, heating, and cooling.</p>
+    </div>
+    <div className="bg-yellow-100 rounded-xl p-6 text-center">
+      <h4 className="font-bold mb-2">Scope 3</h4>
+      <p>All other indirect emissions in the value chain (e.g., supply chain, product use, waste).</p>
+    </div>
+  </section>
 );
 
-// Placeholder for tips
-const TipsSection = () => (
-  <div className="emission-tracking-tips bg-[#FFCA28] rounded-xl shadow p-6 mt-8 animate-fade-in">
-    <div className="font-bold text-[#2E7D32] mb-2">Tips for Reduction</div>
-    <ul className="list-disc pl-5 text-gray-800">
-      <li>Switch to public transport for daily commute</li>
-      <li>Reduce energy usage during peak hours</li>
-      <li>Choose plant-based meals more often</li>
-    </ul>
-  </div>
+// --- Why Track Section ---
+const WhyTrackSection = () => (
+  <section className="my-12 text-center">
+    <h2 className="text-2xl font-bold mb-2">Why Track Sector Emissions?</h2>
+    <p className="mb-2">8 sectors = 80% of global emissions</p>
+    <p className="mb-2">Benchmarking helps identify decarbonization opportunities</p>
+    <p>Transparent data drives climate action and regulatory compliance</p>
+  </section>
+);
+
+// --- Call to Action ---
+const CallToAction = () => (
+  <section className="my-12 text-center">
+    <button className="bg-[#2E7D32] text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-[#256029] transition">Explore Our Sector Database</button>
+    <div className="mt-2">
+      <a href="#" className="text-blue-600 underline mx-2">Request Industry Coverage</a>
+      <a href="#" className="text-blue-600 underline mx-2">Contribute Data</a>
+    </div>
+  </section>
+);
+
+// --- Roadmap Section ---
+const RoadmapSection = () => (
+  <section className="my-12 text-center">
+    <h2 className="text-xl font-bold mb-2">Roadmap / Coming Soon</h2>
+    <p>More sectors, deeper industry breakdowns, and company-level benchmarking coming soon.</p>
+  </section>
 );
 
 const EmissionTracking: React.FC = () => {
+  // Fetch all taxonomy data (sectors/industries)
+  const { data: taxonomyData = [] } = useIndustryTaxonomy();
+  // Use the sector emissions JSON for sector-level emissions
+  const sectors = sectorEmissions.sectors;
+  // Sort sectors by emission percentage (descending)
+  const sortedSectors = useMemo(() => [...sectors].sort((a, b) => b.percentage - a.percentage), [sectors]);
+  // Top 3 emitters for badge
+  const topEmitters = sortedSectors.slice(0, 3).map(s => s.sector);
+
   return (
-    <div className="emission-tracking-root min-h-screen bg-[#F5F5DC] flex">
-      <Sidebar />
-      <main className="emission-tracking-main flex-1 ml-56 p-8">
-        <div className="mb-4">
-          <Link to="/" className="inline-block bg-[#4FC3F7] text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-[#2E7D32] transition-colors">← Back to Home</Link>
+    <div className="min-h-screen bg-[#F5F5DC]">
+      <HeroSection />
+      {/* Sector Explorer */}
+      <section className="container mx-auto py-12">
+        <h2 className="text-2xl font-bold mb-6 text-center">Sector Explorer</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sortedSectors.map(sector => (
+            <SectorCard key={sector.sector} sector={sector} isTopEmitter={topEmitters.includes(sector.sector)} />
+          ))}
         </div>
-        <Header />
-        <section className="emission-tracking-stats grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <StatCard title="Total Emissions" value="41.4M tCO2e" accent="border-[#2E7D32]" />
-          <StatCard title="Transport" value="12.1M tCO2e" accent="border-[#4FC3F7]" />
-          <StatCard title="Energy" value="18.2M tCO2e" accent="border-[#FFCA28]" />
-          <StatCard title="Food" value="11.1M tCO2e" accent="border-[#2E7D32]" />
-        </section>
-        <EmissionChart />
-        <TipsSection />
-      </main>
+      </section>
+      <ScopeEducationPanel />
+      <WhyTrackSection />
+      <CallToAction />
+      <RoadmapSection />
     </div>
   );
 };
 
 export default EmissionTracking;
-
-// Scoped styles (add to a CSS module or global if using Tailwind JIT)
-// .emission-tracking-root { ... }
-// .emission-tracking-header { ... }
-// .emission-tracking-sidebar { ... }
-// .emission-tracking-card { ... }
-// .emission-tracking-chart { ... }
-// .emission-tracking-tips { ... }
-// .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; } 
+// ---
+// This page uses sector-emissions-sources.json for sector-level emissions and taxonomy for future industry-level expansion.
+// Add more detailed sector/industry breakdowns and company-level data as available. 
