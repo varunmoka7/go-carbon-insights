@@ -124,7 +124,7 @@ const Landing = () => {
                 <div className="relative">
                   <Logo size="large" className="h-16 w-auto animate-pulse" />
                 </div>
-                 <span className="text-3xl font-bold text-white drop-shadow-lg">GoCarbonTracker</span>
+                 <span className="text-3xl font-bold drop-shadow-lg" style={{ color: '#000000' }}>GoCarbonTracker</span>
                </div>
                 <span className="text-lg font-medium drop-shadow" style={{ color: '#228B22' }}>
                   Global Supply Chain Emissions Intelligence Platform
@@ -302,7 +302,7 @@ const Landing = () => {
               {/* Collaboration infographic */}
               <div className="backdrop-blur-sm rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500 border-2" style={{ backgroundColor: 'rgba(30, 74, 43, 0.2)', borderColor: 'rgba(255, 255, 255, 0.3)' }}>
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-white mb-2">The Collaboration Imperative</h3>
+                  <h3 className="text-2xl font-bold mb-2" style={{ color: '#000000' }}>The Collaboration Imperative</h3>
                   <p style={{ color: '#9CAF88' }}>Working together for collective impact</p>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
