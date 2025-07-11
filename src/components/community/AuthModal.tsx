@@ -135,7 +135,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuth }) => {
               <Button
                 onClick={() => handleSubmit(false)}
                 disabled={isLoading || !email || !password}
-                className="w-full bg-emerald-600 hover:bg-emerald-700"
+                className="w-full bg-emerald-500 hover:bg-emerald-600 text-center"
               >
                 {isLoading ? 'Signing in...' : 'Sign In'}
               </Button>
@@ -220,7 +220,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuth }) => {
               <Button
                 onClick={() => handleSubmit(true)}
                 disabled={isLoading || !email || !password || !username || password !== confirmPassword}
-                className="w-full bg-emerald-600 hover:bg-emerald-700"
+                className="w-full bg-emerald-500 hover:bg-emerald-600 text-center"
               >
                 {isLoading ? 'Creating account...' : 'Join Community'}
               </Button>

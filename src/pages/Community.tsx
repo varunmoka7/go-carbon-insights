@@ -9,6 +9,7 @@ import ReplyBox from '@/components/community/ReplyBox';
 import CommunityStats from '@/components/community/CommunityStats';
 import AuthModal from '@/components/community/AuthModal';
 import ContentUpload from '@/components/community/ContentUpload';
+import UserDashboard from '@/components/community/UserDashboard';
 import SearchBar from '@/components/community/SearchBar';
 import TagCloud from '@/components/community/TagCloud';
 import NotificationBell from '@/components/community/NotificationBell';
@@ -32,6 +33,7 @@ const Community = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showDashboard, setShowDashboard] = useState(false);
 
   useEffect(() => {
     loadCategories();
@@ -132,9 +134,14 @@ const Community = () => {
               email,
               username: additionalData.username,
               display_name: additionalData.display_name,
+              role: 'member',
+              is_gct_team: false
             });
 
-          if (profileError) throw profileError;
+          if (profileError && profileError.code !== '23505') {
+            // Ignore duplicate key errors (user already exists)
+            throw profileError;
+          }
         }
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -233,17 +240,25 @@ const Community = () => {
                 {user ? (
                   <div className="flex items-center gap-3">
                     <NotificationBell userId={user.id} />
+                    <Button
+                      onClick={() => setShowDashboard(!showDashboard)}
+                      variant="outline"
+                      size="sm"
+                      className="text-emerald-600"
+                    >
+                      Dashboard
+                    </Button>
                     <span className="text-sm text-gray-600">
                       Welcome, {user.display_name}!
                     </span>
-                  <Button
-                    onClick={() => supabase.auth.signOut()}
-                    variant="outline"
-                    size="sm"
-                  >
-                    Sign Out
-                  </Button>
-                </div>
+                    <Button
+                      onClick={() => supabase.auth.signOut()}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Sign Out
+                    </Button>
+                  </div>
               ) : (
                 <Button
                   onClick={() => setIsAuthModalOpen(true)}
@@ -282,27 +297,40 @@ const Community = () => {
 
               {/* Right Panel - Stats & Actions */}
               <div className="lg:col-span-1 space-y-6">
-                <CommunityStats />
-                <TagCloud
-                  onTagClick={(tag) => setSearchQuery(tag)}
-                  selectedTags={[]}
-                />
-                {user && (
-                  <ContentUpload
+                {user && showDashboard ? (
+                  <UserDashboard
+                    user={user}
+                    categories={categories}
                     onContentUploaded={() => {
                       loadCategories();
                       loadTopics();
                     }}
-                    categories={categories}
-                    user={user}
                   />
+                ) : (
+                  <>
+                    <CommunityStats />
+                    <TagCloud
+                      onTagClick={(tag) => setSearchQuery(tag)}
+                      selectedTags={[]}
+                    />
+                    {user && (
+                      <ContentUpload
+                        onContentUploaded={() => {
+                          loadCategories();
+                          loadTopics();
+                        }}
+                        categories={categories}
+                        user={user}
+                      />
+                    )}
+                    <ReplyBox
+                      topicId={selectedTopic}
+                      onReply={handleReply}
+                      isAuthenticated={!!user}
+                      onLoginRequired={() => setIsAuthModalOpen(true)}
+                    />
+                  </>
                 )}
-                <ReplyBox
-                  topicId={selectedTopic}
-                  onReply={handleReply}
-                  isAuthenticated={!!user}
-                  onLoginRequired={() => setIsAuthModalOpen(true)}
-                />
               </div>
             </div>
           </div>

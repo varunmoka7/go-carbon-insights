@@ -108,8 +108,8 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/community">
-              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 px-8 py-3 font-montserrat font-semibold">
-                Join Community Now
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 font-montserrat font-semibold">
+                Join Now
               </Button>
             </Link>
             <Link to="/dashboard">
@@ -141,7 +141,7 @@ const Index = () => {
                 <span>• Networking Opportunities</span>
               </div>
               <Link to="/community">
-                <Button className="bg-emerald-600 hover:bg-emerald-700 font-montserrat font-semibold">
+                <Button className="bg-emerald-500 hover:bg-emerald-600 font-montserrat font-semibold">
                   Explore Community Forum →
                 </Button>
               </Link>

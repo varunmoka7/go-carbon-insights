@@ -394,7 +394,7 @@ const ContentUpload: React.FC<ContentUploadProps> = ({ onContentUploaded, catego
           <Button 
             type="submit" 
             disabled={isUploading}
-            className="w-full bg-emerald-600 hover:bg-emerald-700"
+            className="w-full bg-emerald-500 hover:bg-emerald-600"
           >
             {isUploading ? 'Uploading...' : `Create ${contentType}`}
           </Button>

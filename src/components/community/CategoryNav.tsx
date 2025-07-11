@@ -85,8 +85,8 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
           </p>
         </div>
 
-        {/* Professional Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+         {/* Professional Grid Layout */}
+        <div className="grid grid-cols-1 gap-4 mb-6">
           {sortedCategories.map((category) => {
             const Icon = iconMap[category.icon] || Building2;
             const isActive = activeCategory === category.slug;
@@ -95,7 +95,7 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
               <button
                 key={category.id}
                 onClick={() => onCategorySelect(category.slug)}
-                className={`group relative p-4 rounded-xl border-2 transition-all duration-300 text-left 
+                 className={`group relative p-4 rounded-xl border-2 transition-all duration-300 text-left items-center
                   hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
                   ${isActive 
                     ? 'bg-emerald-50 border-emerald-500 shadow-md' 
@@ -111,9 +111,9 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
                   }`}>
                     <Icon className="h-5 w-5" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`font-montserrat font-medium text-sm mb-1 ${
-                      isActive ? 'text-emerald-700' : 'text-gray-900'
+                   <div className="flex-1 min-w-0">
+                    <h3 className={`font-montserrat font-medium text-sm mb-1 text-emerald-600 ${
+                      isActive ? 'text-emerald-700' : 'text-emerald-600'
                     }`}>
                       {category.name}
                     </h3>

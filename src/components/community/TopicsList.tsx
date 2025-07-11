@@ -83,14 +83,14 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
       </div>
       
       {/* Professional Topics Grid */}
-      <div className="space-y-4">
+      <div className="grid grid-cols-3 gap-4">
         {sortedTopics.map((topic) => (
           <Card
             key={topic.id}
-            className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-gray-100 hover:border-emerald-300 hover:-translate-y-1"
+            className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-gray-100 hover:border-emerald-300 hover:-translate-y-1 bg-white"
             onClick={() => onTopicSelect(topic.id)}
           >
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               <div className="space-y-4">
                 {/* Header Section */}
                 <div className="flex items-start justify-between">
@@ -109,16 +109,16 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
                       </Badge>
                     </div>
                     
-                    {/* Title - Center aligned, emerald-600 */}
-                    <h3 className="text-xl font-montserrat font-semibold text-emerald-600 text-center leading-relaxed group-hover:text-emerald-700 transition-colors">
+                     {/* Title - Text-left aligned, emerald-600 */}
+                    <h3 className="text-lg font-montserrat font-semibold text-emerald-600 text-left leading-relaxed group-hover:text-emerald-700 transition-colors">
                       {topic.title}
                     </h3>
                   </div>
                 </div>
                 
-                {/* Content Preview - Left aligned */}
+                 {/* Content Preview - Left aligned */}
                 <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-emerald-400">
-                  <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
+                  <p className="text-gray-700 text-sm leading-relaxed line-clamp-2 text-left">
                     {topic.content}
                   </p>
                 </div>
