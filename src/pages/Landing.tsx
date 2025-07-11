@@ -299,18 +299,18 @@ const Landing = () => {
               </div>
             </div>
             <div className="relative">
-              {/* Collaboration infographic */}
-              <div className="backdrop-blur-sm rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500 border-2" style={{ backgroundColor: 'rgba(30, 74, 43, 0.2)', borderColor: 'rgba(255, 255, 255, 0.3)' }}>
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold mb-2" style={{ color: '#000000' }}>The Collaboration Imperative</h3>
-                  <p style={{ color: '#9CAF88' }}>Working together for collective impact</p>
+              {/* Collaboration info section */}
+              <div className="backdrop-blur-sm rounded-3xl shadow-2xl p-10 border-2" style={{ backgroundColor: 'rgba(30, 74, 43, 0.2)', borderColor: 'rgba(255, 255, 255, 0.3)' }}>
+                <div className="text-center mb-8">
+                  <h3 className="text-3xl font-bold mb-4" style={{ color: '#000000' }}>The Collaboration Imperative</h3>
+                  <p className="text-lg text-white">Working together for collective impact</p>
                 </div>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {collaborationBenefits.map((benefit, index) => (
-                    <div key={index} className="text-center p-4 rounded-2xl transition-colors border" style={{ backgroundColor: 'rgba(80, 200, 120, 0.1)', borderColor: 'rgba(80, 200, 120, 0.3)' }}>
-                      <benefit.icon className="h-8 w-8 mx-auto mb-3" style={{ color: '#50C878' }} />
-                      <div className="text-sm font-semibold text-white mb-2">{benefit.title}</div>
-                      <div className="text-xs" style={{ color: '#9CAF88' }}>{benefit.description}</div>
+                    <div key={index} className="text-center p-6 rounded-2xl border" style={{ backgroundColor: 'rgba(80, 200, 120, 0.1)', borderColor: 'rgba(80, 200, 120, 0.3)' }}>
+                      <benefit.icon className="h-10 w-10 mx-auto mb-4" style={{ color: '#50C878' }} />
+                      <div className="text-lg font-semibold text-white mb-3">{benefit.title}</div>
+                      <div className="text-base text-white leading-relaxed">{benefit.description}</div>
                     </div>
                   ))}
                 </div>
