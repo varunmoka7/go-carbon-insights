@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
 import { useIndustryTaxonomy } from '@/hooks/useIndustryTaxonomy';
 import sectorEmissions from '@/data/sources/sector-emissions-sources.json';
+import { ResponsiveContainer, Tooltip, Rectangle } from 'recharts';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 // --- Hero Section ---
 const HeroSection = () => (
@@ -11,6 +14,135 @@ const HeroSection = () => (
     </p>
   </section>
 );
+
+/**
+ * SectorEmissionsHeatmap - Enterprise-grade heatmap for all 21 sectors using Recharts.
+ * @param sectors - Array of sector objects with sector, absolute, color, and percentage fields.
+ */
+const SectorEmissionsHeatmap: React.FC<{ sectors: any[] }> = ({ sectors }) => {
+  // Convert absolute emissions to numbers and find max for color scaling
+  const sectorData = sectors.map(s => ({
+    ...s,
+    value: parseFloat(s.absolute),
+    label: s.absolute
+  }));
+  
+  const maxEmissions = Math.max(...sectorData.map(s => s.value));
+  
+  // Create heatmap data - arrange sectors in a grid
+  const gridSize = 7; // 7 columns to fit 21 sectors nicely
+  const heatmapData = sectorData.map((sector, index) => ({
+    x: index % gridSize,
+    y: Math.floor(index / gridSize),
+    sector: sector.sector,
+    value: sector.value,
+    percentage: sector.percentage,
+    color: sector.color,
+    label: sector.label
+  }));
+
+  // Color scale function
+  const getColor = (value: number) => {
+    const intensity = value / maxEmissions;
+    if (intensity > 0.8) return '#dc2626'; // Red for highest
+    if (intensity > 0.6) return '#ea580c'; // Orange
+    if (intensity > 0.4) return '#f59e0b'; // Amber
+    if (intensity > 0.2) return '#84cc16'; // Lime
+    return '#22c55e'; // Green for lowest
+  };
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className="bg-white p-4 border rounded-lg shadow-lg">
+          <p className="font-bold text-lg">{data.sector}</p>
+          <p className="text-sm text-gray-600">Emissions: {data.label}</p>
+          <p className="text-sm text-gray-600">Share: {data.percentage}%</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <Card className="mb-8">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          Sector Emissions Heatmap
+          <Badge variant="secondary" className="ml-2">All 21 sectors</Badge>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div style={{ width: '100%', height: 500 }}>
+          <ResponsiveContainer>
+            <svg width="100%" height="100%">
+              {heatmapData.map((item, index) => (
+                <Rectangle
+                  key={index}
+                  x={item.x * (100 / gridSize)}
+                  y={item.y * (100 / Math.ceil(sectorData.length / gridSize))}
+                  width={100 / gridSize}
+                  height={100 / Math.ceil(sectorData.length / gridSize)}
+                  fill={getColor(item.value)}
+                  stroke="#fff"
+                  strokeWidth={1}
+                  opacity={0.8}
+                  onMouseEnter={(e) => {
+                    const target = e.target as SVGElement;
+                    target.style.opacity = '1';
+                    target.style.strokeWidth = '2';
+                  }}
+                  onMouseLeave={(e) => {
+                    const target = e.target as SVGElement;
+                    target.style.opacity = '0.8';
+                    target.style.strokeWidth = '1';
+                  }}
+                >
+                  <title>{`${item.sector}: ${item.label} (${item.percentage}%)`}</title>
+                </Rectangle>
+              ))}
+              
+              {/* Sector labels */}
+              {heatmapData.map((item, index) => (
+                <text
+                  key={`label-${index}`}
+                  x={item.x * (100 / gridSize) + (100 / gridSize) / 2}
+                  y={item.y * (100 / Math.ceil(sectorData.length / gridSize)) + (100 / Math.ceil(sectorData.length / gridSize)) / 2}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="10"
+                  fill="#fff"
+                  fontWeight="bold"
+                  style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
+                >
+                  {item.sector.split(' ')[0]}
+                </text>
+              ))}
+            </svg>
+          </ResponsiveContainer>
+        </div>
+        
+        {/* Legend */}
+        <div className="mt-4 flex justify-center">
+          <div className="flex items-center gap-4 text-sm">
+            <span>Low</span>
+            <div className="flex">
+              {['#22c55e', '#84cc16', '#f59e0b', '#ea580c', '#dc2626'].map((color, i) => (
+                <div
+                  key={i}
+                  className="w-6 h-4"
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </div>
+            <span>High</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 // --- Sector Card ---
 const SectorCard = ({ sector, isTopEmitter }: { sector: any, isTopEmitter: boolean }) => (
@@ -98,6 +230,7 @@ const EmissionTracking: React.FC = () => {
       {/* Sector Explorer */}
       <section className="container mx-auto py-12">
         <h2 className="text-2xl font-bold mb-6 text-center">Sector Explorer</h2>
+        <SectorEmissionsHeatmap sectors={sortedSectors} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sortedSectors.map(sector => (
             <SectorCard key={sector.sector} sector={sector} isTopEmitter={topEmitters.includes(sector.sector)} />

@@ -80,6 +80,163 @@
         {"name": "Waste management", "value": "0.3 GtCO₂eq", "percentage": 7}
       ],
       "color": "#10b981"
+    },
+    {
+      "sector": "Waste Management",
+      "percentage": 3.2,
+      "absolute": "1.9 GtCO₂eq",
+      "subcategories": [
+        {"name": "Landfill emissions", "value": "1.2 GtCO₂eq", "percentage": 63},
+        {"name": "Wastewater treatment", "value": "0.4 GtCO₂eq", "percentage": 21},
+        {"name": "Incineration", "value": "0.3 GtCO₂eq", "percentage": 16}
+      ],
+      "color": "#8b5cf6"
+    },
+    {
+      "sector": "Mining & Metals",
+      "percentage": 2.8,
+      "absolute": "1.6 GtCO₂eq",
+      "subcategories": [
+        {"name": "Iron ore mining", "value": "0.6 GtCO₂eq", "percentage": 38},
+        {"name": "Coal mining", "value": "0.5 GtCO₂eq", "percentage": 31},
+        {"name": "Other metals", "value": "0.5 GtCO₂eq", "percentage": 31}
+      ],
+      "color": "#6366f1"
+    },
+    {
+      "sector": "Oil & Gas",
+      "percentage": 2.5,
+      "absolute": "1.4 GtCO₂eq",
+      "subcategories": [
+        {"name": "Upstream operations", "value": "0.8 GtCO₂eq", "percentage": 57},
+        {"name": "Refining", "value": "0.4 GtCO₂eq", "percentage": 29},
+        {"name": "Distribution", "value": "0.2 GtCO₂eq", "percentage": 14}
+      ],
+      "color": "#06b6d4"
+    },
+    {
+      "sector": "Food & Beverage",
+      "percentage": 2.1,
+      "absolute": "1.2 GtCO₂eq",
+      "subcategories": [
+        {"name": "Food processing", "value": "0.7 GtCO₂eq", "percentage": 58},
+        {"name": "Packaging", "value": "0.3 GtCO₂eq", "percentage": 25},
+        {"name": "Distribution", "value": "0.2 GtCO₂eq", "percentage": 17}
+      ],
+      "color": "#f97316"
+    },
+    {
+      "sector": "Textiles & Apparel",
+      "percentage": 1.8,
+      "absolute": "1.0 GtCO₂eq",
+      "subcategories": [
+        {"name": "Fiber production", "value": "0.4 GtCO₂eq", "percentage": 40},
+        {"name": "Manufacturing", "value": "0.3 GtCO₂eq", "percentage": 30},
+        {"name": "Distribution", "value": "0.3 GtCO₂eq", "percentage": 30}
+      ],
+      "color": "#ec4899"
+    },
+    {
+      "sector": "Construction",
+      "percentage": 1.5,
+      "absolute": "0.9 GtCO₂eq",
+      "subcategories": [
+        {"name": "Building materials", "value": "0.5 GtCO₂eq", "percentage": 56},
+        {"name": "Construction activities", "value": "0.3 GtCO₂eq", "percentage": 33},
+        {"name": "Equipment", "value": "0.1 GtCO₂eq", "percentage": 11}
+      ],
+      "color": "#a855f7"
+    },
+    {
+      "sector": "Information Technology",
+      "percentage": 1.2,
+      "absolute": "0.7 GtCO₂eq",
+      "subcategories": [
+        {"name": "Data centers", "value": "0.4 GtCO₂eq", "percentage": 57},
+        {"name": "Manufacturing", "value": "0.2 GtCO₂eq", "percentage": 29},
+        {"name": "Operations", "value": "0.1 GtCO₂eq", "percentage": 14}
+      ],
+      "color": "#3b82f6"
+    },
+    {
+      "sector": "Healthcare",
+      "percentage": 1.0,
+      "absolute": "0.6 GtCO₂eq",
+      "subcategories": [
+        {"name": "Medical equipment", "value": "0.3 GtCO₂eq", "percentage": 50},
+        {"name": "Pharmaceuticals", "value": "0.2 GtCO₂eq", "percentage": 33},
+        {"name": "Facilities", "value": "0.1 GtCO₂eq", "percentage": 17}
+      ],
+      "color": "#ef4444"
+    },
+    {
+      "sector": "Financial Services",
+      "percentage": 0.8,
+      "absolute": "0.5 GtCO₂eq",
+      "subcategories": [
+        {"name": "Operations", "value": "0.3 GtCO₂eq", "percentage": 60},
+        {"name": "Investments", "value": "0.1 GtCO₂eq", "percentage": 20},
+        {"name": "Facilities", "value": "0.1 GtCO₂eq", "percentage": 20}
+      ],
+      "color": "#10b981"
+    },
+    {
+      "sector": "Education",
+      "percentage": 0.6,
+      "absolute": "0.3 GtCO₂eq",
+      "subcategories": [
+        {"name": "Facilities", "value": "0.2 GtCO₂eq", "percentage": 67},
+        {"name": "Transportation", "value": "0.1 GtCO₂eq", "percentage": 33}
+      ],
+      "color": "#f59e0b"
+    },
+    {
+      "sector": "Entertainment & Media",
+      "percentage": 0.5,
+      "absolute": "0.3 GtCO₂eq",
+      "subcategories": [
+        {"name": "Digital infrastructure", "value": "0.2 GtCO₂eq", "percentage": 67},
+        {"name": "Production", "value": "0.1 GtCO₂eq", "percentage": 33}
+      ],
+      "color": "#8b5cf6"
+    },
+    {
+      "sector": "Real Estate",
+      "percentage": 0.4,
+      "absolute": "0.2 GtCO₂eq",
+      "subcategories": [
+        {"name": "Property management", "value": "0.1 GtCO₂eq", "percentage": 50},
+        {"name": "Development", "value": "0.1 GtCO₂eq", "percentage": 50}
+      ],
+      "color": "#06b6d4"
+    },
+    {
+      "sector": "Legal Services",
+      "percentage": 0.3,
+      "absolute": "0.2 GtCO₂eq",
+      "subcategories": [
+        {"name": "Operations", "value": "0.1 GtCO₂eq", "percentage": 50},
+        {"name": "Facilities", "value": "0.1 GtCO₂eq", "percentage": 50}
+      ],
+      "color": "#6366f1"
+    },
+    {
+      "sector": "Consulting",
+      "percentage": 0.2,
+      "absolute": "0.1 GtCO₂eq",
+      "subcategories": [
+        {"name": "Travel", "value": "0.1 GtCO₂eq", "percentage": 100}
+      ],
+      "color": "#84cc16"
+    },
+    {
+      "sector": "Non-Profit",
+      "percentage": 0.1,
+      "absolute": "0.1 GtCO₂eq",
+      "subcategories": [
+        {"name": "Operations", "value": "0.1 GtCO₂eq", "percentage": 100}
+      ],
+      "color": "#22c55e"
     }
   ]
 }
