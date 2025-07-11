@@ -8,6 +8,7 @@ import TopicsList from '@/components/community/TopicsList';
 import ReplyBox from '@/components/community/ReplyBox';
 import CommunityStats from '@/components/community/CommunityStats';
 import AuthModal from '@/components/community/AuthModal';
+import ContentUpload from '@/components/community/ContentUpload';
 import { supabase } from '@/integrations/supabase/client';
 
 interface User {
@@ -267,8 +268,16 @@ const Community = () => {
             />
           </div>
 
-          {/* Right Sidebar - Reply Box */}
-          <div className="lg:col-span-1">
+          {/* Right Sidebar - Content Upload & Reply Box */}
+          <div className="lg:col-span-1 space-y-6">
+            <ContentUpload
+              onContentUploaded={() => {
+                loadCategories();
+                loadTopics();
+              }}
+              categories={categories}
+              user={user}
+            />
             <ReplyBox
               topicId={selectedTopic}
               onReply={handleReply}

@@ -172,6 +172,7 @@ export type Database = {
         Row: {
           color: string | null
           created_at: string
+          created_by: string | null
           description: string | null
           icon: string | null
           id: string
@@ -184,6 +185,7 @@ export type Database = {
         Insert: {
           color?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string | null
           icon?: string | null
           id?: string
@@ -196,6 +198,7 @@ export type Database = {
         Update: {
           color?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string | null
           icon?: string | null
           id?: string
@@ -205,7 +208,15 @@ export type Database = {
           sort_order?: number | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "community_categories_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "community_users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       community_replies: {
         Row: {
@@ -273,6 +284,7 @@ export type Database = {
           author_id: string
           category_id: string
           content: string | null
+          context_file: string | null
           created_at: string
           id: string
           is_locked: boolean
@@ -289,6 +301,7 @@ export type Database = {
           author_id: string
           category_id: string
           content?: string | null
+          context_file?: string | null
           created_at?: string
           id?: string
           is_locked?: boolean
@@ -305,6 +318,7 @@ export type Database = {
           author_id?: string
           category_id?: string
           content?: string | null
+          context_file?: string | null
           created_at?: string
           id?: string
           is_locked?: boolean

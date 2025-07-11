@@ -114,7 +114,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
                       <div className="flex items-center gap-1">
                         <span>by</span>
                         <span className="font-medium text-gray-900">
-                          {topic.author.display_name}
+                          {topic.author?.display_name || topic.author?.username || 'Anonymous'}
                         </span>
                         <ExpertBadge
                           isTeamMember={topic.author.is_gct_team}
