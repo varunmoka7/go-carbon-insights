@@ -134,17 +134,34 @@ const Index = () => {
                 Connect with carbon accounting experts, discuss Scope 3 emissions, supply chain decarbonization, 
                 GHG Protocol implementation, and ESG reporting best practices.
               </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm text-emerald-600 mb-6">
-                <span>• Expert Knowledge Sharing</span>
-                <span>• Professional Discussions</span>
-                <span>• Industry Best Practices</span>
-                <span>• Networking Opportunities</span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-emerald-600 mb-6">
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                  <span>Expert Knowledge Sharing</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                  <span>Professional Discussions</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                  <span>Industry Best Practices</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                  <span>Networking Opportunities</span>
+                </div>
               </div>
-              <Link to="/community">
-                <Button className="bg-emerald-500 hover:bg-emerald-600 font-montserrat font-semibold">
-                  Explore Community Forum →
-                </Button>
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link to="/community">
+                  <Button className="bg-emerald-500 hover:bg-emerald-600 font-montserrat font-semibold px-8 py-3 text-lg">
+                    Join Community →
+                  </Button>
+                </Link>
+                <p className="text-sm text-gray-600">
+                  Free access • Professional network • Expert insights
+                </p>
+              </div>
             </div>
           </div>
         </div>

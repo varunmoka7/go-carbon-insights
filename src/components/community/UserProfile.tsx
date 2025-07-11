@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Edit3, Star, Calendar, Building2, Mail, Shield, Check, X } from 'lucide-react';
+import { User, Edit3, Star, Calendar, Building2, Mail, Shield, Check, X, Camera } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,8 @@ interface UserProfileProps {
     email: string;
     bio: string | null;
     avatar_url: string | null;
+    company: string | null;
+    reputation: number;
     is_gct_team: boolean;
     role: string;
     joined_at: string;
@@ -40,11 +42,43 @@ const UserProfile: React.FC<UserProfileProps> = ({
   const [editData, setEditData] = useState({
     display_name: user.display_name || '',
     bio: user.bio || '',
+    company: user.company || '',
     avatar_url: user.avatar_url || ''
   });
 
   const isOwnProfile = currentUser?.id === user.id;
   const canModerate = currentUser?.is_gct_team || currentUser?.role === 'moderator';
+
+  const handleAvatarUpload = async (file: File) => {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/avatar.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from('community-avatars')
+        .upload(fileName, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage
+        .from('community-avatars')
+        .getPublicUrl(fileName);
+
+      setEditData(prev => ({
+        ...prev,
+        avatar_url: urlData.publicUrl
+      }));
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleAvatarUpload(file);
+    }
+  };
 
   const handleSave = async () => {
     setIsLoading(true);
@@ -54,6 +88,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
         .update({
           display_name: editData.display_name,
           bio: editData.bio,
+          company: editData.company,
           avatar_url: editData.avatar_url,
           updated_at: new Date().toISOString()
         })
@@ -74,6 +109,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
     setEditData({
       display_name: user.display_name || '',
       bio: user.bio || '',
+      company: user.company || '',
       avatar_url: user.avatar_url || ''
     });
     setIsEditing(false);
@@ -96,7 +132,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       .slice(0, 2);
   };
 
-  const reputation = Math.floor(Math.random() * 1000) + 50; // Mock reputation
+  const reputation = user.reputation || 0;
   const topicsCreated = Math.floor(Math.random() * 50) + 1; // Mock metrics
   const repliesPosted = Math.floor(Math.random() * 200) + 10;
 
@@ -105,12 +141,29 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={user.avatar_url || undefined} />
-              <AvatarFallback className="bg-emerald-100 text-emerald-700 text-lg font-semibold">
-                {getInitials(user.display_name || user.username)}
-              </AvatarFallback>
-            </Avatar>
+            <div className="relative">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={user.avatar_url || undefined} />
+                <AvatarFallback className="bg-emerald-100 text-emerald-700 text-lg font-semibold">
+                  {getInitials(user.display_name || user.username)}
+                </AvatarFallback>
+              </Avatar>
+              {isOwnProfile && isEditing && (
+                <label 
+                  htmlFor="avatar-upload"
+                  className="absolute bottom-0 right-0 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-1.5 cursor-pointer shadow-lg"
+                >
+                  <Camera className="h-3 w-3" />
+                </label>
+              )}
+              <input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </div>
             
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -141,6 +194,15 @@ const UserProfile: React.FC<UserProfileProps> = ({
                   <Star className="h-4 w-4 text-yellow-500" />
                   <span>{reputation} reputation</span>
                 </div>
+                {user.company && (
+                  <>
+                    <span>•</span>
+                    <div className="flex items-center gap-1">
+                      <Building2 className="h-4 w-4" />
+                      <span>{user.company}</span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -189,12 +251,16 @@ const UserProfile: React.FC<UserProfileProps> = ({
               </div>
               
               <div>
-                <label className="text-sm font-medium text-gray-700">Avatar URL</label>
-                <Input
-                  value={editData.avatar_url}
-                  onChange={(e) => setEditData(prev => ({ ...prev, avatar_url: e.target.value }))}
-                  placeholder="https://example.com/avatar.jpg"
-                />
+                <label className="text-sm font-medium text-gray-700">Company</label>
+                <div className="relative">
+                  <Building2 className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input
+                    value={editData.company}
+                    onChange={(e) => setEditData(prev => ({ ...prev, company: e.target.value }))}
+                    placeholder="Your organization"
+                    className="pl-10"
+                  />
+                </div>
               </div>
               
               <div className="flex gap-2">

@@ -14,6 +14,7 @@ import SearchBar from '@/components/community/SearchBar';
 import TagCloud from '@/components/community/TagCloud';
 import NotificationBell from '@/components/community/NotificationBell';
 import UserProfile from '@/components/community/UserProfile';
+import OnboardingFlow from '@/components/community/OnboardingFlow';
 import { supabase } from '@/integrations/supabase/client';
 
 interface User {
@@ -34,6 +35,7 @@ const Community = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
     loadCategories();
@@ -111,6 +113,22 @@ const Community = () => {
     loadTopics();
   }, [selectedCategory, categories]);
 
+  const handleGoogleAuth = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/community`
+        }
+      });
+      
+      if (error) throw error;
+    } catch (error) {
+      console.error('Google auth error:', error);
+      throw error;
+    }
+  };
+
   const handleAuth = async (email: string, password: string, isSignUp: boolean, additionalData?: any) => {
     try {
       if (isSignUp) {
@@ -134,13 +152,18 @@ const Community = () => {
               email,
               username: additionalData.username,
               display_name: additionalData.display_name,
+              company: additionalData.company,
               role: 'member',
-              is_gct_team: false
+              is_gct_team: false,
+              reputation: 0
             });
 
           if (profileError && profileError.code !== '23505') {
             // Ignore duplicate key errors (user already exists)
             throw profileError;
+          } else {
+            // Show onboarding for new users
+            setShowOnboarding(true);
           }
         }
       } else {
@@ -215,16 +238,25 @@ const Community = () => {
       <div className="bg-white border-b border-emerald-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
-            <div className="flex items-center gap-3">
-              <MessageSquare className="h-8 w-8 text-emerald-600" />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  GoCarbonTracker Community
-                </h1>
-                <p className="text-sm text-gray-600">
-                  Global hub for carbon tracking professionals
-                </p>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3">
+                <MessageSquare className="h-8 w-8 text-emerald-600" />
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    GoCarbonTracker Community
+                  </h1>
+                  <p className="text-sm text-gray-600">
+                    Global hub for carbon tracking professionals
+                  </p>
+                </div>
               </div>
+              <a 
+                href="https://gocarbontracker.com" 
+                target="_blank" 
+                className="text-emerald-400 hover:text-emerald-600 text-sm font-medium"
+              >
+                ← Back to Home
+              </a>
             </div>
             
               <div className="flex items-center gap-4">
@@ -342,7 +374,19 @@ const Community = () => {
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
         onAuth={handleAuth}
+        onGoogleAuth={handleGoogleAuth}
       />
+
+      {/* Onboarding Flow */}
+      {showOnboarding && user && (
+        <OnboardingFlow
+          user={user}
+          onComplete={() => {
+            setShowOnboarding(false);
+            checkAuth(); // Refresh user data after onboarding
+          }}
+        />
+      )}
     </div>
   );
 };

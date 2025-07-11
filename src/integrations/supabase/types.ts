@@ -359,6 +359,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bio: string | null
+          company: string | null
           created_at: string
           display_name: string | null
           email: string
@@ -367,6 +368,7 @@ export type Database = {
           is_gct_team: boolean
           joined_at: string
           last_active: string | null
+          reputation: number | null
           role: string
           updated_at: string
           username: string
@@ -374,6 +376,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           bio?: string | null
+          company?: string | null
           created_at?: string
           display_name?: string | null
           email: string
@@ -382,6 +385,7 @@ export type Database = {
           is_gct_team?: boolean
           joined_at?: string
           last_active?: string | null
+          reputation?: number | null
           role?: string
           updated_at?: string
           username: string
@@ -389,6 +393,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           bio?: string | null
+          company?: string | null
           created_at?: string
           display_name?: string | null
           email?: string
@@ -397,6 +402,7 @@ export type Database = {
           is_gct_team?: boolean
           joined_at?: string
           last_active?: string | null
+          reputation?: number | null
           role?: string
           updated_at?: string
           username?: string
