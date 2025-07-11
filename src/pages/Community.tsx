@@ -16,6 +16,7 @@ import NotificationBell from '@/components/community/NotificationBell';
 import UserProfile from '@/components/community/UserProfile';
 import OnboardingFlow from '@/components/community/OnboardingFlow';
 import { supabase } from '@/integrations/supabase/client';
+import { Link } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -250,13 +251,7 @@ const Community = () => {
                   </p>
                 </div>
               </div>
-              <a 
-                href="https://gocarbontracker.com" 
-                target="_blank" 
-                className="text-emerald-400 hover:text-emerald-600 text-sm font-medium"
-              >
-                ← Back to Home
-              </a>
+              <Link to="/" className="text-emerald-400 hover:text-emerald-600 text-sm font-medium">← Back to Home</Link>
             </div>
             
               <div className="flex items-center gap-4">
