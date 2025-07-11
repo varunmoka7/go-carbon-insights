@@ -34,6 +34,7 @@ import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 import NavigationDebugger from "./components/NavigationDebugger";
 import NavigationLoader from "./components/NavigationLoader";
+import EmissionTracking from "./pages/EmissionTracking";
 
 const queryClient = new QueryClient();
 
@@ -105,6 +106,7 @@ const App = () => {
                         <Tracking />
                       </Layout>
                     } />
+                    <Route path="/emission-tracking" element={<EmissionTracking />} />
                     <Route path="/scope1" element={
                       <Layout>
                         <Scope1 />
