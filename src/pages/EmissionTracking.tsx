@@ -2,6 +2,8 @@ import React from 'react';
 import sectorEmissions from '@/data/sources/sector-emissions-sources.json';
 import { Treemap, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const acronymMap: Record<string, string> = {
   'Fossil fuel electricity': 'FFE',
@@ -131,6 +133,7 @@ const TreemapTooltip = ({ active, payload }: any) => {
 };
 
 const EmissionTracking: React.FC = () => {
+  const navigate = useNavigate();
   if (!Array.isArray(sectorEmissions.sectors) || sectorEmissions.sectors.length === 0) {
     return (
       <div className="min-h-screen bg-[#F5F5DC] flex items-center justify-center">
@@ -143,6 +146,9 @@ const EmissionTracking: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F5F5DC]">
       <section className="container mx-auto py-8">
+        <div className="mb-4 flex justify-start">
+          <Button variant="outline" onClick={() => navigate('/')}>Back to Home</Button>
+        </div>
         <Card>
           <CardHeader>
             <CardTitle className="text-center text-2xl font-bold">GLOBAL SECTORS EMISSIONS DISTRIBUTION</CardTitle>
