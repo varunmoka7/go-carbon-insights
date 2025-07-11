@@ -120,6 +120,11 @@
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
   }
+
+  /* Global text color override - set all text elements to black */
+  body, p, h1, h2, h3, h4, h5, h6, span, div, a, button, input, textarea, label, li, td, th {
+    color: black !important;
+  }
 }
 
 @layer utilities {
