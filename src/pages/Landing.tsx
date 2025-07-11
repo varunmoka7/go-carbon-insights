@@ -126,9 +126,9 @@ const Landing = () => {
                 </div>
                  <span className="text-3xl font-bold text-white drop-shadow-lg">GoCarbonTracker</span>
                </div>
-               <span className="text-lg text-white/90 font-medium drop-shadow">
-                 Global Supply Chain Emissions Intelligence Platform
-               </span>
+                <span className="text-lg font-medium drop-shadow" style={{ color: '#228B22' }}>
+                  Global Supply Chain Emissions Intelligence Platform
+                </span>
             </div>
           </div>
 
@@ -250,39 +250,39 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Platform Features Section - Cloud Texture */}
-      <div className="py-20 bg-gradient-to-b from-muted to-atmospheric-cloud/50 relative">
+      {/* Platform Features Section */}
+      <div className="py-20 relative" style={{ background: 'linear-gradient(135deg, #F0FFF0 0%, #E8F5E8 50%, #DFF0DF 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">Platform Features</h2>
-            <p className="text-xl text-gray-700 font-medium">
+            <h2 className="text-5xl font-bold mb-6" style={{ color: '#228B22' }}>Platform Features</h2>
+            <p className="text-xl font-medium" style={{ color: '#3A6B47' }}>
               Tools designed to drive transparency and collaborative decarbonization
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border-2 border-atmospheric-primary/20 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-atmospheric-primary/50">
-                <div className="w-16 h-16 bg-gradient-to-br from-atmospheric-light/20 to-atmospheric-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2 border-atmospheric-primary/30">
-                  <feature.icon className="h-8 w-8 text-atmospheric-primary" />
+              <div key={index} className="group bg-white/90 backdrop-blur-sm rounded-3xl shadow-lg border-2 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2" style={{ borderColor: '#50C878', borderLeftWidth: '4px' }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2" style={{ background: 'linear-gradient(135deg, #50C878 0%, #228B22 100%)', borderColor: '#228B22' }}>
+                  <feature.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
-                <p className="text-gray-700 leading-relaxed font-medium">{feature.description}</p>
+                <h3 className="text-2xl font-semibold mb-4" style={{ color: '#1E4A2B' }}>{feature.title}</h3>
+                <p className="leading-relaxed font-medium" style={{ color: '#3A6B47' }}>{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Why Choose GoCarbonTracker Section - Deep Blue Gradient */}
-      <div className="py-20 bg-gradient-to-r from-atmospheric-primary to-atmospheric-deep">
+      {/* Why Choose GoCarbonTracker Section */}
+      <div className="py-20" style={{ background: 'linear-gradient(135deg, #228B22 0%, #50C878 50%, #9CAF88 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-5xl font-bold text-white mb-8 drop-shadow-lg">
                 Why Choose GoCarbonTracker?
               </h2>
-              <p className="text-xl text-white/90 mb-10 font-medium leading-relaxed drop-shadow">
+              <p className="text-xl mb-10 font-medium leading-relaxed drop-shadow" style={{ color: '#E8F5E8' }}>
                 As the definitive platform for supply chain carbon intelligence, we provide unparalleled visibility 
                 into global emissions patterns, industry-specific benchmarking, and access to the world's largest 
                 collaborative network of decarbonization experts driving measurable climate outcomes.
@@ -291,26 +291,26 @@ const Landing = () => {
                 {whyTrackingMatters.map((reason, index) => (
                   <div key={index} className="flex items-start space-x-4 group">
                     <div className="flex-shrink-0">
-                      <CheckCircle className="h-6 w-6 text-atmospheric-light group-hover:scale-110 transition-transform mt-1" />
+                      <CheckCircle className="h-6 w-6 group-hover:scale-110 transition-transform mt-1" style={{ color: '#50C878' }} />
                     </div>
-                    <span className="text-lg text-white/95 font-medium leading-relaxed drop-shadow">{reason}</span>
+                    <span className="text-lg font-medium leading-relaxed drop-shadow" style={{ color: '#F0FFF0' }}>{reason}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="relative">
-              {/* Cloud-based infographic */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500 border-2 border-white/20">
+              {/* Collaboration infographic */}
+              <div className="backdrop-blur-sm rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500 border-2" style={{ backgroundColor: 'rgba(30, 74, 43, 0.2)', borderColor: 'rgba(255, 255, 255, 0.3)' }}>
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">The Collaboration Imperative</h3>
-                  <p className="text-gray-600">Working together for collective impact</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">The Collaboration Imperative</h3>
+                  <p style={{ color: '#9CAF88' }}>Working together for collective impact</p>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   {collaborationBenefits.map((benefit, index) => (
-                    <div key={index} className="text-center p-4 rounded-2xl bg-atmospheric-cloud/50 hover:bg-atmospheric-light/20 transition-colors border border-atmospheric-primary/20">
-                      <benefit.icon className="h-8 w-8 mx-auto mb-3 text-atmospheric-primary" />
-                      <div className="text-sm font-semibold text-gray-900 mb-2">{benefit.title}</div>
-                      <div className="text-xs text-gray-600">{benefit.description}</div>
+                    <div key={index} className="text-center p-4 rounded-2xl transition-colors border" style={{ backgroundColor: 'rgba(80, 200, 120, 0.1)', borderColor: 'rgba(80, 200, 120, 0.3)' }}>
+                      <benefit.icon className="h-8 w-8 mx-auto mb-3" style={{ color: '#50C878' }} />
+                      <div className="text-sm font-semibold text-white mb-2">{benefit.title}</div>
+                      <div className="text-xs" style={{ color: '#9CAF88' }}>{benefit.description}</div>
                     </div>
                   ))}
                 </div>
@@ -320,30 +320,47 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Footer Section - Deep Blue Gradient */}
-      <div className="py-20 bg-gradient-to-r from-atmospheric-deep to-atmospheric-primary">
+      {/* Footer Section - Ready to Navigate Your Carbon Future? */}
+      <div className="py-20" style={{ background: 'linear-gradient(135deg, #1E4A2B 0%, #228B22 50%, #2D5A3D 100%)' }}>
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-lg">
             Ready to Navigate Your Carbon Future?
           </h2>
-          <p className="text-xl text-white/90 mb-10 font-medium leading-relaxed drop-shadow">
+          <p className="text-xl mb-10 font-medium leading-relaxed drop-shadow" style={{ color: '#9CAF88' }}>
             Join the world's most comprehensive supply chain emissions intelligence platform. Access granular 
             industry benchmarking, identify critical hotspots, and collaborate with leading experts to implement 
             science-based decarbonization strategies that deliver measurable climate impact.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link to="/home">
-              <Button size="lg" className="bg-white/90 backdrop-blur-sm hover:bg-atmospheric-light text-gray-900 hover:text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-white/20">
+              <Button 
+                size="lg" 
+                className="text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl hover:opacity-90"
+                style={{ background: 'linear-gradient(135deg, #50C878 0%, #228B22 100%)' }}
+              >
                 Start Tracking Now
               </Button>
             </Link>
             <Link to="/methodology">
-              <Button size="lg" variant="outline" className="border-2 border-white/80 text-white hover:bg-white/20 backdrop-blur-sm px-10 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 px-10 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                style={{ borderColor: '#50C878', color: '#50C878' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#50C878';
+                  e.currentTarget.style.color = 'white';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#50C878';
+                }}
+              >
                 Explore Our Intelligence
               </Button>
             </Link>
           </div>
-          <p className="text-white/80 mt-6 text-sm drop-shadow">
+          <p className="mt-6 text-sm drop-shadow" style={{ color: '#9CAF88' }}>
             ✓ Global emissions database  ✓ Industry-specific benchmarking  ✓ Expert collaboration network
           </p>
         </div>
