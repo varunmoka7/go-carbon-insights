@@ -153,6 +153,12 @@ const Landing = () => {
                 <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
+            <Link to="/community">
+              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl border-2 border-emerald-600">
+                <Users className="mr-3 h-6 w-6" />
+                Join Our Community
+              </Button>
+            </Link>
             <Link to="/tracking">
               <Button variant="outline" size="lg" className="border-3 border-teal-600 text-teal-700 hover:bg-teal-50 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
                 View Emissions Intelligence

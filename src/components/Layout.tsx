@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu, ChevronDown } from 'lucide-react';
+import { BarChart, Target, FileText, Home, Users, Settings, Search, Bell, Menu, ChevronDown, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -44,7 +44,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     return isCollapsed ? 'ml-16' : 'ml-72';
   };
 
-  // Simplified main navigation (5 core items + search + profile)
+  // Simplified main navigation (6 core items + search + profile)
   const mainNavigation = [
     { name: t('navigation:home'), href: '/home', icon: Home },
     { name: t('navigation:dashboard'), href: '/dashboard', icon: BarChart },
@@ -60,6 +60,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       ]
     },
     { name: t('navigation:decarbonization'), href: '/decarbonization', icon: Target },
+    { name: 'Community', href: '/community', icon: MessageSquare },
     { name: t('navigation:donate'), href: '/donate', icon: Users },
   ];
 
@@ -101,6 +102,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       links: [
         { name: 'Documentation', href: '/methodology' },
         { name: t('navigation:reference'), href: '/reference' },
+        { name: 'Community', href: '/community' },
         { name: 'Support', href: '/contact' },
         { name: 'Privacy Policy', href: '/about' },
         { name: t('navigation:donate'), href: '/donate' },

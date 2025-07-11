@@ -297,3 +297,21 @@ button[aria-label*="Edit with Lovable"] {
   display: none !important;
 }
 
+/* ==========================================================================
+   COMMUNITY PLATFORM STYLES
+   ========================================================================== */
+
+/* Expert badge pulse animation */
+.gct-team-badge {
+  animation: expertPulse 2s infinite;
+}
+
+@keyframes expertPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
