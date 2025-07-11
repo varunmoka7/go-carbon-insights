@@ -1,251 +1,172 @@
-import React, { useMemo } from 'react';
-import { useIndustryTaxonomy } from '@/hooks/useIndustryTaxonomy';
+import React from 'react';
 import sectorEmissions from '@/data/sources/sector-emissions-sources.json';
-import { ResponsiveContainer, Tooltip, Rectangle } from 'recharts';
+import { Treemap, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
-// --- Hero Section ---
-const HeroSection = () => (
-  <section className="bg-gradient-to-r from-green-200 to-blue-100 py-12 text-center">
-    <h1 className="text-4xl font-bold mb-2">Global Sector Emissions Intelligence</h1>
-    <p className="text-lg max-w-2xl mx-auto">
-      Explore emissions data and decarbonization trends across major sectors and their industries. Track Scope 1, 2, and 3 emissions, benchmark sectors, and discover actionable insights for a net zero future.
-    </p>
-  </section>
-);
+const acronymMap: Record<string, string> = {
+  'Fossil fuel electricity': 'FFE',
+  'Heat generation': 'HG',
+  'Other energy': 'OE',
+  'Steel production': 'SP',
+  'Cement production': 'CP',
+  'Chemicals': 'CH',
+  'Other manufacturing': 'OM',
+  'Livestock': 'LS',
+  'Crop production': 'CRP',
+  'Land use change': 'LUC',
+  'Forestry': 'FR',
+  'Road transport': 'RT',
+  'Aviation': 'AV',
+  'Shipping': 'SH',
+  'Rail transport': 'RTS',
+  'Iron ore mining': 'IOM',
+  'Coal mining': 'CM',
+  'Upstream operations': 'UO',
+  'Refining': 'RF',
+  'Data centers': 'DC',
+  'Food processing': 'FP',
+  'Distribution': 'DS',
+  'Medical equipment': 'ME',
+  'Lighting & appliances': 'LA',
+  'Energy losses': 'EL',
+  'Cooling systems': 'CS',
+  'Residential heating': 'RH',
+  'Commercial buildings': 'CB',
+  'Fugitive emissions': 'FE',
+  'Buildings': 'BLD',
+  'Other energy uses': 'OEU',
+};
+const getAcronym = (name: string) => acronymMap[name] || name.split(' ').map(w => w[0]).join('').toUpperCase();
 
-/**
- * SectorEmissionsHeatmap - Enterprise-grade heatmap for all 21 sectors using Recharts.
- * @param sectors - Array of sector objects with sector, absolute, color, and percentage fields.
- */
-const SectorEmissionsHeatmap: React.FC<{ sectors: any[] }> = ({ sectors }) => {
-  // Convert absolute emissions to numbers and find max for color scaling
-  const sectorData = sectors.map(s => ({
-    ...s,
-    value: parseFloat(s.absolute),
-    label: s.absolute
-  }));
-  
-  const maxEmissions = Math.max(...sectorData.map(s => s.value));
-  
-  // Create heatmap data - arrange sectors in a grid
-  const gridSize = 7; // 7 columns to fit 21 sectors nicely
-  const heatmapData = sectorData.map((sector, index) => ({
-    x: index % gridSize,
-    y: Math.floor(index / gridSize),
-    sector: sector.sector,
-    value: sector.value,
-    percentage: sector.percentage,
-    color: sector.color,
-    label: sector.label
-  }));
-
-  // Color scale function
-  const getColor = (value: number) => {
-    const intensity = value / maxEmissions;
-    if (intensity > 0.8) return '#dc2626'; // Red for highest
-    if (intensity > 0.6) return '#ea580c'; // Orange
-    if (intensity > 0.4) return '#f59e0b'; // Amber
-    if (intensity > 0.2) return '#84cc16'; // Lime
-    return '#22c55e'; // Green for lowest
-  };
-
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-white p-4 border rounded-lg shadow-lg">
-          <p className="font-bold text-lg">{data.sector}</p>
-          <p className="text-sm text-gray-600">Emissions: {data.label}</p>
-          <p className="text-sm text-gray-600">Share: {data.percentage}%</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
-  return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          Sector Emissions Heatmap
-          <Badge variant="secondary" className="ml-2">All 21 sectors</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div style={{ width: '100%', height: 500 }}>
-          <ResponsiveContainer>
-            <svg width="100%" height="100%">
-              {heatmapData.map((item, index) => (
-                <Rectangle
-                  key={index}
-                  x={item.x * (100 / gridSize)}
-                  y={item.y * (100 / Math.ceil(sectorData.length / gridSize))}
-                  width={100 / gridSize}
-                  height={100 / Math.ceil(sectorData.length / gridSize)}
-                  fill={getColor(item.value)}
-                  stroke="#fff"
-                  strokeWidth={1}
-                  opacity={0.8}
-                  onMouseEnter={(e) => {
-                    const target = e.target as SVGElement;
-                    target.style.opacity = '1';
-                    target.style.strokeWidth = '2';
-                  }}
-                  onMouseLeave={(e) => {
-                    const target = e.target as SVGElement;
-                    target.style.opacity = '0.8';
-                    target.style.strokeWidth = '1';
-                  }}
-                >
-                  <title>{`${item.sector}: ${item.label} (${item.percentage}%)`}</title>
-                </Rectangle>
-              ))}
-              
-              {/* Sector labels */}
-              {heatmapData.map((item, index) => (
-                <text
-                  key={`label-${index}`}
-                  x={item.x * (100 / gridSize) + (100 / gridSize) / 2}
-                  y={item.y * (100 / Math.ceil(sectorData.length / gridSize)) + (100 / Math.ceil(sectorData.length / gridSize)) / 2}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize="10"
-                  fill="#fff"
-                  fontWeight="bold"
-                  style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
-                >
-                  {item.sector.split(' ')[0]}
-                </text>
-              ))}
-            </svg>
-          </ResponsiveContainer>
-        </div>
-        
-        {/* Legend */}
-        <div className="mt-4 flex justify-center">
-          <div className="flex items-center gap-4 text-sm">
-            <span>Low</span>
-            <div className="flex">
-              {['#22c55e', '#84cc16', '#f59e0b', '#ea580c', '#dc2626'].map((color, i) => (
-                <div
-                  key={i}
-                  className="w-6 h-4"
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-            <span>High</span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
+// Add color scale logic
+const getColor = (value: number) => {
+  if (value > 5) return '#d73027'; // Very high (red)
+  if (value > 2) return '#f46d43'; // High (orange)
+  if (value > 1) return '#fee08b'; // Medium (yellow)
+  if (value > 0.5) return '#abdda4'; // Low (light green)
+  return '#66bd63'; // Very low (green)
 };
 
-// --- Sector Card ---
-const SectorCard = ({ sector, isTopEmitter }: { sector: any, isTopEmitter: boolean }) => (
-  <div className={`bg-white rounded-xl shadow p-6 flex flex-col gap-2 border-t-4 ${isTopEmitter ? 'border-red-500' : 'border-blue-300'} hover:shadow-lg transition relative`}>
-    {isTopEmitter && <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">Top Emitter</span>}
-    <div className="flex justify-between items-center">
-      <h3 className="text-xl font-bold">{sector.sector}</h3>
-      <span className="text-xs px-2 py-1 rounded" style={{ background: sector.color, color: '#fff' }}>{sector.percentage}%</span>
-    </div>
-    <div className="text-gray-600 text-sm">Total Emissions: <span className="font-semibold">{sector.absolute}</span></div>
-    <div className="flex flex-wrap gap-2 text-xs mt-2">
-      {sector.subcategories?.map((sub: any) => (
-        <span key={sub.name} className="bg-gray-100 text-gray-700 px-2 py-1 rounded">{sub.name}: {sub.value}</span>
-      ))}
-    </div>
-    <div className="mt-2">
-      <div className="w-full bg-gray-200 rounded-full h-2">
-        <div className="h-2 rounded-full" style={{ width: `${sector.percentage}%`, background: sector.color }}></div>
+const treemapData = Array.isArray(sectorEmissions.sectors)
+  ? sectorEmissions.sectors.map((sector: any) => ({
+      name: getAcronym(sector.sector),
+      fullName: sector.sector,
+      value: parseFloat(sector.absolute),
+      color: getColor(parseFloat(sector.absolute)),
+      children: sector.subcategories
+        ? sector.subcategories.map((sub: any) => ({
+            name: getAcronym(sub.name),
+            fullName: sub.name,
+            value: parseFloat(sub.value),
+            color: getColor(parseFloat(sub.value)),
+          }))
+        : [],
+    }))
+  : [];
+
+function TreemapContent(props: any) {
+  // Debug: log props if blank page
+  if (!props || typeof props.x !== 'number' || typeof props.y !== 'number' || typeof props.width !== 'number' || typeof props.height !== 'number') {
+    console.log('TreemapContent props:', props);
+    return null;
+  }
+  const { x, y, width, height, name, fullName, value, color } = props;
+  const minWidth = 80;
+  const minHeight = 40;
+  const showText = width > minWidth && height > minHeight;
+  const fitsFullName = showText && (fullName && fullName.length * 8 < width - 16);
+  return (
+    <g>
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        style={{ fill: color || '#8884d8', stroke: '#fff', opacity: 0.9 }}
+        rx={8}
+      />
+      {showText && (
+        <>
+          <text
+            x={x + width / 2}
+            y={y + height / 2 - 4}
+            textAnchor="middle"
+            fill="#000"
+            fontWeight="bold"
+            fontSize={16}
+            style={{ pointerEvents: 'none', fontFamily: 'Inter, Arial, sans-serif' }}
+          >
+            {fitsFullName ? fullName : name}
+          </text>
+          <text
+            x={x + width / 2}
+            y={y + height / 2 + 16}
+            textAnchor="middle"
+            fill="#000"
+            fontWeight="normal"
+            fontSize={14}
+            style={{ pointerEvents: 'none', fontFamily: 'Inter, Arial, sans-serif' }}
+          >
+            {value} Gt
+          </text>
+        </>
+      )}
+    </g>
+  );
+}
+// Wrap TreemapContent with React.forwardRef for recharts compatibility
+const ForwardedTreemapContent = React.forwardRef<SVGGElement, any>((props, ref) => <TreemapContent {...props} ref={ref} />);
+
+const TreemapTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div style={{ background: '#fff', color: '#000', border: '1px solid #ccc', borderRadius: 8, padding: 12, minWidth: 180, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <div style={{ fontWeight: 700, fontSize: 16 }}>{data.fullName || data.name}</div>
+        <div style={{ fontSize: 14 }}>Emissions: <b>{data.value} GtCO₂eq</b></div>
       </div>
-    </div>
-    <button className="mt-2 bg-[#FFCA28] text-[#2E7D32] px-4 py-1 rounded font-semibold hover:bg-yellow-300 transition">View Details</button>
-  </div>
-);
-
-// --- Scope Education Panel ---
-const ScopeEducationPanel = () => (
-  <section className="my-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div className="bg-green-100 rounded-xl p-6 text-center">
-      <h4 className="font-bold mb-2">Scope 1</h4>
-      <p>Direct emissions from owned or controlled sources (e.g., fuel combustion, process emissions).</p>
-    </div>
-    <div className="bg-blue-100 rounded-xl p-6 text-center">
-      <h4 className="font-bold mb-2">Scope 2</h4>
-      <p>Indirect emissions from the generation of purchased electricity, steam, heating, and cooling.</p>
-    </div>
-    <div className="bg-yellow-100 rounded-xl p-6 text-center">
-      <h4 className="font-bold mb-2">Scope 3</h4>
-      <p>All other indirect emissions in the value chain (e.g., supply chain, product use, waste).</p>
-    </div>
-  </section>
-);
-
-// --- Why Track Section ---
-const WhyTrackSection = () => (
-  <section className="my-12 text-center">
-    <h2 className="text-2xl font-bold mb-2">Why Track Sector Emissions?</h2>
-    <p className="mb-2">8 sectors = 80% of global emissions</p>
-    <p className="mb-2">Benchmarking helps identify decarbonization opportunities</p>
-    <p>Transparent data drives climate action and regulatory compliance</p>
-  </section>
-);
-
-// --- Call to Action ---
-const CallToAction = () => (
-  <section className="my-12 text-center">
-    <button className="bg-[#2E7D32] text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-[#256029] transition">Explore Our Sector Database</button>
-    <div className="mt-2">
-      <a href="#" className="text-blue-600 underline mx-2">Request Industry Coverage</a>
-      <a href="#" className="text-blue-600 underline mx-2">Contribute Data</a>
-    </div>
-  </section>
-);
-
-// --- Roadmap Section ---
-const RoadmapSection = () => (
-  <section className="my-12 text-center">
-    <h2 className="text-xl font-bold mb-2">Roadmap / Coming Soon</h2>
-    <p>More sectors, deeper industry breakdowns, and company-level benchmarking coming soon.</p>
-  </section>
-);
+    );
+  }
+  return null;
+};
 
 const EmissionTracking: React.FC = () => {
-  // Fetch all taxonomy data (sectors/industries)
-  const { data: taxonomyData = [] } = useIndustryTaxonomy();
-  // Use the sector emissions JSON for sector-level emissions
-  const sectors = sectorEmissions.sectors;
-  // Sort sectors by emission percentage (descending)
-  const sortedSectors = useMemo(() => [...sectors].sort((a, b) => b.percentage - a.percentage), [sectors]);
-  // Top 3 emitters for badge
-  const topEmitters = sortedSectors.slice(0, 3).map(s => s.sector);
-
+  if (!Array.isArray(sectorEmissions.sectors) || sectorEmissions.sectors.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#F5F5DC] flex items-center justify-center">
+        <div style={{ color: 'red', fontWeight: 600, fontSize: 20, textAlign: 'center' }}>
+          No sector emissions data found. Please check your data source.
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-[#F5F5DC]">
-      <HeroSection />
-      {/* Sector Explorer */}
-      <section className="container mx-auto py-12">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sector Explorer</h2>
-        <SectorEmissionsHeatmap sectors={sortedSectors} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedSectors.map(sector => (
-            <SectorCard key={sector.sector} sector={sector} isTopEmitter={topEmitters.includes(sector.sector)} />
-          ))}
-        </div>
+      <section className="container mx-auto py-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-center text-2xl font-bold">GLOBAL SECTORS EMISSIONS DISTRIBUTION</CardTitle>
+          </CardHeader>
+          <CardContent style={{ padding: 0 }}>
+            <div style={{ width: '100%', minHeight: '90vh', height: '90vh' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <Treemap
+                  data={treemapData}
+                  dataKey="value"
+                  stroke="#fff"
+                  fill="#8884d8"
+                  aspectRatio={16 / 9}
+                  content={<TreemapContent />}
+                >
+                  <Tooltip content={<TreemapTooltip />} />
+                </Treemap>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
       </section>
-      <ScopeEducationPanel />
-      <WhyTrackSection />
-      <CallToAction />
-      <RoadmapSection />
     </div>
   );
 };
 
-export default EmissionTracking;
-// ---
-// This page uses sector-emissions-sources.json for sector-level emissions and taxonomy for future industry-level expansion.
-// Add more detailed sector/industry breakdowns and company-level data as available. 
+export default EmissionTracking; 
