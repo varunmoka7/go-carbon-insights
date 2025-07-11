@@ -95,14 +95,11 @@ const Landing = () => {
   return (
     <div className="min-h-screen">
       {/* Demo Mode Notice */}
-      <div className="bg-gradient-to-r from-atmospheric-primary to-atmospheric-deep text-white py-3">
+      <div className="bg-gradient-to-r from-atmospheric-primary to-atmospheric-deep text-white py-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Alert className="border-0 bg-transparent text-white">
-            <AlertCircle className="h-4 w-4 text-white" />
-            <AlertDescription className="text-white font-medium">
-              <span className="font-bold">PROTOTYPE DEMO:</span> This is a development prototype showcasing GoCarbonTracker's capabilities with mock data. Currently under active development.
-            </AlertDescription>
-          </Alert>
+          <div className="text-center">
+            <span className="text-sm font-medium">Prototype Demo</span>
+          </div>
         </div>
       </div>
 
@@ -136,17 +133,17 @@ const Landing = () => {
           </div>
 
           {/* Enhanced Main Heading */}
-          <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 animate-fade-in drop-shadow-lg">
+          <h1 className="text-4xl md:text-7xl font-bold mb-8 animate-fade-in drop-shadow-lg" style={{ color: '#1E4A2B' }}>
             <span className="block animate-slide-in-right">The GPS of</span>
-            <span className="block text-atmospheric-light animate-slide-in-right delay-300">Corporate Carbon</span>
+            <span className="block animate-slide-in-right delay-300">Corporate Carbon</span>
             <span className="block animate-slide-in-right delay-500">Emissions</span>
           </h1>
 
           {/* Enhanced Subtitle with Mission Focus */}
-          <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-700 font-medium drop-shadow">
+          <p className="text-xl md:text-2xl mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-700 font-medium drop-shadow" style={{ color: '#1E4A2B' }}>
             Navigate the complex landscape of global supply chain emissions with precision. Our platform delivers 
-            <span className="text-atmospheric-light font-bold"> granular industry benchmarking</span>, identifies critical emission hotspots, 
-            and connects you with a <span className="text-atmospheric-cloud font-bold">collaborative expert network</span> driving 
+            <span className="font-bold"> granular industry benchmarking</span>, identifies critical emission hotspots, 
+            and connects you with a <span className="font-bold">collaborative expert network</span> driving 
             real decarbonization outcomes across all sectors.
           </p>
 
