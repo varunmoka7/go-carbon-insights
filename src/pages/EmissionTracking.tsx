@@ -53,7 +53,7 @@ const EmissionTracking: React.FC = () => {
       <Sidebar />
       <main className="emission-tracking-main flex-1 ml-56 p-8">
         <div className="mb-4">
-          <a href="https://gocarbontracker.net" className="inline-block bg-[#4FC3F7] text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-[#2E7D32] transition-colors">← Back to Home</a>
+          <Link to="/" className="inline-block bg-[#4FC3F7] text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-[#2E7D32] transition-colors">← Back to Home</Link>
         </div>
         <Header />
         <section className="emission-tracking-stats grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
