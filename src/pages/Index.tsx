@@ -107,6 +107,11 @@ const Index = () => {
             Explore our comprehensive carbon management tools and start tracking your emissions today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/community">
+              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 px-8 py-3 font-montserrat font-semibold">
+                Join Community Now
+              </Button>
+            </Link>
             <Link to="/dashboard">
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 px-8 py-3">
                 View Dashboard
@@ -117,6 +122,30 @@ const Index = () => {
                 Start Tracking
               </Button>
             </Link>
+          </div>
+          
+          {/* Community CTA Section */}
+          <div className="mt-16 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-8 border border-emerald-200">
+            <div className="text-center">
+              <h3 className="text-2xl font-montserrat font-semibold text-emerald-600 mb-4">
+                Join Our Professional Community
+              </h3>
+              <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
+                Connect with carbon accounting experts, discuss Scope 3 emissions, supply chain decarbonization, 
+                GHG Protocol implementation, and ESG reporting best practices.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-emerald-600 mb-6">
+                <span>• Expert Knowledge Sharing</span>
+                <span>• Professional Discussions</span>
+                <span>• Industry Best Practices</span>
+                <span>• Networking Opportunities</span>
+              </div>
+              <Link to="/community">
+                <Button className="bg-emerald-600 hover:bg-emerald-700 font-montserrat font-semibold">
+                  Explore Community Forum →
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

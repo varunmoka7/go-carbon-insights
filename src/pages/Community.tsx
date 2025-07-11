@@ -176,6 +176,12 @@ const Community = () => {
   };
 
   const filteredTopics = topics.filter((topic: any) => {
+    // Filter for varun_moka_gct knowledge base content
+    const isExpertContent = topic.author?.username === 'varun_moka' || 
+                           topic.author?.username === 'varun_moka_gct';
+    
+    if (!isExpertContent) return false;
+    
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
@@ -251,47 +257,54 @@ const Community = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Left Sidebar - Categories */}
-          <div className="lg:col-span-1 space-y-6">
-            <CategoryNav
-              categories={categories}
-              activeCategory={selectedCategory}
-              onCategorySelect={setSelectedCategory}
-            />
-            <TagCloud
-              onTagClick={(tag) => console.log('Tag clicked:', tag)}
-              selectedTags={[]}
-            />
-            <CommunityStats />
-          </div>
+      {/* Professional Grid Layout */}
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-0">
+        {/* Left Sidebar - Professional Categories (Full Height) */}
+        <div className="xl:col-span-1 bg-white border-r border-emerald-200">
+          <CategoryNav
+            categories={categories}
+            activeCategory={selectedCategory}
+            onCategorySelect={setSelectedCategory}
+          />
+        </div>
 
-          {/* Main Content - Topics */}
-          <div className="lg:col-span-2">
-            <TopicsList
-              topics={filteredTopics}
-              onTopicSelect={setSelectedTopic}
-            />
-          </div>
+        {/* Main Content Area */}
+        <div className="xl:col-span-3 bg-gray-50">
+          <div className="p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Knowledge Base Content - Topics */}
+              <div className="lg:col-span-2">
+                <TopicsList
+                  topics={filteredTopics}
+                  onTopicSelect={setSelectedTopic}
+                />
+              </div>
 
-          {/* Right Sidebar - Content Upload & Reply Box */}
-          <div className="lg:col-span-1 space-y-6">
-            <ContentUpload
-              onContentUploaded={() => {
-                loadCategories();
-                loadTopics();
-              }}
-              categories={categories}
-              user={user}
-            />
-            <ReplyBox
-              topicId={selectedTopic}
-              onReply={handleReply}
-              isAuthenticated={!!user}
-              onLoginRequired={() => setIsAuthModalOpen(true)}
-            />
+              {/* Right Panel - Stats & Actions */}
+              <div className="lg:col-span-1 space-y-6">
+                <CommunityStats />
+                <TagCloud
+                  onTagClick={(tag) => setSearchQuery(tag)}
+                  selectedTags={[]}
+                />
+                {user && (
+                  <ContentUpload
+                    onContentUploaded={() => {
+                      loadCategories();
+                      loadTopics();
+                    }}
+                    categories={categories}
+                    user={user}
+                  />
+                )}
+                <ReplyBox
+                  topicId={selectedTopic}
+                  onReply={handleReply}
+                  isAuthenticated={!!user}
+                  onLoginRequired={() => setIsAuthModalOpen(true)}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
