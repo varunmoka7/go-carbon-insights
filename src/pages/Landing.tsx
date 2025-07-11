@@ -161,7 +161,7 @@ const Landing = () => {
                 Join Our Community
               </Button>
             </Link>
-            <Link to="/tracking">
+            <Link to="/emission-tracking">
               <Button variant="outline" size="lg" className="border-2 border-white/80 text-white hover:bg-white/20 backdrop-blur-sm px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
                 View Emissions Intelligence
               </Button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Placeholder for sticky sidebar
 const Sidebar = () => (
@@ -51,6 +52,9 @@ const EmissionTracking: React.FC = () => {
     <div className="emission-tracking-root min-h-screen bg-[#F5F5DC] flex">
       <Sidebar />
       <main className="emission-tracking-main flex-1 ml-56 p-8">
+        <div className="mb-4">
+          <Link to="/" className="inline-block bg-[#4FC3F7] text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-[#2E7D32] transition-colors">← Back to Home</Link>
+        </div>
         <Header />
         <section className="emission-tracking-stats grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <StatCard title="Total Emissions" value="41.4M tCO2e" accent="border-[#2E7D32]" />
