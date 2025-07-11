@@ -9,6 +9,10 @@ import ReplyBox from '@/components/community/ReplyBox';
 import CommunityStats from '@/components/community/CommunityStats';
 import AuthModal from '@/components/community/AuthModal';
 import ContentUpload from '@/components/community/ContentUpload';
+import SearchBar from '@/components/community/SearchBar';
+import TagCloud from '@/components/community/TagCloud';
+import NotificationBell from '@/components/community/NotificationBell';
+import UserProfile from '@/components/community/UserProfile';
 import { supabase } from '@/integrations/supabase/client';
 
 interface User {
@@ -210,22 +214,22 @@ const Community = () => {
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Search discussions..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64"
+              <div className="flex items-center gap-4">
+                <SearchBar
+                  onSearch={(query, filters) => {
+                    // Handle search logic here
+                    console.log('Search:', query, filters);
+                  }}
+                  categories={categories}
+                  availableTags={['Scope 3', 'Carbon Accounting', 'GHG Protocol', 'Supply Chain']}
                 />
-              </div>
-              
-              {user ? (
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-600">
-                    Welcome, {user.display_name}!
-                  </span>
+                
+                {user ? (
+                  <div className="flex items-center gap-3">
+                    <NotificationBell userId={user.id} />
+                    <span className="text-sm text-gray-600">
+                      Welcome, {user.display_name}!
+                    </span>
                   <Button
                     onClick={() => supabase.auth.signOut()}
                     variant="outline"
@@ -256,6 +260,10 @@ const Community = () => {
               categories={categories}
               activeCategory={selectedCategory}
               onCategorySelect={setSelectedCategory}
+            />
+            <TagCloud
+              onTagClick={(tag) => console.log('Tag clicked:', tag)}
+              selectedTags={[]}
             />
             <CommunityStats />
           </div>
