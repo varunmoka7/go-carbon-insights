@@ -1,0 +1,39 @@
+# Cursor Rules for GoCarbonTracker Deployment
+
+## Project Overview
+This is a React + Vite + TailwindCSS project deployed on Vercel at gocarbontracker.net
+
+## Automatic Deployment Workflow
+After making any code changes, automatically:
+
+1. **Commit and Push Changes**
+   - Stage all changes: `git add .`
+   - Commit with descriptive message: `git commit -m "Description of changes"`
+   - Push to main branch: `git push origin main`
+
+2. **Trigger Vercel Deployment**
+   - Vercel automatically detects pushes to main branch
+   - Builds the project using `npm run build`
+   - Deploys to production at gocarbontracker.net
+
+3. **Verify Deployment**
+   - Check Vercel dashboard for deployment status
+   - Test the live site at gocarbontracker.net
+   - Report deployment status
+
+## Key Files
+- `src/App.tsx` - Main application component
+- `src/index.css` - Global styles (including text color overrides)
+- `vercel.json` - Vercel deployment configuration
+- `package.json` - Dependencies and build scripts
+
+## Development Commands
+- `npm run dev` - Start development server (localhost:8080)
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+
+## Important Notes
+- Always test changes locally before pushing
+- The site uses Vercel's automatic deployment from GitHub
+- Text color is globally set to black via CSS override
+- Authentication is handled via GitHub Personal Access Token 
