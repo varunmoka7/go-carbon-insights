@@ -19,8 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'montserrat': ['Montserrat', 'sans-serif'],
-				'sans': ['Montserrat', 'system-ui', 'sans-serif'],
+				'inter': ['Inter', 'sans-serif'],
+				'roboto': ['Roboto', 'sans-serif'],
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -65,6 +66,12 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				atmospheric: {
+					light: 'hsl(var(--atmospheric-light))',
+					primary: 'hsl(var(--atmospheric-primary))',
+					deep: 'hsl(var(--atmospheric-deep))',
+					cloud: 'hsl(var(--atmospheric-cloud))'
 				}
 			},
 			borderRadius: {

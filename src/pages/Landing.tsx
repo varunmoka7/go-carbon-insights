@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import Logo from '@/components/ui/Logo';
+import atmosphericHero from '@/assets/atmospheric-hero-bg.jpg';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -92,9 +93,9 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-green-50">
+    <div className="min-h-screen">
       {/* Demo Mode Notice */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3">
+      <div className="bg-gradient-to-r from-atmospheric-primary to-atmospheric-deep text-white py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Alert className="border-0 bg-transparent text-white">
             <AlertCircle className="h-4 w-4 text-white" />
@@ -105,14 +106,18 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Hero Section with Enhanced Animation */}
-      <div className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full opacity-20 animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-green-100 rounded-full opacity-20 animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-teal-200 rounded-full opacity-30 animate-bounce delay-500"></div>
-        </div>
+      {/* Hero Section with Atmospheric Background */}
+      <div 
+        className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8"
+        style={{
+          backgroundImage: `url(${atmosphericHero})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Atmospheric Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20"></div>
 
         <div className="relative max-w-7xl mx-auto text-center">
           {/* Logo with Animation */}
@@ -122,45 +127,45 @@ const Landing = () => {
                 <div className="relative">
                   <Logo size="large" className="h-16 w-auto animate-pulse" />
                 </div>
-                <span className="text-3xl font-bold text-gray-900">GoCarbonTracker</span>
-              </div>
-              <span className="text-lg text-gray-600 font-medium">
-                Global Supply Chain Emissions Intelligence Platform
-              </span>
+                 <span className="text-3xl font-bold text-white drop-shadow-lg">GoCarbonTracker</span>
+               </div>
+               <span className="text-lg text-white/90 font-medium drop-shadow">
+                 Global Supply Chain Emissions Intelligence Platform
+               </span>
             </div>
           </div>
 
           {/* Enhanced Main Heading */}
-          <h1 className="text-4xl md:text-7xl font-bold text-gray-900 mb-8 animate-fade-in">
+          <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 animate-fade-in drop-shadow-lg">
             <span className="block animate-slide-in-right">The GPS of</span>
-            <span className="block text-teal-600 animate-slide-in-right delay-300">Corporate Carbon</span>
+            <span className="block text-atmospheric-light animate-slide-in-right delay-300">Corporate Carbon</span>
             <span className="block animate-slide-in-right delay-500">Emissions</span>
           </h1>
 
           {/* Enhanced Subtitle with Mission Focus */}
-          <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-700 font-medium">
+          <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-700 font-medium drop-shadow">
             Navigate the complex landscape of global supply chain emissions with precision. Our platform delivers 
-            <span className="text-teal-600 font-bold"> granular industry benchmarking</span>, identifies critical emission hotspots, 
-            and connects you with a <span className="text-green-600 font-bold">collaborative expert network</span> driving 
+            <span className="text-atmospheric-light font-bold"> granular industry benchmarking</span>, identifies critical emission hotspots, 
+            and connects you with a <span className="text-atmospheric-cloud font-bold">collaborative expert network</span> driving 
             real decarbonization outcomes across all sectors.
           </p>
 
-          {/* Updated CTA Buttons - Demo Mode */}
+          {/* Cloud-like CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in delay-1000">
             <Link to="/home">
-              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl group border-2 border-teal-600">
+              <Button size="lg" className="bg-white/90 backdrop-blur-sm hover:bg-atmospheric-light text-gray-900 hover:text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl group border-2 border-atmospheric-primary/20">
                 Explore Platform
                 <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link to="/community">
-              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl border-2 border-emerald-600">
+              <Button size="lg" className="bg-atmospheric-primary hover:bg-atmospheric-deep text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-atmospheric-primary">
                 <Users className="mr-3 h-6 w-6" />
                 Join Our Community
               </Button>
             </Link>
             <Link to="/tracking">
-              <Button variant="outline" size="lg" className="border-3 border-teal-600 text-teal-700 hover:bg-teal-50 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
+              <Button variant="outline" size="lg" className="border-2 border-white/80 text-white hover:bg-white/20 backdrop-blur-sm px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
                 View Emissions Intelligence
               </Button>
             </Link>
@@ -168,38 +173,41 @@ const Landing = () => {
 
           {/* Platform Capabilities */}
           <div className="mt-12 animate-fade-in delay-1200">
-            <p className="text-sm text-gray-600 mb-4 font-medium">Platform Capabilities:</p>
-            <div className="text-gray-700 text-lg font-medium max-w-4xl mx-auto">
+            <p className="text-sm text-white/70 mb-4 font-medium">Platform Capabilities:</p>
+            <div className="text-white/90 text-lg font-medium max-w-4xl mx-auto drop-shadow">
               Granular supply chain tracking • Industry-specific benchmarking • Global emissions database • Expert collaboration network
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 animate-fade-in delay-1200">
-            <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/50 transition-all">
-              <div className="text-5xl font-bold text-teal-600 mb-2 group-hover:scale-110 transition-transform">15K+</div>
-              <div className="text-gray-700 font-medium">Global Companies Tracked</div>
+            <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/20 backdrop-blur-sm transition-all">
+              <div className="text-5xl font-bold text-white mb-2 group-hover:scale-110 transition-transform drop-shadow-lg">15K+</div>
+              <div className="text-white/90 font-medium drop-shadow">Global Companies Tracked</div>
             </div>
-            <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/50 transition-all">
-              <div className="text-5xl font-bold text-green-600 mb-2 group-hover:scale-110 transition-transform">50+</div>
-              <div className="text-gray-700 font-medium">Industry Sectors Covered</div>
+            <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/20 backdrop-blur-sm transition-all">
+              <div className="text-5xl font-bold text-atmospheric-light mb-2 group-hover:scale-110 transition-transform drop-shadow-lg">50+</div>
+              <div className="text-white/90 font-medium drop-shadow">Industry Sectors Covered</div>
             </div>
-            <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/50 transition-all">
-              <div className="text-5xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">500+</div>
-              <div className="text-gray-700 font-medium">Expert Network Members</div>
+            <div className="text-center group cursor-pointer p-4 rounded-lg hover:bg-white/20 backdrop-blur-sm transition-all">
+              <div className="text-5xl font-bold text-atmospheric-cloud mb-2 group-hover:scale-110 transition-transform drop-shadow-lg">500+</div>
+              <div className="text-white/90 font-medium drop-shadow">Expert Network Members</div>
             </div>
           </div>
         </div>
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-teal-600 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-teal-600 rounded-full mt-2 animate-pulse"></div>
+          <div className="w-6 h-10 border-2 border-white/80 rounded-full flex justify-center backdrop-blur-sm">
+            <div className="w-1 h-3 bg-white/80 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </div>
 
-      {/* Understanding Supply Chain Emissions Section */}
-      <div className="py-20 bg-white">
+      {/* Understanding Supply Chain Emissions Section - Stratosphere */}
+      <div className="py-20 bg-muted relative">
+        {/* Cloud border effect */}
+        <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white to-transparent"></div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-gray-900 mb-6">Understanding Supply Chain Emissions</h2>
@@ -211,12 +219,12 @@ const Landing = () => {
           
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             {scopeEducation.map((scope, index) => (
-              <div key={index} className={`group bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-l-4 ${scope.color}`}>
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${scope.color}`}>
-                  <scope.icon className="h-8 w-8" />
+              <div key={index} className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border-2 border-atmospheric-light/30 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-atmospheric-primary/50">
+                <div className="w-16 h-16 bg-atmospheric-light/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2 border-atmospheric-primary/20">
+                  <scope.icon className="h-8 w-8 text-atmospheric-primary" />
                 </div>
                 <div className="mb-4">
-                  <span className="text-sm font-bold text-gray-500 uppercase tracking-wide">{scope.scope}</span>
+                  <span className="text-sm font-bold text-atmospheric-primary uppercase tracking-wide">{scope.scope}</span>
                   <h3 className="text-2xl font-semibold text-gray-900 mt-1">{scope.title}</h3>
                 </div>
                 <p className="text-gray-700 leading-relaxed font-medium mb-6">{scope.description}</p>
@@ -225,7 +233,7 @@ const Landing = () => {
                   <ul className="text-sm text-gray-600 space-y-1">
                     {scope.examples.map((example, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
+                        <CheckCircle className="h-3 w-3 text-atmospheric-primary flex-shrink-0" />
                         {example}
                       </li>
                     ))}
@@ -235,7 +243,7 @@ const Landing = () => {
             ))}
           </div>
 
-          <div className="text-center bg-gradient-to-r from-teal-50 to-green-50 rounded-xl p-8">
+          <div className="text-center bg-gradient-to-r from-atmospheric-light/20 to-atmospheric-primary/20 backdrop-blur-sm rounded-3xl p-8 border border-atmospheric-primary/30">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Value Chain Studies Matter</h3>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">
               Most emissions occur in supply chains (Scope 3). Companies must work together with industry experts 
@@ -245,7 +253,8 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="py-20 bg-gray-50">
+      {/* Platform Features Section - Cloud Texture */}
+      <div className="py-20 bg-gradient-to-b from-muted to-atmospheric-cloud/50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-gray-900 mb-6">Platform Features</h2>
@@ -256,9 +265,9 @@ const Landing = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="group bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                <div className="w-16 h-16 bg-gradient-to-r from-teal-100 to-green-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <feature.icon className="h-8 w-8 text-teal-600" />
+              <div key={index} className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border-2 border-atmospheric-primary/20 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-atmospheric-primary/50">
+                <div className="w-16 h-16 bg-gradient-to-br from-atmospheric-light/20 to-atmospheric-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2 border-atmospheric-primary/30">
+                  <feature.icon className="h-8 w-8 text-atmospheric-primary" />
                 </div>
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
                 <p className="text-gray-700 leading-relaxed font-medium">{feature.description}</p>
@@ -268,14 +277,15 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="py-20 bg-gradient-to-r from-teal-50 to-green-50">
+      {/* Why Choose GoCarbonTracker Section - Deep Blue Gradient */}
+      <div className="py-20 bg-gradient-to-r from-atmospheric-primary to-atmospheric-deep">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-5xl font-bold text-gray-900 mb-8">
+              <h2 className="text-5xl font-bold text-white mb-8 drop-shadow-lg">
                 Why Choose GoCarbonTracker?
               </h2>
-              <p className="text-xl text-gray-700 mb-10 font-medium leading-relaxed">
+              <p className="text-xl text-white/90 mb-10 font-medium leading-relaxed drop-shadow">
                 As the definitive platform for supply chain carbon intelligence, we provide unparalleled visibility 
                 into global emissions patterns, industry-specific benchmarking, and access to the world's largest 
                 collaborative network of decarbonization experts driving measurable climate outcomes.
@@ -284,23 +294,24 @@ const Landing = () => {
                 {whyTrackingMatters.map((reason, index) => (
                   <div key={index} className="flex items-start space-x-4 group">
                     <div className="flex-shrink-0">
-                      <CheckCircle className="h-6 w-6 text-teal-600 group-hover:scale-110 transition-transform mt-1" />
+                      <CheckCircle className="h-6 w-6 text-atmospheric-light group-hover:scale-110 transition-transform mt-1" />
                     </div>
-                    <span className="text-lg text-gray-800 font-medium leading-relaxed">{reason}</span>
+                    <span className="text-lg text-white/95 font-medium leading-relaxed drop-shadow">{reason}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="relative">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+              {/* Cloud-based infographic */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500 border-2 border-white/20">
                 <div className="text-center mb-6">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">The Collaboration Imperative</h3>
                   <p className="text-gray-600">Working together for collective impact</p>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   {collaborationBenefits.map((benefit, index) => (
-                    <div key={index} className="text-center p-4 rounded-lg bg-gray-50 hover:bg-teal-50 transition-colors">
-                      <benefit.icon className="h-8 w-8 mx-auto mb-3 text-teal-600" />
+                    <div key={index} className="text-center p-4 rounded-2xl bg-atmospheric-cloud/50 hover:bg-atmospheric-light/20 transition-colors border border-atmospheric-primary/20">
+                      <benefit.icon className="h-8 w-8 mx-auto mb-3 text-atmospheric-primary" />
                       <div className="text-sm font-semibold text-gray-900 mb-2">{benefit.title}</div>
                       <div className="text-xs text-gray-600">{benefit.description}</div>
                     </div>
@@ -312,29 +323,30 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="py-20 bg-gradient-to-r from-teal-600 to-green-600">
+      {/* Footer Section - Deep Blue Gradient */}
+      <div className="py-20 bg-gradient-to-r from-atmospheric-deep to-atmospheric-primary">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl font-bold text-white mb-6">
+          <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-lg">
             Ready to Navigate Your Carbon Future?
           </h2>
-          <p className="text-xl text-teal-100 mb-10 font-medium leading-relaxed">
+          <p className="text-xl text-white/90 mb-10 font-medium leading-relaxed drop-shadow">
             Join the world's most comprehensive supply chain emissions intelligence platform. Access granular 
             industry benchmarking, identify critical hotspots, and collaborate with leading experts to implement 
             science-based decarbonization strategies that deliver measurable climate impact.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link to="/home">
-              <Button size="lg" variant="secondary" className="bg-white text-teal-600 hover:bg-gray-100 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
+              <Button size="lg" className="bg-white/90 backdrop-blur-sm hover:bg-atmospheric-light text-gray-900 hover:text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-white/20">
                 Start Tracking Now
               </Button>
             </Link>
             <Link to="/methodology">
-              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-teal-600 px-10 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105">
+              <Button size="lg" variant="outline" className="border-2 border-white/80 text-white hover:bg-white/20 backdrop-blur-sm px-10 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
                 Explore Our Intelligence
               </Button>
             </Link>
           </div>
-          <p className="text-teal-100 mt-6 text-sm">
+          <p className="text-white/80 mt-6 text-sm drop-shadow">
             ✓ Global emissions database  ✓ Industry-specific benchmarking  ✓ Expert collaboration network
           </p>
         </div>
