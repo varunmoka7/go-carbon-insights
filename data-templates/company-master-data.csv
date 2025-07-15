@@ -1,0 +1,25 @@
+company_id,company_name,industry,sector,headquarters_country,headquarters_city,website,description,founded_year,employee_count_range,revenue_range_usd,public_private,stock_exchange,ticker_symbol,primary_business_activities,geographical_presence,sustainability_officer_contact,data_quality_score,last_updated,data_source
+EXAMPLE_001,Example Corporation Ltd,Technology Hardware & Equipment,Technology,United States,San Francisco,www.example.com,Leading technology hardware manufacturer,1985,10000-50000,5B-10B,Public,NASDAQ,EXMPL,"Hardware manufacturing, Software development, Cloud services","North America, Europe, Asia",sustainability@example.com,0.95,2024-01-15,CDP Disclosure
+TEMPLATE_002,Template Industries Inc,Chemicals,Materials,Germany,Munich,www.template.de,Specialty chemicals and materials,1978,1000-5000,1B-5B,Private,N/A,N/A,"Chemical manufacturing, R&D, Distribution","Europe, Asia",esg@template.de,0.88,2024-01-10,Company Report
+
+# FIELD SPECIFICATIONS:
+# company_id: Unique identifier (TEXT, REQUIRED) - Use company ticker or create unique ID
+# company_name: Official company name (TEXT, REQUIRED)
+# industry: From industry_taxonomy table (TEXT, REQUIRED) - Must match existing industry
+# sector: From industry_taxonomy table (TEXT, REQUIRED) - Must match existing sector  
+# headquarters_country: ISO country code or full name (TEXT, REQUIRED)
+# headquarters_city: Main headquarters city (TEXT, REQUIRED)
+# website: Company website URL (TEXT, OPTIONAL)
+# description: Brief company description (TEXT, OPTIONAL, MAX 500 chars)
+# founded_year: Year company was founded (INTEGER, OPTIONAL, 1800-2024)
+# employee_count_range: Employee count ranges (TEXT, OPTIONAL) - Options: <100, 100-500, 500-1000, 1000-5000, 5000-10000, 10000-50000, >50000
+# revenue_range_usd: Annual revenue in USD (TEXT, OPTIONAL) - Options: <10M, 10M-50M, 50M-100M, 100M-500M, 500M-1B, 1B-5B, 5B-10B, >10B
+# public_private: Company type (TEXT, OPTIONAL) - Options: Public, Private, Government, Non-profit
+# stock_exchange: Stock exchange if public (TEXT, OPTIONAL)
+# ticker_symbol: Stock ticker symbol (TEXT, OPTIONAL)
+# primary_business_activities: Main business activities (TEXT, OPTIONAL)
+# geographical_presence: Regions of operation (TEXT, OPTIONAL)
+# sustainability_officer_contact: ESG/Sustainability contact (TEXT, OPTIONAL)
+# data_quality_score: Quality score 0-1 (DECIMAL, OPTIONAL, 0.0-1.0)
+# last_updated: Date of last data update (DATE, REQUIRED, YYYY-MM-DD format)
+# data_source: Source of data (TEXT, REQUIRED) - Options: CDP, Company Report, SEC Filing, Third Party, Public Database

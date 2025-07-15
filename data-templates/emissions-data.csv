@@ -1,0 +1,24 @@
+company_id,reporting_year,scope1_total,scope2_total,scope3_total,scope1_sources,scope2_sources,scope3_categories,verification_status,reporting_boundary,methodology,uncertainty_assessment,data_quality_score,last_updated,data_source
+EXAMPLE_001,2023,15000,25000,180000,"Stationary Combustion: 8000|Mobile Combustion: 4000|Process Emissions: 2000|Fugitive Emissions: 1000","Purchased Electricity: 20000|Purchased Heat/Steam: 3000|Purchased Cooling: 2000","Purchased Goods: 80000|Capital Goods: 15000|Fuel/Energy: 10000|Transportation: 25000|Waste: 5000|Business Travel: 8000|Employee Commuting: 12000|Downstream Transportation: 15000|Use of Products: 10000",Third-party verified,Operational Control,GHG Protocol Corporate Standard,±5%,0.92,2024-01-15,CDP Disclosure
+TEMPLATE_002,2023,8500,12000,95000,"Stationary Combustion: 5500|Mobile Combustion: 2000|Process Emissions: 1000","Purchased Electricity: 10000|Purchased Heat/Steam: 2000","Purchased Goods: 45000|Capital Goods: 8000|Fuel/Energy: 5000|Transportation: 12000|Waste: 3000|Business Travel: 4000|Employee Commuting: 6000|Downstream Transportation: 8000|Use of Products: 4000",Internal verification,Financial Control,GHG Protocol Corporate Standard,±8%,0.85,2024-01-10,Company Report
+
+# FIELD SPECIFICATIONS:
+# company_id: Company identifier (TEXT, REQUIRED) - Must match companies table
+# reporting_year: Year of emissions data (INTEGER, REQUIRED, 2015-2024)
+# scope1_total: Total Scope 1 emissions in tCO2e (INTEGER, REQUIRED, ≥0)
+# scope2_total: Total Scope 2 emissions in tCO2e (INTEGER, REQUIRED, ≥0)  
+# scope3_total: Total Scope 3 emissions in tCO2e (INTEGER, OPTIONAL, ≥0)
+# scope1_sources: Breakdown by source (TEXT, OPTIONAL) - Format: "Source1: value|Source2: value"
+# scope2_sources: Breakdown by source (TEXT, OPTIONAL) - Format: "Source1: value|Source2: value"
+# scope3_categories: Breakdown by category (TEXT, OPTIONAL) - Format: "Category1: value|Category2: value"
+# verification_status: Verification level (TEXT, OPTIONAL) - Options: Third-party verified, Internal verification, Limited assurance, Reasonable assurance, Not verified
+# reporting_boundary: Organizational boundary (TEXT, OPTIONAL) - Options: Operational Control, Financial Control, Equity Share
+# methodology: Calculation methodology (TEXT, OPTIONAL) - Options: GHG Protocol Corporate Standard, ISO 14064-1, Other
+# uncertainty_assessment: Uncertainty level (TEXT, OPTIONAL) - Format: ±X%
+# data_quality_score: Quality score 0-1 (DECIMAL, OPTIONAL, 0.0-1.0)
+# last_updated: Date of last data update (DATE, REQUIRED, YYYY-MM-DD format)
+# data_source: Source of data (TEXT, REQUIRED) - Options: CDP, Company Report, SEC Filing, Third Party, Sustainability Report
+
+# SCOPE 1 SOURCES: Stationary Combustion, Mobile Combustion, Process Emissions, Fugitive Emissions
+# SCOPE 2 SOURCES: Purchased Electricity, Purchased Heat/Steam, Purchased Cooling
+# SCOPE 3 CATEGORIES: Purchased Goods, Capital Goods, Fuel/Energy, Transportation, Waste, Business Travel, Employee Commuting, Downstream Transportation, Use of Products, End-of-life, Downstream Leased Assets, Franchises, Investments

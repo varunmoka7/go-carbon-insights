@@ -1,0 +1,32 @@
+industry,sector,metric_name,metric_unit,percentile_25,percentile_50,percentile_75,average_value,best_in_class,data_points_count,reporting_year,methodology,data_quality_score,last_updated,data_source
+Technology Hardware & Equipment,Technology,Scope 1+2 Emissions Intensity,tCO2e/USD Million Revenue,2.5,4.2,7.8,5.1,0.8,145,2023,Peer Analysis,0.89,2024-01-15,Industry Database
+Chemicals,Materials,Total Emissions per Employee,tCO2e/Employee,15.2,28.5,45.3,31.2,8.1,89,2023,Statistical Analysis,0.84,2024-01-10,CDP Database
+Automotive,Consumer Discretionary,Renewable Energy Adoption,%,35,55,75,58,95,67,2023,Industry Survey,0.91,2024-01-12,Industry Association
+
+# FIELD SPECIFICATIONS:
+# industry: Industry name (TEXT, REQUIRED) - Must match industry_taxonomy table
+# sector: Sector name (TEXT, REQUIRED) - Must match industry_taxonomy table
+# metric_name: Name of benchmark metric (TEXT, REQUIRED)
+# metric_unit: Unit of measurement (TEXT, REQUIRED)
+# percentile_25: 25th percentile value (DECIMAL, REQUIRED)
+# percentile_50: 50th percentile (median) value (DECIMAL, REQUIRED)  
+# percentile_75: 75th percentile value (DECIMAL, REQUIRED)
+# average_value: Average/mean value (DECIMAL, REQUIRED)
+# best_in_class: Best performing value in dataset (DECIMAL, OPTIONAL)
+# data_points_count: Number of companies in benchmark (INTEGER, REQUIRED)
+# reporting_year: Year of benchmark data (INTEGER, REQUIRED, 2020-2024)
+# methodology: Benchmarking methodology used (TEXT, OPTIONAL)
+# data_quality_score: Quality score 0-1 (DECIMAL, OPTIONAL, 0.0-1.0)
+# last_updated: Date of last data update (DATE, REQUIRED, YYYY-MM-DD format)
+# data_source: Source of benchmark data (TEXT, REQUIRED)
+
+# COMMON METRICS:
+# Emissions Intensity: tCO2e/USD Million Revenue, tCO2e/Employee, tCO2e/Unit Production
+# Energy Metrics: MWh/USD Million Revenue, MWh/Employee, Renewable Energy %
+# Water Metrics: m3/USD Million Revenue, m3/Employee, Water Recycling %
+# Waste Metrics: tonnes/USD Million Revenue, tonnes/Employee, Waste Diversion %
+# Financial Metrics: Sustainability Investment %, R&D Investment %, ESG Score
+# Compliance Metrics: Framework Compliance %, Target Achievement %, Verification %
+
+# METHODOLOGIES: Peer Analysis, Statistical Analysis, Industry Survey, Regression Analysis, Machine Learning, Expert Assessment
+# DATA SOURCES: Industry Database, CDP Database, Industry Association, Commercial Provider, Government Database, Academic Research

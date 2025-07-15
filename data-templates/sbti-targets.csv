@@ -1,0 +1,24 @@
+company_id,target_type,baseline_year,target_year,scope_coverage,reduction_percentage,absolute_emissions_target,intensity_target,target_description,validation_status,submission_date,approval_date,target_status,progress_percentage,current_emissions,baseline_emissions,last_updated,data_source
+EXAMPLE_001,Near-term,2019,2030,Scope 1+2,50,12000,N/A,Reduce absolute Scope 1 and 2 emissions by 50% by 2030 from 2019 baseline,SBTi Approved,2022-03-15,2022-06-20,Committed,35,15500,24000,2024-01-15,SBTi Database
+EXAMPLE_001,Long-term,2019,2050,Scope 1+2+3,90,2400,N/A,Achieve net-zero emissions across value chain by 2050,SBTi Approved,2022-03-15,2022-08-10,Committed,12,220000,240000,2024-01-15,SBTi Database
+TEMPLATE_002,Near-term,2020,2030,Scope 1+2,42,N/A,25% reduction per unit revenue,Reduce Scope 1 and 2 emissions intensity by 42% per unit revenue by 2030,Under Review,2023-09-10,N/A,Submitted,18,20500,25000,2024-01-10,Company Report
+
+# FIELD SPECIFICATIONS:
+# company_id: Company identifier (TEXT, REQUIRED) - Must match companies table
+# target_type: Type of target (TEXT, REQUIRED) - Options: Near-term, Long-term, Net-zero
+# baseline_year: Baseline year for target (INTEGER, REQUIRED, 2015-2022)
+# target_year: Target achievement year (INTEGER, REQUIRED, 2025-2050)
+# scope_coverage: Emissions scopes covered (TEXT, REQUIRED) - Options: Scope 1, Scope 2, Scope 1+2, Scope 1+2+3, Scope 3
+# reduction_percentage: Percentage reduction target (INTEGER, OPTIONAL, 0-100)
+# absolute_emissions_target: Absolute emissions target in tCO2e (INTEGER, OPTIONAL)
+# intensity_target: Intensity target description (TEXT, OPTIONAL)
+# target_description: Detailed target description (TEXT, REQUIRED)
+# validation_status: SBTi validation status (TEXT, OPTIONAL) - Options: SBTi Approved, Under Review, Committed, Not Submitted
+# submission_date: Date submitted to SBTi (DATE, OPTIONAL, YYYY-MM-DD format)
+# approval_date: Date approved by SBTi (DATE, OPTIONAL, YYYY-MM-DD format)
+# target_status: Current status (TEXT, REQUIRED) - Options: Committed, Achieved, In Progress, Delayed, Withdrawn
+# progress_percentage: Progress towards target (INTEGER, OPTIONAL, 0-100)
+# current_emissions: Current year emissions in tCO2e (INTEGER, OPTIONAL)
+# baseline_emissions: Baseline year emissions in tCO2e (INTEGER, OPTIONAL)
+# last_updated: Date of last data update (DATE, REQUIRED, YYYY-MM-DD format)
+# data_source: Source of data (TEXT, REQUIRED) - Options: SBTi Database, Company Report, CDP, Sustainability Report

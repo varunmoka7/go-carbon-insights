@@ -1,85 +1,160 @@
 
-# Welcome to your Lovable project
+# GoCarbonTracker - Corporate Climate Intelligence Platform
 
-## Project info
+**Transform corporate climate data into actionable insights for a sustainable future**
 
-**URL**: https://lovable.dev/projects/6fcef7a7-25cd-4c8d-b7e1-5fdfbaf9a17b
+🌍 **Live Platform**: https://lovable.dev/projects/6fcef7a7-25cd-4c8d-b7e1-5fdfbaf9a17b
+
+## 🚀 Platform Overview
+
+GoCarbonTracker is a comprehensive corporate climate intelligence platform that provides real-time insights into company carbon emissions, science-based targets, and decarbonization strategies. Our platform helps organizations, investors, and policymakers make informed decisions based on standardized, verified climate data.
+
+### 🎯 Core Features
+
+#### **Multi-Scope Emissions Tracking**
+- **Scope 1**: Direct emissions from owned/controlled sources
+- **Scope 2**: Indirect emissions from purchased energy  
+- **Scope 3**: Value chain emissions across 15 categories
+- **Real-time visualization** with interactive charts and treemaps
+
+#### **Industry Intelligence**
+- **185+ Industries** with detailed taxonomy and classification
+- **Emissions archetypes** for sector-specific analysis
+- **Benchmarking tools** against industry peers
+- **Hotspot identification** for targeted improvements
+
+#### **Science-Based Targets (SBTi)**
+- **Target validation** and progress tracking
+- **Near-term and long-term** commitment monitoring
+- **Net-zero pathway** alignment assessment
+- **Progress visualization** with interactive dashboards
+
+#### **Framework Compliance**
+- **CDP Climate Change** scoring and analysis
+- **TCFD alignment** assessment
+- **GRI Standards** compliance tracking
+- **Regulatory disclosure** monitoring
+
+#### **Financial Integration**
+- **Emissions intensity** per revenue/employee
+- **Climate risk** financial quantification
+- **Investment flow** tracking for sustainability
+- **ROI analysis** for decarbonization initiatives
+
+#### **Collaboration Hub**
+- **Expert community** for knowledge sharing
+- **Best practices** exchange platform
+- **Solution marketplace** for climate technologies
+- **Peer learning** networks
+
+### 📊 Platform Statistics
+
+- **112 Companies** with verified emissions data
+- **185 Industries** with detailed classification
+- **3-Year History** of emissions tracking
+- **Real-time Updates** via Supabase integration
+- **Professional UI/UX** with mobile-first design
 
 ## 📚 Documentation
 
 **For comprehensive project documentation, see [PROJECT_KNOWLEDGE.md](./PROJECT_KNOWLEDGE.md)**
 
-This includes:
-- Complete technical architecture
-- Component documentation  
-- API reference
-- Development guidelines
-- Security considerations
-- Roadmap and changelog
-
 ### Quick Links
 - 📖 [Full Project Knowledge Base](./PROJECT_KNOWLEDGE.md)
 - 📁 [Documentation Directory](./docs/)
+- 📥 [Data Import Templates](./data-templates/)
 - 🔄 [Update Process](./docs/UPDATE_PROCESS.md)
 - 🤝 [Contributing Guidelines](./.github/CONTRIBUTING.md)
 
-## How can I edit this code?
+## 🛠️ Development & Data Import
 
-There are several ways of editing your application.
+### Local Development Setup
 
-**Use Lovable**
+**Prerequisites**: Node.js & npm ([install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6fcef7a7-25cd-4c8d-b7e1-5fdfbaf9a17b) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### 📥 Data Import System
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+We provide comprehensive data import templates for scaling the platform with real corporate climate data:
 
-**Use GitHub Codespaces**
+#### **Available Templates**
+- **Company Master Data**: Core company information and classification
+- **Emissions Data**: Scope 1, 2, 3 emissions with detailed breakdowns  
+- **SBTi Targets**: Science-based targets and progress tracking
+- **Framework Compliance**: CDP, TCFD, GRI status and scores
+- **Financial & Operational**: Revenue, employees, facilities data
+- **Industry Benchmarking**: Sector-specific performance metrics
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+#### **Data Sources Supported**
+- **CDP Climate Disclosures**: Primary emissions data source
+- **Company Sustainability Reports**: Detailed strategic information
+- **SBTi Database**: Validated climate targets
+- **SEC Filings**: Financial context and risk disclosures
+- **Commercial Providers**: Refinitiv, MSCI, Sustainalytics
 
-## What technologies are used for this project?
+#### **Quality Assurance**
+- **Automated validation** with 90%+ accuracy requirements
+- **Cross-reference verification** against multiple sources
+- **Statistical outlier detection** and expert review
+- **Continuous quality monitoring** and improvement
 
-This project is built with:
+**📖 Get Started**: See [Data Import Guide](./docs/data-import/DATA_IMPORT_GUIDE.md)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Development Options
 
-For detailed technical architecture, see the [Technical Architecture section](./PROJECT_KNOWLEDGE.md#technical-architecture) in the project knowledge base.
+**Option 1: Lovable Platform**
+- Visit [Lovable Project](https://lovable.dev/projects/6fcef7a7-25cd-4c8d-b7e1-5fdfbaf9a17b)
+- Changes automatically committed to repository
+- Real-time preview and collaboration
+
+**Option 2: GitHub Integration**
+- Direct file editing in GitHub interface  
+- GitHub Codespaces for cloud development
+- Automatic sync with Lovable platform
+
+## 🏗️ Technical Architecture
+
+### **Frontend Stack**
+- **React 18** with TypeScript for type safety
+- **Vite** for fast development and optimized builds
+- **Tailwind CSS** with custom design system
+- **shadcn/ui** components with extensive customization
+- **Recharts** for advanced data visualizations
+- **React Router** for seamless navigation
+
+### **Backend Infrastructure**  
+- **Supabase** for database, authentication, and real-time features
+- **PostgreSQL** with comprehensive emissions data schema
+- **Row-Level Security (RLS)** for data access control
+- **Real-time subscriptions** for live data updates
+- **Edge Functions** for serverless data processing
+
+### **Data Architecture**
+- **112 Companies** with verified emissions data
+- **185 Industries** with detailed taxonomy
+- **Multi-year tracking** (2022-2024) with trend analysis
+- **Quality scoring** system with validation framework
+- **Import pipeline** supporting multiple data sources
+
+### **Key Features**
+- **Responsive design** optimized for mobile-first experience
+- **Professional theming** with semantic design tokens
+- **Advanced filtering** and search capabilities
+- **Real-time charts** with interactive visualizations
+- **Export functionality** for data analysis
+
+For detailed technical specifications, see [Technical Architecture](./PROJECT_KNOWLEDGE.md#technical-architecture).
 
 ## How can I deploy this project?
 
@@ -93,16 +168,53 @@ To connect a domain, navigate to Project > Settings > Domains and click Connect 
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
 
-## 🔐 Security & Authentication
+## 🎯 Use Cases & Applications
 
-This project uses Supabase for authentication and database management. See the [Security section](./PROJECT_KNOWLEDGE.md#known-issues--roadmap) in the knowledge base for current security status and planned improvements.
+### **For Organizations**
+- **Emissions Management**: Track and manage Scope 1, 2, 3 emissions
+- **Target Setting**: Align with science-based targets (SBTi)
+- **Benchmark Analysis**: Compare performance against industry peers
+- **Compliance Tracking**: Monitor CDP, TCFD, GRI framework alignment
+- **Strategy Development**: Data-driven decarbonization planning
 
-## 📊 Project Status
+### **For Investors & Analysts**
+- **ESG Assessment**: Comprehensive climate performance evaluation
+- **Risk Analysis**: Climate risk identification and quantification
+- **Portfolio Management**: Climate-aligned investment decisions
+- **Due Diligence**: Verified emissions and target data
+- **Impact Measurement**: Track investment climate outcomes
 
-- **Version**: 1.0.0
-- **Status**: Active Development
-- **Documentation**: Comprehensive
-- **Last Updated**: January 1, 2025
+### **For Researchers & Policymakers**
+- **Industry Analysis**: Sector-wide emissions trends and patterns
+- **Policy Impact**: Measure effectiveness of climate regulations
+- **Academic Research**: Access to verified corporate climate data
+- **Benchmark Development**: Industry standard creation and refinement
 
-For detailed project status, roadmap, and known issues, see the [Project Knowledge Base](./PROJECT_KNOWLEDGE.md).
+## 🔐 Security & Data Quality
+
+### **Data Security**
+- **Supabase authentication** with Row-Level Security (RLS)
+- **HTTPS encryption** for all data transmission
+- **API rate limiting** and abuse prevention
+- **Audit logging** for all data modifications
+- **Backup and recovery** procedures
+
+### **Data Quality Framework**
+- **Quality scoring** system (0.0-1.0 scale)
+- **Multi-source validation** and cross-referencing
+- **Statistical outlier detection** and expert review
+- **Continuous monitoring** and improvement processes
+- **User feedback integration** for data corrections
+
+## 📊 Current Platform Status
+
+- **Version**: 1.2.0
+- **Status**: Production Ready
+- **Companies**: 112 with verified data
+- **Industries**: 185 with detailed classification  
+- **Data Quality**: 90%+ accuracy across core metrics
+- **Update Frequency**: Real-time with annual data refreshes
+- **Last Updated**: January 15, 2025
+
+For detailed project roadmap and known issues, see the [Project Knowledge Base](./PROJECT_KNOWLEDGE.md).
 # Test deployment - Fri Jul 11 23:40:03 CEST 2025

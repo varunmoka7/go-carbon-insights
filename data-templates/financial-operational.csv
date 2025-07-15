@@ -1,0 +1,28 @@
+company_id,reporting_year,annual_revenue_usd,revenue_currency,employee_count,facilities_count,countries_of_operation,primary_markets,energy_consumption_mwh,renewable_energy_percentage,water_consumption_m3,waste_generated_tonnes,capex_usd,sustainability_investments_usd,r_and_d_spending_usd,last_updated,data_source
+EXAMPLE_001,2023,7500000000,USD,45000,125,25,"North America, Europe, Asia-Pacific",850000,65,125000,15000,450000000,75000000,950000000,2024-01-15,Annual Report
+TEMPLATE_002,2023,2100000000,EUR,12000,38,12,"Europe, Asia",320000,42,45000,8500,120000000,18000000,180000000,2024-01-10,Annual Report
+
+# FIELD SPECIFICATIONS:
+# company_id: Company identifier (TEXT, REQUIRED) - Must match companies table
+# reporting_year: Financial reporting year (INTEGER, REQUIRED, 2020-2024)
+# annual_revenue_usd: Annual revenue in USD (INTEGER, OPTIONAL) - Convert to USD if different currency
+# revenue_currency: Original reporting currency (TEXT, OPTIONAL) - ISO currency codes
+# employee_count: Total number of employees (INTEGER, OPTIONAL)
+# facilities_count: Number of operational facilities (INTEGER, OPTIONAL)
+# countries_of_operation: Number of countries where company operates (INTEGER, OPTIONAL)
+# primary_markets: Main geographical markets (TEXT, OPTIONAL)
+# energy_consumption_mwh: Total energy consumption in MWh (INTEGER, OPTIONAL)
+# renewable_energy_percentage: Percentage of renewable energy (INTEGER, OPTIONAL, 0-100)
+# water_consumption_m3: Total water consumption in cubic meters (INTEGER, OPTIONAL)
+# waste_generated_tonnes: Total waste generated in tonnes (INTEGER, OPTIONAL)
+# capex_usd: Capital expenditure in USD (INTEGER, OPTIONAL)
+# sustainability_investments_usd: Sustainability-related investments in USD (INTEGER, OPTIONAL)
+# r_and_d_spending_usd: Research and development spending in USD (INTEGER, OPTIONAL)
+# last_updated: Date of last data update (DATE, REQUIRED, YYYY-MM-DD format)
+# data_source: Source of data (TEXT, REQUIRED) - Options: Annual Report, SEC Filing, Sustainability Report, Company Website, Third Party
+
+# CURRENCY CODES: USD, EUR, GBP, JPY, CNY, CAD, AUD, CHF, SEK, NOK, DKK, etc.
+# ENERGY UNITS: MWh (Megawatt hours)
+# WATER UNITS: m3 (cubic meters)
+# WASTE UNITS: tonnes (metric tons)
+# FINANCIAL UNITS: USD (US Dollars)

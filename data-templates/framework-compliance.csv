@@ -1,0 +1,29 @@
+company_id,framework_name,compliance_status,disclosure_score,reporting_year,submission_date,public_disclosure_url,compliance_level,assessment_methodology,key_strengths,improvement_areas,last_updated,data_source
+EXAMPLE_001,CDP Climate Change,A-,85,2023,2023-07-31,https://www.cdp.net/en/responses?queries[name]=Example,Leadership,CDP Methodology,"Comprehensive emissions data, Science-based targets, Climate risk management","Scope 3 data quality, Supplier engagement",2024-01-15,CDP Database
+EXAMPLE_001,TCFD,Fully Aligned,92,2023,2023-03-31,https://example.com/tcfd-report-2023,Full Implementation,TCFD Framework,"Strategy alignment, Risk assessment, Metrics disclosure","Scenario analysis depth",2024-01-15,Company Report
+TEMPLATE_002,CDP Climate Change,B,72,2023,2023-07-31,N/A,Management,CDP Methodology,"Emissions reporting, Energy efficiency programs","Science-based targets, Third-party verification",2024-01-10,CDP Database
+
+# FIELD SPECIFICATIONS:
+# company_id: Company identifier (TEXT, REQUIRED) - Must match companies table
+# framework_name: Reporting framework name (TEXT, REQUIRED) - Options: CDP Climate Change, CDP Water, CDP Forests, TCFD, GRI, SASB, CDSB, IIRC
+# compliance_status: Overall compliance status (TEXT, REQUIRED) - CDP: A+, A, A-, B, B-, C, D, F; TCFD: Fully Aligned, Largely Aligned, Partially Aligned, Not Aligned; GRI: Core, Comprehensive, Not Aligned
+# disclosure_score: Numerical score if available (INTEGER, OPTIONAL, 0-100)
+# reporting_year: Year of compliance assessment (INTEGER, REQUIRED, 2020-2024)
+# submission_date: Date of framework submission (DATE, OPTIONAL, YYYY-MM-DD format)
+# public_disclosure_url: URL to public disclosure (TEXT, OPTIONAL)
+# compliance_level: Level of compliance (TEXT, OPTIONAL) - Options: Leadership, Management, Awareness, Disclosure, No Disclosure
+# assessment_methodology: Assessment method used (TEXT, OPTIONAL)
+# key_strengths: Main strengths identified (TEXT, OPTIONAL)
+# improvement_areas: Areas for improvement (TEXT, OPTIONAL)
+# last_updated: Date of last data update (DATE, REQUIRED, YYYY-MM-DD format)
+# data_source: Source of data (TEXT, REQUIRED) - Options: CDP Database, Company Report, Third Party Assessment, Framework Database
+
+# FRAMEWORK DETAILS:
+# CDP Climate Change: Focus on emissions, energy, climate risks
+# CDP Water: Water management and stewardship
+# CDP Forests: Deforestation and forest risk commodities
+# TCFD: Climate-related financial disclosures
+# GRI: Global Reporting Initiative sustainability standards
+# SASB: Sustainability Accounting Standards Board
+# CDSB: Climate Disclosure Standards Board
+# IIRC: Integrated Reporting Council
