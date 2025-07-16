@@ -38,7 +38,7 @@ export const resources = {
       methodology: 'Methodology',
       reference: 'Reference',
       profile: 'Profile',
-      donate: 'Donate',
+      
       about: 'About',
       contact: 'Contact',
       settings: 'Settings',
@@ -141,7 +141,7 @@ export const resources = {
       methodology: 'Methodik',
       reference: 'Referenz',
       profile: 'Profil',
-      donate: 'Spenden',
+      
       about: 'Über uns',
       contact: 'Kontakt',
       settings: 'Einstellungen',
@@ -244,7 +244,7 @@ export const resources = {
       methodology: 'Méthodologie',
       reference: 'Référence',
       profile: 'Profil',
-      donate: 'Faire un don',
+      
       about: 'À propos',
       contact: 'Contact',
       settings: 'Paramètres',
@@ -347,7 +347,7 @@ export const resources = {
       methodology: 'Metodología',
       reference: 'Referencia',
       profile: 'Perfil',
-      donate: 'Donar',
+      
       about: 'Acerca de',
       contact: 'Contacto',
       settings: 'Configuración',
@@ -450,7 +450,7 @@ export const resources = {
       methodology: 'Metodologia',
       reference: 'Riferimento',
       profile: 'Profilo',
-      donate: 'Dona',
+      
       about: 'Chi siamo',
       contact: 'Contatti',
       settings: 'Impostazioni',

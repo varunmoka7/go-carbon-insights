@@ -61,7 +61,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     },
     { name: t('navigation:decarbonization'), href: '/decarbonization', icon: Target },
     { name: 'Community', href: '/community', icon: MessageSquare },
-    { name: t('navigation:donate'), href: '/donate', icon: Users },
   ];
 
   const isActive = (href: string) => location.pathname === href;
@@ -76,7 +75,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { name: t('navigation:dashboard'), href: '/dashboard' },
         { name: t('navigation:methodology'), href: '/methodology' },
         { name: t('navigation:contact'), href: '/contact' },
-        { name: t('navigation:donate'), href: '/donate' },
       ]
     },
     tracking: {
@@ -105,7 +103,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { name: 'Community', href: '/community' },
         { name: 'Support', href: '/contact' },
         { name: 'Privacy Policy', href: '/about' },
-        { name: t('navigation:donate'), href: '/donate' },
       ]
     }
   };

@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import { DonationProvider } from "./contexts/DonationContext";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -24,7 +23,7 @@ import Reference from "./pages/Reference";
 import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Donate from "./pages/Donate";
+
 import IndustryAnalysis from "./pages/IndustryAnalysis";
 import PlasticPackaging from "./pages/PlasticPackaging";
 import IndustryTaxonomy from "./pages/IndustryTaxonomy";
@@ -43,8 +42,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
-          <DonationProvider>
-            <SidebarProvider>
+          <SidebarProvider>
               <TooltipProvider>
                 <Toaster />
                 <Sonner />
@@ -62,11 +60,6 @@ const App = () => {
                     <Route path="/contact" element={
                       <Layout>
                         <Contact />
-                      </Layout>
-                    } />
-                    <Route path="/donate" element={
-                      <Layout>
-                        <Donate />
                       </Layout>
                     } />
                     <Route path="/community" element={<Community />} />
@@ -158,7 +151,6 @@ const App = () => {
                 </BrowserRouter>
               </TooltipProvider>
             </SidebarProvider>
-          </DonationProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
