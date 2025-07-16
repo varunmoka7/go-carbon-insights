@@ -42,6 +42,7 @@ const Sidebar: React.FC = () => {
     { name: t('scopes:scope3.title'), href: '/scope3', icon: Truck, description: t('scopes:scope3.description') },
     { name: t('navigation:reportsAnalytics'), href: '/reports-analytics', icon: FileText, description: 'Reports & analysis' },
     { name: t('navigation:decarbonization'), href: '/decarbonization', icon: Target, description: 'Strategy planning' },
+    { name: t('navigation:donate'), href: '/donate', icon: Users, description: 'Support our mission' },
   ];
 
   const isActive = (href: string) => {
