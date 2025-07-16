@@ -114,7 +114,7 @@ const Contact = () => {
       console.error('Error sending message:', error);
       toast({
         title: "Failed to send message",
-        description: "Please try again or contact me directly at moka@gocarbontracker.com",
+        description: "Please try again or contact me directly at moka@gocarbontracker.net",
         variant: "destructive",
       });
     } finally {
@@ -264,10 +264,10 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Email</h3>
                       <a 
-                        href="mailto:varunmoka7@gmail.com"
+                        href="mailto:moka@gocarbontracker.net"
                         className="text-teal-600 hover:text-teal-700 font-medium"
                       >
-                        varunmoka7@gmail.com
+                        moka@gocarbontracker.net
                       </a>
                     </div>
                     
