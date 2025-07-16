@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useSupabaseCompanies } from '@/hooks/useSupabaseCompanies';
 import { useSupabaseSectors } from '@/hooks/useSupabaseIndustries';
 import { Search, Filter, Star, TrendingDown, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Company } from '@/types/company';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -22,7 +23,7 @@ const EnhancedFeaturedCompaniesTable = () => {
   const filteredCompanies = useMemo(() => {
     if (!companies) return [];
     
-    return companies.filter(company => {
+    return companies.filter((company: Company) => {
       const matchesSearch = company.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            company.industry?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesSector = selectedSector === 'all' || company.sector === selectedSector;
@@ -44,6 +45,45 @@ const EnhancedFeaturedCompaniesTable = () => {
     }
     return emissions.toString();
   };
+
+  // Optimized event handlers with useCallback
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
+  }, []);
+
+  const handleSectorChange = useCallback((value: string) => {
+    setSelectedSector(value);
+    setCurrentPage(1); // Reset to first page on filter
+  }, []);
+
+  // Simplified pagination logic
+  const getPageNumbers = useCallback(() => {
+    const maxVisiblePages = 5;
+    const pages: number[] = [];
+    
+    if (totalPages <= maxVisiblePages) {
+      // Show all pages if total is small
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Show limited pages with current page in center when possible
+      let start = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+      let end = Math.min(totalPages, start + maxVisiblePages - 1);
+      
+      // Adjust if we're near the end
+      if (end === totalPages) {
+        start = Math.max(1, end - maxVisiblePages + 1);
+      }
+      
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+    }
+    
+    return pages;
+  }, [totalPages, currentPage]);
 
   if (companiesLoading || sectorsLoading) {
     return (
@@ -87,18 +127,12 @@ const EnhancedFeaturedCompaniesTable = () => {
             <Input
               placeholder="Search companies or industries..."
               value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(1); // Reset to first page on search
-              }}
+              onChange={handleSearchChange}
               className="pl-10"
             />
           </div>
           
-          <Select value={selectedSector} onValueChange={(value) => {
-            setSelectedSector(value);
-            setCurrentPage(1); // Reset to first page on filter
-          }}>
+          <Select value={selectedSector} onValueChange={handleSectorChange}>
             <SelectTrigger className="w-full sm:w-[200px]">
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder="Filter by sector" />
@@ -124,13 +158,13 @@ const EnhancedFeaturedCompaniesTable = () => {
           <>
             {/* Companies List */}
             <div className="space-y-4">
-              {paginatedCompanies.map((company) => (
+              {paginatedCompanies.map((company: Company) => (
                 <div key={company.id} className="flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition-shadow">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h4 className="font-semibold text-gray-900">{company.name}</h4>
                       <Badge variant="outline" className="text-xs">
-                        {company.sector || company.industry || 'Unknown'}
+                        {company.sector}
                       </Badge>
                     </div>
                     
@@ -138,19 +172,15 @@ const EnhancedFeaturedCompaniesTable = () => {
                       <div className="flex items-center gap-1">
                         <span>Carbon Footprint:</span>
                         <span className="font-medium text-gray-900">
-                          {formatEmissions(
-                            ('carbon_footprint' in company) 
-                              ? company.carbon_footprint || 0 
-                              : company.total_emissions || 0
-                          )} tCO2e
+                          {formatEmissions(company.totalEmissions)} tCO2e
                         </span>
                       </div>
                       
-                      {('renewable_energy_percentage' in company) && company.renewable_energy_percentage && (
+                      {company.renewableEnergyPercentage && (
                         <div className="flex items-center gap-1">
                           <span>Renewable:</span>
                           <span className="font-medium text-green-600">
-                            {company.renewable_energy_percentage}%
+                            {company.renewableEnergyPercentage}%
                           </span>
                         </div>
                       )}
@@ -190,22 +220,17 @@ const EnhancedFeaturedCompaniesTable = () => {
                   </Button>
                   
                   <div className="flex items-center gap-1">
-                    {[...Array(Math.min(5, totalPages))].map((_, i) => {
-                      const pageNum = currentPage <= 3 ? i + 1 : currentPage - 2 + i;
-                      if (pageNum > totalPages) return null;
-                      
-                      return (
-                        <Button
-                          key={pageNum}
-                          variant={pageNum === currentPage ? "default" : "outline"}
-                          size="sm"
-                          className="w-8 h-8 p-0"
-                          onClick={() => setCurrentPage(pageNum)}
-                        >
-                          {pageNum}
-                        </Button>
-                      );
-                    })}
+                    {getPageNumbers().map((pageNum) => (
+                      <Button
+                        key={pageNum}
+                        variant={pageNum === currentPage ? "default" : "outline"}
+                        size="sm"
+                        className="w-8 h-8 p-0"
+                        onClick={() => setCurrentPage(pageNum)}
+                      >
+                        {pageNum}
+                      </Button>
+                    ))}
                   </div>
                   
                   <Button

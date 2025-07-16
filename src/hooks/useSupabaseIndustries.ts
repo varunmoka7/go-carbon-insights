@@ -27,7 +27,7 @@ export const useSupabaseIndustries = () => {
 export const useSupabaseSectors = () => {
   return useQuery({
     queryKey: ['sectors'],
-    queryFn: async () => {
+    queryFn: async (): Promise<string[]> => {
       console.log('Fetching sectors from Supabase...');
       
       const { data, error } = await supabase
@@ -40,8 +40,8 @@ export const useSupabaseSectors = () => {
         throw error;
       }
       
-      // Get unique sectors
-      const uniqueSectors = [...new Set(data?.map(item => item.sector) || [])];
+      // Get unique sectors using Set to eliminate duplicates
+      const uniqueSectors = [...new Set(data?.map(item => item.sector).filter(Boolean) || [])];
       console.log(`Successfully fetched ${uniqueSectors.length} unique sectors`);
       
       return uniqueSectors;

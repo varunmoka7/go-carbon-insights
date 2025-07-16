@@ -2,13 +2,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { Company, normalizeCompanyData } from '@/types/company';
 
 export const useSupabaseCompanies = () => {
   const { user } = useAuth();
   
   return useQuery({
     queryKey: ['companies', user?.id],
-    queryFn: async () => {
+    queryFn: async (): Promise<Company[]> => {
       console.log('Fetching companies from Supabase with enhanced security...');
       
       // First try to fetch from the secure public view (no auth required)
@@ -19,7 +20,8 @@ export const useSupabaseCompanies = () => {
       
       if (!publicError && publicData && publicData.length > 0) {
         console.log(`Successfully fetched ${publicData.length} companies from secure public view`);
-        return publicData;
+        // Normalize the data to ensure consistent structure
+        return publicData.map(normalizeCompanyData);
       }
       
       // If authenticated, try direct access to companies table with permissive RLS
@@ -31,7 +33,8 @@ export const useSupabaseCompanies = () => {
         
         if (!error && data) {
           console.log(`Successfully fetched ${data.length} companies from direct access`);
-          return data;
+          // Normalize the data to ensure consistent structure
+          return data.map(normalizeCompanyData);
         }
         
         if (error) {
@@ -54,7 +57,7 @@ export const useSupabaseCompany = (companyId: string) => {
   
   return useQuery({
     queryKey: ['company', companyId, user?.id],
-    queryFn: async () => {
+    queryFn: async (): Promise<Company | null> => {
       if (!companyId) {
         throw new Error('Company ID is required');
       }
@@ -112,7 +115,8 @@ export const useSupabaseCompany = (companyId: string) => {
       console.log(`Frameworks: ${frameworks?.length || 0} records`);
       console.log(`Benchmarks: ${benchmarks?.length || 0} records`);
 
-      return {
+      // Create enhanced company object with normalized data
+      const enhancedCompany = {
         ...company,
         emissionsData: emissionsData || [],
         sbtiTargets: sbtiTarget,
@@ -123,7 +127,7 @@ export const useSupabaseCompany = (companyId: string) => {
           ? emissionsData[emissionsData.length - 1].scope1 + 
             emissionsData[emissionsData.length - 1].scope2 + 
             emissionsData[emissionsData.length - 1].scope3
-          : 0,
+          : company.carbon_footprint || 0,
         // Preserve fallback data for missing properties
         topCarbonFootprints: company?.top_carbon_footprints || [
           'Manufacturing Operations',
@@ -135,6 +139,9 @@ export const useSupabaseCompany = (companyId: string) => {
         renewableEnergyPercentage: company?.renewable_energy_percentage || 45,
         sbtiProgress: sbtiTarget?.progress_percentage || 0
       };
+
+      // Normalize the enhanced company data
+      return normalizeCompanyData(enhancedCompany);
     },
     enabled: !!companyId,
     retry: 1,

@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { useFeaturedCompanies } from '@/hooks/useFeaturedCompanies';
 import { Star, TrendingDown, Award } from 'lucide-react';
+import { Company } from '@/types/company';
 
 const FeaturedCompaniesGrid = () => {
   const { data: companies, isLoading } = useFeaturedCompanies();
@@ -48,7 +49,7 @@ const FeaturedCompaniesGrid = () => {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {companies?.map((company) => (
+          {companies?.map((company: Company) => (
             <div key={company.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between mb-3">
                 <div>
@@ -61,20 +62,22 @@ const FeaturedCompaniesGrid = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">Carbon Footprint:</span>
-                  <span className="font-medium">{formatEmissions(company.carbon_footprint)} tCO2e</span>
+                  <span className="font-medium">{formatEmissions(company.totalEmissions)} tCO2e</span>
                 </div>
                 
-                {company.renewable_energy_percentage && (
+                {company.renewableEnergyPercentage && (
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Renewable Energy:</span>
-                    <span className="font-medium text-green-600">{company.renewable_energy_percentage}%</span>
+                    <span className="font-medium text-green-600">{company.renewableEnergyPercentage}%</span>
                   </div>
                 )}
                 
                 <div className="pt-2 border-t">
                   <div className="flex items-center gap-2">
                     <Award className="h-3 w-3 text-blue-500" />
-                    <span className="text-xs text-gray-600">{company.achievement}</span>
+                    <span className="text-xs text-gray-600">
+                      {company.sbtiCommitted ? 'SBTi Committed' : 'Sustainability Leader'}
+                    </span>
                   </div>
                 </div>
               </div>
