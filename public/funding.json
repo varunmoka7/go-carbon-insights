@@ -5,7 +5,7 @@
     "type": "individual",
     "role": "maintainer",
     "name": "Varun Moka",
-    "email": "varunmoka7@gmail.com",
+    "email": "moka@gocarbontracker.net",
     "phone": "+4915566176170",
     "description": "Open source developer and sustainability advocate building carbon emissions tracking solutions for global supply chain transparency and decarbonization.",
     "webpageUrl": {
@@ -44,7 +44,7 @@
       {
         "guid": "contact-for-funding",
         "type": "bank",
-        "address": "varunmoka7@gmail.com",
+        "address": "moka@gocarbontracker.net",
         "description": "Please contact me for bank transfer details or other funding arrangements."
       }
     ],
@@ -167,7 +167,7 @@
   ],
   "contact": {
     "founder": "Varun Moka",
-    "email": "varunmoka7@gmail.com",
+    "email": "moka@gocarbontracker.net",
     "linkedin": "https://www.linkedin.com/in/varunmoka7"
   },
   "createdAt": "2025-06-14T21:53:59Z",
