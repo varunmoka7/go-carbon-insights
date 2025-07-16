@@ -9,6 +9,7 @@ import CommunityPostComposer from '@/components/community/CommunityPostComposer'
 import CommunityRightbar from '@/components/community/CommunityRightbar';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import ForumLayout from '@/components/community/ForumLayout';
 
 const Community = () => {
   const { user, loading: authLoading } = useCommunityAuth();
@@ -81,47 +82,50 @@ const Community = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-emerald-50 to-green-50">
-      {/* Sidebar */}
-      <CommunitySidebar
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        tags={trendingTags}
-        quickLinks={[]}
-      />
-      {/* Main Content */}
-      <main className="flex-1 max-w-3xl mx-auto p-6 flex flex-col gap-4">
-        <div className="flex items-center gap-2 mb-4">
-          <input
-            className="flex-1 border rounded p-2"
-            placeholder="Search topics..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <CommunityPostComposer onPost={handlePostTopic} user={user} loading={topicsLoading} />
-        {!selectedThread ? (
-          <CommunityFeed
-            topics={topics}
-            loading={topicsLoading}
-            onSelectTopic={setSelectedThread}
-            onUpvote={handleUpvoteTopic}
-            userUpvotes={userUpvotes}
-          />
-        ) : (
-          <CommunityThread
-            thread={selectedThread}
-            replies={selectedThreadReplies}
-            user={user}
-            onReply={handlePostReply}
-            loading={topicsLoading}
-          />
-        )}
-      </main>
-      {/* Rightbar */}
-      <CommunityRightbar user={user} trendingTags={trendingTags} stats={stats} />
-    </div>
+    <ForumLayout
+      sidebar={
+        <CommunitySidebar
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          tags={trendingTags}
+          quickLinks={[]}
+        />
+      }
+      main={
+        <>
+          <div className="flex items-center gap-2 mb-4">
+            <input
+              className="flex-1 border rounded p-2"
+              placeholder="Search topics..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <CommunityPostComposer onPost={handlePostTopic} user={user} loading={topicsLoading} />
+          {!selectedThread ? (
+            <CommunityFeed
+              topics={topics}
+              loading={topicsLoading}
+              onSelectTopic={setSelectedThread}
+              onUpvote={handleUpvoteTopic}
+              userUpvotes={userUpvotes}
+            />
+          ) : (
+            <CommunityThread
+              thread={selectedThread}
+              replies={selectedThreadReplies}
+              user={user}
+              onReply={handlePostReply}
+              loading={topicsLoading}
+            />
+          )}
+        </>
+      }
+      rightbar={
+        <CommunityRightbar user={user} trendingTags={trendingTags} stats={stats} />
+      }
+    />
   );
 };
 
