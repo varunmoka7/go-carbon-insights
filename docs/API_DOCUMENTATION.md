@@ -575,6 +575,6 @@ GET /rpc/get_import_status?import_id={import_id}
 
 ### Enterprise Support
 For enterprise customers requiring SLA guarantees, dedicated support, or custom implementations:
-- Email: enterprise@gocarbontracker.com
+- Email: moka@gocarbontracker.net
 - Phone: +1-555-CARBON-1
 - Support Portal: https://support.gocarbontracker.com

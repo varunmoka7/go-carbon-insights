@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Create a mock user for demo purposes
         const mockUser = {
           id: 'demo-user',
-          email: 'demo@gocarbontracker.com',
+          email: 'moka@gocarbontracker.net',
           email_confirmed_at: new Date().toISOString(),
         } as User;
         setUser(mockUser);
