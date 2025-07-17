@@ -10,6 +10,8 @@ import CommunityRightbar from '@/features/forum/components/CommunityRightbar';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import ForumLayout from '@/features/forum/components/ForumLayout';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Community = () => {
   const { user, loading: authLoading } = useCommunityAuth();
@@ -19,6 +21,7 @@ const Community = () => {
   const { topics, loading: topicsLoading, fetchTopics, postTopic, postReply } = useCommunityTopics(selectedCategory, searchQuery);
   const { toast } = useToast();
   const [userUpvotes, setUserUpvotes] = useState({});
+  const navigate = useNavigate();
 
   // Placeholder for trending tags and stats (replace with real data as needed)
   const trendingTags = ['climate', 'scope3', 'netzero'];
@@ -94,6 +97,10 @@ const Community = () => {
       }
       main={
         <>
+          {/* Back to Home Button */}
+          <div className="mb-4">
+            <Button variant="outline" onClick={() => navigate('/')}>← Back to Home</Button>
+          </div>
           <div className="flex items-center gap-2 mb-4">
             <input
               className="flex-1 border rounded p-2"
