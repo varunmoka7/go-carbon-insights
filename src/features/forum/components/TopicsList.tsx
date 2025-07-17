@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import ExpertBadge from './ExpertBadge';
 import { supabase } from '@/integrations/supabase/client';
+import DOMPurify from 'dompurify';
 
 interface Topic {
   id: string;
@@ -85,6 +86,9 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
     return date.toLocaleDateString();
   };
 
+  const truncate = (str: string, n: number) => (str.length > n ? str.slice(0, n - 1) + '…' : str);
+  const stripHtml = (html: string) => DOMPurify.sanitize(html, { ALLOWED_TAGS: [] });
+
   // Increment view count with session-based debouncing
   const handleTopicView = async (topicId: string) => {
     // Check if already viewed in this session
@@ -141,126 +145,108 @@ const TopicsList: React.FC<TopicsListProps> = ({ topics, onTopicSelect }) => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Professional Header */}
-      <div className="bg-white border border-emerald-200 rounded-lg p-6 shadow-sm">
+      <div className="bg-white border border-emerald-200 rounded-xl p-8 shadow-md">
         <div className="text-center">
-          <h2 className="text-2xl font-montserrat font-semibold text-emerald-600 mb-2">
+          <h2 className="text-3xl font-montserrat font-bold text-emerald-700 mb-2 tracking-tight">
             Knowledge Base Content
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-lg">
             Expert insights and guidance from the GoCarbonTracker team
           </p>
-          <div className="mt-3 text-sm text-emerald-600">
+          <div className="mt-3 text-base text-emerald-600 font-semibold">
             {sortedTopics.length} professional {sortedTopics.length === 1 ? 'article' : 'articles'}
           </div>
         </div>
       </div>
-      
       {/* Professional Topics Grid */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {sortedTopics.map((topic) => (
           <Card
             key={topic.id}
-            className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-gray-100 hover:border-emerald-300 hover:-translate-y-1 bg-white"
+            className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-200 hover:border-emerald-400 bg-white rounded-2xl min-h-[320px] flex flex-col justify-between"
             onClick={() => handleTopicView(topic.id)}
           >
-            <CardContent className="p-4">
-              <div className="space-y-4">
+            <CardContent className="p-6 flex flex-col h-full">
+              <div className="flex-1 flex flex-col gap-4">
                 {/* Header Section */}
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-center gap-3">
-                      {topic.is_pinned && (
-                        <div className="flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-xs">
-                          <Pin className="h-3 w-3" />
-                          Featured
-                        </div>
-                      )}
-                      <Badge
-                        className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
-                      >
-                        {topic.category.name}
-                      </Badge>
+                <div className="flex items-center gap-2 mb-2">
+                  {topic.is_pinned && (
+                    <div className="flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-xs font-semibold">
+                      <Pin className="h-3 w-3" />
+                      Featured
                     </div>
-                    
-                     {/* Title - Text-left aligned, emerald-600 */}
-                    <h3 className="text-lg font-montserrat font-semibold text-emerald-600 text-left leading-relaxed group-hover:text-emerald-700 transition-colors">
-                      {topic.title}
-                    </h3>
-                  </div>
+                  )}
+                  <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 text-xs font-semibold">
+                    {topic.category.name}
+                  </Badge>
                 </div>
-                
-                 {/* Content Preview - Left aligned */}
-                <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-emerald-400">
-                  <p className="text-gray-700 text-sm leading-relaxed line-clamp-2 text-left">
-                    {topic.content}
+                {/* Title */}
+                <h3 className="text-xl font-montserrat font-bold text-emerald-700 leading-tight group-hover:text-emerald-800 transition-colors line-clamp-2">
+                  {truncate(topic.title, 80)}
+                </h3>
+                {/* Content Preview */}
+                <div className="bg-gray-50 rounded-lg p-3 border-l-4 border-emerald-400 min-h-[48px]">
+                  <p className="text-gray-700 text-base leading-relaxed line-clamp-3">
+                    {truncate(stripHtml(topic.content), 120)}
                   </p>
                 </div>
-                
                 {/* Tags */}
                 {topic.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mt-2">
                     {topic.tags.slice(0, 4).map((tag) => (
-                      <Badge key={tag} variant="outline" className="text-xs bg-white hover:bg-emerald-50">
+                      <Badge key={tag} variant="outline" className="text-xs bg-white hover:bg-emerald-50 border-emerald-100">
                         #{tag}
                       </Badge>
                     ))}
                   </div>
                 )}
-                
-                {/* Footer Section */}
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                  <div className="flex items-center gap-3">
+              </div>
+              {/* Footer Section */}
+              <div className="flex items-center justify-between pt-4 mt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2">
+                  <div className="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center">
+                    <span className="text-emerald-600 font-bold text-base">
+                      {topic.author?.username?.charAt(0).toUpperCase() || 'A'}
+                    </span>
+                  </div>
+                  <div>
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                        <span className="text-emerald-600 font-medium text-xs">
-                          {topic.author?.username?.charAt(0).toUpperCase() || 'A'}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-montserrat font-medium text-gray-900 text-sm">
-                            {topic.author?.display_name || topic.author?.username || 'Expert'}
-                          </span>
-                          <ExpertBadge
-                            isTeamMember={topic.author.is_gct_team}
-                            size="sm"
-                          />
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {formatTimeAgo(topic.created_at)}
-                        </div>
-                      </div>
+                      <span className="font-montserrat font-semibold text-gray-900 text-sm">
+                        {truncate(topic.author?.display_name || topic.author?.username || 'Expert', 18)}
+                      </span>
+                      <ExpertBadge isTeamMember={topic.author.is_gct_team} size="sm" />
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {formatTimeAgo(topic.created_at)}
                     </div>
                   </div>
-                  
-                  <div className="flex items-center gap-4 text-right font-montserrat text-emerald-600">
-                    <div className="flex items-center gap-1 hover:text-emerald-700 transition-colors">
-                      <Eye className="h-4 w-4" />
-                      <span className="text-sm font-medium">{topic.view_count}</span>
-                    </div>
-                    <div className="flex items-center gap-1 hover:text-emerald-700 transition-colors">
-                      <MessageSquare className="h-4 w-4" />
-                      <span className="text-sm font-medium">{topic.reply_count}</span>
-                    </div>
-                    {topic.last_reply_at && (
-                      <div className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition-colors">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">{formatTimeAgo(topic.last_reply_at)}</span>
-                      </div>
-                    )}
+                </div>
+                <div className="flex items-center gap-4 text-right font-montserrat text-emerald-600">
+                  <div className="flex items-center gap-1 hover:text-emerald-700 transition-colors">
+                    <Eye className="h-4 w-4" />
+                    <span className="text-sm font-semibold">{topic.view_count}</span>
                   </div>
+                  <div className="flex items-center gap-1 hover:text-emerald-700 transition-colors">
+                    <MessageSquare className="h-4 w-4" />
+                    <span className="text-sm font-semibold">{topic.reply_count}</span>
+                  </div>
+                  {topic.last_reply_at && (
+                    <div className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition-colors">
+                      <Clock className="h-4 w-4" />
+                      <span className="text-sm">{formatTimeAgo(topic.last_reply_at)}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
-      
       {/* Empty State */}
       {sortedTopics.length === 0 && (
-        <Card className="border-dashed border-2 border-emerald-200 bg-emerald-50/30">
+        <Card className="border-dashed border-2 border-emerald-200 bg-emerald-50/30 rounded-xl">
           <CardContent className="p-12 text-center">
             <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <MessageSquare className="h-8 w-8 text-emerald-600" />
