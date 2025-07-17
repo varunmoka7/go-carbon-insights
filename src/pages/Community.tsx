@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useCommunityAuth } from '@/hooks/useCommunityAuth';
-import { useCommunityCategories } from '@/hooks/useCommunityCategories';
-import { useCommunityTopics } from '@/hooks/useCommunityTopics';
-import CommunitySidebar from '@/components/community/CommunitySidebar';
-import CommunityFeed from '@/components/community/CommunityFeed';
-import CommunityThread from '@/components/community/CommunityThread';
-import CommunityPostComposer from '@/components/community/CommunityPostComposer';
-import CommunityRightbar from '@/components/community/CommunityRightbar';
+import { useCommunityAuth } from '@/features/forum/hooks/useCommunityAuth';
+import { useCommunityCategories } from '@/features/forum/hooks/useCommunityCategories';
+import { useCommunityTopics } from '@/features/forum/hooks/useCommunityTopics';
+import CommunitySidebar from '@/features/forum/components/CommunitySidebar';
+import CommunityFeed from '@/features/forum/components/CommunityFeed';
+import CommunityThread from '@/features/forum/components/CommunityThread';
+import CommunityPostComposer from '@/features/forum/components/CommunityPostComposer';
+import CommunityRightbar from '@/features/forum/components/CommunityRightbar';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import ForumLayout from '@/components/community/ForumLayout';
+import ForumLayout from '@/features/forum/components/ForumLayout';
 
 const Community = () => {
   const { user, loading: authLoading } = useCommunityAuth();
