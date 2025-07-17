@@ -3,7 +3,7 @@ import React from 'react';
 interface ForumLayoutProps {
   sidebar: React.ReactNode;
   main: React.ReactNode;
-  rightbar: React.ReactNode;
+  rightbar?: React.ReactNode; // Make rightbar optional
 }
 
 const ForumLayout: React.FC<ForumLayoutProps> = ({ sidebar, main, rightbar }) => {
@@ -14,13 +14,15 @@ const ForumLayout: React.FC<ForumLayoutProps> = ({ sidebar, main, rightbar }) =>
         {sidebar}
       </aside>
       {/* Main Content */}
-      <main className="flex-1 max-w-3xl mx-auto p-4 lg:p-8 flex flex-col gap-4">
+      <main className="flex-1 max-w-5xl mx-auto p-4 lg:p-8 flex flex-col gap-4">
         {main}
       </main>
-      {/* Rightbar */}
-      <aside className="w-full lg:w-80 border-l border-gray-200 bg-white/80 p-4 hidden lg:block">
-        {rightbar}
-      </aside>
+      {/* Rightbar (optional) */}
+      {rightbar && (
+        <aside className="w-full lg:w-80 border-l border-gray-200 bg-white/80 p-4 hidden lg:block">
+          {rightbar}
+        </aside>
+      )}
     </div>
   );
 };
