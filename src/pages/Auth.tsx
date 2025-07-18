@@ -164,13 +164,23 @@ const Auth = () => {
         if (error) {
           setError(error.message || 'An error occurred during sign up. Please try again.');
         } else {
-          toast({
+          '''          toast({
             title: "Account Created Successfully",
             description: "Welcome to GoCarbonTracker! Redirecting to your personal tracker...",
           });
-          // Note: The redirect will happen automatically via the useEffect when user state updates
+          setError(''); // Clear any previous errors
+          // Display a success message on the form itself
+          setFormData({ // Clear form data
+            emailOrUsername: '',
+            email: '',
+            username: '',
+            password: '',
+            confirmPassword: ''
+          });
+          setIsSignUp(false); // Switch to sign-in view
+          // The redirect will happen automatically via the useEffect when user state updates
           // This covers AC5: automatic login and redirect after successful registration
-        }
+        }'''
       } else if (isForgotPassword) {
         const { error } = await resetPassword(formData.email);
         
@@ -227,11 +237,11 @@ const Auth = () => {
     try {
       const { error } = await signInWithGoogle();
       
-      if (error) {
-        setError(error.message || 'An error occurred during Google sign in. Please try again.');
+      '''      if (error) {
+        setError(error.message || 'Failed to sign in with Google. Please try again.');
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      setError('An unexpected error occurred during Google sign in. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -245,14 +255,14 @@ const Auth = () => {
       const { error } = await signInWithGitHub();
       
       if (error) {
-        setError(error.message || 'An error occurred during GitHub sign in. Please try again.');
+        setError(error.message || 'Failed to sign in with GitHub. Please try again.');
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      setError('An unexpected error occurred during GitHub sign in. Please try again.');
     } finally {
       setLoading(false);
     }
-  };
+  };'''
 
   return (
     <div 
@@ -328,7 +338,7 @@ const Auth = () => {
                     disabled={loading}
                     className="w-full bg-white hover:bg-gray-50 border-gray-200 text-gray-700 font-medium transition-all duration-200 hover:shadow-md"
                   >
-                    <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+                    '''                    <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" aria-hidden="true">
                       <path
                         fill="currentColor"
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -354,9 +364,10 @@ const Auth = () => {
                     variant="outline"
                     onClick={handleGitHubSignIn}
                     disabled={loading}
-                    className="w-full bg-white hover:bg-gray-50 border-gray-200 text-gray-700 font-medium transition-all duration-200 hover:shadow-md"
+                    aria-label="Continue with GitHub"
+                    className="w-full bg-white hover:bg-gray-50 border-gray-200 text-gray-700 font-medium transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-3 focus:ring-primary-focus"
                   >
-                    <Github className="w-5 h-5 mr-2" />
+                    <Github className="w-5 h-5 mr-2" aria-hidden="true" />
                     Continue with GitHub
                   </Button>
                 </div>
@@ -385,7 +396,7 @@ const Auth = () => {
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     placeholder="Enter your email address"
-                    className="w-full"
+                    className="w-full focus:ring-3 focus:ring-primary-focus"
                     maxLength={100}
                   />
                 </div>
@@ -402,7 +413,7 @@ const Auth = () => {
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
                       placeholder="Enter your email"
-                      className="w-full"
+                      className="w-full focus:ring-3 focus:ring-primary-focus"
                       maxLength={100}
                     />
                   </div>
@@ -418,7 +429,7 @@ const Auth = () => {
                       value={formData.username}
                       onChange={(e) => handleInputChange('username', e.target.value)}
                       placeholder="Choose a username"
-                      className="w-full"
+                      className="w-full focus:ring-3 focus:ring-primary-focus"
                       maxLength={20}
                     />
                   </div>
@@ -435,7 +446,7 @@ const Auth = () => {
                     value={formData.emailOrUsername}
                     onChange={(e) => handleInputChange('emailOrUsername', e.target.value)}
                     placeholder="Enter your email or username"
-                    className="w-full"
+                    className="w-full focus:ring-3 focus:ring-primary-focus"
                     maxLength={100}
                   />
                 </div>
@@ -454,21 +465,22 @@ const Auth = () => {
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
                       placeholder="Enter your password"
-                      className="w-full pr-10"
+                      className="w-full pr-10 focus:ring-3 focus:ring-primary-focus"
                       maxLength={128}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none focus:ring-3 focus:ring-primary-focus rounded-md"
                     >
                       {showPassword ? (
-                        <EyeOff className="h-4 w-4 text-gray-400" />
+                        <EyeOff className="h-4 w-4 text-gray-400" aria-hidden="true" />
                       ) : (
-                        <Eye className="h-4 w-4 text-gray-400" />
+                        <Eye className="h-4 w-4 text-gray-400" aria-hidden="true" />
                       )}
                     </button>
-                  </div>
+                  </div>'''
                   {isSignUp && (
                     <p className="mt-1 text-xs text-gray-500">
                       Password must be at least 8 characters with uppercase, lowercase, and number

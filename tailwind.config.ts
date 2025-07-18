@@ -76,9 +76,15 @@ export default {
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
+				'''				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+      ringWidth: {
+        '3': '3px',
+      },
+      ringColor: {
+        'primary-focus': 'hsl(var(--primary-focus))',
+      },''',
 			keyframes: {
 				'accordion-down': {
 					from: {
