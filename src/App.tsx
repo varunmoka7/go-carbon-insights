@@ -67,9 +67,13 @@ const App = () => {
                         <Contact />
                       </Layout>
                     } />
-                    <Route path="/community" element={<Community />} />
                     
                     {/* Protected routes - require authentication */}
+                    <Route path="/community" element={
+                      <PrivateRoute>
+                        <Community />
+                      </PrivateRoute>
+                    } />
                     <Route path="/home" element={
                       <PrivateRoute>
                         <Layout>

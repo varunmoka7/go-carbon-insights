@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, AlertCircle, Github, Leaf, Droplets } from 'lucide-react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { sanitizeInput, validateEmail, validatePassword, validateUsername } from '@/utils/securityValidation';
 import Logo from '@/components/ui/Logo';
 import RainAnimation from '@/components/ui/RainAnimation';
+import rainforestBg from '@/assets/rainforest-bg.jpg';
 import '@/styles/rain-animation.css';
 
 const Auth = () => {
@@ -18,6 +19,8 @@ const Auth = () => {
   const { signIn, signUp, user, resetPassword, signInWithGoogle, signInWithGitHub } = useAuth();
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const redirectMessage = location.state?.message;
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
@@ -83,7 +86,7 @@ const Auth = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate('/tracking');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
 
@@ -252,7 +255,21 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen rainforest-bg flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div 
+      className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+      style={{
+        background: `linear-gradient(135deg, 
+          rgba(26, 76, 46, 0.8) 0%,
+          rgba(45, 90, 61, 0.7) 25%,
+          rgba(30, 58, 43, 0.8) 50%,
+          rgba(15, 43, 26, 0.9) 75%,
+          rgba(10, 31, 18, 0.9) 100%
+        ), url(${rainforestBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       {/* Rain Animation */}
       <RainAnimation />
       
@@ -288,6 +305,12 @@ const Auth = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
+            {redirectMessage && (
+              <Alert className="mb-4" variant="default">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{redirectMessage}</AlertDescription>
+              </Alert>
+            )}
             {error && (
               <Alert className="mb-4" variant="destructive">
                 <AlertCircle className="h-4 w-4" />

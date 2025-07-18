@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import Logo from '@/components/ui/Logo';
+import SimpleHeader from '@/components/SimpleHeader';
 import atmosphericHero from '@/assets/atmospheric-hero-bg.jpg';
 
 const Landing = () => {
@@ -12,7 +13,15 @@ const Landing = () => {
 
   const handleExplorePlatform = () => {
     console.log('🚀 Explore Platform button clicked');
-    navigate('/home');
+    navigate('/auth');
+  };
+
+  const handleJoinCommunity = () => {
+    navigate('/auth');
+  };
+
+  const handleViewEmissions = () => {
+    navigate('/auth');
   };
 
   const features = [
@@ -94,6 +103,9 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Simple Header */}
+      <SimpleHeader />
+
       {/* Demo Mode Notice */}
       <div className="bg-gradient-to-r from-atmospheric-primary to-atmospheric-deep text-white py-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -147,25 +159,39 @@ const Landing = () => {
             real decarbonization outcomes across all sectors.
           </p>
 
-          {/* Cloud-like CTA Buttons */}
+          {/* Clear CTA Buttons - All lead to authentication */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in delay-1000">
-            <Link to="/home">
-              <Button size="lg" className="bg-white/90 backdrop-blur-sm hover:bg-atmospheric-light text-gray-900 hover:text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl group border-2 border-atmospheric-primary/20">
-                Explore Platform
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <Link to="/community">
-              <Button size="lg" className="bg-atmospheric-primary hover:bg-atmospheric-deep text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-atmospheric-primary">
-                <Users className="mr-3 h-6 w-6" />
-                Join Our Community
-              </Button>
-            </Link>
-            <Link to="/emission-tracking">
-              <Button variant="outline" size="lg" className="border-2 border-white/80 text-white hover:bg-white/20 backdrop-blur-sm px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
-                View Emissions Intelligence
-              </Button>
-            </Link>
+            <Button 
+              onClick={handleExplorePlatform}
+              size="lg" 
+              className="bg-white/90 backdrop-blur-sm hover:bg-atmospheric-light text-gray-900 hover:text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl group border-2 border-atmospheric-primary/20"
+            >
+              Get Started
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button 
+              onClick={handleJoinCommunity}
+              size="lg" 
+              className="bg-atmospheric-primary hover:bg-atmospheric-deep text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-atmospheric-primary"
+            >
+              <Users className="mr-3 h-6 w-6" />
+              Join Community
+            </Button>
+            <Button 
+              onClick={handleViewEmissions}
+              variant="outline" 
+              size="lg" 
+              className="border-2 border-white/80 text-white hover:bg-white/20 backdrop-blur-sm px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              View Demo
+            </Button>
+          </div>
+
+          {/* Clear messaging about authentication */}
+          <div className="mt-8 animate-fade-in delay-1200">
+            <p className="text-white/80 text-lg font-medium">
+              🔐 All features require a free account • Sign up in 30 seconds
+            </p>
           </div>
 
           {/* Platform Capabilities */}
