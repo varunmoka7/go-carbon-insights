@@ -27,4 +27,10 @@ export default defineConfig(({ mode }) => ({
     // Ensure static files are copied to build output
     copyPublicDir: true,
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    css: true,
+  },
 }));

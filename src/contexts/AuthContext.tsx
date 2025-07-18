@@ -190,7 +190,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       
       const { data: profile, error: lookupError } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .select('email')
         .eq('username', cleanUsername)
         .maybeSingle();
