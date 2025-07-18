@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, EyeOff, AlertCircle, Github } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, Github, Leaf, Droplets } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,8 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeInput, validateEmail, validatePassword, validateUsername } from '@/utils/securityValidation';
 import Logo from '@/components/ui/Logo';
+import RainAnimation from '@/components/ui/RainAnimation';
+import '@/styles/rain-animation.css';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -250,29 +252,40 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen rainforest-bg flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Rain Animation */}
+      <RainAnimation />
+      
+      {/* Content */}
+      <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="text-center">
           <div className="flex flex-col items-center mb-6">
-            <Logo size="large" className="h-12 w-auto mb-4" />
-            <span className="text-2xl font-bold text-gray-900">GoCarbonTracker</span>
+            <div className="flex items-center justify-center w-16 h-16 mb-4 bg-white/20 backdrop-blur-md rounded-full border border-white/30">
+              <Leaf className="h-8 w-8 text-green-100" />
+            </div>
+            <span className="text-3xl font-bold text-white rainforest-form-header drop-shadow-lg">
+              GoCarbonTracker
+            </span>
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-900">
+          <h2 className="text-3xl font-extrabold text-white drop-shadow-lg">
             {isSignUp ? 'Create your account' : isForgotPassword ? 'Reset your password' : 'Welcome back'}
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-green-100 drop-shadow-sm">
             {isSignUp 
-              ? 'Sign up to start tracking your carbon emissions' 
+              ? 'Join us in tracking carbon emissions for a sustainable future' 
               : isForgotPassword 
                 ? 'Enter your email address to receive a password reset link'
-                : 'Sign in to your account to continue'
+                : 'Continue your journey towards carbon neutrality'
             }
           </p>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{isSignUp ? 'Sign up' : isForgotPassword ? 'Reset Password' : 'Sign in'}</CardTitle>
+        <Card className="rainforest-form border-0 shadow-2xl">
+          <CardHeader className="text-center pb-4">
+            <CardTitle className="text-xl font-semibold text-gray-800 flex items-center justify-center gap-2">
+              <Droplets className="h-5 w-5 text-green-600" />
+              {isSignUp ? 'Sign up' : isForgotPassword ? 'Reset Password' : 'Sign in'}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             {error && (
@@ -290,7 +303,7 @@ const Auth = () => {
                     variant="outline"
                     onClick={handleGoogleSignIn}
                     disabled={loading}
-                    className="w-full"
+                    className="w-full bg-white hover:bg-gray-50 border-gray-200 text-gray-700 font-medium transition-all duration-200 hover:shadow-md"
                   >
                     <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                       <path
@@ -318,7 +331,7 @@ const Auth = () => {
                     variant="outline"
                     onClick={handleGitHubSignIn}
                     disabled={loading}
-                    className="w-full"
+                    className="w-full bg-white hover:bg-gray-50 border-gray-200 text-gray-700 font-medium transition-all duration-200 hover:shadow-md"
                   >
                     <Github className="w-5 h-5 mr-2" />
                     Continue with GitHub
@@ -461,7 +474,7 @@ const Auth = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-teal-600 hover:bg-teal-700"
+                className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-3 shadow-lg hover:shadow-xl transition-all duration-200"
                 disabled={loading}
               >
                 {loading ? 'Processing...' : (isSignUp ? 'Sign up' : isForgotPassword ? 'Send Reset Email' : 'Sign in')}
