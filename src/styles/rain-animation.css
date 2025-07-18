@@ -1,6 +1,6 @@
 /* Rain Animation Styles */
 @keyframes rain {
-  '''  0% {
+  0% {
     transform: translateY(-100vh) rotate(10deg);
     opacity: 0;
   }
@@ -14,7 +14,7 @@
   100% {
     transform: translateY(100vh) rotate(10deg);
     opacity: 0;
-  }'''
+  }
 }
 
 .animate-rain {

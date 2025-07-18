@@ -25,7 +25,7 @@ const CategoryKPIOverview: React.FC<CategoryKPIOverviewProps> = ({ category, sel
 
   const getCategoryKPIs = () => {
     switch (category) {
-      case 'producers':
+      case 'producers': {
         const producerData = data as typeof categoryPerformanceData.producers;
         return [
           { name: 'Avg Carbon Intensity', value: producerData.avgCarbonIntensity, unit: 'tCO₂e/ton', target: 1.8 },
@@ -33,7 +33,8 @@ const CategoryKPIOverview: React.FC<CategoryKPIOverviewProps> = ({ category, sel
           { name: 'Avg Renewable Energy', value: producerData.avgRenewableEnergy, unit: '%', target: 70 },
           { name: 'Avg Recyclable Portfolio', value: producerData.avgRecyclablePortfolio, unit: '%', target: 80 }
         ];
-      case 'converters':
+      }
+      case 'converters': {
         const converterData = data as typeof categoryPerformanceData.converters;
         return [
           { name: 'Avg Material Efficiency', value: converterData.avgMaterialEfficiency, unit: '%', target: 85 },
@@ -41,7 +42,8 @@ const CategoryKPIOverview: React.FC<CategoryKPIOverviewProps> = ({ category, sel
           { name: 'Avg Recyclability Index', value: converterData.avgRecyclabilityIndex, unit: 'score', target: 85 },
           { name: 'Avg Eco-design Share', value: converterData.avgEcoDesignShare, unit: '%', target: 60 }
         ];
-      case 'brands':
+      }
+      case 'brands': {
         const brandData = data as typeof categoryPerformanceData.brands;
         return [
           { name: 'Avg Circular Content', value: brandData.avgCircularContent, unit: '%', target: 50 },
@@ -49,7 +51,8 @@ const CategoryKPIOverview: React.FC<CategoryKPIOverviewProps> = ({ category, sel
           { name: 'Avg Reuse Rate', value: brandData.avgReuseRate, unit: '%', target: 30 },
           { name: 'Avg EPR Score', value: brandData.avgEPRScore, unit: 'score', target: 90 }
         ];
-      case 'wasteManagement':
+      }
+      case 'wasteManagement': {
         const wasteData = data as typeof categoryPerformanceData.wasteManagement;
         return [
           { name: 'Avg Recovery Efficiency', value: wasteData.avgRecoveryEfficiency, unit: '%', target: 85 },
@@ -57,6 +60,7 @@ const CategoryKPIOverview: React.FC<CategoryKPIOverviewProps> = ({ category, sel
           { name: 'Avg Tech Innovation', value: wasteData.avgTechInnovation, unit: 'score', target: 80 },
           { name: 'Avg Collection Reach', value: wasteData.avgCollectionReach, unit: '%', target: 90 }
         ];
+      }
       default:
         return [];
     }
