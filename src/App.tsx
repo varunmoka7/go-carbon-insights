@@ -8,6 +8,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import Layout from "./components/Layout";
+import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Tracking from "./pages/Tracking";
@@ -21,6 +22,8 @@ import ReportsAnalytics from "./pages/ReportsAnalytics";
 import Methodology from "./pages/Methodology";
 import Reference from "./pages/Reference";
 import Auth from "./pages/Auth";
+import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
@@ -52,6 +55,8 @@ const App = () => {
                   <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/auth" element={<Auth />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/update-password" element={<UpdatePassword />} />
                     <Route path="/about" element={
                       <Layout>
                         <About />
@@ -63,17 +68,78 @@ const App = () => {
                       </Layout>
                     } />
                     <Route path="/community" element={<Community />} />
-                    {/* Demo mode: All pages accessible without authentication */}
+                    
+                    {/* Protected routes - require authentication */}
                     <Route path="/home" element={
-                      <Layout>
-                        <Home />
-                      </Layout>
+                      <PrivateRoute>
+                        <Layout>
+                          <Home />
+                        </Layout>
+                      </PrivateRoute>
                     } />
                     <Route path="/dashboard" element={
-                      <Layout>
-                        <Dashboard />
-                      </Layout>
+                      <PrivateRoute>
+                        <Layout>
+                          <Dashboard />
+                        </Layout>
+                      </PrivateRoute>
                     } />
+                    <Route path="/tracking" element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Tracking />
+                        </Layout>
+                      </PrivateRoute>
+                    } />
+                    <Route path="/emission-tracking" element={
+                      <PrivateRoute>
+                        <EmissionTracking />
+                      </PrivateRoute>
+                    } />
+                    <Route path="/scope1" element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Scope1 />
+                        </Layout>
+                      </PrivateRoute>
+                    } />
+                    <Route path="/scope2" element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Scope2 />
+                        </Layout>
+                      </PrivateRoute>
+                    } />
+                    <Route path="/scope3" element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Scope3 />
+                        </Layout>
+                      </PrivateRoute>
+                    } />
+                    <Route path="/decarbonization" element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Decarbonization />
+                        </Layout>
+                      </PrivateRoute>
+                    } />
+                    <Route path="/profile" element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Profile />
+                        </Layout>
+                      </PrivateRoute>
+                    } />
+                    <Route path="/reports-analytics" element={
+                      <PrivateRoute>
+                        <Layout>
+                          <ReportsAnalytics />
+                        </Layout>
+                      </PrivateRoute>
+                    } />
+                    
+                    {/* Public routes */}
                     <Route path="/industry-glossary" element={
                       <Layout>
                         <IndustryGlossary />
@@ -92,42 +158,6 @@ const App = () => {
                     <Route path="/industry-taxonomy" element={
                       <Layout>
                         <IndustryTaxonomy />
-                      </Layout>
-                    } />
-                    <Route path="/tracking" element={
-                      <Layout>
-                        <Tracking />
-                      </Layout>
-                    } />
-                    <Route path="/emission-tracking" element={<EmissionTracking />} />
-                    <Route path="/scope1" element={
-                      <Layout>
-                        <Scope1 />
-                      </Layout>
-                    } />
-                    <Route path="/scope2" element={
-                      <Layout>
-                        <Scope2 />
-                      </Layout>
-                    } />
-                    <Route path="/scope3" element={
-                      <Layout>
-                        <Scope3 />
-                      </Layout>
-                    } />
-                    <Route path="/decarbonization" element={
-                      <Layout>
-                        <Decarbonization />
-                      </Layout>
-                    } />
-                    <Route path="/profile" element={
-                      <Layout>
-                        <Profile />
-                      </Layout>
-                    } />
-                    <Route path="/reports-analytics" element={
-                      <Layout>
-                        <ReportsAnalytics />
                       </Layout>
                     } />
                     <Route path="/methodology" element={

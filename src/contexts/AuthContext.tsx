@@ -21,6 +21,8 @@ interface AuthContextType {
   signInWithGitHub: () => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resetPassword: (email: string) => Promise<{ error: any }>;
+  sendPasswordResetEmail: (email: string) => Promise<{ error: any }>;
+  updateUserPassword: (newPassword: string) => Promise<{ error: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -328,6 +330,67 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const sendPasswordResetEmail = async (email: string) => {
+    try {
+      setLoading(true);
+      
+      const sanitizedEmail = sanitizeInput(email);
+      
+      if (!checkRateLimit(`reset:${sanitizedEmail}`, 2, 15 * 60 * 1000)) {
+        return { error: { message: 'Too many password reset attempts. Please try again later.' } };
+      }
+      
+      if (!validateEmail(sanitizedEmail)) {
+        return { error: { message: 'Please enter a valid email address' } };
+      }
+
+      const redirectUrl = `${window.location.origin}/auth?mode=reset`;
+      
+      const { error } = await supabase.auth.resetPasswordForEmail(sanitizedEmail, {
+        redirectTo: redirectUrl
+      });
+
+      if (error) {
+        console.error('Password reset email error:', error);
+        return { error: { message: 'Unable to send password reset email. Please try again.' } };
+      }
+
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected password reset email error:', error);
+      return { error: { message: 'An unexpected error occurred while sending the reset email' } };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateUserPassword = async (newPassword: string) => {
+    try {
+      setLoading(true);
+      
+      const passwordValidation = validatePassword(newPassword);
+      if (!passwordValidation.isValid) {
+        return { error: { message: passwordValidation.message || 'Password does not meet requirements' } };
+      }
+
+      const { error } = await supabase.auth.updateUser({ 
+        password: newPassword 
+      });
+
+      if (error) {
+        console.error('Password update error:', error);
+        return { error: { message: 'Unable to update password. Please try again.' } };
+      }
+
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected password update error:', error);
+      return { error: { message: 'An unexpected error occurred while updating the password' } };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     user,
     session,
@@ -338,7 +401,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGoogle,
     signInWithGitHub,
     signOut,
-    resetPassword
+    resetPassword,
+    sendPasswordResetEmail,
+    updateUserPassword
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

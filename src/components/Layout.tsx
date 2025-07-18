@@ -228,13 +228,43 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {user && (
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    {user.email}
-                  </span>
-                  <LogoutButton />
-                </div>
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative flex items-center gap-2 px-3 py-2">
+                      <div className="w-8 h-8 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center">
+                        <Users className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+                      </div>
+                      <div className="text-left hidden sm:block">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          {user.user_metadata?.display_name || user.user_metadata?.username || 'User'}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {user.email}
+                        </p>
+                      </div>
+                      <ChevronDown className="h-4 w-4 text-gray-500" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile" className="flex items-center gap-2 w-full">
+                        <Users className="h-4 w-4" />
+                        My Profile
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <LogoutButton />
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button asChild variant="outline">
+                  <Link to="/auth">
+                    Login / Register
+                  </Link>
+                </Button>
               )}
 
               {!showSidebar && (
