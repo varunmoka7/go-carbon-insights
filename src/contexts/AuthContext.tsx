@@ -17,6 +17,8 @@ interface AuthContextType {
   signUp: (email: string, password: string, username?: string) => Promise<{ error: any }>;
   signIn: (emailOrUsername: string, password: string) => Promise<{ error: any }>;
   signInWithUsername: (username: string, password: string) => Promise<{ error: any }>;
+  signInWithGoogle: () => Promise<{ error: any }>;
+  signInWithGitHub: () => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resetPassword: (email: string) => Promise<{ error: any }>;
 }
@@ -37,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   // Demo mode flag - set to false when moving to production
-  const isDemoMode = true;
+  const isDemoMode = false;
 
   useEffect(() => {
     // In demo mode, simulate a quick loading state then allow access
@@ -105,7 +107,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const redirectUrl = `${window.location.origin}/auth`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: sanitizedEmail,
         password,
         options: {
@@ -123,6 +125,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return { error: { message: 'An account with this email may already exist. Please try signing in instead.' } };
         }
         return { error: { message: 'Unable to create account. Please try again.' } };
+      }
+
+      // If user is immediately confirmed (no email verification required)
+      if (data.user && data.session && data.user.email_confirmed_at) {
+        console.log('User confirmed immediately, auto-login successful');
+        setUser(data.user);
+        setSession(data.session);
       }
 
       return { error: null };
@@ -210,6 +219,64 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      setLoading(true);
+      
+      if (!checkRateLimit('oauth:google', 5, 15 * 60 * 1000)) {
+        return { error: { message: 'Too many OAuth attempts. Please try again later.' } };
+      }
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth`
+        }
+      });
+      
+      if (error) {
+        console.error('Google OAuth error:', error);
+        return { error: { message: 'Unable to sign in with Google. Please try again.' } };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected Google OAuth error:', error);
+      return { error: { message: 'An unexpected error occurred during Google sign in' } };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signInWithGitHub = async () => {
+    try {
+      setLoading(true);
+      
+      if (!checkRateLimit('oauth:github', 5, 15 * 60 * 1000)) {
+        return { error: { message: 'Too many OAuth attempts. Please try again later.' } };
+      }
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: `${window.location.origin}/auth`
+        }
+      });
+      
+      if (error) {
+        console.error('GitHub OAuth error:', error);
+        return { error: { message: 'Unable to sign in with GitHub. Please try again.' } };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected GitHub OAuth error:', error);
+      return { error: { message: 'An unexpected error occurred during GitHub sign in' } };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const signOut = async () => {
     try {
       setLoading(true);
@@ -268,6 +335,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signUp,
     signIn,
     signInWithUsername,
+    signInWithGoogle,
+    signInWithGitHub,
     signOut,
     resetPassword
   };

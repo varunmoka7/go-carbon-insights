@@ -1,116 +1,152 @@
 import React, { useState } from 'react';
-import TopicItem from './TopicItem';
+import { Pin } from 'lucide-react';
+import TopicCard from './TopicCard';
 
 const sampleTopics = [
   {
+    id: 'pinned-1',
+    title: 'Welcome to the GoCarbonTracker Community!',
+    category: { name: 'General', color: 'text-blue-400', dot: 'bg-blue-400' },
+    replies: 12,
+    views: 320,
+    votes: 42,
+    user: { name: 'Admin', username: 'admin', initials: 'AD', color: 'bg-emerald-600' },
+    time: '1d ago',
+    tags: ['community', 'welcome'],
+    answered: true,
+    preview: 'Introduce yourself and connect with other sustainability professionals...',
+    pinned: true,
+  },
+  {
     id: '1',
     title: 'SBTi validation timeline for manufacturing companies',
-    category: { name: 'Regulations', color: 'bg-yellow-600' },
+    category: { name: 'Regulations', color: 'text-yellow-400', dot: 'bg-yellow-400' },
     replies: 4,
     views: 120,
-    lastActivity: '2d',
-    participants: [
-      { name: 'Dr. Sarah Chen', initials: 'SC', color: 'bg-emerald-600' },
-      { name: 'Mike Rodriguez', initials: 'MR', color: 'bg-blue-600' },
-      { name: 'Anna Kowalski', initials: 'AK', color: 'bg-gray-600' },
-    ],
+    votes: 15,
+    user: { name: 'Dr. Sarah Chen', username: 'sarahchen', initials: 'SC', color: 'bg-emerald-600' },
+    time: '2d ago',
+    tags: ['SBTi', 'manufacturing'],
+    answered: false,
+    preview: 'What is the typical timeline and process for SBTi validation in the manufacturing sector?...',
+    pinned: false,
   },
   {
     id: '2',
     title: 'Scope 3 calculation methodology for financial services',
-    category: { name: 'Scope 1-2-3', color: 'bg-green-600' },
+    category: { name: 'Scope 1-2-3', color: 'text-green-400', dot: 'bg-green-400' },
     replies: 7,
     views: 210,
-    lastActivity: '5d',
-    participants: [
-      { name: 'James Liu', initials: 'JL', color: 'bg-blue-700' },
-      { name: 'Dr. Sarah Chen', initials: 'SC', color: 'bg-emerald-600' },
-    ],
+    votes: 22,
+    user: { name: 'Mike Rodriguez', username: 'miker', initials: 'MR', color: 'bg-blue-600' },
+    time: '5d ago',
+    tags: ['scope3', 'finance'],
+    answered: true,
+    preview: 'How are financial institutions approaching Scope 3 calculations for investments and loans?...',
+    pinned: false,
   },
   {
     id: '3',
     title: 'GHG Protocol updates 2024 - implementation guidance',
-    category: { name: 'Regulations', color: 'bg-yellow-600' },
+    category: { name: 'Regulations', color: 'text-yellow-400', dot: 'bg-yellow-400' },
     replies: 2,
     views: 80,
-    lastActivity: '1d',
-    participants: [
-      { name: 'Anna Kowalski', initials: 'AK', color: 'bg-gray-600' },
-      { name: 'Mike Rodriguez', initials: 'MR', color: 'bg-blue-600' },
-    ],
+    votes: 8,
+    user: { name: 'Anna Kowalski', username: 'annak', initials: 'AK', color: 'bg-gray-600' },
+    time: '1d ago',
+    tags: ['GHG Protocol', 'updates'],
+    answered: false,
+    preview: 'The 2024 GHG Protocol update brings new requirements for data quality and reporting...',
+    pinned: false,
   },
   {
     id: '4',
     title: 'Carbon accounting software integration challenges',
-    category: { name: 'Software', color: 'bg-purple-600' },
+    category: { name: 'Software', color: 'text-purple-400', dot: 'bg-purple-400' },
     replies: 5,
     views: 150,
-    lastActivity: '3d',
-    participants: [
-      { name: 'James Liu', initials: 'JL', color: 'bg-blue-700' },
-      { name: 'Dr. Sarah Chen', initials: 'SC', color: 'bg-emerald-600' },
-      { name: 'Mike Rodriguez', initials: 'MR', color: 'bg-blue-600' },
-      { name: 'Anna Kowalski', initials: 'AK', color: 'bg-gray-600' },
-    ],
-  },
-  {
-    id: '5',
-    title: 'Supply chain emissions data quality issues',
-    category: { name: 'Supply Chain', color: 'bg-green-700' },
-    replies: 3,
-    views: 95,
-    lastActivity: '4d',
-    participants: [
-      { name: 'Mike Rodriguez', initials: 'MR', color: 'bg-blue-600' },
-      { name: 'Anna Kowalski', initials: 'AK', color: 'bg-gray-600' },
-    ],
-  },
-  {
-    id: '6',
-    title: 'CSRD compliance preparation - practical steps',
-    category: { name: 'Regulations', color: 'bg-yellow-600' },
-    replies: 6,
-    views: 180,
-    lastActivity: '6d',
-    participants: [
-      { name: 'Dr. Sarah Chen', initials: 'SC', color: 'bg-emerald-600' },
-      { name: 'James Liu', initials: 'JL', color: 'bg-blue-700' },
-    ],
+    votes: 10,
+    user: { name: 'James Liu', username: 'jamesl', initials: 'JL', color: 'bg-blue-700' },
+    time: '3d ago',
+    tags: ['software', 'integration'],
+    answered: true,
+    preview: 'What are the main hurdles when integrating carbon accounting tools with ERP systems?...',
+    pinned: false,
   },
 ];
 
-const tabOptions = [
-  { label: 'Categories', value: 'categories' },
-  { label: 'Latest', value: 'latest' },
-  { label: 'Top', value: 'top' },
+const sortOptions = [
+  { label: '🔥 Hot', value: 'hot' },
+  { label: '🆕 New', value: 'new' },
+  { label: '📊 Top', value: 'top' },
+  { label: '💬 Active', value: 'active' },
 ];
 
 const TopicsList: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('latest');
-  const handleTopicClick = (id: string) => {
-    // Placeholder for routing
-    alert(`Navigate to /community/topic/${id}`);
-  };
+  const [sort, setSort] = useState('hot');
+  const [votes, setVotes] = useState(() => Object.fromEntries(sampleTopics.map(t => [t.id, t.votes])));
+  const handleNewTopic = () => alert('Open new topic form');
+  const handleTopicClick = (id: string) => alert(`Navigate to /community/topic/${id}`);
+  const handleVote = (id: string, delta: number) => setVotes(v => ({ ...v, [id]: v[id] + delta }));
+
+  const pinned = sampleTopics.filter(t => t.pinned);
+  const regular = sampleTopics.filter(t => !t.pinned);
+
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      {/* Tabs */}
-      <div className="flex items-center gap-2 mb-6 border-b border-[#232323]">
-        {tabOptions.map((tab) => (
+    <div className="w-full max-w-3xl mx-auto">
+      {/* Header and New Topic Button */}
+      <div className="flex items-center justify-between mb-6 mt-2">
+        <h2 className="text-2xl font-bold text-white tracking-tight">Community Discussions</h2>
+        <button
+          className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow transition focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          onClick={handleNewTopic}
+        >
+          [+ New Topic]
+        </button>
+      </div>
+      {/* Sort Options */}
+      <div className="flex items-center gap-2 mb-4">
+        {sortOptions.map(opt => (
           <button
-            key={tab.value}
-            className={`px-4 py-2 text-sm font-semibold rounded-t-md focus:outline-none transition-colors ${activeTab === tab.value ? 'text-emerald-400 border-b-2 border-emerald-400 bg-[#232323]' : 'text-gray-400 hover:text-emerald-300'}`}
-            onClick={() => setActiveTab(tab.value)}
-            aria-selected={activeTab === tab.value}
-            role="tab"
+            key={opt.value}
+            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 ${sort === opt.value ? 'bg-emerald-700 text-white' : 'bg-[#232323] text-gray-400 hover:bg-emerald-900 hover:text-white'}`}
+            onClick={() => setSort(opt.value)}
           >
-            {tab.label}
+            {opt.label}
           </button>
         ))}
       </div>
-      {/* Topic List */}
-      <div className="divide-y divide-[#232323] bg-[#181818] rounded-lg shadow">
-        {sampleTopics.map((topic) => (
-          <TopicItem key={topic.id} topic={topic} onClick={handleTopicClick} />
+      {/* Pinned Topics */}
+      {pinned.length > 0 && (
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2 text-emerald-400 font-semibold text-sm">
+            <Pin className="w-4 h-4" /> Pinned
+          </div>
+          <div className="space-y-3">
+            {pinned.map(topic => (
+              <TopicCard
+                key={topic.id}
+                topic={topic}
+                votes={votes[topic.id]}
+                onUpvote={() => handleVote(topic.id, 1)}
+                onDownvote={() => handleVote(topic.id, -1)}
+                onClick={() => handleTopicClick(topic.id)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {/* Regular Topics */}
+      <div className="space-y-3">
+        {regular.map(topic => (
+          <TopicCard
+            key={topic.id}
+            topic={topic}
+            votes={votes[topic.id]}
+            onUpvote={() => handleVote(topic.id, 1)}
+            onDownvote={() => handleVote(topic.id, -1)}
+            onClick={() => handleTopicClick(topic.id)}
+          />
         ))}
       </div>
     </div>
