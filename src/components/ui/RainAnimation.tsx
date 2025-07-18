@@ -16,11 +16,12 @@ const RainDrop: React.FC<RainDropProps> = ({ left, animationDuration, opacity, s
         animationDuration: `${animationDuration}s`,
         opacity: opacity,
         width: `${size}px`,
-        height: `${size * 8}px`,
-        background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3), transparent)',
+        height: `${size * 12}px`,
+        background: 'linear-gradient(to bottom, transparent, rgba(173, 216, 230, 0.8), rgba(135, 206, 235, 0.6), transparent)',
         borderRadius: '50%',
         animation: `rain ${animationDuration}s linear infinite`,
         animationDelay: `${Math.random() * animationDuration}s`,
+        boxShadow: '0 0 6px rgba(173, 216, 230, 0.4)',
       }}
     />
   );
@@ -45,9 +46,9 @@ const RainAnimation: React.FC = () => {
     for (let i = 0; i < dropCount; i++) {
       drops.push({
         left: Math.random() * 100,
-        animationDuration: Math.random() * 1 + 0.5, // 0.5-1.5 seconds
-        opacity: Math.random() * 0.3 + 0.1, // 0.1-0.4 opacity
-        size: Math.random() * 2 + 1, // 1-3px width
+        animationDuration: Math.random() * 1.5 + 1, // 1-2.5 seconds
+        opacity: Math.random() * 0.6 + 0.3, // 0.3-0.9 opacity
+        size: Math.random() * 3 + 2, // 2-5px width
       });
     }
     
@@ -58,7 +59,7 @@ const RainAnimation: React.FC = () => {
   if (isReducedMotion) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
       {rainDrops.map((drop, index) => (
         <RainDrop
           key={index}

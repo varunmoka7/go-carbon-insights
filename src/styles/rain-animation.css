@@ -21,15 +21,42 @@
   will-change: transform, opacity;
 }
 
-/* Rainforest Background Gradient */
+/* Rain container */
+.rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Rain drop styling */
+.rain-drop {
+  position: absolute;
+  background: linear-gradient(to bottom, transparent, rgba(173, 216, 230, 0.8), rgba(135, 206, 235, 0.6), transparent);
+  border-radius: 50%;
+  animation: rain linear infinite;
+  pointer-events: none;
+}
+
+/* Rainforest Background with Image */
 .rainforest-bg {
-  background: linear-gradient(135deg, 
-    #1a4c2e 0%,
-    #2d5a3d 25%,
-    #1e3a2b 50%,
-    #0f2b1a 75%,
-    #0a1f12 100%
-  );
+  background: 
+    linear-gradient(135deg, 
+      rgba(26, 76, 46, 0.8) 0%,
+      rgba(45, 90, 61, 0.7) 25%,
+      rgba(30, 58, 43, 0.8) 50%,
+      rgba(15, 43, 26, 0.9) 75%,
+      rgba(10, 31, 18, 0.9) 100%
+    ),
+    url('../assets/rainforest-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   position: relative;
 }
 
@@ -41,9 +68,9 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(ellipse at 20% 80%, rgba(46, 125, 50, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(27, 94, 32, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 40% 40%, rgba(56, 142, 60, 0.2) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 80%, rgba(46, 125, 50, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(27, 94, 32, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 40%, rgba(56, 142, 60, 0.1) 0%, transparent 50%);
   animation: forestGlow 8s ease-in-out infinite alternate;
 }
 
@@ -94,11 +121,16 @@
   }
   
   .rainforest-bg {
-    background: linear-gradient(135deg, 
-      #1a4c2e 0%,
-      #2d5a3d 50%,
-      #0a1f12 100%
-    );
+    background: 
+      linear-gradient(135deg, 
+        rgba(26, 76, 46, 0.9) 0%,
+        rgba(45, 90, 61, 0.8) 50%,
+        rgba(10, 31, 18, 0.9) 100%
+      ),
+      url('../assets/rainforest-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll; /* Better for mobile */
   }
 }
 

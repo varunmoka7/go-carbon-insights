@@ -257,7 +257,7 @@ const Auth = () => {
       <RainAnimation />
       
       {/* Content */}
-      <div className="max-w-md w-full space-y-8 relative z-10">
+      <div className="max-w-md w-full space-y-8 relative z-20">
         <div className="text-center">
           <div className="flex flex-col items-center mb-6">
             <div className="flex items-center justify-center w-16 h-16 mb-4 bg-white/20 backdrop-blur-md rounded-full border border-white/30">
