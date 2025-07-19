@@ -1,51 +1,52 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import { FileUpload } from '../FileUpload';
 import { useToast } from '../../../../hooks/use-toast';
 
 // Mock the toast hook
-jest.mock('../../../../hooks/use-toast');
-const mockUseToast = useToast as jest.MockedFunction<typeof useToast>;
-const mockToast = jest.fn();
+vi.mock('../../../../hooks/use-toast');
+const mockUseToast = useToast as any;
+const mockToast = vi.fn();
 
 // Mock fetch
-global.fetch = jest.fn();
-const mockFetch = fetch as jest.MockedFunction<typeof fetch>;
+global.fetch = vi.fn();
+const mockFetch = fetch as any;
 
 // Mock URL.createObjectURL and revokeObjectURL
 Object.defineProperty(URL, 'createObjectURL', {
   writable: true,
-  value: jest.fn(() => 'mock-object-url'),
+  value: vi.fn(() => 'mock-object-url'),
 });
 
 Object.defineProperty(URL, 'revokeObjectURL', {
   writable: true,
-  value: jest.fn(),
+  value: vi.fn(),
 });
 
 // Mock localStorage
 Object.defineProperty(window, 'localStorage', {
   value: {
-    getItem: jest.fn(() => 'mock-auth-token'),
+    getItem: vi.fn(() => 'mock-auth-token'),
   },
 });
 
 describe('FileUpload', () => {
   const defaultProps = {
     uploadUrl: '/api/uploads',
-    onProgress: jest.fn(),
-    onSuccess: jest.fn(),
-    onError: jest.fn(),
+    onProgress: vi.fn(),
+    onSuccess: vi.fn(),
+    onError: vi.fn(),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockUseToast.mockReturnValue({ toast: mockToast });
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders upload zone correctly', () => {

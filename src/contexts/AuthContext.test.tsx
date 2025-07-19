@@ -232,7 +232,7 @@ describe('AuthContext', () => {
       expect(mockSupabase.auth.signInWithOAuth).toHaveBeenCalledWith({
         provider: 'google',
         options: {
-          redirectTo: expect.stringContaining('/auth'),
+          redirectTo: expect.stringContaining('/tracking'),
         },
       });
     });
@@ -253,7 +253,7 @@ describe('AuthContext', () => {
       expect(mockSupabase.auth.signInWithOAuth).toHaveBeenCalledWith({
         provider: 'github',
         options: {
-          redirectTo: expect.stringContaining('/auth'),
+          redirectTo: expect.stringContaining('/tracking'),
         },
       });
     });
