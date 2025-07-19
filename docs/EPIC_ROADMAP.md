@@ -51,7 +51,7 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - **Target**: Q2 2025
 - **Scope**: Private data management, dual-view tracker, personal analytics
 
-### 🔄 **Epic 4: Community Forum** - 80% COMPLETE
+### 🔄 **Epic 4: Community Forum – Professional Community Platform** - IN PROGRESS
 - **Status**: In progress
 - **Target**: January 2025
 - **Remaining**: Advanced features, mobile optimization
@@ -119,26 +119,32 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - Organization-specific analytics and insights
 - Custom reporting and data export capabilities
 
-### Epic 4: Community Forum 🔄 **80% COMPLETE**
+### Epic 4: Community Forum – Professional Community Platform 🚀 **IN PROGRESS**
 
-**Goal**: Comprehensive community platform for climate discussions and collaboration
+**Goal**: Build a professional-grade community platform for climate discussions, collaboration, and engagement.
 
-**Completed Stories**:
-- ✅ Story 4.1: Forum categories and topics structure
-- ✅ Story 4.2: User profiles and reputation system
-- ✅ Story 4.3: Content moderation tools
-- ✅ Story 4.4: File sharing and attachments
-- 🔄 Story 4.5: Notifications and subscriptions (in progress)
-- 🔄 Story 4.6: Advanced search and discovery (in progress)
-- 🔄 Story 4.7: Mobile responsive design (in progress)
-- 🔄 Story 4.8: Main platform integration (in progress)
+**Foundational Stories (Completed):**
+- ✅ Story 4.1: Forum Foundations
+- ✅ Story 4.2: User Profiles & Reputation System
+- ✅ Story 4.3: Advanced Moderation & Admin Dashboard
+- ✅ Story 4.4: File Uploads & Attachments
+- 🔄 Story 4.5: Real-Time Notifications (in progress)
 
-**Technical Implementation**:
-- Supabase-based forum with real-time features
-- Hierarchical category structure
-- Reputation system with points/badges
-- Moderation dashboard with action tools
-- File upload and attachment system
+**Planned Enhancements (To Achieve Professional Grade):**
+- Story 4.6: Advanced Search & Discovery
+- Story 4.7: Mobile-First Experience & PWA
+- Story 4.8: Enhanced User Engagement
+- Story 4.9: Rich Content & Editor Experience
+- Story 4.10: Community Analytics & Insights
+- Story 4.11: Accessibility & Internationalization
+
+**Technical Implementation:**
+- WebSocket/SSE for real-time notifications
+- S3-backed file uploads with CDN
+- Advanced moderation and admin dashboard
+- Reputation and badge system
+- Mobile-first, accessible, and internationalized UI
+- Full-text search, engagement features, analytics
 
 ***
 

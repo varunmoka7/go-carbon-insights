@@ -57,117 +57,183 @@ This document outlines the requirements for enhancing the GoCarbonTracker platfo
         3.  Tables for `public_company_profiles`, `public_emissions_data`, and `industry_benchmarks` are created.
         4.  All necessary relationships, foreign keys, and initial RLS policies are configured.
 
-### Epic 2: Carbon Tracker
-*Goal: To implement a unified Tracker Page with two distinct modes: a "Private Tracking" view for personal data management and a "Public Data" view for open-access exploration.*
+### Epic 2: Carbon Tracking & Public Platform + Real Data Integration
+*Goal: To implement a unified platform for exploring public emissions data, company benchmarking, and global monitoring with comprehensive analytics, visualization capabilities, and real corporate climate data integration.*
 
-* **Story 2.1: Implement Dual-View Tracker Page**
-    * As a user, I want a unified Tracker Page with a clear way to switch between a "Public Data" view and my "Private Tracking" view, so that I can explore all data and also manage my own.
+* **Story 2.1: Display Company Profiles List**
+    * As a user, I want to browse a comprehensive list of company profiles, so that I can explore different organizations and their climate performance.
     * **AC:**
-        1.  The Tracker Page has a UI control (tabs/toggle) to select "Public Data" or "Private Tracking".
-        2.  The "Public Data" view is the default.
-        3.  Components displayed change dynamically based on the selected view.
+        1.  Company list displays with search and filtering capabilities
+        2.  Each company shows key metrics (emissions, targets, industry)
+        3.  Pagination handles large datasets efficiently
+        4.  Company cards link to detailed profiles
+        5.  Industry and region filters available
 
-* **Story 2.2: Manage Private Emission Records**
-    * As a logged-in user, I want a table in my "Private Tracking" view to see, add, edit, and delete my own emission records, so that I can manage my data accurately.
+* **Story 2.2: View Detailed Company Dashboard**
+    * As a user, I want to view a comprehensive dashboard for any company, so that I can understand their climate performance and strategy.
     * **AC:**
-        1.  The "Private Tracking" view contains a data table displaying only the records associated with the user.
-        2.  An "Add New Record" feature is available.
-        3.  Each record has "Edit" and "Delete" actions.
-        4.  The backend logic is updated to support a secure delete function.
+        1.  Company-specific climate performance dashboard
+        2.  Emissions data across all scopes with historical trends
+        3.  SBTi targets and net zero commitments
+        4.  Industry benchmarking and peer comparisons
+        5.  Carbon projects and initiatives overview
 
-* **Story 2.3: Explore Public Emission Records**
-    * As a user, I want to see a filterable table of all public emission records in the "Public Data" view, so that I can analyze the entire dataset.
+* **Story 2.3: Benchmark Company Performance**
+    * As a user, I want to compare company performance against industry peers and benchmarks, so that I can understand relative positioning and identify best practices.
     * **AC:**
-        1.  The "Public Data" view displays a table of all publicly available emission records.
-        2.  The table is filterable by company, date, and emission scope.
+        1.  Industry benchmarking with peer comparisons
+        2.  Performance metrics and rankings
+        3.  Gap analysis against targets and benchmarks
+        4.  Visual charts and graphs for easy comparison
+        5.  Export capabilities for reports
 
-* **Story 2.4: Visualize Emission Trends (for Both Views)**
-    * As a user, I want to see charts that visualize the emission data, so that I can identify trends in both the public dataset and my own private data.
+* **Story 2.4: Explore Public Emission Records**
+    * As a user, I want to explore public emission records and data, so that I can understand global emissions patterns and trends.
     * **AC:**
-        1.  Charts update dynamically based on the selected view (Public/Private).
-        2.  Charts show aggregated data for the selected view.
-        3.  Charts respect any active filters applied to the data tables.
+        1.  Global emissions monitoring center
+        2.  Sector breakdown and regional analysis
+        3.  Historical trends and projections
+        4.  Data quality indicators and source attribution
+        5.  Interactive visualizations and charts
 
-* **Story 2.5: Bulk Import Private Emission Records via CSV**
-    * As a logged-in user, I want to upload a CSV file in my "Private Tracking" view, so that I can efficiently import my own emission records.
+* **Story 2.5: Visualize Emission Trends**
+    * As a user, I want to visualize emission trends and patterns, so that I can identify insights and opportunities for improvement.
     * **AC:**
-        1.  The "Private Tracking" view includes a "Bulk Import" feature.
-        2.  A downloadable CSV template is provided.
-        3.  The UI parses and validates the CSV, providing clear error feedback.
-        4.  Valid records are sent to the backend for secure insertion.
+        1.  Interactive charts and graphs for trend analysis
+        2.  Multiple visualization types (line, bar, scatter, treemap)
+        3.  Time series analysis with period comparisons
+        4.  Drill-down capabilities for detailed exploration
+        5.  Export and sharing functionality
 
 * **Story 2.6: Display Targets and Progress**
-    * As a user, I want to see climate targets and progress against them, so that I can assess performance in both the Public and Private views.
+    * As a user, I want to view company targets and progress tracking, so that I can understand commitment levels and achievement rates.
     * **AC:**
-        1.  The UI includes a component for displaying targets and progress.
-        2.  The component shows data relevant to the active view (public company or private user).
-        3.  Progress bars or charts are used to visualize progress.
+        1.  SBTi targets and validation status
+        2.  Net zero commitments and timelines
+        3.  Progress tracking against targets
+        4.  Target setting and management tools
+        5.  Achievement recognition and milestones
 
-* **Story 2.7: Display Data Quality and Validation Status**
-    * As a user, I want to see the quality score and validation status for emission records, so that I can assess the reliability of the data.
+* **Story 2.7: Display Data Quality Metrics**
+    * As a user, I want to understand data quality and reliability, so that I can make informed decisions based on trustworthy information.
     * **AC:**
-        1.  Data tables in both views include a "Data Quality Score" column.
-        2.  Filtering by quality score is supported.
-        3.  Record details show validation status and data source.
+        1.  Data quality indicators and scoring
+        2.  Source attribution and verification status
+        3.  Completeness and accuracy metrics
+        4.  Data freshness and update frequency
+        5.  Quality improvement recommendations
 
-### Epic 3: Public Platform & Company Benchmarking
-*Goal: To build the public-facing "Platform Page," focusing on company profiles, comparative data, and industry benchmarks.*
-
-* **Story 3.1: Display Company Profiles List**
-    * As a user, I want to see a searchable and filterable list of all company profiles, so that I can discover and select companies for detailed analysis.
+* **Story 2.8: Display Platform Impact Metrics**
+    * As a user, I want to see platform impact and usage statistics, so that I can understand the community's engagement and influence.
     * **AC:**
-        1.  A "Platform" page displays all companies in a grid/list.
-        2.  Each item shows Company Name, Industry, and Location.
-        3.  The page includes search and filter controls.
-        4.  Clicking a company navigates to its detailed dashboard.
+        1.  Platform usage statistics and trends
+        2.  Community engagement metrics
+        3.  Data contribution and sharing statistics
+        4.  Impact measurement and reporting
+        5.  Success stories and case studies
 
-* **Story 3.2: View Detailed Company Dashboard**
-    * As a user, I want to view a detailed dashboard for a specific company, so that I can analyze its emissions data, targets, and compliance status in one place.
+* **Story 2.9: CSV Data Import System**
+    * As a Data Administrator, I want to import real corporate climate data from CSV files, so that the platform can display verified emissions data instead of mock data.
     * **AC:**
-        1.  A dedicated page displays a single company's profile.
-        2.  The page shows detailed emissions data, climate targets, and compliance badges.
-        3.  Relevant financial/operational data is included for context.
-        4.  All data is fetched from Supabase.
+        1.  CSV file upload with drag-and-drop interface
+        2.  Template validation against predefined schemas
+        3.  Data parsing and transformation
+        4.  Error reporting and validation feedback
+        5.  Import progress tracking and status updates
 
-* **Story 3.3: Benchmark Company Performance Against Industry Averages**
-    * As a user, I want to compare a company's emissions data against industry benchmarks, so that I can understand its performance relative to its peers.
+* **Story 2.10: Data Quality Monitoring Dashboard**
+    * As a Data Administrator, I want to monitor data quality scores and issues, so that I can ensure the platform displays reliable and accurate information.
     * **AC:**
-        1.  The company dashboard includes a "Benchmarking" section.
-        2.  Charts compare the company's key metrics against its industry average.
-        3.  "Best-in-class" metrics are displayed as a performance target.
-        4.  Benchmark data is fetched from the `industry_benchmarks` table.
+        1.  Quality score visualization (0.0-1.0 scale)
+        2.  Data completeness and accuracy metrics
+        3.  Quality issue tracking and resolution
+        4.  Source attribution and verification status
+        5.  Quality trend analysis over time
 
-### Epic 4: Community Forum
-*Goal: To build the core features of the community forum, including moderation and administration tools.*
-
-* **Story 4.1: Implement Basic Forum Moderation Tools**
-    * As a Forum Moderator, I want to be able to delete, lock, and pin/unpin topics directly from the UI, so that I can effectively manage the community.
+* **Story 2.11: Import Management Interface**
+    * As a Data Administrator, I want to manage data imports and track import history, so that I can maintain data integrity and audit trails.
     * **AC:**
-        1.  Moderators see moderation controls on topics and replies.
-        2.  "Delete" removes the item from view.
-        3.  "Lock" prevents new replies.
-        4.  "Pin" sticks the topic to the top of the list.
-        5.  Actions are protected by RLS.
+        1.  Import history with success/failure tracking
+        2.  Data source management and configuration
+        3.  Import scheduling and automation
+        4.  Rollback capabilities for failed imports
+        5.  Import performance metrics and optimization
 
-* **Story 4.2: Create a Basic Forum Admin Dashboard**
-    * As an Administrator, I want a simple dashboard to view key forum statistics and manage user roles, so that I can monitor the health of the community.
+* **Story 2.12: Data Source Attribution**
+    * As a user, I want to see the source of data displayed on the platform, so that I can understand data reliability and make informed decisions.
     * **AC:**
-        1.  A new, protected "Admin Dashboard" page is created.
-        2.  The dashboard displays key stats (total topics, replies, users).
-        3.  The dashboard includes a user table to manage user roles (e.g., promote to moderator).
+        1.  Data source indicators on all data displays
+        2.  Source credibility scoring and badges
+        3.  Last update timestamps for all data
+        4.  Data lineage tracking and documentation
+        5.  Source comparison and verification tools
 
-* **Story 4.3: Support Image and File Uploads in Posts**
-    * As a user, I want to be able to upload images and files when creating a topic or a reply, so that I can share richer content.
-    * **AC:**
-        1.  The post composer includes a file upload button.
-        2.  Common image and document formats are supported.
-        3.  Images are rendered in the post; documents are shown as links.
-        4.  Files are stored securely in Supabase Storage.
+### Epic 3: Personal Carbon Management (Future Plan)
+*Goal: To implement private carbon tracking capabilities for individual users and organizations to manage their own emissions data.*
 
-* **Story 4.4: Implement Basic User Notifications**
-    * As a user, I want to receive a notification when someone replies to my topic, so that I can stay engaged in the conversation.
+* **Story 3.1: Private Data Management Interface**
+    * As a user, I want to manage my private emission records, so that I can track my organization's carbon footprint securely.
     * **AC:**
-        1.  The topic author receives a notification on a new reply.
-        2.  The `NotificationBell` component shows an unread indicator.
-        3.  Clicking the bell shows a list of recent notifications.
-        4.  Clicking a notification navigates to the relevant reply.
+        1.  Private data table with CRUD operations
+        2.  Add/Edit/Delete forms for emission records
+        3.  User-specific data management
+        4.  Secure data storage and access controls
+        5.  Data validation and quality checks
+
+* **Story 3.2: Dual-View Tracker Interface**
+    * As a user, I want a unified tracker page with public and private views, so that I can seamlessly switch between exploring public data and managing my private records.
+    * **AC:**
+        1.  Tab/toggle interface for Public vs Private views
+        2.  Dynamic component switching
+        3.  Unified tracker page design
+        4.  Consistent user experience across views
+        5.  Context-aware navigation and actions
+
+* **Story 3.3: Private Analytics and Reporting**
+    * As a user, I want private analytics and reporting tools, so that I can generate insights and reports for my organization's emissions data.
+    * **AC:**
+        1.  Private dashboard with organization-specific metrics
+        2.  Custom report generation
+        3.  Data export capabilities
+        4.  Trend analysis and forecasting
+        5.  Goal setting and progress tracking
+
+### Epic 4: Community Forum – Professional Community Platform
+*Goal: To build a professional-grade community platform for climate discussions, collaboration, and engagement.*
+
+#### **Foundational Stories (Completed/In Progress)**
+
+* **Story 4.1: Forum Foundations**
+    * Topic/reply structure, categories, basic forum logic.
+
+* **Story 4.2: User Profiles & Reputation System**
+    * Dynamic user profiles, reputation tracking, badge achievements, upvote/downvote system.
+
+* **Story 4.3: Advanced Moderation & Admin Dashboard**
+    * Flagged content queue, ban tools, moderation logs, admin role protection.
+
+* **Story 4.4: File Uploads & Attachments**
+    * S3 integration, file preview UI, attachments in posts.
+
+* **Story 4.5: Real-Time Notifications (in progress)**
+    * SSE/WebSocket-based delivery, user-targeted alerts, frontend bell integration.
+
+#### **Planned Enhancements (To Achieve Professional Grade)**
+
+* **Story 4.6: Advanced Search & Discovery**
+    * Full-text search, trending topics, tag filters, SEO-friendly URLs and metadata.
+
+* **Story 4.7: Mobile-First Experience & PWA**
+    * Responsive layout, touch-first components, offline mode, app-like experience.
+
+* **Story 4.8: Enhanced User Engagement**
+    * Mentions (@username), bookmarks, follows, content reactions, personalized feed.
+
+* **Story 4.9: Rich Content & Editor Experience**
+    * WYSIWYG with Markdown, media embeds, post types (Q&A, polls, announcements).
+
+* **Story 4.10: Community Analytics & Insights**
+    * User engagement dashboards, trending discussions, growth metrics.
+
+* **Story 4.11: Accessibility & Internationalization**
+    * WCAG compliance, screen reader support, i18n, RTL support, GDPR alignment.

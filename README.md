@@ -71,7 +71,7 @@ GoCarbonTracker is a comprehensive corporate climate intelligence platform that 
 - ✅ **Epic 1**: Foundational Backend & User Authentication (Complete)
 - ✅ **Epic 2**: Carbon Tracking & Public Platform + Real Data Integration (90% Complete)
 - 🔄 **Epic 3**: Personal Carbon Management (Future Plan)
-- 🔄 **Epic 4**: Community Forum (80% Complete)
+- 🚀 **Epic 4**: Community Forum – Professional Community Platform (see [Epic Story Structure](./docs/prd/3-epic-story-structure.md) for full breakdown)
 - 📋 **Epics 5-12**: See [Complete Epic Roadmap](./docs/EPIC_ROADMAP.md) for future development phases
 
 **Complete Epic Overview**:

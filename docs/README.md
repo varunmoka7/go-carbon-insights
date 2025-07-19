@@ -42,3 +42,7 @@ This documentation structure is prepared for CI/CD integration:
 - Metadata headers for GitHub Actions parsing
 - Consistent file naming for automated processing
 - Version tracking for automated PDF generation
+
+---
+
+**Note:** The full Epic 4 Community Forum story structure is maintained in [docs/prd/3-epic-story-structure.md](./prd/3-epic-story-structure.md).

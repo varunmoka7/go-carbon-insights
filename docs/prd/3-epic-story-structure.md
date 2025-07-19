@@ -189,77 +189,42 @@
         4.  Trend analysis and forecasting
         5.  Goal setting and progress tracking
 
-## Epic 4: Community Forum
-*Goal: To build a comprehensive community platform where users can discuss climate topics, share insights, and collaborate on carbon reduction strategies.*
+## Epic 4: Community Forum – Professional Community Platform
 
-* **Story 4.1: Forum Categories and Topics**
-    * As a user, I want to browse and participate in forum discussions organized by categories and topics, so that I can find relevant conversations and share my expertise.
-    * **AC:**
-        1.  Hierarchical category structure (Climate Science, Industry Best Practices, etc.)
-        2.  Topic creation and management
-        3.  Thread-based discussion system
-        4.  Search and filtering capabilities
-        5.  Tag system for content organization
+### Foundational Stories (Completed)
+- [**Story 4.1**: Forum Foundations](../../Stories/4.1-forum-foundations.md)  
+  Topic/reply structure, categories, basic forum logic.
 
-* **Story 4.2: User Profiles and Reputation**
-    * As a user, I want to build a profile and reputation within the community, so that my contributions are recognized and I can establish credibility.
-    * **AC:**
-        1.  User profiles with activity history
-        2.  Reputation system with points/badges
-        3.  Contribution tracking and recognition
-        4.  Profile customization options
-        5.  Privacy controls for profile information
+- [**Story 4.2**: User Profiles & Reputation System](../../Stories/4.2-user-profiles-reputation.md)  
+  Dynamic user profiles, reputation tracking, badge achievements, upvote/downvote system.
 
-* **Story 4.3: Content Moderation**
-    * As a moderator, I want tools to moderate forum content, so that the community maintains high quality and appropriate behavior.
-    * **AC:**
-        1.  Report system for inappropriate content
-        2.  Moderation dashboard with action tools
-        3.  Automated content filtering
-        4.  User suspension and banning capabilities
-        5.  Appeal process for moderation actions
+- [**Story 4.3**: Advanced Moderation & Admin Dashboard](../../Stories/4.3-advanced-moderation-admin-dashboard.md)  
+  Flagged content queue, ban tools, moderation logs, admin role protection.
 
-* **Story 4.4: File Sharing and Attachments**
-    * As a user, I want to share files and attachments in forum posts, so that I can provide supporting documents and visual content.
-    * **AC:**
-        1.  File upload and attachment system
-        2.  Supported file types (PDF, images, documents)
-        3.  File size limits and storage management
-        4.  Preview capabilities for common file types
-        5.  Security scanning for uploaded files
+- [**Story 4.4**: File Uploads & Attachments](../../Stories/4.4-s3-file-uploads-with-cdn.md)  
+  S3 integration, file preview UI, attachments in posts.
 
-* **Story 4.5: Notifications and Subscriptions**
-    * As a user, I want to receive notifications about forum activity, so that I can stay engaged with discussions and respond to interactions.
-    * **AC:**
-        1.  Email and in-app notification system
-        2.  Subscription preferences for topics/categories
-        3.  Mention and quote notifications
-        4.  Digest emails for activity summaries
-        5.  Notification management and settings
+- [**Story 4.5**: Real-Time Notifications (in progress)](../../Stories/4.5-realtime-notifications.md)  
+  SSE/WebSocket-based delivery, user-targeted alerts, frontend bell integration.
 
-* **Story 4.6: Advanced Search and Discovery**
-    * As a user, I want advanced search capabilities to find relevant content, so that I can quickly locate discussions and information I need.
-    * **AC:**
-        1.  Full-text search across posts and topics
-        2.  Advanced filters (date, author, category, tags)
-        3.  Search result ranking and relevance
-        4.  Search history and saved searches
-        5.  Related content suggestions
+---
 
-* **Story 4.7: Mobile Responsive Design**
-    * As a mobile user, I want to access the forum on my mobile device, so that I can participate in discussions anywhere, anytime.
-    * **AC:**
-        1.  Responsive design for mobile devices
-        2.  Touch-friendly interface elements
-        3.  Optimized navigation for small screens
-        4.  Fast loading and performance
-        5.  Offline reading capabilities
+### Planned Enhancements (To Achieve Professional Grade)
 
-* **Story 4.8: Integration with Main Platform**
-    * As a user, I want seamless integration between the forum and main platform, so that I can easily reference data and share insights.
-    * **AC:**
-        1.  Single sign-on between platform and forum
-        2.  Data sharing and embedding capabilities
-        3.  Cross-platform notifications
-        4.  Unified user profiles and settings
-        5.  Seamless navigation between features
+- **Story 4.6**: Advanced Search & Discovery  
+  Full-text search, trending topics, tag filters, SEO-friendly URLs and metadata.
+
+- **Story 4.7**: Mobile-First Experience & PWA  
+  Responsive layout, touch-first components, offline mode, app-like experience.
+
+- **Story 4.8**: Enhanced User Engagement  
+  Mentions (@username), bookmarks, follows, content reactions, personalized feed.
+
+- **Story 4.9**: Rich Content & Editor Experience  
+  WYSIWYG with Markdown, media embeds, post types (Q&A, polls, announcements).
+
+- **Story 4.10**: Community Analytics & Insights  
+  User engagement dashboards, trending discussions, growth metrics.
+
+- **Story 4.11**: Accessibility & Internationalization  
+  WCAG compliance, screen reader support, i18n, RTL support, GDPR alignment.
