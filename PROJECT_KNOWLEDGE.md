@@ -214,10 +214,10 @@ interface KPIDefinition {
 * **Key Features**: User registration/login, social auth, database schema
 * **Completion Date**: December 2024
 
-#### Epic 2: Carbon Tracking & Public Platform ✅ **COMPLETE**
-* **Status**: ~90% complete (combined with former Epic 3)
+#### Epic 2: Carbon Tracking & Public Platform + Real Data Integration ✅ **90% COMPLETE**
+* **Status**: ~90% complete (combined with former Epic 3 and Epic 5)
 * **Completed**: Company profiles, dashboards, benchmarking, analytics, global monitoring
-* **Remaining**: Minor UI refinements and optimization
+* **Remaining**: Real data import system, quality monitoring, UI refinements
 * **Completion Date**: January 2025
 
 #### Epic 3: Personal Carbon Management 🔄 **FUTURE PLAN**
@@ -236,7 +236,6 @@ interface KPIDefinition {
 For comprehensive details on the complete epic roadmap including Epics 5-12, see **[Complete Epic Roadmap](./docs/EPIC_ROADMAP.md)**
 
 #### Phase 2: Data & Intelligence (Q2-Q3 2025)
-* **Epic 5**: Data Migration & Real Data Integration
 * **Epic 6**: SaaS Platform Features
 * **Epic 7**: Advanced Analytics & AI
 * **Epic 8**: Mobile & Offline Capabilities

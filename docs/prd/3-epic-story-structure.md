@@ -48,8 +48,8 @@
         4.  Audit trails for data changes and user actions
         5.  Proper indexing for performance optimization
 
-## Epic 2: Carbon Tracking & Public Platform
-*Goal: To implement a unified platform for exploring public emissions data, company benchmarking, and global monitoring with comprehensive analytics and visualization capabilities.*
+## Epic 2: Carbon Tracking & Public Platform + Real Data Integration
+*Goal: To implement a unified platform for exploring public emissions data, company benchmarking, and global monitoring with comprehensive analytics, visualization capabilities, and real corporate climate data integration.*
 
 * **Story 2.1: Display Company Profiles List**
     * As a user, I want to browse a comprehensive list of company profiles, so that I can explore different organizations and their climate performance.
@@ -122,6 +122,42 @@
         3.  Data contribution and sharing statistics
         4.  Impact measurement and reporting
         5.  Success stories and case studies
+
+* **Story 2.9: CSV Data Import System**
+    * As a Data Administrator, I want to import real corporate climate data from CSV files, so that the platform can display verified emissions data instead of mock data.
+    * **AC:**
+        1.  CSV file upload with drag-and-drop interface
+        2.  Template validation against predefined schemas
+        3.  Data parsing and transformation
+        4.  Error reporting and validation feedback
+        5.  Import progress tracking and status updates
+
+* **Story 2.10: Data Quality Monitoring Dashboard**
+    * As a Data Administrator, I want to monitor data quality scores and issues, so that I can ensure the platform displays reliable and accurate information.
+    * **AC:**
+        1.  Quality score visualization (0.0-1.0 scale)
+        2.  Data completeness and accuracy metrics
+        3.  Quality issue tracking and resolution
+        4.  Source attribution and verification status
+        5.  Quality trend analysis over time
+
+* **Story 2.11: Import Management Interface**
+    * As a Data Administrator, I want to manage data imports and track import history, so that I can maintain data integrity and audit trails.
+    * **AC:**
+        1.  Import history with success/failure tracking
+        2.  Data source management and configuration
+        3.  Import scheduling and automation
+        4.  Rollback capabilities for failed imports
+        5.  Import performance metrics and optimization
+
+* **Story 2.12: Data Source Attribution**
+    * As a user, I want to see the source of data displayed on the platform, so that I can understand data reliability and make informed decisions.
+    * **AC:**
+        1.  Data source indicators on all data displays
+        2.  Source credibility scoring and badges
+        3.  Last update timestamps for all data
+        4.  Data lineage tracking and documentation
+        5.  Source comparison and verification tools
 
 ## Epic 3: Personal Carbon Management (Future Plan)
 *Goal: To implement private carbon tracking capabilities for individual users and organizations to manage their own emissions data.*

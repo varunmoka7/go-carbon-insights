@@ -40,10 +40,11 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - **Completion Date**: December 2024
 - **Key Achievements**: Supabase integration, social auth, comprehensive database schema
 
-### ✅ **Epic 2: Carbon Tracking & Public Platform** - 90% COMPLETE
-- **Status**: Combined with former Epic 3, nearly complete
+### ✅ **Epic 2: Carbon Tracking & Public Platform + Real Data Integration** - 90% COMPLETE
+- **Status**: Combined with former Epic 3 and Epic 5, nearly complete
 - **Completion Date**: January 2025
 - **Key Achievements**: Company dashboards, benchmarking, analytics, global monitoring
+- **New Scope**: Adding real data import system and quality monitoring
 
 ### 🔄 **Epic 3: Personal Carbon Management** - FUTURE PLAN
 - **Status**: Planning phase
@@ -90,6 +91,12 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - ✅ Story 2.7: Data quality metrics display
 - ✅ Story 2.8: Platform impact metrics
 
+**New Stories (Epic 5 Integration)**:
+- 🔄 Story 2.9: CSV Data Import System (in progress)
+- 🔄 Story 2.10: Data Quality Monitoring Dashboard (in progress)
+- 🔄 Story 2.11: Import Management Interface (planned)
+- 🔄 Story 2.12: Data Source Attribution (planned)
+
 **Technical Implementation**:
 - Interactive charts and visualizations (Recharts)
 - Global emissions monitoring center
@@ -135,20 +142,11 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 
 ***
 
-## Epic 5-8: Data & Intelligence
+## Epic 6-8: Data & Intelligence
 
-### Epic 5: Data Migration & Real Data Integration 🔄 **PLANNING**
+### Epic 5: [REMOVED - Integrated into Epic 2]
 
-**Goal**: Transition from mock data to real corporate climate data with robust import and validation systems
-
-**Stories**:
-- **Story 5.1**: Comprehensive data import pipeline
-- **Story 5.2**: Data validation and quality checks
-- **Story 5.3**: Automated data update procedures
-- **Story 5.4**: Data source integration (CDP, SBTi, company reports)
-- **Story 5.5**: Data versioning and audit trails
-- **Story 5.6**: Data quality scoring and monitoring
-- **Story 5.7**: Data export and API endpoints
+**Note**: Epic 5 (Data Migration & Real Data Integration) has been integrated into Epic 2 as Stories 2.9-2.12 to create a complete public platform with real data capabilities.
 
 **Key Features**:
 - CSV/Excel import with template validation
@@ -376,19 +374,18 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 ### Phase 1: Foundation & Core Features (Q1 2025)
 **Focus**: Complete current epics and establish solid foundation
 
-**Epic 2**: Carbon Tracking & Public Platform - Final completion
+**Epic 2**: Carbon Tracking & Public Platform + Real Data Integration - Final completion
 **Epic 4**: Community Forum - Complete remaining features
 **Epic 3**: Personal Carbon Management - Begin implementation
 
 **Deliverables**:
-- Complete public platform functionality
+- Complete public platform with real data integration
 - Full community forum with mobile optimization
 - Basic private data management capabilities
 
 ### Phase 2: Data & Intelligence (Q2-Q3 2025)
 **Focus**: Real data integration and AI capabilities
 
-**Epic 5**: Data Migration & Real Data Integration
 **Epic 6**: SaaS Platform Features (basic multi-tenancy)
 **Epic 7**: Advanced Analytics & AI
 **Epic 8**: Mobile & Offline Capabilities
