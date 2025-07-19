@@ -4,7 +4,7 @@ import { io, Socket } from 'socket.io-client';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
 
-const FORUM_API_BASE = process.env.REACT_APP_FORUM_API_URL || 'http://localhost:3001';
+const FORUM_API_BASE = 'http://localhost:3001';
 
 // Event types based on our WebSocket contracts
 interface WSEvent {
