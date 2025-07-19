@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ModerationAction, ModerationMetrics, PaginatedResponse } from '../types';
 
-const FORUM_API_BASE = process.env.REACT_APP_FORUM_API_URL || 'http://localhost:3001/api';
+const FORUM_API_BASE = 'http://localhost:3001/api';
 
 interface SuspendUserData {
   userId: string;

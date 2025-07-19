@@ -193,7 +193,7 @@ export const ReportsList: React.FC = () => {
         <CardContent className="p-6 text-center">
           <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-2" />
           <p className="text-sm text-muted-foreground">
-            Error loading reports: {error}
+            Error loading reports: {error?.message || 'Unknown error'}
           </p>
         </CardContent>
       </Card>
