@@ -9,6 +9,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Tracking from "./pages/Tracking";
@@ -37,6 +38,11 @@ import FloatingActionButton from "./components/FloatingActionButton";
 import NavigationDebugger from "./components/NavigationDebugger";
 import NavigationLoader from "./components/NavigationLoader";
 import EmissionTracking from "./pages/EmissionTracking";
+
+// Admin components
+import { AdminLayout } from "./features/admin/components/AdminLayout";
+import { AdminDashboard } from "./features/admin/pages/AdminDashboard";
+import { ReportsPage } from "./features/admin/pages/ReportsPage";
 
 const queryClient = new QueryClient();
 
@@ -142,6 +148,20 @@ const App = () => {
                         </Layout>
                       </PrivateRoute>
                     } />
+                    
+                    {/* Admin routes - require admin/moderator role */}
+                    <Route path="/admin" element={
+                      <ProtectedAdminRoute>
+                        <AdminLayout />
+                      </ProtectedAdminRoute>
+                    }>
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="reports" element={<ReportsPage />} />
+                      <Route path="moderation" element={<div>Moderation Page - Coming Soon</div>} />
+                      <Route path="users" element={<div>Users Management - Coming Soon</div>} />
+                      <Route path="analytics" element={<div>Analytics - Coming Soon</div>} />
+                      <Route path="settings" element={<div>Settings - Coming Soon</div>} />
+                    </Route>
                     
                     {/* Public routes */}
                     <Route path="/industry-glossary" element={

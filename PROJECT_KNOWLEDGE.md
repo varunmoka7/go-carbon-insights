@@ -207,6 +207,46 @@ interface KPIDefinition {
 
 ## Development Timeline
 
+### Current Epic Status (Updated January 2025)
+
+#### Epic 1: Foundational Backend & User Authentication ✅ **COMPLETE**
+* **Status**: All stories implemented and tested
+* **Key Features**: User registration/login, social auth, database schema
+* **Completion Date**: December 2024
+
+#### Epic 2: Carbon Tracking & Public Platform ✅ **COMPLETE**
+* **Status**: ~90% complete (combined with former Epic 3)
+* **Completed**: Company profiles, dashboards, benchmarking, analytics, global monitoring
+* **Remaining**: Minor UI refinements and optimization
+* **Completion Date**: January 2025
+
+#### Epic 3: Personal Carbon Management 🔄 **FUTURE PLAN**
+* **Status**: Planning phase
+* **Planned Features**: Private data management, dual-view tracker, personal analytics
+* **Target**: Q2 2025
+
+#### Epic 4: Community Forum 🔄 **IN PROGRESS**
+* **Status**: ~80% complete
+* **Completed**: Basic forum structure, moderation tools
+* **Remaining**: Advanced features, mobile optimization
+* **Target**: January 2025
+
+### Future Epic Roadmap (Epics 5-12)
+
+For comprehensive details on the complete epic roadmap including Epics 5-12, see **[Complete Epic Roadmap](./docs/EPIC_ROADMAP.md)**
+
+#### Phase 2: Data & Intelligence (Q2-Q3 2025)
+* **Epic 5**: Data Migration & Real Data Integration
+* **Epic 6**: SaaS Platform Features
+* **Epic 7**: Advanced Analytics & AI
+* **Epic 8**: Mobile & Offline Capabilities
+
+#### Phase 3: Enterprise & Scale (Q4 2025-Q1 2026)
+* **Epic 9**: Integration & API Ecosystem
+* **Epic 10**: Compliance & Reporting
+* **Epic 11**: Gamification & Engagement
+* **Epic 12**: Performance & Scalability
+
 ### Version 1.2.0 - Plastic Packaging Module (January 8, 2025)
 
 #### Completed Features

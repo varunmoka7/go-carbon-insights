@@ -61,10 +61,23 @@ GoCarbonTracker is a comprehensive corporate climate intelligence platform that 
 
 ### Quick Links
 - 📖 [Full Project Knowledge Base](./PROJECT_KNOWLEDGE.md)
+- 🗺️ [Complete Epic Roadmap](./docs/EPIC_ROADMAP.md)
 - 📁 [Documentation Directory](./docs/)
 - 📥 [Data Import Templates](./data-templates/)
 - 🔄 [Update Process](./docs/UPDATE_PROCESS.md)
 - 🤝 [Contributing Guidelines](./.github/CONTRIBUTING.md)
+
+### Epic Status (Updated January 2025)
+- ✅ **Epic 1**: Foundational Backend & User Authentication (Complete)
+- ✅ **Epic 2**: Carbon Tracking & Public Platform (90% Complete)
+- 🔄 **Epic 3**: Personal Carbon Management (Future Plan)
+- 🔄 **Epic 4**: Community Forum (80% Complete)
+- 📋 **Epics 5-12**: See [Complete Epic Roadmap](./docs/EPIC_ROADMAP.md) for future development phases
+
+**Complete Epic Overview**:
+- **Phase 1 (Q1 2025)**: Epics 1-4 - Foundation & Core Features
+- **Phase 2 (Q2-Q3 2025)**: Epics 5-8 - Data & Intelligence
+- **Phase 3 (Q4 2025-Q1 2026)**: Epics 9-12 - Enterprise & Scale
 
 ## 🛠️ Development & Data Import
 
