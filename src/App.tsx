@@ -43,6 +43,8 @@ import EmissionTracking from "./pages/EmissionTracking";
 import { AdminLayout } from "./features/admin/components/AdminLayout";
 import { AdminDashboard } from "./features/admin/pages/AdminDashboard";
 import { ReportsPage } from "./features/admin/pages/ReportsPage";
+import { ModerationDashboard } from "./features/admin/pages/ModerationDashboard";
+import { ProtectedModerationRoute } from "./components/ProtectedModerationRoute";
 
 const queryClient = new QueryClient();
 
@@ -157,7 +159,11 @@ const App = () => {
                     }>
                       <Route index element={<AdminDashboard />} />
                       <Route path="reports" element={<ReportsPage />} />
-                      <Route path="moderation" element={<div>Moderation Page - Coming Soon</div>} />
+                      <Route path="moderation" element={
+                        <ProtectedModerationRoute>
+                          <ModerationDashboard />
+                        </ProtectedModerationRoute>
+                      } />
                       <Route path="users" element={<div>Users Management - Coming Soon</div>} />
                       <Route path="analytics" element={<div>Analytics - Coming Soon</div>} />
                       <Route path="settings" element={<div>Settings - Coming Soon</div>} />
