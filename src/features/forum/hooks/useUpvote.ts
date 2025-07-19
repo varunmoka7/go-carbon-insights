@@ -135,12 +135,6 @@ export function useUpvote() {
       queryKey: ['user-upvotes', topicIds, replyIds],
       queryFn: () => fetchUserUpvotes(topicIds, replyIds),
       enabled: !!user && (topicIds.length > 0 || replyIds.length > 0),
-      onSuccess: (data) => {
-        setUpvoteStates(prev => ({
-          topics: { ...prev.topics, ...data.upvotes.topics },
-          replies: { ...prev.replies, ...data.upvotes.replies },
-        }));
-      }
     });
   };
 
