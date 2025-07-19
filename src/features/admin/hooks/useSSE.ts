@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
-const FORUM_API_BASE = process.env.REACT_APP_FORUM_API_URL || 'http://localhost:3001/api';
+const FORUM_API_BASE = 'http://localhost:3001/api';
 
 interface SSEEvent {
   type: string;
