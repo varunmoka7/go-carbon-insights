@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { FileUpload } from '../FileUpload';
 import { useToast } from '../../../../hooks/use-toast';
+import { server } from '../../../../test/mocks/server';
 
 // Mock the toast hook
 vi.mock('../../../../hooks/use-toast');
@@ -43,10 +44,14 @@ describe('FileUpload', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockUseToast.mockReturnValue({ toast: mockToast });
+    // Disable MSW for upload tests to use Jest fetch mock instead
+    server.close();
   });
 
   afterEach(() => {
     vi.resetAllMocks();
+    // Restart MSW after each test
+    server.listen({ onUnhandledRequest: 'bypass' });
   });
 
   it('renders upload zone correctly', () => {
@@ -61,7 +66,7 @@ describe('FileUpload', () => {
     render(<FileUpload {...defaultProps} />);
     
     const file = new File(['test content'], 'test.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, file);
     
@@ -70,37 +75,53 @@ describe('FileUpload', () => {
   });
 
   it('validates file types', async () => {
-    const user = userEvent.setup();
     render(<FileUpload {...defaultProps} />);
     
     const invalidFile = new File(['test content'], 'test.txt', { type: 'text/plain' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
-    await user.upload(input, invalidFile);
-    
-    expect(mockToast).toHaveBeenCalledWith({
-      title: 'Upload Error',
-      description: 'Invalid file type. Allowed types: image/png, image/jpeg, application/pdf',
-      variant: 'destructive',
+    // Simulate file selection more directly
+    Object.defineProperty(input, 'files', {
+      value: [invalidFile],
+      writable: false,
     });
+    
+    fireEvent.change(input);
+    
+    // Wait for the component to process the file
+    await waitFor(() => {
+      expect(mockToast).toHaveBeenCalledWith({
+        title: 'Upload Error',
+        description: 'Invalid file type. Allowed types: image/png, image/jpeg, application/pdf',
+        variant: 'destructive',
+      });
+    }, { timeout: 3000 });
   });
 
   it('validates file size', async () => {
-    const user = userEvent.setup();
-    render(<FileUpload {...defaultProps} maxSizeBytes={1024} />);
+    const maxSize = 1024 * 1024; // 1MB
+    render(<FileUpload {...defaultProps} maxSizeBytes={maxSize} />);
     
     // Create a file larger than the limit
     const largeFile = new File(['x'.repeat(2048)], 'large.png', { type: 'image/png' });
-    Object.defineProperty(largeFile, 'size', { value: 2048 });
+    Object.defineProperty(largeFile, 'size', { value: 2 * 1024 * 1024 }); // 2MB
     
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
-    await user.upload(input, largeFile);
+    // Simulate file selection more directly
+    Object.defineProperty(input, 'files', {
+      value: [largeFile],
+      writable: false,
+    });
     
-    expect(mockToast).toHaveBeenCalledWith({
-      title: 'Upload Error',
-      description: 'File size exceeds maximum limit of 0MB',
-      variant: 'destructive',
+    fireEvent.change(input);
+    
+    await waitFor(() => {
+      expect(mockToast).toHaveBeenCalledWith({
+        title: 'Upload Error',
+        description: 'File size exceeds maximum limit of 1MB',
+        variant: 'destructive',
+      });
     });
   });
 
@@ -152,7 +173,7 @@ describe('FileUpload', () => {
     render(<FileUpload {...defaultProps} />);
     
     const file = new File(['test content'], 'test.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, file);
     
@@ -185,7 +206,7 @@ describe('FileUpload', () => {
     render(<FileUpload {...defaultProps} />);
     
     const file = new File(['test content'], 'test.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, file);
     
@@ -207,7 +228,7 @@ describe('FileUpload', () => {
     render(<FileUpload {...defaultProps} />);
     
     const file = new File(['test content'], 'test.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, file);
     
@@ -225,7 +246,7 @@ describe('FileUpload', () => {
     
     const file1 = new File(['content 1'], 'test1.png', { type: 'image/png' });
     const file2 = new File(['content 2'], 'test2.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, [file1, file2]);
     
@@ -239,7 +260,7 @@ describe('FileUpload', () => {
     
     const file1 = new File(['content 1'], 'test1.png', { type: 'image/png' });
     const file2 = new File(['content 2'], 'test2.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, file1);
     expect(screen.getByText('test1.png')).toBeInTheDocument();
@@ -254,7 +275,7 @@ describe('FileUpload', () => {
     render(<FileUpload {...defaultProps} />);
     
     const imageFile = new File(['image content'], 'image.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, imageFile);
     
@@ -267,7 +288,7 @@ describe('FileUpload', () => {
     render(<FileUpload {...defaultProps} />);
     
     const pdfFile = new File(['pdf content'], 'document.pdf', { type: 'application/pdf' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, pdfFile);
     
@@ -305,7 +326,7 @@ describe('FileUpload', () => {
     render(<FileUpload {...defaultProps} />);
     
     const file = new File(['test content'], 'test.png', { type: 'image/png' });
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     await user.upload(input, file);
     

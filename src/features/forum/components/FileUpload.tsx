@@ -267,6 +267,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     <div className={`space-y-4 ${className}`}>
       {/* Drop Zone */}
       <Card
+        role="button"
+        tabIndex={0}
         className={`
           p-8 border-2 border-dashed cursor-pointer transition-colors
           ${isDragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
@@ -275,6 +277,12 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onClick={handleClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
       >
         <div className="text-center">
           <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
