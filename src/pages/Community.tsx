@@ -15,12 +15,21 @@ import NewTopicForm from '@/features/forum/components/NewTopicForm';
 const Community = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const { topics, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useInfiniteTopics(selectedCategory);
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { handleTopicUpvote, isTopicUpvoted } = useUpvote();
   const navigate = useNavigate();
 
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [isNewTopicFormOpen, setIsNewTopicFormOpen] = useState(false);
+
+  // Add debugging information
+  useEffect(() => {
+    console.log('Community component mounted');
+    console.log('Auth loading:', authLoading);
+    console.log('User:', user);
+    console.log('Topics loading:', isLoading);
+    console.log('Topics error:', error);
+  }, [authLoading, user, isLoading, error]);
 
   useKeyboardShortcuts([
     { key: 'n', handler: () => setIsNewTopicFormOpen(true) },
@@ -70,6 +79,42 @@ const Community = () => {
     return acc;
   }, {} as Record<string, boolean>);
 
+  // Show loading state while auth is loading
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center">
+          <Spinner size="xl" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading community...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if there's an error
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4">
+            <h3 className="text-lg font-medium text-red-800 dark:text-red-200 mb-2">
+              Error Loading Community
+            </h3>
+            <p className="text-red-600 dark:text-red-300 text-sm">
+              {error}
+            </p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <CommunityLayout
       sidebar={
@@ -81,7 +126,6 @@ const Community = () => {
       }
     >
       <div className="flex-1 p-4">
-        {error && <div className="text-red-500">Error: {error}</div>}
         <CommunityFeed 
           topics={topics}
           loading={isLoading && topics.length === 0}

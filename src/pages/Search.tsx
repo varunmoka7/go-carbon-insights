@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import SearchPage from '@/features/forum/components/SearchPage';
 import { WebSocketProvider } from '@/features/forum/contexts/WebSocketContext';
+import { Spinner } from '@/components/ui/spinner';
 
 // Mock data - these would normally come from API calls
 const mockCategories = [
@@ -42,8 +43,12 @@ const Search: React.FC = () => {
   const [categories, setCategories] = useState(mockCategories);
   const [availableTags, setAvailableTags] = useState(mockTags);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Add debugging information
+    console.log('Search component mounted');
+    
     // Simulate API calls to fetch categories and tags
     const fetchData = async () => {
       try {
@@ -62,6 +67,7 @@ const Search: React.FC = () => {
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch search data:', error);
+        setError('Failed to load search data. Please try again.');
         setIsLoading(false);
       }
     };
@@ -73,8 +79,31 @@ const Search: React.FC = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading search...</p>
+          <Spinner size="xl" />
+          <p className="mt-4 text-gray-600">Loading search...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <h3 className="text-lg font-medium text-red-800 mb-2">
+              Error Loading Search
+            </h3>
+            <p className="text-red-600 text-sm">
+              {error}
+            </p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Retry
+            </button>
+          </div>
         </div>
       </div>
     );

@@ -32,12 +32,12 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
   } = useWebSocket({
     namespace: '/forum',
     autoConnect: true,
-    showToasts: true,
+    showToasts: false, // Disable toasts in context to avoid spam
     onReconnect: () => {
-      toast.success('Connected to real-time updates');
+      console.log('WebSocket reconnected');
     },
     onDisconnect: () => {
-      toast.warning('Real-time updates disconnected');
+      console.log('WebSocket disconnected');
     },
   });
 
@@ -83,7 +83,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     if (connectionError) {
       console.warn('WebSocket connection error:', connectionError);
       
-      // Don't show toast for every error to avoid spam
+      // Only show toast for authentication errors
       if (connectionError.includes('Authentication')) {
         toast.error('Authentication failed - please refresh the page');
       }
@@ -123,7 +123,15 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
 export const useWebSocketContext = (): WebSocketContextType => {
   const context = useContext(WebSocketContext);
   if (!context) {
-    throw new Error('useWebSocketContext must be used within a WebSocketProvider');
+    // Return a fallback context if WebSocket is not available
+    return {
+      isConnected: false,
+      connectionError: 'WebSocket context not available',
+      lastEvent: null,
+      joinRoom: () => console.log('WebSocket not available'),
+      leaveRoom: () => console.log('WebSocket not available'),
+      reconnect: () => console.log('WebSocket not available'),
+    };
   }
   return context;
 };

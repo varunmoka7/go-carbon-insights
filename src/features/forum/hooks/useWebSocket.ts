@@ -4,7 +4,8 @@ import { io, Socket } from 'socket.io-client';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
 
-const FORUM_API_BASE = 'http://localhost:3001';
+// Use environment variable or fallback to localhost
+const FORUM_API_BASE = import.meta.env.VITE_FORUM_API_BASE || 'http://localhost:3001';
 
 // Event types based on our WebSocket contracts
 interface WSEvent {
@@ -103,16 +104,92 @@ export const useWebSocket = (options: UseWebSocketOptions = {}): UseWebSocketRet
 
     try {
       const newSocket = io(`${FORUM_API_BASE}${namespace}`, {
-        path: '/ws',
         auth: {
-          token: token,
+          token,
         },
         transports: ['websocket', 'polling'],
         timeout: 10000,
-        reconnection: true,
-        reconnectionAttempts: maxReconnectAttempts,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 5000,
+        forceNew: true,
+      });
+
+      newSocket.on('connect', () => {
+        console.log('WebSocket connected');
+        setIsConnected(true);
+        setConnectionError(null);
+        reconnectAttempts.current = 0;
+        
+        if (showToasts && onReconnect) {
+          onReconnect();
+        }
+      });
+
+      newSocket.on('disconnect', (reason) => {
+        console.log('WebSocket disconnected:', reason);
+        setIsConnected(false);
+        
+        if (showToasts && onDisconnect) {
+          onDisconnect();
+        }
+      });
+
+      newSocket.on('connect_error', (error) => {
+        console.error('WebSocket connection error:', error);
+        setConnectionError(`Connection failed: ${error.message}`);
+        setIsConnected(false);
+        
+        // Don't show toast for every connection error to avoid spam
+        if (showToasts && reconnectAttempts.current === 0) {
+          toast.error('Real-time updates unavailable');
+        }
+      });
+
+      // Handle real-time events
+      newSocket.on('topic:created', (event: TopicCreatedEvent) => {
+        setLastEvent(event);
+        queryClient.invalidateQueries({ queryKey: ['community-topics'] });
+        
+        if (showToasts) {
+          toast.success(`New topic: ${event.title}`);
+        }
+      });
+
+      newSocket.on('reply:created', (event: ReplyCreatedEvent) => {
+        setLastEvent(event);
+        queryClient.invalidateQueries({ queryKey: ['community-topics'] });
+        queryClient.invalidateQueries({ queryKey: ['topic-replies', event.topicId] });
+        
+        if (showToasts) {
+          toast.success(`New reply to: ${event.topicTitle}`);
+        }
+      });
+
+      newSocket.on('report:created', (event: ReportCreatedEvent) => {
+        setLastEvent(event);
+        queryClient.invalidateQueries({ queryKey: ['moderation-reports'] });
+        
+        if (showToasts) {
+          toast.warning(`New ${event.contentType} reported`);
+        }
+      });
+
+      newSocket.on('moderation:action', (event: ModerationActionEvent) => {
+        setLastEvent(event);
+        queryClient.invalidateQueries({ queryKey: ['community-topics'] });
+        queryClient.invalidateQueries({ queryKey: ['moderation-reports'] });
+        
+        if (showToasts) {
+          toast.info(`Moderation action: ${event.actionType}`);
+        }
+      });
+
+      newSocket.on('user:suspension', (event: UserSuspensionEvent) => {
+        setLastEvent(event);
+        queryClient.invalidateQueries({ queryKey: ['community-topics'] });
+        
+        if (showToasts) {
+          const action = event.suspended ? 'suspended' : 'unsuspended';
+          toast.info(`User ${event.username} ${action}`);
+        }
       });
 
       return newSocket;
@@ -121,134 +198,18 @@ export const useWebSocket = (options: UseWebSocketOptions = {}): UseWebSocketRet
       setConnectionError('Failed to create connection');
       return null;
     }
-  }, [namespace, user, getAuthToken]);
-
-  const setupEventListeners = useCallback((socketInstance: Socket) => {
-    // Connection events
-    socketInstance.on('connect', () => {
-      console.log('WebSocket connected');
-      setIsConnected(true);
-      setConnectionError(null);
-      reconnectAttempts.current = 0;
-      
-      if (onReconnect && reconnectAttempts.current > 0) {
-        onReconnect();
-      }
-    });
-
-    socketInstance.on('disconnect', (reason) => {
-      console.log('WebSocket disconnected:', reason);
-      setIsConnected(false);
-      
-      if (onDisconnect) {
-        onDisconnect();
-      }
-    });
-
-    socketInstance.on('connect_error', (error) => {
-      console.error('WebSocket connection error:', error);
-      setConnectionError(error.message);
-      setIsConnected(false);
-      reconnectAttempts.current++;
-    });
-
-    // Forum events
-    socketInstance.on('topic:created', (data: TopicCreatedEvent) => {
-      console.log('New topic created:', data);
-      setLastEvent({ type: 'topic:created', data });
-      
-      // Invalidate topics queries to refresh lists
-      queryClient.invalidateQueries({ queryKey: ['topics'] });
-      queryClient.invalidateQueries({ queryKey: ['categories'] });
-      
-      if (showToasts) {
-        toast.success(`New topic: "${data.title}" by ${data.authorUsername}`);
-      }
-    });
-
-    socketInstance.on('reply:created', (data: ReplyCreatedEvent) => {
-      console.log('New reply created:', data);
-      setLastEvent({ type: 'reply:created', data });
-      
-      // Invalidate specific topic and general replies queries
-      queryClient.invalidateQueries({ queryKey: ['topics', data.topicId] });
-      queryClient.invalidateQueries({ queryKey: ['replies', data.topicId] });
-      queryClient.invalidateQueries({ queryKey: ['topics'] }); // For reply counts
-      
-      if (showToasts) {
-        toast.info(`New reply in "${data.topicTitle}" by ${data.authorUsername}`);
-      }
-    });
-
-    socketInstance.on('report:created', (data: ReportCreatedEvent) => {
-      console.log('New report created:', data);
-      setLastEvent({ type: 'report:created', data });
-      
-      // Only show to admin/moderator users
-      if (user?.user_metadata?.role === 'admin' || user?.user_metadata?.role === 'moderator') {
-        queryClient.invalidateQueries({ queryKey: ['reports'] });
-        
-        if (showToasts) {
-          toast.warning(`New ${data.contentType} reported for ${data.reason}`);
-        }
-      }
-    });
-
-    socketInstance.on('moderation:action', (data: ModerationActionEvent) => {
-      console.log('Moderation action:', data);
-      setLastEvent({ type: 'moderation:action', data });
-      
-      // Invalidate relevant queries
-      queryClient.invalidateQueries({ queryKey: ['topics'] });
-      queryClient.invalidateQueries({ queryKey: ['replies'] });
-      queryClient.invalidateQueries({ queryKey: ['moderation'] });
-      
-      if (showToasts) {
-        toast.info(`Moderation: ${data.actionType} by ${data.moderatorUsername}`);
-      }
-    });
-
-    socketInstance.on('user:suspension', (data: UserSuspensionEvent) => {
-      console.log('User suspension:', data);
-      setLastEvent({ type: 'user:suspension', data });
-      
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-      queryClient.invalidateQueries({ queryKey: ['moderation'] });
-      
-      // If current user is suspended, show important notification
-      if (data.username === user?.user_metadata?.username) {
-        if (data.suspended) {
-          toast.error(`Your account has been suspended. Reason: ${data.reason || 'No reason provided'}`);
-        } else {
-          toast.success('Your account suspension has been lifted');
-        }
-      } else if (showToasts) {
-        const action = data.suspended ? 'suspended' : 'unsuspended';
-        toast.info(`User ${data.username} ${action}`);
-      }
-    });
-
-    socketInstance.on('error', (error) => {
-      console.error('WebSocket error:', error);
-      setConnectionError(error.message);
-      
-      if (showToasts) {
-        toast.error(`Connection error: ${error.message}`);
-      }
-    });
-  }, [queryClient, showToasts, onReconnect, onDisconnect, user]);
+  }, [user, getAuthToken, namespace, showToasts, onReconnect, onDisconnect, queryClient]);
 
   const connect = useCallback(() => {
-    if (socket?.connected) {
-      return; // Already connected
+    if (socket) {
+      socket.connect();
+    } else {
+      const newSocket = createConnection();
+      if (newSocket) {
+        setSocket(newSocket);
+      }
     }
-
-    const newSocket = createConnection();
-    if (newSocket) {
-      setupEventListeners(newSocket);
-      setSocket(newSocket);
-    }
-  }, [socket, createConnection, setupEventListeners]);
+  }, [socket, createConnection]);
 
   const disconnect = useCallback(() => {
     if (socket) {
@@ -259,47 +220,52 @@ export const useWebSocket = (options: UseWebSocketOptions = {}): UseWebSocketRet
   }, [socket]);
 
   const reconnect = useCallback(() => {
+    if (reconnectAttempts.current >= maxReconnectAttempts) {
+      setConnectionError('Max reconnection attempts reached');
+      return;
+    }
+
+    reconnectAttempts.current++;
     disconnect();
+    
     setTimeout(() => {
-      connect();
-    }, 1000);
-  }, [disconnect, connect]);
+      const newSocket = createConnection();
+      if (newSocket) {
+        setSocket(newSocket);
+      }
+    }, 1000 * reconnectAttempts.current);
+  }, [disconnect, createConnection]);
 
   const joinRoom = useCallback((room: string) => {
-    if (socket?.connected) {
-      socket.emit('join:room', room);
-      console.log(`Joined room: ${room}`);
+    if (socket && isConnected) {
+      socket.emit('join-room', room);
     }
-  }, [socket]);
+  }, [socket, isConnected]);
 
   const leaveRoom = useCallback((room: string) => {
-    if (socket?.connected) {
-      socket.emit('leave:room', room);
-      console.log(`Left room: ${room}`);
+    if (socket && isConnected) {
+      socket.emit('leave-room', room);
     }
-  }, [socket]);
+  }, [socket, isConnected]);
 
-  // Auto-connect on mount if enabled
+  // Auto-connect when user is available
   useEffect(() => {
-    if (autoConnect && user) {
-      connect();
+    if (autoConnect && user && !socket) {
+      const newSocket = createConnection();
+      if (newSocket) {
+        setSocket(newSocket);
+      }
     }
+  }, [autoConnect, user, socket, createConnection]);
 
-    // Cleanup on unmount
+  // Cleanup on unmount
+  useEffect(() => {
     return () => {
-      disconnect();
+      if (socket) {
+        socket.disconnect();
+      }
     };
-  }, [autoConnect, user, connect, disconnect]);
-
-  // Reconnect when auth token changes
-  useEffect(() => {
-    const token = getAuthToken();
-    if (token && user && !socket?.connected) {
-      connect();
-    } else if (!token && socket) {
-      disconnect();
-    }
-  }, [getAuthToken, user, socket, connect, disconnect]);
+  }, [socket]);
 
   return {
     socket,
