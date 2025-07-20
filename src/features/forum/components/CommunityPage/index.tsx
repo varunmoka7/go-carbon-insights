@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
-import Header from './Header';
-import ForumLayout from '../ForumLayout';
-import Sidebar from './Sidebar';
+import React, { useState, useEffect } from 'react';
 import TopicsList from './TopicsList';
 import CategoryList from '../CategoryList';
+import TopicThreadView from '../TopicThreadView';
 
-const CommunityPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+interface CommunityPageProps {
+  selectedCategory?: string;
+  onCategorySelect?: (categoryId: string) => void;
+}
+
+const CommunityPage: React.FC<CommunityPageProps> = ({ 
+  selectedCategory: propSelectedCategory = '', 
+  onCategorySelect 
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>(propSelectedCategory);
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [view, setView] = useState<'categories' | 'topics' | 'topic'>('topics');
 
+  // Sync internal state with prop changes
+  useEffect(() => {
+    setSelectedCategory(propSelectedCategory);
+  }, [propSelectedCategory]);
+
   const handleCategorySelect = (categoryId: string) => {
     setSelectedCategory(categoryId);
+    onCategorySelect?.(categoryId);
     setView('topics');
   };
 
@@ -42,22 +54,10 @@ const CommunityPage: React.FC = () => {
         );
       case 'topic':
         return (
-          <div className="w-full max-w-3xl mx-auto">
-            <div className="bg-gray-800/50 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-100 mb-4">
-                Topic View (Coming Soon)
-              </h2>
-              <p className="text-gray-400 mb-4">
-                Topic ID: {selectedTopic}
-              </p>
-              <button
-                onClick={() => setView('topics')}
-                className="text-emerald-400 hover:text-emerald-300 underline"
-              >
-                ← Back to Topics
-              </button>
-            </div>
-          </div>
+          <TopicThreadView
+            topicId={selectedTopic}
+            onBackToTopics={() => setView('topics')}
+          />
         );
       case 'topics':
       default:
@@ -71,19 +71,8 @@ const CommunityPage: React.FC = () => {
   };
 
   return (
-    <div className="community-page min-h-screen bg-[#1a1a1a] text-gray-100 font-sans">
-      <Header />
-      <ForumLayout
-        sidebar={
-          <Sidebar 
-            selectedCategory={selectedCategory}
-            onCategorySelect={handleCategorySelect}
-            onTopicSelect={handleTopicSelect}
-          />
-        }
-        main={renderMainContent()}
-        right={null}
-      />
+    <div className="min-h-full">
+      {renderMainContent()}
     </div>
   );
 };

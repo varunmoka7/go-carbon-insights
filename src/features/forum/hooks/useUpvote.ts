@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBadgeSystem } from './useBadgeSystem';
 
 interface UpvoteResponse {
   message: string;
@@ -18,6 +19,7 @@ interface UserUpvotesResponse {
 export function useUpvote() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const { awardFirstLikeBadge, hasBadge } = useBadgeSystem();
   const [upvoteStates, setUpvoteStates] = useState<{
     topics: Record<string, boolean>;
     replies: Record<string, boolean>;
@@ -47,7 +49,7 @@ export function useUpvote() {
 
       return response.json();
     },
-    onSuccess: (data, topicId) => {
+    onSuccess: async (data, topicId) => {
       // Update local upvote state
       setUpvoteStates(prev => ({
         ...prev,
@@ -56,6 +58,15 @@ export function useUpvote() {
           [topicId]: data.action === 'upvoted'
         }
       }));
+
+      // Award First Like badge if this is user's first upvote
+      if (data.action === 'upvoted' && !hasBadge('First Like')) {
+        try {
+          await awardFirstLikeBadge();
+        } catch (error) {
+          console.error('Failed to award first like badge:', error);
+        }
+      }
 
       // Invalidate and refetch topics
       queryClient.invalidateQueries({ queryKey: ['community-topics'] });
@@ -87,7 +98,7 @@ export function useUpvote() {
 
       return response.json();
     },
-    onSuccess: (data, replyId) => {
+    onSuccess: async (data, replyId) => {
       // Update local upvote state
       setUpvoteStates(prev => ({
         ...prev,
@@ -96,6 +107,15 @@ export function useUpvote() {
           [replyId]: data.action === 'upvoted'
         }
       }));
+
+      // Award First Like badge if this is user's first upvote
+      if (data.action === 'upvoted' && !hasBadge('First Like')) {
+        try {
+          await awardFirstLikeBadge();
+        } catch (error) {
+          console.error('Failed to award first like badge:', error);
+        }
+      }
 
       // Invalidate and refetch related queries
       queryClient.invalidateQueries({ queryKey: ['community-topics'] });

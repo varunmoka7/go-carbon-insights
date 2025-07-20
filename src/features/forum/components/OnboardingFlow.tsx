@@ -21,6 +21,7 @@ import {
   Lightbulb
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useBadgeSystem } from '../hooks/useBadgeSystem';
 
 interface OnboardingFlowProps {
   user: {
@@ -34,6 +35,7 @@ interface OnboardingFlowProps {
 const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ user, onComplete }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const { awardBasicBadge } = useBadgeSystem();
   const [profileData, setProfileData] = useState({
     display_name: '',
     company: '',
@@ -92,6 +94,15 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ user, onComplete }) => 
         .eq('id', user.id);
 
       if (error) throw error;
+
+      // Award the Basic badge for completing onboarding
+      try {
+        await awardBasicBadge();
+      } catch (badgeError) {
+        console.error('Failed to award basic badge:', badgeError);
+        // Don't fail onboarding if badge award fails
+      }
+
       onComplete();
     } catch (error) {
       console.error('Error completing onboarding:', error);

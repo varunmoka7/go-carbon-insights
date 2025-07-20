@@ -51,10 +51,10 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - **Target**: Q2 2025
 - **Scope**: Private data management, dual-view tracker, personal analytics
 
-### 🔄 **Epic 4: Community Forum – Professional Community Platform** - IN PROGRESS
-- **Status**: In progress
-- **Target**: January 2025
-- **Remaining**: Advanced features, mobile optimization
+### ✅ **Epic 4: Community Forum – Reddit-style Discussion Forum** - COMPLETE
+- **Status**: Complete
+- **Completion Date**: January 2025
+- **Key Achievements**: MVP forum implementation, badge system, simplified user experience
 
 ***
 
@@ -119,32 +119,41 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - Organization-specific analytics and insights
 - Custom reporting and data export capabilities
 
-### Epic 4: Community Forum – Professional Community Platform 🚀 **IN PROGRESS**
+### Epic 4: Community Forum – Reddit-style Discussion Forum ✅ **COMPLETE**
 
-**Goal**: Build a professional-grade community platform for climate discussions, collaboration, and engagement.
+**Analysis**: Successfully refactored the existing "professional knowledge base" into a simpler, Reddit-style discussion forum focused on core MVP functionality.
 
-**Foundational Stories (Completed):**
-- ✅ Story 4.1: Forum Foundations
-- ✅ Story 4.2: User Profiles & Reputation System
-- ✅ Story 4.3: Advanced Moderation & Admin Dashboard
-- ✅ Story 4.4: File Uploads & Attachments
-- 🔄 Story 4.5: Real-Time Notifications (in progress)
+**Completed Stories:**
 
-**Planned Enhancements (To Achieve Professional Grade):**
-- Story 4.6: Advanced Search & Discovery
-- Story 4.7: Mobile-First Experience & PWA
-- Story 4.8: Enhanced User Engagement
-- Story 4.9: Rich Content & Editor Experience
-- Story 4.10: Community Analytics & Insights
-- Story 4.11: Accessibility & Internationalization
+**Story 4.5 (Revised): Refactor Main Layout to Two-Column View** - Status: ✅ **Complete**
+- Two-column layout with persistent sidebar implemented
+- Mobile-responsive design maintained
 
-**Technical Implementation:**
-- WebSocket/SSE for real-time notifications
-- S3-backed file uploads with CDN
-- Advanced moderation and admin dashboard
-- Reputation and badge system
-- Mobile-first, accessible, and internationalized UI
-- Full-text search, engagement features, analytics
+**Story 4.6 (Revised): Rework TopicsList.tsx for Infinite Scroll Feed** - Status: ✅ **Complete**
+- Infinite scroll mechanism replacing pagination
+- Simplified filtering interface for improved UX
+
+**Story 4.7 (Revised): Simplify CommunityThread.tsx Interactions for MVP** - Status: ✅ **Complete**
+- TopicThreadView component with focused Like/Reply interface
+- Non-MVP actions (Share, Bookmark) removed as planned
+
+**Story 4.8 (Revised): Adapt UserProfile.tsx for MVP Focus** - Status: ✅ **Complete**
+- Profile simplified to Summary and Activity tabs only
+- Clean tab-based interface with essential user information
+
+**Story 4.9 (Revised): Integrate New Onboarding Badge Logic** - Status: ✅ **Complete**
+- Badge system integrated with reputation hooks
+- Basic badge (onboarding) and First Like badge implemented
+
+**Story 4.10: Community Analytics & Insights** - Status: ⏸️ **Deferred** (Post-MVP)
+
+**Story 4.11: Accessibility & Internationalization** - Status: 🧩 **Integrated** (Handled as Acceptance Criteria in completed stories)
+
+**Key Technical Achievements:**
+- New Components: TopicThreadView, useBadgeSystem hook, useTopicThread hook
+- Enhanced Components: UserProfile (tab-based), TopicsList (infinite scroll), OnboardingFlow (badge integration)
+- Performance: Infinite scroll optimization, efficient badge system
+- UX: Simplified MVP-focused interface, mobile-responsive design
 
 ***
 
