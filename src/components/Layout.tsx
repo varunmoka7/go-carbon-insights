@@ -46,20 +46,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   // Simplified main navigation (6 core items + search + profile)
   const mainNavigation = [
-    { name: t('navigation:home'), href: '/home', icon: Home },
-    { name: t('navigation:dashboard'), href: '/dashboard', icon: BarChart },
+    { name: t('navigation:home') || 'Home', href: '/home', icon: Home },
+    { name: t('navigation:dashboard') || 'Dashboard', href: '/dashboard', icon: BarChart },
     { 
-      name: t('navigation:tracking'), 
+      name: t('navigation:tracking') || 'Tracking', 
       href: '/tracking', 
       icon: Target,
       dropdown: [
-        { name: t('navigation:tracking'), href: '/tracking' },
-        { name: t('navigation:scope1'), href: '/scope1' },
-        { name: t('navigation:scope2'), href: '/scope2' },
-        { name: t('navigation:scope3'), href: '/scope3' },
+        { name: t('navigation:tracking') || 'Tracking', href: '/tracking' },
+        { name: t('navigation:scope1') || 'Scope 1', href: '/scope1' },
+        { name: t('navigation:scope2') || 'Scope 2', href: '/scope2' },
+        { name: t('navigation:scope3') || 'Scope 3', href: '/scope3' },
       ]
     },
-    { name: t('navigation:decarbonization'), href: '/decarbonization', icon: Target },
+    { name: t('navigation:decarbonization') || 'Decarbonization', href: '/decarbonization', icon: Target },
     { name: 'Community', href: '/community', icon: MessageSquare },
   ];
 
@@ -71,19 +71,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     platform: {
       title: 'Platform',
       links: [
-        { name: t('navigation:about'), href: '/about' },
-        { name: t('navigation:dashboard'), href: '/dashboard' },
-        { name: t('navigation:methodology'), href: '/methodology' },
-        { name: t('navigation:contact'), href: '/contact' },
+        { name: t('navigation:about') || 'About', href: '/about' },
+        { name: t('navigation:dashboard') || 'Dashboard', href: '/dashboard' },
+        { name: t('navigation:methodology') || 'Methodology', href: '/methodology' },
+        { name: t('navigation:contact') || 'Contact', href: '/contact' },
       ]
     },
     tracking: {
       title: 'Emissions Tracking',
       links: [
-        { name: t('scopes:scope1.title'), href: '/scope1' },
-        { name: t('scopes:scope2.title'), href: '/scope2' },
-        { name: t('scopes:scope3.title'), href: '/scope3' },
-        { name: t('navigation:tracking'), href: '/tracking' },
+        { name: t('scopes:scope1.title') || 'Scope 1', href: '/scope1' },
+        { name: t('scopes:scope2.title') || 'Scope 2', href: '/scope2' },
+        { name: t('scopes:scope3.title') || 'Scope 3', href: '/scope3' },
+        { name: t('navigation:tracking') || 'Tracking', href: '/tracking' },
       ]
     },
     analytics: {
@@ -92,14 +92,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { name: 'Reports', href: '/reports' },
         { name: 'Analysis', href: '/analysis' },
         { name: 'Benchmarking', href: '/dashboard' },
-        { name: t('navigation:decarbonization'), href: '/decarbonization' },
+        { name: t('navigation:decarbonization') || 'Decarbonization', href: '/decarbonization' },
       ]
     },
     resources: {
       title: 'Resources & Support',
       links: [
         { name: 'Documentation', href: '/methodology' },
-        { name: t('navigation:reference'), href: '/reference' },
+        { name: t('navigation:reference') || 'Reference', href: '/reference' },
         { name: 'Community', href: '/community' },
         { name: 'Support', href: '/contact' },
         { name: 'Privacy Policy', href: '/about' },

@@ -33,15 +33,60 @@ const Sidebar: React.FC = () => {
   const { t } = useTranslation();
 
   const navigationItems: NavigationItem[] = [
-    { name: t('navigation:home'), href: '/home', icon: Home, description: t('dashboard:overview') },
-    { name: t('navigation:dashboard'), href: '/dashboard', icon: BarChart, description: t('dashboard:analytics') },
-    { name: 'Industry Glossary', href: '/industry-glossary', icon: Building, description: 'ESG industry taxonomy' },
-    { name: t('navigation:industryAnalysis'), href: '/industry-analysis', icon: Building, description: 'Sector-specific analysis' },
-    { name: t('scopes:scope1.title'), href: '/scope1', icon: Factory, description: t('scopes:scope1.description') },
-    { name: t('scopes:scope2.title'), href: '/scope2', icon: Zap, description: t('scopes:scope2.description') },
-    { name: t('scopes:scope3.title'), href: '/scope3', icon: Truck, description: t('scopes:scope3.description') },
-    { name: t('navigation:reportsAnalytics'), href: '/reports-analytics', icon: FileText, description: 'Reports & analysis' },
-    { name: t('navigation:decarbonization'), href: '/decarbonization', icon: Target, description: 'Strategy planning' },
+    { 
+      name: t('navigation:home') || 'Home', 
+      href: '/home', 
+      icon: Home, 
+      description: 'Overview'
+    },
+    { 
+      name: t('navigation:dashboard') || 'Dashboard', 
+      href: '/dashboard', 
+      icon: BarChart, 
+      description: 'Analytics'
+    },
+    { 
+      name: 'Industry Glossary', 
+      href: '/industry-glossary', 
+      icon: Building, 
+      description: 'ESG industry taxonomy' 
+    },
+    { 
+      name: 'Industry Analysis', 
+      href: '/industry-analysis', 
+      icon: Globe, 
+      description: 'Sector-specific analysis' 
+    },
+    { 
+      name: 'Scope 1', 
+      href: '/scope1', 
+      icon: Factory, 
+      description: 'Direct emissions' 
+    },
+    { 
+      name: 'Scope 2', 
+      href: '/scope2', 
+      icon: Zap, 
+      description: 'Energy emissions' 
+    },
+    { 
+      name: 'Scope 3', 
+      href: '/scope3', 
+      icon: Truck, 
+      description: 'Value chain emissions' 
+    },
+    { 
+      name: 'Reports & Analytics', 
+      href: '/reports-analytics', 
+      icon: FileText, 
+      description: 'Reports & analysis' 
+    },
+    { 
+      name: 'Decarbonization', 
+      href: '/decarbonization', 
+      icon: Target, 
+      description: 'Strategy planning' 
+    },
   ];
 
   const isActive = (href: string) => {
