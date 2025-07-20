@@ -152,20 +152,20 @@ export function useUpvote() {
   // Hook to get upvote status for specific items
   const useUserUpvotes = (topicIds: string[] = [], replyIds: string[] = []) => {
     return useQuery({
-      queryKey: ['user-upvotes', topicIds, replyIds],
+      queryKey: ['user-upvotes', user?.id, topicIds, replyIds],
       queryFn: () => fetchUserUpvotes(topicIds, replyIds),
       enabled: !!user && (topicIds.length > 0 || replyIds.length > 0),
     });
   };
 
   // Helper functions to check upvote status
-  const isTopicUpvoted = (topicId: string): boolean => {
+  const isTopicUpvoted = useCallback((topicId: string): boolean => {
     return upvoteStates.topics[topicId] || false;
-  };
+  }, [upvoteStates.topics]);
 
-  const isReplyUpvoted = (replyId: string): boolean => {
+  const isReplyUpvoted = useCallback((replyId: string): boolean => {
     return upvoteStates.replies[replyId] || false;
-  };
+  }, [upvoteStates.replies]);
 
   // Handle upvote with optimistic updates
   const handleTopicUpvote = async (topicId: string, currentUpvoteCount: number) => {

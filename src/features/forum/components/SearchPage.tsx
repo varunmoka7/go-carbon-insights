@@ -188,6 +188,8 @@ const SearchPage: React.FC<SearchPageProps> = ({
                 categories={categories}
                 availableTags={availableTags}
                 showTrending={true}
+                isLoadingCategories={categoriesLoading}
+                isLoadingTags={tagsLoading}
               />
             </div>
 

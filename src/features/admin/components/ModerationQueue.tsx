@@ -361,9 +361,9 @@ export const ModerationQueue: React.FC = () => {
                     <div className="flex flex-col gap-2">
                       <Button
                         size="sm"
-                        variant="destructive"
-                        onClick={() => handleSingleAction(report, 'hide', 'Content violates community guidelines')}
-                        disabled={isHidingContent || isResolvingReport}
+                        variant={report.content.isHidden ? "outline" : "destructive"}
+                        onClick={() => handleSingleAction(report, report.content.isHidden ? 'restore' : 'hide', report.content.isHidden ? 'Content restored by moderator' : 'Content hidden by moderator')}
+                        disabled={isHidingContent || isRestoringContent || isResolvingReport}
                       >
                         {report.content.isHidden ? (
                           <>

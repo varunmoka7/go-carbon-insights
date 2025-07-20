@@ -264,16 +264,22 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Tags</label>
                   <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
-                    {availableTags.slice(0, 10).map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant={(filters.tags || []).includes(tag) ? "default" : "outline"}
-                        className="cursor-pointer text-xs"
-                        onClick={() => handleTagToggle(tag)}
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
+                    {isLoadingTags ? (
+                      <div className="text-sm text-gray-500">Loading tags...</div>
+                    ) : availableTags.length > 0 ? (
+                      availableTags.slice(0, 10).map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant={(filters.tags || []).includes(tag) ? "default" : "outline"}
+                          className="cursor-pointer text-xs"
+                          onClick={() => handleTagToggle(tag)}
+                        >
+                          {tag}
+                        </Badge>
+                      ))
+                    ) : (
+                      <div className="text-sm text-gray-500">No tags found.</div>
+                    )}
                   </div>
                 </div>
 

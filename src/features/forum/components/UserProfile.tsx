@@ -96,8 +96,9 @@ const UserProfile: React.FC<UserProfileProps> = ({
   useEffect(() => {
     if (targetUserId) {
       fetchUserProfile();
+      fetchPresence([targetUserId]);
     }
-  }, [targetUserId]);
+  }, [targetUserId, fetchPresence]);
 
   const fetchUserProfile = async () => {
     if (!targetUserId) return;
@@ -136,6 +137,35 @@ const UserProfile: React.FC<UserProfileProps> = ({
     }
   };
 
+  try {
+      const file = e.target.files?.[0];
+      if (!file || !currentUser) return;
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${currentUser.id}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('user-assets')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('user-assets')
+        .getPublicUrl(filePath);
+
+      setEditData(prev => ({ ...prev, avatarUrl: publicUrl }));
+
+      await handleSaveProfile();
+
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to upload avatar');
+    }
+  };
+
   const handleSaveProfile = async () => {
     if (!isOwnProfile || !currentUser) return;
     
@@ -147,9 +177,13 @@ const UserProfile: React.FC<UserProfileProps> = ({
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${currentUser.id}`
         },
-        body: JSON.stringify(editData)
+        body: JSON.stringify({
+          display_name: editData.displayName,
+          bio: editData.bio,
+          avatar_url: editData.avatar_url,
+        })
       });
 
       if (!response.ok) {
@@ -239,9 +273,17 @@ const UserProfile: React.FC<UserProfileProps> = ({
   const actualBadges = isOwnProfile ? userBadges : badges;
   const actualBadgeStats = isOwnProfile ? getBadgeStats() : badgeStats;
 
+  const breadcrumbItems = [
+    { href: '/', label: 'Home' },
+    { href: '/community', label: 'Community' },
+    { href: `/community/profile/${profileUser.id}`, label: profileUser.displayName || profileUser.username },
+  ];
+
   return (
     <TooltipProvider>
       <div className="space-y-6 max-w-4xl mx-auto">
+        <Breadcrumb items={breadcrumbItems} />
+
         {/* Profile Header */}
         <Card className="bg-gray-800 border-gray-700">
           <CardHeader className="pb-4">
@@ -249,9 +291,9 @@ const UserProfile: React.FC<UserProfileProps> = ({
               <div className="flex items-center space-x-4">
                 <div className="relative">
                   <Avatar className="w-20 h-20">
-                    <AvatarImage src={profileUser.avatarUrl || undefined} />
+                    <AvatarImage src={profileUser.avatar_url || undefined} />
                     <AvatarFallback className="bg-gray-600 text-gray-100 text-lg">
-                      {getInitials(profileUser.displayName || profileUser.username)}
+                      {getInitials(profileUser.display_name || profileUser.username)}
                     </AvatarFallback>
                   </Avatar>
                   {isOwnProfile && isEditing && (

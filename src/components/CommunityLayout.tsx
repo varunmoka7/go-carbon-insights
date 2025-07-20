@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Settings, Search, Bell, Menu, ChevronDown, Users } from 'lucide-react';
+import { Settings, Search, Bell, Menu, ChevronDown, Users, Home, MessageSquare, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -223,7 +223,7 @@ const CommunityLayout: React.FC<CommunityLayoutProps> = ({ children, sidebar }) 
       </header>
 
       {/* Two-Column Layout */}
-      <div className="flex min-h-[calc(100vh-73px)]">
+      <div className="flex min-h-[calc(100vh-73px)] pb-16 md:pb-0">
         {/* Persistent Left Sidebar */}
         <aside className="hidden md:block w-[280px] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto">
           {sidebar}
@@ -261,6 +261,28 @@ const CommunityLayout: React.FC<CommunityLayoutProps> = ({ children, sidebar }) 
           </div>
         </main>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50 md:hidden">
+        <div className="flex justify-around h-16 items-center">
+          <Link to="/community" className="flex flex-col items-center justify-center text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 w-full h-full">
+            <Home className="h-5 w-5 mb-1" />
+            Home
+          </Link>
+          <Link to="/search" className="flex flex-col items-center justify-center text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 w-full h-full">
+            <Search className="h-5 w-5 mb-1" />
+            Search
+          </Link>
+          <Link to="/community/new-topic" className="flex flex-col items-center justify-center text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 w-full h-full">
+            <MessageSquare className="h-5 w-5 mb-1" />
+            New Topic
+          </Link>
+          <Link to="/profile" className="flex flex-col items-center justify-center text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 w-full h-full">
+            <User className="h-5 w-5 mb-1" />
+            Profile
+          </Link>
+        </div>
+      </nav>
     </div>
   );
 };

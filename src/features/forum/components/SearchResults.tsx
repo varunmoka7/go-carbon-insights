@@ -248,7 +248,9 @@ const SearchResults: React.FC<SearchResultsProps> = ({
                   variant="outline" 
                   className="cursor-pointer hover:bg-gray-50"
                   onClick={() => {
-                    // Handle suggestion click - would need to be passed from parent
+                    // This assumes onResultClick can handle a suggestion string
+                    // You might need a separate prop for handling suggestion clicks
+                    onResultClick?.({ ...searchResponse.results[0], title: suggestion, content: suggestion });
                   }}
                 >
                   {suggestion}

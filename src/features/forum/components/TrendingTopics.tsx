@@ -209,7 +209,7 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({
                             {topic.author.displayName.charAt(0).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
-                        <span>{topic.author.displayName}</span>
+                        <span>{topic.author.display_name || topic.author.username}</span>
                       </div>
                       
                       <div className="flex items-center gap-1">

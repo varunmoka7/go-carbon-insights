@@ -118,96 +118,34 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* Top Navigation Bar */}
       <header className={`bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 transition-all duration-300 ${getMainContentMargin()}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center gap-8">
+          <div className="flex justify-between items-center py-2 md:py-4">
+            <div className="flex items-center gap-4 md:gap-8">
               {/* Mobile sidebar trigger */}
               {showSidebar && <SidebarTrigger />}
               
-              {/* Logo - only show when sidebar is hidden */}
-              {!showSidebar && (
-                <Link to="/home" className="flex items-center gap-2">
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2">
-                      <Logo size="medium" className="rounded-lg" />
-                      <span className="text-xl font-bold text-gray-900 dark:text-white">
-                        GoCarbonTracker
-                      </span>
-                    </div>
-                    <span className="text-xs text-gray-600 dark:text-gray-400 ml-8 hidden sm:block">
-                      Accelerating global supply chain decarbonization
+              {/* Logo */}
+              <Link to="/home" className="flex items-center gap-2">
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <Logo size="small" className="rounded-lg md:hidden" />
+                    <Logo size="medium" className="rounded-lg hidden md:block" />
+                    <span className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">
+                      GoCarbonTracker
                     </span>
                   </div>
-                </Link>
-              )}
-              
-              {/* Desktop Navigation - hide when sidebar is present */}
-              {!showSidebar && (
-                <nav className="hidden lg:flex items-center space-x-1">
-                  {mainNavigation.map((item) => {
-                    const Icon = item.icon;
-                    
-                    if (item.dropdown) {
-                      return (
-                        <DropdownMenu key={item.name}>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
-                                isTrackingActive()
-                                  ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300'
-                                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
-                              }`}
-                            >
-                              <Icon className="h-4 w-4" />
-                              {item.name}
-                              <ChevronDown className="h-3 w-3" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="start" className="w-56">
-                            {item.dropdown.map((subItem) => (
-                              <DropdownMenuItem key={subItem.name} asChild>
-                                <Link 
-                                  to={subItem.href}
-                                  className={`w-full ${
-                                    isActive(subItem.href) 
-                                      ? 'bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300' 
-                                      : ''
-                                  }`}
-                                >
-                                  {subItem.name}
-                                </Link>
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      );
-                    }
-
-                    return (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                          isActive(item.href)
-                            ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300'
-                            : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
-                        }`}
-                      >
-                        <Icon className="h-4 w-4 inline mr-2" />
-                        {item.name}
-                      </Link>
-                    );
-                  })}
-                </nav>
-              )}
+                  <span className="text-xs text-gray-600 dark:text-gray-400 ml-8 hidden sm:block">
+                    Accelerating global supply chain decarbonization
+                  </span>
+                </div>
+              </Link>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <GlobalSearch />
               
-              <Button variant="outline" size="icon" className="relative">
+              <Button variant="outline" size="icon" className="relative h-8 w-8 md:h-10 md:w-10">
                 <Bell className="h-4 w-4" />
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs">
+                <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 text-xs flex items-center justify-center">
                   3
                 </Badge>
               </Button>
@@ -215,7 +153,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               {/* Settings dropdown with language switcher */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="icon">
+                  <Button variant="outline" size="icon" className="h-8 w-8 md:h-10 md:w-10">
                     <Settings className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -231,8 +169,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative flex items-center gap-2 px-3 py-2">
-                      <div className="w-8 h-8 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center">
+                    <Button variant="ghost" className="relative flex items-center gap-2 px-2 py-1 md:px-3 md:py-2 h-8 md:h-10">
+                      <div className="w-7 h-7 md:w-8 md:h-8 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center">
                         <Users className="h-4 w-4 text-teal-600 dark:text-teal-400" />
                       </div>
                       <div className="text-left hidden sm:block">
@@ -260,7 +198,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" size="sm" className="h-8 md:h-10">
                   <Link to="/auth">
                     Login / Register
                   </Link>
@@ -271,7 +209,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <Button 
                   variant="outline" 
                   size="icon" 
-                  className="lg:hidden"
+                  className="lg:hidden h-8 w-8 md:h-10 md:w-10"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                   <Menu className="h-4 w-4" />

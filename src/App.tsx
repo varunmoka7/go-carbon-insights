@@ -1,5 +1,5 @@
 
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -46,6 +46,7 @@ import { AdminDashboard } from "./features/admin/pages/AdminDashboard";
 import { ReportsPage } from "./features/admin/pages/ReportsPage";
 import { ModerationDashboard } from "./features/admin/pages/ModerationDashboard";
 import { ProtectedModerationRoute } from "./components/ProtectedModerationRoute";
+import UserManagement from "./features/admin/components/UserManagement";
 
 const queryClient = new QueryClient();
 

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Send, Tag, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,14 +16,12 @@ interface NewTopicFormProps {
   isOpen: boolean;
   onClose: () => void;
   initialCategoryId?: string;
-  onSuccess?: (topicId: string) => void;
 }
 
 const NewTopicForm: React.FC<NewTopicFormProps> = ({
   isOpen,
   onClose,
   initialCategoryId,
-  onSuccess,
 }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -35,8 +34,9 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
   const { user } = useAuth();
   const { categories, loading: categoriesLoading } = useCommunityCategories();
   const { createTopic } = useCommunityTopics();
+  const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (initialCategoryId) {
       setCategoryId(initialCategoryId);
     }
@@ -78,11 +78,34 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
     setError(null);
 
     try {
+      const attachmentUrls = [];
+      for (const file of attachments) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+        const filePath = `topic-attachments/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('user-assets')
+          .upload(filePath, file);
+
+        if (uploadError) {
+          throw uploadError;
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('user-assets')
+          .getPublicUrl(filePath);
+        
+        attachmentUrls.push({ url: publicUrl, name: file.name, type: file.type });
+      }
+
       const newTopic = await createTopic({
         title: title.trim(),
         content: content.trim(),
         category_id: categoryId,
+        author_id: user.id,
         tags: tags.length > 0 ? tags : undefined,
+        attachments: attachmentUrls.length > 0 ? attachmentUrls : undefined,
       });
 
       setTitle('');
@@ -90,9 +113,10 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
       setCategoryId(initialCategoryId || '');
       setTags([]);
       setCurrentTag('');
+      setAttachments([]);
       
-      onSuccess?.(newTopic.id);
       onClose();
+      navigate(`/community/topics/${newTopic.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create topic');
     } finally {
@@ -202,14 +226,9 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
               <label htmlFor="content" className="text-sm font-medium text-gray-200">
                 Content *
               </label>
-              <Textarea
-                id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Write your topic content here..."
-                className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 min-h-[120px]"
-                maxLength={5000}
-                required
+              <RichTextEditor
+                content={content}
+                onChange={setContent}
               />
               <div className="text-xs text-gray-400 text-right">
                 {content.length}/5000
@@ -264,6 +283,19 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
               <div className="text-xs text-gray-400">
                 {tags.length}/5 tags
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="attachments" className="text-sm font-medium text-gray-200">
+                Attachments (optional)
+              </label>
+              <Input
+                id="attachments"
+                type="file"
+                multiple
+                onChange={(e) => setAttachments(Array.from(e.target.files || []))}
+                className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400"
+              />
             </div>
           </CardContent>
 

@@ -235,6 +235,43 @@ export function useTopicThread(topicId: string | null) {
     await Promise.all([fetchTopic(), fetchReplies()]);
   }, [fetchTopic, fetchReplies]);
 
+  // Real-time subscription for new replies
+  useEffect(() => {
+    if (!topicId) return;
+
+    const subscription = supabase
+      .channel(`topic_replies:${topicId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'community_replies',
+          filter: `topic_id=eq.${topicId}`,
+        },
+        (payload) => {
+          const newReply = payload.new as Reply;
+          setReplies((prev) => [...prev, newReply]);
+
+          // Notify topic author if it's not their own reply
+          if (topic && user && newReply.author_id !== user.id && newReply.author_id === topic.author_id) {
+            toast.success(`New reply in your topic: "${topic.title}"`);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
+  }, [topicId, topic, user]);
+
+  const fetchNextRepliesPage = useCallback(() => {
+    if (hasMoreReplies && !repliesLoading) {
+      fetchReplies(replyPage + 1, true);
+    }
+  }, [hasMoreReplies, repliesLoading, replyPage, fetchReplies]);
+
   return {
     topic,
     replies,
@@ -244,5 +281,9 @@ export function useTopicThread(topicId: string | null) {
     submittingReply,
     createReply,
     refresh,
+    refetchTopic: fetchTopic, // Expose refetch functions for manual refresh
+    refetchReplies: fetchReplies,
+    fetchNextRepliesPage,
+    hasMoreReplies,
   };
 }

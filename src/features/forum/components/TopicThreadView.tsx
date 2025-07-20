@@ -1,21 +1,32 @@
 import React from 'react';
-import { ArrowLeft, Heart, MessageSquare, Eye, Clock, User, Pin } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Heart, MessageSquare, Eye, Clock, Pin, Paperclip, Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { useTopicThread } from '../hooks/useTopicThread';
 import { useUpvote } from '../hooks/useUpvote';
+import { useBookmark } from '../hooks/useBookmark';
+import { useUserPresence } from '../hooks/useUserPresence';
+import { useTypingIndicator } from '../hooks/useTypingIndicator';
 import { useAuth } from '@/contexts/AuthContext';
 import { formatDistanceToNow } from 'date-fns';
+import Breadcrumb from '@/components/ui/Breadcrumb';
+import DOMPurify from 'dompurify';
+import RichTextEditor from '@/components/ui/RichTextEditor';
+import { Spinner } from '@/components/ui/spinner';
 
 interface TopicThreadViewProps {
-  topicId: string;
   onBackToTopics: () => void;
 }
 
-const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopics }) => {
+const TopicThreadView: React.FC<TopicThreadViewProps> = ({ onBackToTopics }) => {
+  const { topicId } = useParams<{ topicId: string }>();
+  const navigate = useNavigate();
   const { user } = useAuth();
+  const { presence, fetchPresence } = useUserPresence();
+  const { typingUsers, startTyping, stopTyping } = useTypingIndicator(topicId!);
   const { 
     topic, 
     replies, 
@@ -23,8 +34,12 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
     repliesLoading, 
     error, 
     submittingReply,
-    createReply 
-  } = useTopicThread(topicId);
+    createReply,
+    refetchTopic,
+    refetchReplies,
+    fetchNextRepliesPage,
+    hasMoreReplies
+  } = useTopicThread(topicId!);
   
   const { 
     isTopicUpvoted, 
@@ -35,12 +50,36 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
   } = useUpvote();
 
   const [replyContent, setReplyContent] = React.useState('');
+  const loadMoreRepliesRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMoreReplies && !repliesLoading) {
+          fetchNextRepliesPage();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (loadMoreRepliesRef.current) {
+      observer.observe(loadMoreRepliesRef.current);
+    }
+
+    return () => {
+      if (loadMoreRepliesRef.current) {
+        observer.unobserve(loadMoreRepliesRef.current);
+      }
+    };
+  }, [fetchNextRepliesPage, hasMoreReplies, repliesLoading]);
 
   const getInitials = (name: string) => {
+    if (!name) return '';
     return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   };
 
   const formatTimeAgo = (dateString: string) => {
+    if (!dateString) return '';
     return formatDistanceToNow(new Date(dateString), { addSuffix: true });
   };
 
@@ -49,6 +88,7 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
     
     try {
       await handleTopicUpvote(topic.id, topic.upvote_count);
+      refetchTopic();
     } catch (error) {
       console.error('Failed to like topic:', error);
     }
@@ -59,6 +99,7 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
     
     try {
       await handleReplyUpvote(replyId, upvoteCount);
+      refetchReplies();
     } catch (error) {
       console.error('Failed to like reply:', error);
     }
@@ -133,8 +174,30 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
   const authorName = topic.author?.display_name || topic.author?.username || 'Unknown';
   const isTopicLiked = isTopicUpvoted(topic.id);
 
+  const breadcrumbItems = [
+    { href: '/', label: 'Home' },
+    { href: '/community', label: 'Community' },
+    { href: `/community/categories/${topic.category.id}`, label: topic.category.name },
+    { href: `/community/topics/${topic.id}`, label: topic.title },
+  ];
+
+  useEffect(() => {
+    if (topic?.author_id) {
+      fetchPresence([topic.author_id]);
+    }
+  }, [topic?.author_id, fetchPresence]);
+
+  useEffect(() => {
+    if (replies.length > 0) {
+      const replyAuthorIds = replies.map(reply => reply.author_id);
+      fetchPresence(replyAuthorIds);
+    }
+  }, [replies, fetchPresence]);
+
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
+      <Breadcrumb items={breadcrumbItems} />
+
       {/* Back Button */}
       <Button 
         variant="ghost" 
@@ -189,6 +252,9 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
               <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                 {authorName}
               </span>
+              {presence[topic.author_id] && (
+                <span className="ml-2 inline-block w-2 h-2 rounded-full bg-green-500" title="Online"></span>
+              )}
               {topic.author?.is_gct_team && (
                 <Badge variant="outline" className="ml-2 text-xs border-emerald-500 text-emerald-600">
                   Team
@@ -198,11 +264,30 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
           </div>
 
           {/* Content */}
-          <div className="prose prose-gray dark:prose-invert max-w-none mb-6">
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
-              {topic.content}
-            </p>
-          </div>
+          <div 
+            className="prose prose-gray dark:prose-invert max-w-none mb-6"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(topic.content) }}
+          />
+
+          {topic.attachments && topic.attachments.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold mb-2">Attachments</h3>
+              <div className="flex flex-wrap gap-4">
+                {topic.attachments.map((attachment: any, index: number) => (
+                  <a
+                    key={index}
+                    href={attachment.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+                  >
+                    <Paperclip className="w-4 h-4" />
+                    <span>{attachment.name}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -227,6 +312,18 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
               <Eye className="w-4 h-4" />
               <span>{topic.view_count || 0} views</span>
             </div>
+
+            <Button
+              onClick={toggleBookmark}
+              variant={isBookmarked ? "default" : "outline"}
+              size="sm"
+              disabled={!user || bookmarkLoading}
+              className={isBookmarked ? "bg-blue-500 hover:bg-blue-600" : "hover:bg-blue-50 dark:hover:bg-blue-950"}
+              title={user ? (isBookmarked ? 'Remove bookmark' : 'Bookmark topic') : 'Login to bookmark'}
+            >
+              <Bookmark className={`w-4 h-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
+              Bookmark
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -237,7 +334,7 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
           Replies ({replies.length})
         </h2>
         
-        {repliesLoading ? (
+        {repliesLoading && replies.length === 0 ? (
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
               <Card key={i} className="animate-pulse">
@@ -265,13 +362,19 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
                   <CardContent className="p-4">
                     {/* Reply Author */}
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-300">
-                        {getInitials(replyAuthorName)}
-                      </div>
+                      <Avatar className="w-6 h-6">
+                        <AvatarImage src={reply.author?.avatar_url || undefined} />
+                        <AvatarFallback className="bg-gray-200 dark:bg-gray-700 text-xs font-bold text-gray-600 dark:text-gray-300">
+                          {getInitials(replyAuthorName)}
+                        </AvatarFallback>
+                      </Avatar>
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           {replyAuthorName}
                         </span>
+                        {presence[reply.author_id] && (
+                          <span className="ml-1 inline-block w-2 h-2 rounded-full bg-green-500" title="Online"></span>
+                        )}
                         {reply.author?.is_gct_team && (
                           <Badge variant="outline" className="text-xs border-emerald-500 text-emerald-600">
                             Team
@@ -284,11 +387,10 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
                     </div>
 
                     {/* Reply Content */}
-                    <div className="mb-3">
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
-                        {reply.content}
-                      </p>
-                    </div>
+                    <div 
+                      className="mb-3"
+                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(reply.content) }}
+                    />
 
                     {/* Reply Actions */}
                     <div className="flex items-center gap-2">
@@ -322,6 +424,15 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
             </CardContent>
           </Card>
         )}
+        {(repliesLoading && replies.length > 0) && (
+          <div className="flex justify-center py-4">
+            <Spinner size="lg" />
+          </div>
+        )}
+        {!repliesLoading && !hasMoreReplies && replies.length > 0 && (
+          <div className="text-center text-gray-500 py-4">You've reached the end of the replies.</div>
+        )}
+        <div ref={loadMoreRepliesRef} style={{ height: '20px' }} />
       </div>
 
       {/* Reply Composer */}
@@ -334,13 +445,13 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
             </h3>
             
             <div className="space-y-4">
-              <Textarea
-                placeholder="Share your thoughts, ask questions, or provide insights... (Ctrl+Enter to submit)"
-                value={replyContent}
-                onChange={(e) => setReplyContent(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="min-h-[100px] resize-none"
-                disabled={submittingReply}
+              <RichTextEditor
+                content={replyContent}
+                onChange={(html) => {
+                  setReplyContent(html);
+                  startTyping();
+                }}
+                onBlur={stopTyping}
               />
               
               <div className="flex items-center justify-between">
@@ -360,6 +471,11 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 Tip: Use Ctrl+Enter to submit quickly. Be respectful and constructive.
               </div>
+              {typingUsers.length > 0 && (
+                <div className="text-sm text-gray-500 mt-2">
+                  {typingUsers.map(username => `@${username}`).join(', ')} {typingUsers.length > 1 ? 'are' : 'is'} typing...
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -372,7 +488,11 @@ const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId, onBackToTopi
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Sign in to share your thoughts and participate in the conversation
             </p>
-            <Button variant="outline" className="border-teal-600 text-teal-600 hover:bg-teal-50 dark:hover:bg-teal-950">
+            <Button 
+              variant="outline" 
+              className="border-teal-600 text-teal-600 hover:bg-teal-50 dark:hover:bg-teal-950"
+              onClick={() => navigate('/auth')}
+            >
               Sign In to Reply
             </Button>
           </CardContent>
