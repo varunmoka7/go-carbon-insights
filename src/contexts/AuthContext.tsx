@@ -14,6 +14,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  isLoggingOut: boolean;
   signUp: (email: string, password: string, username?: string) => Promise<{ error: any }>;
   signIn: (emailOrUsername: string, password: string) => Promise<{ error: any }>;
   signInWithUsername: (username: string, password: string) => Promise<{ error: any }>;
@@ -39,6 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Demo mode flag - set to false when moving to production
   const isDemoMode = false;
@@ -281,6 +283,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     try {
+      setIsLoggingOut(true);
       setLoading(true);
       const { error } = await supabase.auth.signOut();
       
@@ -291,9 +294,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       setUser(null);
       setSession(null);
+      
+      // Add a small delay to allow navigation to complete before clearing logout state
+      setTimeout(() => {
+        setIsLoggingOut(false);
+      }, 100);
+      
       return { error: null };
     } catch (error) {
       console.error('Unexpected logout error:', error);
+      setIsLoggingOut(false);
       return { error: { message: 'An unexpected error occurred during logout' } };
     } finally {
       setLoading(false);
@@ -395,6 +405,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user,
     session,
     loading,
+    isLoggingOut,
     signUp,
     signIn,
     signInWithUsername,

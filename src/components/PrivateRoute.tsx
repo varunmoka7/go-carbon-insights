@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, isLoggingOut } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -19,6 +19,11 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
         </div>
       </div>
     );
+  }
+
+  // If user is logging out, allow the logout navigation to proceed
+  if (!user && isLoggingOut) {
+    return null; // Let the logout redirect handle navigation
   }
 
   if (!user) {
