@@ -1,123 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
-import SearchPage from '@/features/forum/components/SearchPage';
-import { WebSocketProvider } from '@/features/forum/contexts/WebSocketContext';
-import { Spinner } from '@/components/ui/spinner';
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Search, FileText, TrendingUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
-// Mock data - these would normally come from API calls
-const mockCategories = [
-  { id: '1', name: 'Carbon Tracking', description: 'General carbon footprint tracking discussions' },
-  { id: '2', name: 'Scope 1 Emissions', description: 'Direct emissions from owned sources' },
-  { id: '3', name: 'Scope 2 Emissions', description: 'Indirect emissions from purchased energy' },
-  { id: '4', name: 'Scope 3 Emissions', description: 'Other indirect emissions' },
-  { id: '5', name: 'Sustainability', description: 'General sustainability topics' },
-  { id: '6', name: 'Tools & Software', description: 'Discussion about carbon tracking tools' },
-  { id: '7', name: 'Industry News', description: 'Latest news in carbon management' },
-  { id: '8', name: 'Best Practices', description: 'Sharing best practices and methodologies' }
-];
-
-const mockTags = [
-  'carbon-footprint',
-  'emissions',
-  'sustainability',
-  'renewable-energy',
-  'ghg-protocol',
-  'climate-change',
-  'net-zero',
-  'carbon-offset',
-  'energy-efficiency',
-  'green-building',
-  'supply-chain',
-  'reporting',
-  'verification',
-  'methodology',
-  'data-collection',
-  'benchmarking',
-  'reduction-targets',
-  'life-cycle-assessment',
-  'environmental-impact',
-  'corporate-sustainability'
-];
-
-const Search: React.FC = () => {
-  const [categories, setCategories] = useState(mockCategories);
-  const [availableTags, setAvailableTags] = useState(mockTags);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Add debugging information
-    console.log('Search component mounted');
-    
-    // Simulate API calls to fetch categories and tags
-    const fetchData = async () => {
-      try {
-        // In a real app, these would be API calls:
-        // const categoriesResponse = await fetch('/api/categories');
-        // const categories = await categoriesResponse.json();
-        // setCategories(categories);
-        
-        // const tagsResponse = await fetch('/api/tags/popular');
-        // const tags = await tagsResponse.json();
-        // setAvailableTags(tags);
-        
-        // For now, just use mock data with a small delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch search data:', error);
-        setError('Failed to load search data. Please try again.');
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <Spinner size="xl" />
-          <p className="mt-4 text-gray-600">Loading search...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto p-6">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-red-800 mb-2">
-              Error Loading Search
-            </h3>
-            <p className="text-red-600 text-sm">
-              {error}
-            </p>
-            <button 
-              onClick={() => window.location.reload()} 
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-            >
-              Retry
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+const Search = () => {
   return (
-    <HelmetProvider>
-      <WebSocketProvider>
-        <SearchPage 
-          categories={categories}
-          availableTags={availableTags}
-        />
-      </WebSocketProvider>
-    </HelmetProvider>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Search
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Search through carbon tracking data, industry insights, and community discussions.
+          </p>
+        </div>
+
+        {/* Coming Soon Message */}
+        <Card className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border-2 border-dashed border-emerald-200 dark:border-emerald-700">
+          <CardHeader className="text-center">
+            <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+              Advanced Search Coming Soon
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-6">
+            <p className="text-gray-600 dark:text-gray-300">
+              We're building powerful search capabilities to help you find exactly what you need 
+              in the carbon tracking ecosystem.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <Search className="w-4 h-4" />
+                <span>Smart Search</span>
+              </div>
+              <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <FileText className="w-4 h-4" />
+                <span>Data Discovery</span>
+              </div>
+              <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <TrendingUp className="w-4 h-4" />
+                <span>Trend Analysis</span>
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <Button asChild className="bg-emerald-600 hover:bg-emerald-700">
+                <Link to="/home">
+                  Back to Dashboard
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 };
 
