@@ -1,12 +1,24 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
 
-const LoadingFallback = () => {
+interface LoadingFallbackProps {
+  message?: string;
+  fullScreen?: boolean;
+}
+
+const LoadingFallback: React.FC<LoadingFallbackProps> = ({ 
+  message = "Loading...", 
+  fullScreen = true 
+}) => {
+  const containerClasses = fullScreen 
+    ? "min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900"
+    : "flex items-center justify-center p-8";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-gray-900">
+    <div className={containerClasses}>
       <div className="text-center">
-        <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-500" />
-        <p className="text-gray-400">Loading...</p>
+        <Loader2 className="h-8 w-8 animate-spin text-teal-600 mx-auto mb-4" />
+        <p className="text-gray-600 dark:text-gray-300 text-sm">{message}</p>
       </div>
     </div>
   );

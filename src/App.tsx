@@ -1,4 +1,5 @@
 
+import React, { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -39,6 +40,8 @@ import FloatingActionButton from "./components/FloatingActionButton";
 import NavigationDebugger from "./components/NavigationDebugger";
 import NavigationLoader from "./components/NavigationLoader";
 import EmissionTracking from "./pages/EmissionTracking";
+import ErrorBoundary from "./components/ErrorBoundary";
+import LoadingFallback from "./components/LoadingFallback";
 
 // Admin components
 import { AdminLayout } from "./features/admin/components/AdminLayout";
@@ -60,9 +63,11 @@ const App = () => {
                 <Toaster />
                 <Sonner />
                 <BrowserRouter>
-                  <NavigationDebugger />
-                  <NavigationLoader />
-                  <Routes>
+                  <ErrorBoundary>
+                    <NavigationDebugger />
+                    <NavigationLoader />
+                    <Suspense fallback={<LoadingFallback message="Loading application..." />}>
+                      <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -212,9 +217,11 @@ const App = () => {
                     <Route path="/analysis" element={<Navigate to="/reports-analytics" replace />} />
                     {/* Only catch-all for undefined app routes, not static files */}
                     <Route path="*" element={<Navigate to="/" replace />} />
-                  </Routes>
-                  <AccessibilityPanel />
-                  <FloatingActionButton />
+                      </Routes>
+                    </Suspense>
+                    <AccessibilityPanel />
+                    <FloatingActionButton />
+                  </ErrorBoundary>
                 </BrowserRouter>
               </TooltipProvider>
             </SidebarProvider>

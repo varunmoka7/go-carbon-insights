@@ -62,26 +62,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     // Production mode: normal auth flow
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('Auth event:', event);
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
+    try {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          console.log('Auth event:', event);
+          setSession(session);
+          setUser(session?.user ?? null);
+          setLoading(false);
 
-        if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
-          console.log('Email verified and user signed in');
+          if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
+            console.log('Email verified and user signed in');
+          }
         }
-      }
-    );
+      );
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+      supabase.auth.getSession()
+        .then(({ data: { session } }) => {
+          setSession(session);
+          setUser(session?.user ?? null);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error getting session:', error);
+          setLoading(false);
+        });
+
+      return () => subscription.unsubscribe();
+    } catch (error) {
+      console.error('Error setting up auth listener:', error);
       setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    }
   }, [isDemoMode]);
 
   const signUp = async (email: string, password: string, username?: string) => {
