@@ -26,8 +26,8 @@ export const useSectorBreakdown = () => {
           supabase.from('emissions_data').select('scope1, scope2, scope3, company_id')
         ]);
 
-        let companiesBySector: Record<string, number> = {};
-        let emissionsBySector: Record<string, number> = {};
+        const companiesBySector: Record<string, number> = {};
+        const emissionsBySector: Record<string, number> = {};
 
         // Get companies by sector
         if (companiesResult.status === 'fulfilled' && companiesResult.value.data) {
