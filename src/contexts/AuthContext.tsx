@@ -9,11 +9,15 @@ import {
   checkRateLimit,
   getGenericAuthError 
 } from '@/utils/securityValidation';
+import LoadingScreen from '@/components/LoadingScreen';
+import ErrorFallback from '@/components/ErrorFallback';
 
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  authFailed: boolean;
+  authError: Error | null;
   isLoggingOut: boolean;
   signUp: (email: string, password: string, username?: string) => Promise<{ error: any }>;
   signIn: (emailOrUsername: string, password: string) => Promise<{ error: any }>;
@@ -24,6 +28,7 @@ interface AuthContextType {
   resetPassword: (email: string) => Promise<{ error: any }>;
   sendPasswordResetEmail: (email: string) => Promise<{ error: any }>;
   updateUserPassword: (newPassword: string) => Promise<{ error: any }>;
+  retryAuth: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,62 +41,95 @@ export const useAuth = () => {
   return context;
 };
 
+// Timeout wrapper for promises
+const withTimeout = <T,>(promise: Promise<T>, timeoutMs: number): Promise<T> => {
+  return Promise.race([
+    promise,
+    new Promise<never>((_, reject) => 
+      setTimeout(() => reject(new Error(`Operation timed out after ${timeoutMs}ms`)), timeoutMs)
+    )
+  ]);
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authFailed, setAuthFailed] = useState(false);
+  const [authError, setAuthError] = useState<Error | null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  // Demo mode flag - set to false when moving to production
-  const isDemoMode = false;
+  // Demo mode configurable via environment variable
+  const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
 
-  useEffect(() => {
-    // In demo mode, simulate a quick loading state then allow access
-    if (isDemoMode) {
-      const timer = setTimeout(() => {
-        setLoading(false);
+  const initializeAuth = async () => {
+    console.log('Initializing authentication...');
+    setLoading(true);
+    setAuthFailed(false);
+    setAuthError(null);
+
+    try {
+      // In demo mode, simulate a quick loading state then allow access
+      if (isDemoMode) {
+        console.log('Demo mode enabled, skipping Supabase authentication');
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
         // Create a mock user for demo purposes
         const mockUser = {
           id: 'demo-user',
-          email: 'moka@gocarbontracker.net',
+          email: 'demo@gocarbontracker.net',
           email_confirmed_at: new Date().toISOString(),
         } as User;
+        
         setUser(mockUser);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
+        setLoading(false);
+        return;
+      }
 
-    // Production mode: normal auth flow
-    try {
+      // Production mode: normal auth flow with timeout
+      console.log('Production mode, initializing Supabase...');
+      
+      // Set up auth state listener with timeout
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         async (event, session) => {
-          console.log('Auth event:', event);
+          console.log('Auth event:', event, session?.user?.id ? 'User authenticated' : 'No user');
           setSession(session);
           setUser(session?.user ?? null);
-          setLoading(false);
-
+          
           if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
             console.log('Email verified and user signed in');
           }
         }
       );
 
-      supabase.auth.getSession()
-        .then(({ data: { session } }) => {
-          setSession(session);
-          setUser(session?.user ?? null);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error('Error getting session:', error);
-          setLoading(false);
-        });
+      // Get initial session with 5-second timeout
+      const sessionResult = await withTimeout(
+        supabase.auth.getSession(),
+        5000
+      );
+
+      console.log('Session retrieved:', sessionResult.data.session?.user?.id ? 'User found' : 'No user');
+      setSession(sessionResult.data.session);
+      setUser(sessionResult.data.session?.user ?? null);
+      setLoading(false);
 
       return () => subscription.unsubscribe();
+      
     } catch (error) {
-      console.error('Error setting up auth listener:', error);
+      console.error('Authentication initialization failed:', error);
+      setAuthError(error as Error);
+      setAuthFailed(true);
       setLoading(false);
     }
+  };
+
+  const retryAuth = () => {
+    console.log('Retrying authentication...');
+    initializeAuth();
+  };
+
+  useEffect(() => {
+    initializeAuth();
   }, [isDemoMode]);
 
   const signUp = async (email: string, password: string, username?: string) => {
@@ -415,6 +453,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user,
     session,
     loading,
+    authFailed,
+    authError,
     isLoggingOut,
     signUp,
     signIn,
@@ -424,8 +464,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signOut,
     resetPassword,
     sendPasswordResetEmail,
-    updateUserPassword
+    updateUserPassword,
+    retryAuth
   };
+
+  // Render loading screen while initializing
+  if (loading) {
+    return (
+      <AuthContext.Provider value={value}>
+        <LoadingScreen message="Initializing authentication..." />
+      </AuthContext.Provider>
+    );
+  }
+
+  // Render error fallback if authentication failed
+  if (authFailed) {
+    return (
+      <AuthContext.Provider value={value}>
+        <ErrorFallback 
+          message="Authentication failed. Please check your network connection and environment configuration."
+          error={authError}
+          onRetry={retryAuth}
+          showHome={false}
+        />
+      </AuthContext.Provider>
+    );
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
