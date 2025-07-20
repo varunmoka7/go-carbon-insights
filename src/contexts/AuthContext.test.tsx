@@ -3,29 +3,45 @@ import { AuthProvider, useAuth } from './AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
-// Mock Supabase client
-const mockSupabase = {
-  auth: {
-    onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
-    getSession: vi.fn(() => Promise.resolve({ data: { session: null } })),
-    signInWithPassword: vi.fn(),
-    signUp: vi.fn(),
-    signOut: vi.fn(),
-    resetPasswordForEmail: vi.fn(),
-    signInWithOAuth: vi.fn(),
-  },
-  from: vi.fn(() => ({
-    select: vi.fn(() => ({
-      eq: vi.fn(() => ({
-        maybeSingle: vi.fn(),
+vi.mock('@/integrations/supabase/client', () => {
+  const mockSupabase = {
+    auth: {
+      onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
+      getSession: vi.fn(() => Promise.resolve({ data: { session: null } })),
+      signInWithPassword: vi.fn(),
+      signUp: vi.fn(),
+      signOut: vi.fn(),
+      resetPasswordForEmail: vi.fn(),
+      signInWithOAuth: vi.fn(),
+      updateUser: vi.fn()
+    },
+    from: vi.fn(() => ({
+      select: vi.fn(() => ({
+        eq: vi.fn(() => ({
+          single: vi.fn(),
+          maybeSingle: vi.fn()
+        })),
+        limit: vi.fn(() => ({
+          single: vi.fn()
+        }))
       })),
-    })),
-  })),
-};
-
-vi.mock('@/integrations/supabase/client', () => ({
-  supabase: mockSupabase,
-}));
+      insert: vi.fn(() => ({
+        select: vi.fn()
+      })),
+      update: vi.fn(() => ({
+        eq: vi.fn(() => ({
+          select: vi.fn()
+        }))
+      })),
+      delete: vi.fn(() => ({
+        eq: vi.fn()
+      }))
+    }))
+  };
+  return {
+    supabase: mockSupabase,
+  };
+});
 
 // Mock security validation functions
 vi.mock('@/utils/securityValidation', () => ({

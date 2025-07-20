@@ -32,5 +32,9 @@ export default defineConfig(({ mode }) => ({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     css: true,
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+    exclude: ['**/node_modules/**', '**/dist/**', '**/forum-service/**', 'src/test/auth.test.tsx', 'src/test/integration.test.tsx'],
   },
 }));

@@ -31,7 +31,11 @@ export interface FileUploadProps {
   className?: string;
 }
 
-interface FileWithPreview extends File {
+interface FileWithPreview {
+  file: File;
+  name: string;
+  size: number;
+  type: string;
   preview?: string;
   uploadId?: string;
   progress?: number;
@@ -97,11 +101,15 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         continue;
       }
 
-      const fileWithPreview: FileWithPreview = Object.assign(file, {
+      const fileWithPreview: FileWithPreview = {
+        file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
         preview: createPreview(file),
         status: 'pending' as const,
         progress: 0,
-      });
+      };
 
       newFiles.push(fileWithPreview);
     }
@@ -119,11 +127,11 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     }
   }, [files, multiple, validateFile, createPreview, toast]);
 
-  const uploadFile = async (file: FileWithPreview): Promise<void> => {
+  const uploadFile = async (fileWrapper: FileWithPreview): Promise<void> => {
     try {
       // Update file status
       setFiles(prev => prev.map(f => 
-        f === file ? { ...f, status: 'uploading', progress: 0 } : f
+        f === fileWrapper ? { ...f, status: 'uploading', progress: 0 } : f
       ));
 
       // Get presigned URL
@@ -134,9 +142,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         },
         body: JSON.stringify({
-          filename: file.name,
-          contentType: file.type,
-          sizeBytes: file.size,
+          filename: fileWrapper.name,
+          contentType: fileWrapper.type,
+          sizeBytes: fileWrapper.size,
         }),
       });
 
@@ -150,9 +158,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       // Upload to S3
       const uploadResponse = await fetch(url, {
         method: 'PUT',
-        body: file,
+        body: fileWrapper.file,
         headers: {
-          'Content-Type': file.type,
+          'Content-Type': fileWrapper.type,
         },
       });
 
@@ -162,7 +170,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
       // Update progress
       setFiles(prev => prev.map(f => 
-        f === file ? { ...f, progress: 50 } : f
+        f === fileWrapper ? { ...f, progress: 50 } : f
       ));
 
       // Confirm upload
@@ -194,7 +202,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
       // Update file status
       setFiles(prev => prev.map(f => 
-        f === file ? { ...f, status: 'uploaded', progress: 100, uploadId } : f
+        f === fileWrapper ? { ...f, status: 'uploaded', progress: 100, uploadId } : f
       ));
 
       onSuccess?.(uploadMeta);
@@ -202,7 +210,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
       toast({
         title: 'Upload Successful',
-        description: `${file.name} has been uploaded successfully.`,
+        description: `${fileWrapper.name} has been uploaded successfully.`,
       });
 
     } catch (error: any) {
@@ -212,7 +220,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       };
 
       setFiles(prev => prev.map(f => 
-        f === file ? { ...f, status: 'failed', error: uploadError.message } : f
+        f === fileWrapper ? { ...f, status: 'failed', error: uploadError.message } : f
       ));
 
       onError?.(uploadError);
@@ -232,8 +240,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     setFiles(prev => prev.filter(f => f !== fileToRemove));
   }, []);
 
-  const retryUpload = useCallback((file: FileWithPreview) => {
-    uploadFile(file);
+  const retryUpload = useCallback((fileWrapper: FileWithPreview) => {
+    uploadFile(fileWrapper);
   }, []);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -256,8 +264,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     fileInputRef.current?.click();
   }, []);
 
-  const getFileIcon = (file: FileWithPreview) => {
-    if (file.type.startsWith('image/')) {
+  const getFileIcon = (fileWrapper: FileWithPreview) => {
+    if (fileWrapper.type.startsWith('image/')) {
       return <Image className="w-8 h-8 text-blue-500" />;
     }
     return <FileText className="w-8 h-8 text-gray-500" />;
@@ -308,54 +316,54 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       {/* File List */}
       {files.length > 0 && (
         <div className="space-y-3">
-          {files.map((file, index) => (
+          {files.map((fileWrapper, index) => (
             <Card key={index} className="p-4">
               <div className="flex items-center space-x-4">
                 {/* File Icon/Preview */}
                 <div className="flex-shrink-0">
-                  {file.preview ? (
+                  {fileWrapper.preview ? (
                     <img
-                      src={file.preview}
-                      alt={file.name}
+                      src={fileWrapper.preview}
+                      alt={fileWrapper.name}
                       className="w-12 h-12 object-cover rounded"
                     />
                   ) : (
-                    getFileIcon(file)
+                    getFileIcon(fileWrapper)
                   )}
                 </div>
 
                 {/* File Info */}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">
-                    {file.name}
+                    {fileWrapper.name}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {(file.size / 1024 / 1024).toFixed(2)} MB
+                    {!isNaN(fileWrapper.size) ? (fileWrapper.size / 1024 / 1024).toFixed(2) : '0.00'} MB
                   </p>
                   
                   {/* Progress Bar */}
-                  {file.status === 'uploading' && (
-                    <Progress value={file.progress || 0} className="mt-2" />
+                  {fileWrapper.status === 'uploading' && (
+                    <Progress value={fileWrapper.progress || 0} className="mt-2" />
                   )}
                   
                   {/* Status Messages */}
-                  {file.status === 'uploaded' && (
+                  {fileWrapper.status === 'uploaded' && (
                     <p className="text-sm text-green-600 mt-1">✓ Uploaded successfully</p>
                   )}
                   
-                  {file.status === 'failed' && (
+                  {fileWrapper.status === 'failed' && (
                     <p className="text-sm text-red-600 mt-1 flex items-center">
                       <AlertCircle className="w-4 h-4 mr-1" />
-                      {file.error}
+                      {fileWrapper.error}
                     </p>
                   )}
                 </div>
 
                 {/* Actions */}
                 <div className="flex items-center space-x-2">
-                  {file.status === 'pending' && (
+                  {fileWrapper.status === 'pending' && (
                     <Button
-                      onClick={() => uploadFile(file)}
+                      onClick={() => uploadFile(fileWrapper)}
                       size="sm"
                       variant="outline"
                     >
@@ -363,21 +371,23 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                     </Button>
                   )}
                   
-                  {file.status === 'failed' && (
+                  {fileWrapper.status === 'failed' && (
                     <Button
-                      onClick={() => retryUpload(file)}
+                      onClick={() => retryUpload(fileWrapper)}
                       size="sm"
                       variant="outline"
+                      aria-label="Retry upload"
                     >
                       <RotateCcw className="w-4 h-4" />
                     </Button>
                   )}
                   
                   <Button
-                    onClick={() => removeFile(file)}
+                    onClick={() => removeFile(fileWrapper)}
                     size="sm"
                     variant="ghost"
                     className="text-red-500 hover:text-red-700"
+                    aria-label="Remove file"
                   >
                     <X className="w-4 h-4" />
                   </Button>

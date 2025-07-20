@@ -33,6 +33,7 @@ import PlasticPackaging from "./pages/PlasticPackaging";
 import IndustryTaxonomy from "./pages/IndustryTaxonomy";
 import IndustryGlossary from "./pages/IndustryGlossary";
 import Community from "./pages/Community";
+import Search from "./pages/Search";
 import AccessibilityPanel from "./components/AccessibilityPanel";
 import FloatingActionButton from "./components/FloatingActionButton";
 import NavigationDebugger from "./components/NavigationDebugger";
@@ -80,6 +81,11 @@ const App = () => {
                     <Route path="/community" element={
                       <PrivateRoute>
                         <Community />
+                      </PrivateRoute>
+                    } />
+                    <Route path="/search" element={
+                      <PrivateRoute>
+                        <Search />
                       </PrivateRoute>
                     } />
                     <Route path="/home" element={

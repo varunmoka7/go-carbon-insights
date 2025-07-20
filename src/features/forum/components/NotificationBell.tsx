@@ -25,6 +25,8 @@ interface Notification {
   };
 }
 
+import { notificationService } from '@/api/NotificationService';
+
 interface NotificationBellProps {
   userId: string;
   onNotificationClick?: (notification: Notification) => void;
@@ -39,61 +41,30 @@ const NotificationBell: React.FC<NotificationBellProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Mock notifications for demonstration
   useEffect(() => {
-    const mockNotifications: Notification[] = [
-      {
-        id: '1',
-        type: 'reply',
-        title: 'New reply to your topic',
-        message: 'Sarah Johnson replied to "Scope 3 Emissions in Manufacturing"',
-        is_read: false,
-        created_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-        from_user: {
-          username: 'sarah_j',
-          display_name: 'Sarah Johnson',
-          is_gct_team: false
-        },
-        topic: {
-          id: 'topic-1',
-          title: 'Scope 3 Emissions in Manufacturing'
-        }
-      },
-      {
-        id: '2',
-        type: 'mention',
-        title: 'You were mentioned',
-        message: 'varun_moka_gct mentioned you in "GHG Protocol Updates"',
-        is_read: false,
-        created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-        from_user: {
-          username: 'varun_moka_gct',
-          display_name: 'Varun Moka',
-          is_gct_team: true
-        },
-        topic: {
-          id: 'topic-2',
-          title: 'GHG Protocol Updates'
-        }
-      },
-      {
-        id: '3',
-        type: 'like',
-        title: 'Your reply was liked',
-        message: 'Linda GCT Expert liked your reply about carbon accounting',
-        is_read: true,
-        created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-        from_user: {
-          username: 'linda_gct_expert',
-          display_name: 'Linda GCT Expert',
-          is_gct_team: true
-        }
-      }
-    ];
+    if (!userId) return;
 
-    setNotifications(mockNotifications);
-    setUnreadCount(mockNotifications.filter(n => !n.is_read).length);
+    setIsLoading(true);
+    notificationService.getNotifications({ id: userId } as any).then(({ data }) => {
+      if (data) {
+        setNotifications(data as any);
+        setUnreadCount(data.filter((n: any) => !n.is_read).length);
+      }
+      setIsLoading(false);
+    });
+
+    const channel = notificationService.subscribeToNotifications({ id: userId } as any, (payload: any) => {
+      const newNotification = payload.new as Notification;
+      setNotifications(prev => [newNotification, ...prev]);
+      setUnreadCount(prev => prev + 1);
+    });
+
+    return () => {
+      notificationService.unsubscribeFromNotifications(channel as any);
+    };
   }, [userId]);
+
+  
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
@@ -124,6 +95,7 @@ const NotificationBell: React.FC<NotificationBellProps> = ({
   };
 
   const markAsRead = async (notificationId: string) => {
+    notificationService.markAsRead([notificationId], { id: userId } as any);
     setNotifications(prev =>
       prev.map(n =>
         n.id === notificationId ? { ...n, is_read: true } : n
@@ -133,6 +105,8 @@ const NotificationBell: React.FC<NotificationBellProps> = ({
   };
 
   const markAllAsRead = async () => {
+    const unreadIds = notifications.filter(n => !n.is_read).map(n => n.id);
+    notificationService.markAsRead(unreadIds, { id: userId } as any);
     setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
     setUnreadCount(0);
   };
