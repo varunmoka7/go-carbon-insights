@@ -16,9 +16,6 @@ const Landing = () => {
     navigate('/auth');
   };
 
-  const handleJoinCommunity = () => {
-    navigate('/auth', { state: { from: '/community' } });
-  };
 
   const handleViewEmissions = () => {
     navigate('/auth');
@@ -159,7 +156,7 @@ const Landing = () => {
             real decarbonization outcomes across all sectors.
           </p>
 
-          {/* Clear CTA Buttons - All lead to authentication */}
+          {/* Clear CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in delay-1000">
             <Button 
               onClick={handleExplorePlatform}
@@ -168,14 +165,6 @@ const Landing = () => {
             >
               Get Started
               <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button 
-              onClick={handleJoinCommunity}
-              size="lg" 
-              className="bg-atmospheric-primary hover:bg-atmospheric-deep text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-atmospheric-primary"
-            >
-              <Users className="mr-3 h-6 w-6" />
-              Join Community
             </Button>
             <Button 
               onClick={handleViewEmissions}
@@ -198,7 +187,21 @@ const Landing = () => {
           <div className="mt-12 animate-fade-in delay-1200">
             <p className="text-sm text-white/70 mb-4 font-medium">Platform Capabilities:</p>
             <div className="text-white/90 text-lg font-medium max-w-4xl mx-auto drop-shadow">
-              Granular supply chain tracking • Industry-specific benchmarking • Global emissions database • Expert collaboration network
+              Granular supply chain tracking • Industry-specific benchmarking • Global emissions database • Expert community collaboration
+            </div>
+          </div>
+
+          {/* Community Information */}
+          <div className="mt-8 animate-fade-in delay-1200">
+            <div className="max-w-3xl mx-auto text-center bg-white/10 backdrop-blur-sm rounded-3xl p-6 border border-white/20">
+              <div className="flex items-center justify-center mb-3">
+                <Users className="h-6 w-6 text-atmospheric-cloud mr-2" />
+                <span className="text-lg font-semibold text-white">Expert Community Network</span>
+              </div>
+              <p className="text-white/90 text-base font-medium">
+                Connect with industry experts, share decarbonization strategies, and collaborate on sustainable solutions 
+                through our integrated community platform - available to all registered users.
+              </p>
             </div>
           </div>
 
