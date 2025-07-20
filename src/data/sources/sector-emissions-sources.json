@@ -1,4 +1,3 @@
-
 {
   "source_attribution": {
     "primary_source": "IPCC AR6 Working Group III",
@@ -13,230 +12,73 @@
     {
       "sector": "Energy & Electricity",
       "percentage": 25,
-      "absolute": "14.5 GtCO₂eq",
+      "absolute": "14.5",
       "subcategories": [
-        {"name": "Fossil fuel electricity", "value": "10.9 GtCO₂eq", "percentage": 75},
-        {"name": "Heat generation", "value": "2.8 GtCO₂eq", "percentage": 19},
-        {"name": "Other energy", "value": "0.8 GtCO₂eq", "percentage": 6}
+        {"name": "Fossil fuel electricity", "value": "10.9", "percentage": 75},
+        {"name": "Heat generation", "value": "2.8", "percentage": 19},
+        {"name": "Other energy", "value": "0.8", "percentage": 6}
       ],
       "color": "#dc2626"
     },
     {
       "sector": "Industry & Manufacturing", 
       "percentage": 21,
-      "absolute": "12.2 GtCO₂eq",
+      "absolute": "12.2",
       "subcategories": [
-        {"name": "Steel production", "value": "3.0 GtCO₂eq", "percentage": 25},
-        {"name": "Cement production", "value": "2.4 GtCO₂eq", "percentage": 20},
-        {"name": "Chemicals", "value": "2.2 GtCO₂eq", "percentage": 18},
-        {"name": "Other manufacturing", "value": "4.6 GtCO₂eq", "percentage": 37}
+        {"name": "Steel production", "value": "3.0", "percentage": 25},
+        {"name": "Cement production", "value": "2.4", "percentage": 20},
+        {"name": "Chemicals", "value": "2.2", "percentage": 18},
+        {"name": "Other manufacturing", "value": "4.6", "percentage": 37}
       ],
       "color": "#ea580c"
     },
     {
       "sector": "Agriculture & Land Use",
       "percentage": 18,
-      "absolute": "10.4 GtCO₂eq",
+      "absolute": "10.4",
       "subcategories": [
-        {"name": "Livestock", "value": "4.2 GtCO₂eq", "percentage": 40},
-        {"name": "Crop production", "value": "2.8 GtCO₂eq", "percentage": 27},
-        {"name": "Land use change", "value": "2.3 GtCO₂eq", "percentage": 22},
-        {"name": "Forestry", "value": "1.1 GtCO₂eq", "percentage": 11}
+        {"name": "Livestock", "value": "4.2", "percentage": 40},
+        {"name": "Crop production", "value": "2.8", "percentage": 27},
+        {"name": "Land use change", "value": "2.3", "percentage": 22},
+        {"name": "Forestry", "value": "1.1", "percentage": 11}
       ],
       "color": "#84cc16"
     },
     {
       "sector": "Transportation",
       "percentage": 16, 
-      "absolute": "9.3 GtCO₂eq",
+      "absolute": "9.3",
       "subcategories": [
-        {"name": "Road transport", "value": "6.2 GtCO₂eq", "percentage": 67},
-        {"name": "Aviation", "value": "1.4 GtCO₂eq", "percentage": 15},
-        {"name": "Shipping", "value": "1.2 GtCO₂eq", "percentage": 13},
-        {"name": "Rail transport", "value": "0.5 GtCO₂eq", "percentage": 5}
+        {"name": "Road transport", "value": "6.2", "percentage": 67},
+        {"name": "Aviation", "value": "1.4", "percentage": 15},
+        {"name": "Shipping", "value": "1.2", "percentage": 13},
+        {"name": "Rail transport", "value": "0.5", "percentage": 5}
       ],
       "color": "#f59e0b"
     },
     {
       "sector": "Buildings",
       "percentage": 12,
-      "absolute": "7.0 GtCO₂eq",
+      "absolute": "7.0",
       "subcategories": [
-        {"name": "Residential heating", "value": "2.8 GtCO₂eq", "percentage": 40},
-        {"name": "Commercial buildings", "value": "2.1 GtCO₂eq", "percentage": 30},
-        {"name": "Cooling systems", "value": "1.4 GtCO₂eq", "percentage": 20},
-        {"name": "Lighting & appliances", "value": "0.7 GtCO₂eq", "percentage": 10}
+        {"name": "Residential heating", "value": "2.8", "percentage": 40},
+        {"name": "Commercial buildings", "value": "2.1", "percentage": 30},
+        {"name": "Cooling systems", "value": "1.4", "percentage": 20},
+        {"name": "Lighting & appliances", "value": "0.7", "percentage": 10}
       ],
       "color": "#22c55e"
     },
     {
       "sector": "Other Energy Uses",
       "percentage": 8,
-      "absolute": "4.6 GtCO₂eq",
+      "absolute": "4.6",
       "subcategories": [
-        {"name": "Fugitive emissions", "value": "2.1 GtCO₂eq", "percentage": 46},
-        {"name": "Other combustion", "value": "1.4 GtCO₂eq", "percentage": 30},
-        {"name": "Energy losses", "value": "0.8 GtCO₂eq", "percentage": 17},
-        {"name": "Waste management", "value": "0.3 GtCO₂eq", "percentage": 7}
+        {"name": "Fugitive emissions", "value": "2.1", "percentage": 46},
+        {"name": "Other combustion", "value": "1.4", "percentage": 30},
+        {"name": "Energy losses", "value": "0.8", "percentage": 17},
+        {"name": "Waste management", "value": "0.3", "percentage": 7}
       ],
       "color": "#10b981"
-    },
-    {
-      "sector": "Waste Management",
-      "percentage": 3.2,
-      "absolute": "1.9 GtCO₂eq",
-      "subcategories": [
-        {"name": "Landfill emissions", "value": "1.2 GtCO₂eq", "percentage": 63},
-        {"name": "Wastewater treatment", "value": "0.4 GtCO₂eq", "percentage": 21},
-        {"name": "Incineration", "value": "0.3 GtCO₂eq", "percentage": 16}
-      ],
-      "color": "#8b5cf6"
-    },
-    {
-      "sector": "Mining & Metals",
-      "percentage": 2.8,
-      "absolute": "1.6 GtCO₂eq",
-      "subcategories": [
-        {"name": "Iron ore mining", "value": "0.6 GtCO₂eq", "percentage": 38},
-        {"name": "Coal mining", "value": "0.5 GtCO₂eq", "percentage": 31},
-        {"name": "Other metals", "value": "0.5 GtCO₂eq", "percentage": 31}
-      ],
-      "color": "#6366f1"
-    },
-    {
-      "sector": "Oil & Gas",
-      "percentage": 2.5,
-      "absolute": "1.4 GtCO₂eq",
-      "subcategories": [
-        {"name": "Upstream operations", "value": "0.8 GtCO₂eq", "percentage": 57},
-        {"name": "Refining", "value": "0.4 GtCO₂eq", "percentage": 29},
-        {"name": "Distribution", "value": "0.2 GtCO₂eq", "percentage": 14}
-      ],
-      "color": "#06b6d4"
-    },
-    {
-      "sector": "Food & Beverage",
-      "percentage": 2.1,
-      "absolute": "1.2 GtCO₂eq",
-      "subcategories": [
-        {"name": "Food processing", "value": "0.7 GtCO₂eq", "percentage": 58},
-        {"name": "Packaging", "value": "0.3 GtCO₂eq", "percentage": 25},
-        {"name": "Distribution", "value": "0.2 GtCO₂eq", "percentage": 17}
-      ],
-      "color": "#f97316"
-    },
-    {
-      "sector": "Textiles & Apparel",
-      "percentage": 1.8,
-      "absolute": "1.0 GtCO₂eq",
-      "subcategories": [
-        {"name": "Fiber production", "value": "0.4 GtCO₂eq", "percentage": 40},
-        {"name": "Manufacturing", "value": "0.3 GtCO₂eq", "percentage": 30},
-        {"name": "Distribution", "value": "0.3 GtCO₂eq", "percentage": 30}
-      ],
-      "color": "#ec4899"
-    },
-    {
-      "sector": "Construction",
-      "percentage": 1.5,
-      "absolute": "0.9 GtCO₂eq",
-      "subcategories": [
-        {"name": "Building materials", "value": "0.5 GtCO₂eq", "percentage": 56},
-        {"name": "Construction activities", "value": "0.3 GtCO₂eq", "percentage": 33},
-        {"name": "Equipment", "value": "0.1 GtCO₂eq", "percentage": 11}
-      ],
-      "color": "#a855f7"
-    },
-    {
-      "sector": "Information Technology",
-      "percentage": 1.2,
-      "absolute": "0.7 GtCO₂eq",
-      "subcategories": [
-        {"name": "Data centers", "value": "0.4 GtCO₂eq", "percentage": 57},
-        {"name": "Manufacturing", "value": "0.2 GtCO₂eq", "percentage": 29},
-        {"name": "Operations", "value": "0.1 GtCO₂eq", "percentage": 14}
-      ],
-      "color": "#3b82f6"
-    },
-    {
-      "sector": "Healthcare",
-      "percentage": 1.0,
-      "absolute": "0.6 GtCO₂eq",
-      "subcategories": [
-        {"name": "Medical equipment", "value": "0.3 GtCO₂eq", "percentage": 50},
-        {"name": "Pharmaceuticals", "value": "0.2 GtCO₂eq", "percentage": 33},
-        {"name": "Facilities", "value": "0.1 GtCO₂eq", "percentage": 17}
-      ],
-      "color": "#ef4444"
-    },
-    {
-      "sector": "Financial Services",
-      "percentage": 0.8,
-      "absolute": "0.5 GtCO₂eq",
-      "subcategories": [
-        {"name": "Operations", "value": "0.3 GtCO₂eq", "percentage": 60},
-        {"name": "Investments", "value": "0.1 GtCO₂eq", "percentage": 20},
-        {"name": "Facilities", "value": "0.1 GtCO₂eq", "percentage": 20}
-      ],
-      "color": "#10b981"
-    },
-    {
-      "sector": "Education",
-      "percentage": 0.6,
-      "absolute": "0.3 GtCO₂eq",
-      "subcategories": [
-        {"name": "Facilities", "value": "0.2 GtCO₂eq", "percentage": 67},
-        {"name": "Transportation", "value": "0.1 GtCO₂eq", "percentage": 33}
-      ],
-      "color": "#f59e0b"
-    },
-    {
-      "sector": "Entertainment & Media",
-      "percentage": 0.5,
-      "absolute": "0.3 GtCO₂eq",
-      "subcategories": [
-        {"name": "Digital infrastructure", "value": "0.2 GtCO₂eq", "percentage": 67},
-        {"name": "Production", "value": "0.1 GtCO₂eq", "percentage": 33}
-      ],
-      "color": "#8b5cf6"
-    },
-    {
-      "sector": "Real Estate",
-      "percentage": 0.4,
-      "absolute": "0.2 GtCO₂eq",
-      "subcategories": [
-        {"name": "Property management", "value": "0.1 GtCO₂eq", "percentage": 50},
-        {"name": "Development", "value": "0.1 GtCO₂eq", "percentage": 50}
-      ],
-      "color": "#06b6d4"
-    },
-    {
-      "sector": "Legal Services",
-      "percentage": 0.3,
-      "absolute": "0.2 GtCO₂eq",
-      "subcategories": [
-        {"name": "Operations", "value": "0.1 GtCO₂eq", "percentage": 50},
-        {"name": "Facilities", "value": "0.1 GtCO₂eq", "percentage": 50}
-      ],
-      "color": "#6366f1"
-    },
-    {
-      "sector": "Consulting",
-      "percentage": 0.2,
-      "absolute": "0.1 GtCO₂eq",
-      "subcategories": [
-        {"name": "Travel", "value": "0.1 GtCO₂eq", "percentage": 100}
-      ],
-      "color": "#84cc16"
-    },
-    {
-      "sector": "Non-Profit",
-      "percentage": 0.1,
-      "absolute": "0.1 GtCO₂eq",
-      "subcategories": [
-        {"name": "Operations", "value": "0.1 GtCO₂eq", "percentage": 100}
-      ],
-      "color": "#22c55e"
     }
   ]
 }
