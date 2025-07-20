@@ -2,13 +2,13 @@
 
 **Comprehensive Development Plan for Enterprise Carbon Management Platform**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![Last Updated](https://img.shields.io/badge/last%20updated-2025--01--08-green.svg) ![Status](https://img.shields.io/badge/status-planning-yellow.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg) ![Last Updated](https://img.shields.io/badge/last%20updated-2025--01--20-green.svg) ![Status](https://img.shields.io/badge/status-planning-yellow.svg)
 
 ## Table of Contents
 
 * [Executive Summary](#executive-summary)
 * [Current Epic Status](#current-epic-status)
-* [Epic 1-4: Foundation & Core Features](#epic-1-4-foundation--core-features)
+* [Epic 1-4.5: Foundation & Core Features](#epic-1-45-foundation--core-features)
 * [Epic 5-8: Data & Intelligence](#epic-5-8-data--intelligence)
 * [Epic 9-12: Enterprise & Scale](#epic-9-12-enterprise--scale)
 * [Implementation Timeline](#implementation-timeline)
@@ -56,9 +56,15 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - **Completion Date**: January 2025
 - **Key Achievements**: MVP forum implementation, badge system, simplified user experience
 
+### 🔄 **Epic 4.5: Advanced Forum Content Management** - PLANNING
+- **Status**: Planning phase
+- **Target**: Q1 2025 (February-March)
+- **Scope**: Complete content lifecycle management bridging Epic 4 MVP to production-ready forum
+- **Key Features**: Edit/delete posts & comments, threaded discussions
+
 ***
 
-## Epic 1-4: Foundation & Core Features
+## Epic 1-4.5: Foundation & Core Features
 
 ### Epic 1: Foundational Backend & User Authentication ✅ **COMPLETE**
 
@@ -154,6 +160,58 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - Enhanced Components: UserProfile (tab-based), TopicsList (infinite scroll), OnboardingFlow (badge integration)
 - Performance: Infinite scroll optimization, efficient badge system
 - UX: Simplified MVP-focused interface, mobile-responsive design
+
+### Epic 4.5: Advanced Forum Content Management 🔄 **PLANNING**
+
+**Analysis**: Epic 4.5 bridges the gap between Epic 4's MVP foundation and the production-ready forum platform that users expect. This epic completes the content lifecycle management by adding essential editing, deletion, and threading capabilities.
+
+**Goal**: Transform the Epic 4 MVP forum into a production-ready community platform with complete content management capabilities.
+
+**Planned Stories:**
+
+**Story 4.5.1: Edit Posts** - Status: 🔄 **Planning**
+- Allow users to edit their own topics with inline editing interface
+- Form validation, optimistic updates, edit history tracking
+- Integration with existing TopicThreadView architecture
+
+**Story 4.5.2: Delete Posts** - Status: 🔄 **Planning**  
+- Soft deletion pattern for topic management with confirmation workflow
+- Tombstone display for deleted content, navigation handling
+- Preservation of discussion integrity and reply context
+
+**Story 4.5.3: Edit Comments** - Status: 🔄 **Planning**
+- Inline reply editing following topic edit patterns
+- Real-time validation, character limits, edit indicators
+- Seamless integration with existing reply threading
+
+**Story 4.5.4: Delete Comments** - Status: 🔄 **Planning**
+- Reply deletion with appropriate confirmation based on context
+- Thread integrity preservation, soft deletion for nested replies
+- Tombstone display maintaining discussion flow
+
+**Story 4.5.5: True Comment Nesting** - Status: 🔄 **Planning**
+- Transform linear replies into hierarchical threaded discussions
+- Reply-to-reply functionality, visual threading indicators
+- Collapse/expand controls, mobile-optimized nested display
+
+**Key Features:**
+- Complete CRUD operations for topics and replies
+- Soft deletion pattern preserving discussion integrity
+- Threaded conversations with unlimited nesting depth
+- Edit history tracking and transparency indicators
+- Mobile-optimized content management interface
+
+**Technical Requirements:**
+- Database schema enhancements for edit tracking and threading
+- Component architecture following Epic 4 brownfield patterns
+- Performance optimization for complex nested structures
+- Comprehensive permission and security validation
+
+**Brownfield Integration Strategy:**
+- Extend existing Epic 4 components rather than rewrite
+- Maintain infinite scroll and performance optimizations  
+- Follow established TypeScript and styling patterns
+- Preserve authentication and permission frameworks
 
 ***
 
@@ -390,12 +448,13 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 **Focus**: Complete current epics and establish solid foundation
 
 **Epic 2**: Carbon Tracking & Public Platform + Real Data Integration - Final completion
-**Epic 4**: Community Forum - Complete remaining features
+**Epic 4.5**: Advanced Forum Content Management - Complete production-ready forum
 **Epic 3**: Personal Carbon Management - Begin implementation
 
 **Deliverables**:
 - Complete public platform with real data integration
-- Full community forum with mobile optimization
+- Production-ready community forum with full content lifecycle management
+- Advanced threaded discussions and content editing capabilities
 - Basic private data management capabilities
 
 ### Phase 2: Data & Intelligence (Q2-Q3 2025)
