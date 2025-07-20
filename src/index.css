@@ -127,6 +127,11 @@
   body, p, h1, h2, h3, h4, h5, h6, span, div, a, button, input, textarea, label, li, td, th {
     color: black !important;
   }
+
+  /* Community page override - allow proper contrast for dark theme */
+  .community-page, .community-page * {
+    color: inherit !important;
+  }
 }
 
 @layer utilities {
@@ -327,5 +332,129 @@ button[aria-label*="Edit with Lovable"] {
   50% {
     opacity: 0.7;
   }
+}
+
+/* Enhanced Community Page Styles */
+.community-page {
+  /* Ensure proper contrast and readability */
+  color-scheme: dark;
+}
+
+/* Override dark backgrounds for better contrast */
+.community-page [class*="bg-[#1a1a1a]"] {
+  background-color: #0f0f0f !important;
+}
+
+.community-page [class*="bg-[#232323]"] {
+  background-color: #1a1a1a !important;
+}
+
+.community-page [class*="bg-[#181818]"] {
+  background-color: #0f0f0f !important;
+}
+
+.community-page [class*="border-[#333]"] {
+  border-color: #404040 !important;
+}
+
+.community-page [class*="border-[#222]"] {
+  border-color: #333333 !important;
+}
+
+/* Enhanced text contrast */
+.community-page .text-gray-100 {
+  color: #f3f4f6 !important;
+}
+
+.community-page .text-gray-300 {
+  color: #d1d5db !important;
+}
+
+.community-page .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.community-page .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+/* Enhanced hover states */
+.community-page [class*="hover:bg-[#262626]"]:hover {
+  background-color: #1f1f1f !important;
+}
+
+.community-page [class*="hover:bg-[#232323]"]:hover {
+  background-color: #1a1a1a !important;
+}
+
+/* Enhanced focus states */
+.community-page .focus\:ring-emerald-400:focus {
+  --tw-ring-color: #34d399 !important;
+}
+
+.community-page .focus-within\:ring-emerald-400:focus-within {
+  --tw-ring-color: #34d399 !important;
+}
+
+/* Enhanced button styles */
+.community-page .bg-emerald-500 {
+  background-color: #10b981 !important;
+}
+
+.community-page .hover\:bg-emerald-600:hover {
+  background-color: #059669 !important;
+}
+
+.community-page .text-emerald-400 {
+  color: #34d399 !important;
+}
+
+.community-page .hover\:text-emerald-300:hover {
+  color: #6ee7b7 !important;
+}
+
+/* Enhanced input styles */
+.community-page input::placeholder {
+  color: #6b7280 !important;
+}
+
+.community-page input:focus {
+  border-color: #34d399 !important;
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.2) !important;
+}
+
+/* Enhanced card shadows */
+.community-page .shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.community-page .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Enhanced transitions */
+.community-page * {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+}
+
+/* Enhanced scrollbar for community page */
+.community-page ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.community-page ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.community-page ::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 4px;
+}
+
+.community-page ::-webkit-scrollbar-thumb:hover {
+  background: #525252;
 }
 
