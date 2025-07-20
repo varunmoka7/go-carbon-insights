@@ -17,7 +17,7 @@ const Landing = () => {
   };
 
   const handleJoinCommunity = () => {
-    navigate('/auth');
+    navigate('/auth', { state: { from: '/community' } });
   };
 
   const handleViewEmissions = () => {

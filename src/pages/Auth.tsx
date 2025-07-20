@@ -86,9 +86,10 @@ const Auth = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate('/dashboard');
+      const intendedDestination = location.state?.from || '/dashboard';
+      navigate(intendedDestination);
     }
-  }, [user, navigate]);
+  }, [user, navigate, location.state]);
 
   const handleInputChange = (field: string, value: string) => {
     // Sanitize input as user types
