@@ -86,7 +86,17 @@ const Auth = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      const intendedDestination = location.state?.from || '/dashboard';
+      // Handle both string paths and location objects from PrivateRoute
+      const from = location.state?.from;
+      let intendedDestination = '/dashboard';
+      
+      if (typeof from === 'string') {
+        intendedDestination = from;
+      } else if (from && from.pathname) {
+        intendedDestination = from.pathname;
+      }
+      
+      console.log('Auth redirect:', { from, intendedDestination, locationState: location.state });
       navigate(intendedDestination);
     }
   }, [user, navigate, location.state]);
@@ -165,9 +175,10 @@ const Auth = () => {
         if (error) {
           setError(error.message || 'An error occurred during sign up. Please try again.');
         } else {
+          const intendedDestination = location.state?.from === '/community' ? 'community' : 'dashboard';
           toast({
             title: "Account Created Successfully",
-            description: "Welcome to GoCarbonTracker! Redirecting to your personal tracker...",
+            description: `Welcome to GoCarbonTracker! Redirecting to ${intendedDestination}...`,
           });
           setError(''); // Clear any previous errors
           // Display a success message on the form itself
@@ -205,6 +216,9 @@ const Auth = () => {
           } else {
             setError(error.message || 'An error occurred during sign in. Please try again.');
           }
+        } else {
+          // Successful sign in - redirect will be handled by useEffect when user state updates
+          console.log('Sign in successful, redirect will be handled by useEffect');
         }
       }
     } catch (err) {
