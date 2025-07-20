@@ -1,5 +1,6 @@
 
 import React from 'react';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import ClimateRealityHero from '@/components/ClimateRealityHero';
 import CorporateClimateMap from '@/components/CorporateClimateMap';
 import SectorEmissionsDashboard from '@/components/SectorEmissionsDashboard';
@@ -10,23 +11,29 @@ import CollaborationHub from '@/components/CollaborationHub';
 const Home = () => {
   return (
     <div className="min-h-screen">
-      {/* Section 1: Climate Reality Hero Section */}
-      <ClimateRealityHero />
+      <ErrorBoundary>
+        <ClimateRealityHero />
+      </ErrorBoundary>
 
-      {/* Section 2: Interactive Corporate Climate Action Map */}
-      <CorporateClimateMap />
+      <ErrorBoundary>
+        <CorporateClimateMap />
+      </ErrorBoundary>
 
-      {/* Section 3: Global Emissions by Sector Dashboard */}
-      <SectorEmissionsDashboard />
+      <ErrorBoundary>
+        <SectorEmissionsDashboard />
+      </ErrorBoundary>
 
-      {/* Section 4: Industry Benchmarking */}
-      <IndustryBenchmarking />
+      <ErrorBoundary>
+        <IndustryBenchmarking />
+      </ErrorBoundary>
 
-      {/* Section 5: Climate Scenarios */}
-      <ClimateScenarios />
+      <ErrorBoundary>
+        <ClimateScenarios />
+      </ErrorBoundary>
 
-      {/* Section 6: Supply Chain Collaboration Hub */}
-      <CollaborationHub />
+      <ErrorBoundary>
+        <CollaborationHub />
+      </ErrorBoundary>
     </div>
   );
 };
