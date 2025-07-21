@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MessageSquare, Users, TrendingUp } from 'lucide-react';
+import { Users, MessageSquare, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -11,10 +12,10 @@ const Community = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Community Forum
+            Community
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Connect with carbon tracking professionals, share insights, and learn from industry experts.
+            Connect with carbon tracking professionals and share insights on decarbonization strategies.
           </p>
         </div>
 
@@ -22,30 +23,30 @@ const Community = () => {
         <Card className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border-2 border-dashed border-emerald-200 dark:border-emerald-700">
           <CardHeader className="text-center">
             <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageSquare className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+              <Users className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
             </div>
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
-              Community Forum Coming Soon
+              Community Platform Coming Soon
             </CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-6">
             <p className="text-gray-600 dark:text-gray-300">
-              We're building an amazing community platform for carbon tracking professionals. 
-              Stay tuned for discussions, expert insights, and networking opportunities.
+              We're building a collaborative platform where carbon tracking professionals can share 
+              insights, best practices, and connect with industry experts.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <MessageSquare className="w-4 h-4" />
+                <span>Expert Forums</span>
+              </div>
+              <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
                 <Users className="w-4 h-4" />
-                <span>Expert Discussions</span>
+                <span>Professional Network</span>
               </div>
               <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
                 <TrendingUp className="w-4 h-4" />
                 <span>Industry Insights</span>
-              </div>
-              <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
-                <MessageSquare className="w-4 h-4" />
-                <span>Knowledge Sharing</span>
               </div>
             </div>
 

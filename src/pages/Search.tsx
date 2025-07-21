@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Search, FileText, TrendingUp } from 'lucide-react';
+import { Search as SearchIcon, FileText, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -22,7 +23,7 @@ const Search = () => {
         <Card className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border-2 border-dashed border-emerald-200 dark:border-emerald-700">
           <CardHeader className="text-center">
             <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+              <SearchIcon className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
             </div>
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
               Advanced Search Coming Soon
@@ -36,7 +37,7 @@ const Search = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
-                <Search className="w-4 h-4" />
+                <SearchIcon className="w-4 h-4" />
                 <span>Smart Search</span>
               </div>
               <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
