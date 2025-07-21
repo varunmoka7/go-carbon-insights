@@ -1,5 +1,6 @@
 
 @import './styles/rain-animation.css';
+@import './styles/landing-animations.css';
 
 @tailwind base;
 @tailwind components;
@@ -456,5 +457,395 @@ button[aria-label*="Edit with Lovable"] {
 
 .community-page ::-webkit-scrollbar-thumb:hover {
   background: #525252;
+}
+
+/* ==========================================================================
+   THREADED REPLIES STYLES - Story 4.5.5
+   ========================================================================== */
+
+/* Threading connector lines */
+.threaded-reply-item {
+  position: relative;
+}
+
+.thread-connectors {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.thread-line {
+  position: absolute;
+  width: 1px;
+  background-color: theme('colors.gray.200');
+  top: 0;
+  bottom: 0;
+}
+
+.dark .thread-line {
+  background-color: theme('colors.gray.700');
+}
+
+/* Collapse/expand controls */
+.collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid theme('colors.gray.300');
+  background: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: theme('colors.gray.600');
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.collapse-toggle:hover {
+  background: theme('colors.gray.50');
+  border-color: theme('colors.gray.400');
+  color: theme('colors.gray.700');
+}
+
+.dark .collapse-toggle {
+  background: theme('colors.gray.800');
+  border-color: theme('colors.gray.600');
+  color: theme('colors.gray.300');
+}
+
+.dark .collapse-toggle:hover {
+  background: theme('colors.gray.700');
+  border-color: theme('colors.gray.500');
+  color: theme('colors.gray.200');
+}
+
+/* Reply content indentation and visual threading */
+.reply-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Threading depth visual cues */
+.threaded-reply-item[data-depth="0"] {
+  border-left: none;
+}
+
+.threaded-reply-item[data-depth="1"] {
+  border-left: 2px solid theme('colors.blue.200');
+}
+
+.threaded-reply-item[data-depth="2"] {
+  border-left: 2px solid theme('colors.green.200');
+}
+
+.threaded-reply-item[data-depth="3"] {
+  border-left: 2px solid theme('colors.yellow.200');
+}
+
+.threaded-reply-item[data-depth="4"] {
+  border-left: 2px solid theme('colors.purple.200');
+}
+
+.threaded-reply-item[data-depth="5"] {
+  border-left: 2px solid theme('colors.pink.200');
+}
+
+.threaded-reply-item[data-depth^="6"], 
+.threaded-reply-item[data-depth^="7"],
+.threaded-reply-item[data-depth^="8"] {
+  border-left: 2px solid theme('colors.gray.300');
+}
+
+/* Dark mode threading colors */
+.dark .threaded-reply-item[data-depth="1"] {
+  border-left-color: theme('colors.blue.600');
+}
+
+.dark .threaded-reply-item[data-depth="2"] {
+  border-left-color: theme('colors.green.600');
+}
+
+.dark .threaded-reply-item[data-depth="3"] {
+  border-left-color: theme('colors.yellow.600');
+}
+
+.dark .threaded-reply-item[data-depth="4"] {
+  border-left-color: theme('colors.purple.600');
+}
+
+.dark .threaded-reply-item[data-depth="5"] {
+  border-left-color: theme('colors.pink.600');
+}
+
+.dark .threaded-reply-item[data-depth^="6"],
+.dark .threaded-reply-item[data-depth^="7"],
+.dark .threaded-reply-item[data-depth^="8"] {
+  border-left-color: theme('colors.gray.600');
+}
+
+/* Nested replies container */
+.nested-replies {
+  position: relative;
+}
+
+/* Deep thread indicator */
+.deep-thread-indicator {
+  padding: 12px 16px;
+  background: theme('colors.gray.50');
+  border: 1px dashed theme('colors.gray.300');
+  border-radius: 8px;
+  text-align: center;
+}
+
+.dark .deep-thread-indicator {
+  background: theme('colors.gray.800');
+  border-color: theme('colors.gray.600');
+}
+
+/* Threading form styles */
+.threaded-reply-form {
+  background: theme('colors.gray.50');
+  border: 2px dashed theme('colors.gray.300');
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.dark .threaded-reply-form {
+  background: theme('colors.gray.800');
+  border-color: theme('colors.gray.600');
+}
+
+/* Reply context preview */
+.reply-context-preview {
+  background: white;
+  border-left: 4px solid theme('colors.blue.200');
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: theme('colors.gray.700');
+  border-radius: 4px;
+  max-height: 60px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dark .reply-context-preview {
+  background: theme('colors.gray.700');
+  border-left-color: theme('colors.blue.600');
+  color: theme('colors.gray.200');
+}
+
+.reply-context-preview::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(transparent, white);
+  pointer-events: none;
+}
+
+.dark .reply-context-preview::after {
+  background: linear-gradient(transparent, theme('colors.gray.700'));
+}
+
+/* Mobile responsive threading */
+@media (max-width: 640px) {
+  .reply-content {
+    margin-left: 12px !important;
+  }
+  
+  .thread-line {
+    left: 6px !important;
+  }
+  
+  .collapse-toggle {
+    left: -10px !important;
+  }
+  
+  .threaded-reply-item[data-depth="1"],
+  .threaded-reply-item[data-depth="2"],
+  .threaded-reply-item[data-depth="3"],
+  .threaded-reply-item[data-depth="4"],
+  .threaded-reply-item[data-depth="5"],
+  .threaded-reply-item[data-depth^="6"],
+  .threaded-reply-item[data-depth^="7"],
+  .threaded-reply-item[data-depth^="8"] {
+    border-left-width: 1px;
+  }
+}
+
+/* Animation for thread collapse/expand */
+.thread-collapse-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.thread-collapse-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.thread-collapse-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.thread-collapse-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Accessibility improvements */
+.threaded-reply-item[aria-expanded="false"] .nested-replies {
+  display: none;
+}
+
+.collapse-toggle[aria-expanded="true"] {
+  background: theme('colors.blue.50');
+  border-color: theme('colors.blue.300');
+  color: theme('colors.blue.700');
+}
+
+.dark .collapse-toggle[aria-expanded="true"] {
+  background: theme('colors.blue.900');
+  border-color: theme('colors.blue.600');
+  color: theme('colors.blue.300');
+}
+
+/* ==========================================================================
+   SOFT DELETION STYLES - Story 4.5.4
+   ========================================================================== */
+
+/* Reply tombstone styling */
+.reply-tombstone {
+  position: relative;
+}
+
+.reply-tombstone .reply-content {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.reply-tombstone:hover .reply-content {
+  opacity: 0.9;
+}
+
+/* Delete button styling */
+.reply-actions .delete-button {
+  color: theme('colors.red.600');
+  transition: all 0.2s ease;
+}
+
+.reply-actions .delete-button:hover {
+  color: theme('colors.red.700');
+  background-color: theme('colors.red.50');
+}
+
+.dark .reply-actions .delete-button:hover {
+  background-color: theme('colors.red.900/20');
+}
+
+/* Tombstone content styling */
+.reply-tombstone [data-depth] {
+  border-left-color: theme('colors.gray.300') !important;
+}
+
+.dark .reply-tombstone [data-depth] {
+  border-left-color: theme('colors.gray.600') !important;
+}
+
+/* Deleted reply fade animation */
+.reply-deleted-fade {
+  animation: fadeToDeleted 0.5s ease-out forwards;
+}
+
+@keyframes fadeToDeleted {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+}
+
+/* Enhanced tombstone with subtle styling */
+.reply-tombstone .bg-gray-50 {
+  background: theme('colors.gray.50/80');
+  border: 1px solid theme('colors.gray.200/80');
+}
+
+.dark .reply-tombstone .bg-gray-50 {
+  background: theme('colors.gray.800/80');
+  border-color: theme('colors.gray.700/80');
+}
+
+/* Deletion confirmation dialog enhancements */
+.delete-reply-preview {
+  background: theme('colors.gray.50');
+  border: 1px solid theme('colors.gray.200');
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: theme('colors.gray.600');
+  max-height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dark .delete-reply-preview {
+  background: theme('colors.gray.800');
+  border-color: theme('colors.gray.700');
+  color: theme('colors.gray.400');
+}
+
+/* Fade overlay for long preview content */
+.delete-reply-preview::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(transparent, theme('colors.gray.50'));
+  pointer-events: none;
+}
+
+.dark .delete-reply-preview::after {
+  background: linear-gradient(transparent, theme('colors.gray.800'));
+}
+
+/* Loading states for delete operations */
+.reply-deleting {
+  pointer-events: none;
+  opacity: 0.6;
+  position: relative;
+}
+
+.reply-deleting::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: theme('colors.gray.50/50');
+  z-index: 10;
+  border-radius: 8px;
+}
+
+.dark .reply-deleting::before {
+  background: theme('colors.gray.800/50');
 }
 
