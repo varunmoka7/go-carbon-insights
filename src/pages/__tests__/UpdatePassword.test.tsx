@@ -82,8 +82,8 @@ describe('UpdatePassword', () => {
     );
 
     expect(screen.getByRole('heading', { name: /update your password/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/new password/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/confirm new password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText('New Password')).toBeInTheDocument();
+    expect(screen.getByLabelText('Confirm New Password')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /update password/i })).toBeInTheDocument();
   });
 
@@ -113,8 +113,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const confirmPasswordInput = screen.getByLabelText(/confirm new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     const validPassword = 'NewPassword123!';
@@ -172,8 +172,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const confirmPasswordInput = screen.getByLabelText(/confirm new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     const shortPassword = '123';
@@ -198,8 +198,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const confirmPasswordInput = screen.getByLabelText(/confirm new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     await user.type(passwordInput, 'Password123!');
@@ -223,7 +223,7 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
 
     // Test weak password
     await user.type(passwordInput, 'weak');
@@ -256,7 +256,7 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     // Enter weak password
@@ -276,7 +276,7 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     // Enter strong password
@@ -301,8 +301,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const confirmPasswordInput = screen.getByLabelText(/confirm new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm New Password');
     const submitButton = screen.getByRole('button', { name: /updating.../i });
 
     expect(submitButton).toBeDisabled();
@@ -324,8 +324,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const confirmPasswordInput = screen.getByLabelText(/confirm new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     const validPassword = 'NewPassword123!';
@@ -359,8 +359,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const confirmPasswordInput = screen.getByLabelText(/confirm new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     const validPassword = 'NewPassword123!';
@@ -393,8 +393,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const toggleButton = screen.getAllByRole('button')[1]; // First toggle button
+    const passwordInput = screen.getByLabelText('New Password');
+    const toggleButton = screen.getByRole('button', { name: /show password|hide password/i });
 
     expect(passwordInput).toHaveAttribute('type', 'password');
 
@@ -431,8 +431,8 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
-    const confirmPasswordInput = screen.getByLabelText(/confirm new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm New Password');
 
     await user.type(passwordInput, 'Password123!');
     await user.type(confirmPasswordInput, 'DifferentPassword');
@@ -451,7 +451,7 @@ describe('UpdatePassword', () => {
       </TestWrapper>
     );
 
-    const passwordInput = screen.getByLabelText(/new password/i);
+    const passwordInput = screen.getByLabelText('New Password');
     const submitButton = screen.getByRole('button', { name: /update password/i });
 
     // Submit without password to show error

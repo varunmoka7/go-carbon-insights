@@ -36,6 +36,13 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 ## Current Epic Status
 
 ### ✅ **Epic 1: Foundational Backend & User Authentication** - COMPLETE
+
+### 🚀 **Epic 1.1: Investor Demo Experience (MVP)** - IN PROGRESS
+- **Status**: In Progress
+- **Target**: Q3 2025
+- **Scope**: Provide a frictionless way for investors and potential partners to explore the GoCarbonTracker platform's features through a pre-configured, read-only demo account.
+- **Stories**: [1.1.1: MVP Investor Demo Account](./epics/epic-1.1.md)
+
 - **Status**: All stories implemented and tested
 - **Completion Date**: December 2024
 - **Key Achievements**: Supabase integration, social auth, comprehensive database schema

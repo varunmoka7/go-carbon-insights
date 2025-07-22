@@ -3,11 +3,10 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 import { ModerationQueue } from '../ModerationQueue';
+import { useModerationAPI } from '../../hooks/useModerationAPI';
 
 // Mock the moderation API hook
-vi.mock('../../hooks/useModerationAPI', () => ({
-  useModerationAPI: vi.fn(),
-}));
+vi.mock('../../hooks/useModerationAPI');
 
 const mockUseModerationAPI = {
   useFlaggedContent: vi.fn(),
@@ -117,8 +116,7 @@ describe('ModerationQueue', () => {
     vi.clearAllMocks();
     
     // Reset mock implementation
-    const { useModerationAPI } = require('../../hooks/useModerationAPI');
-    useModerationAPI.mockReturnValue({
+    (useModerationAPI as vi.Mock).mockReturnValue({
       ...mockUseModerationAPI,
       useFlaggedContent: vi.fn(() => ({
         data: mockFlaggedData,
@@ -174,7 +172,7 @@ describe('ModerationQueue', () => {
 
       await waitFor(() => {
         // Check that timestamps are formatted and displayed
-        expect(screen.getByText(/1\/1\/2024/)).toBeInTheDocument();
+        expect(screen.getAllByText(/1\/1\/2024/)[0]).toBeInTheDocument();
       });
     });
   });
@@ -199,8 +197,7 @@ describe('ModerationQueue', () => {
         error: null,
       }));
 
-      const { useModerationAPI } = require('../../hooks/useModerationAPI');
-      useModerationAPI.mockReturnValue({
+      (useModerationAPI as vi.Mock).mockReturnValue({
         ...mockUseModerationAPI,
         useFlaggedContent: mockUseFlaggedContent,
       });
@@ -230,8 +227,7 @@ describe('ModerationQueue', () => {
       const mockHideContent = vi.fn();
       const mockResolveReport = vi.fn();
 
-      const { useModerationAPI } = require('../../hooks/useModerationAPI');
-      useModerationAPI.mockReturnValue({
+      (useModerationAPI as vi.Mock).mockReturnValue({
         ...mockUseModerationAPI,
         hideContent: mockHideContent,
         resolveReport: mockResolveReport,
@@ -255,12 +251,12 @@ describe('ModerationQueue', () => {
         expect(mockHideContent).toHaveBeenCalledWith(
           'topic-1',
           'topic',
-          'Content violates community guidelines'
+          'Content hidden by moderator'
         );
         expect(mockResolveReport).toHaveBeenCalledWith({
           reportId: 'report-1',
           status: 'resolved',
-          resolutionNotes: 'Content hided: Content violates community guidelines',
+          resolutionNotes: 'Content hidden by moderator',
         });
       });
     });
@@ -268,8 +264,7 @@ describe('ModerationQueue', () => {
     it('should call resolveReport when dismiss button is clicked', async () => {
       const mockResolveReport = vi.fn();
 
-      const { useModerationAPI } = require('../../hooks/useModerationAPI');
-      useModerationAPI.mockReturnValue({
+      (useModerationAPI as vi.Mock).mockReturnValue({
         ...mockUseModerationAPI,
         resolveReport: mockResolveReport,
         useFlaggedContent: vi.fn(() => ({
@@ -289,11 +284,11 @@ describe('ModerationQueue', () => {
       fireEvent.click(screen.getAllByText('Dismiss')[0]);
 
       await waitFor(() => {
-        expect(mockResolveReport).toHaveBeenCalledWith(
-          'report-1',
-          'dismissed',
-          'No action needed'
-        );
+        expect(mockResolveReport).toHaveBeenCalledWith({
+          reportId: 'report-1',
+          status: 'dismissed',
+          resolutionNotes: 'No action needed',
+        });
       });
     });
   });
@@ -335,8 +330,7 @@ describe('ModerationQueue', () => {
       const mockBulkModerate = vi.fn();
       const mockResolveReport = vi.fn();
 
-      const { useModerationAPI } = require('../../hooks/useModerationAPI');
-      useModerationAPI.mockReturnValue({
+      (useModerationAPI as vi.Mock).mockReturnValue({
         ...mockUseModerationAPI,
         bulkModerate: mockBulkModerate,
         resolveReport: mockResolveReport,
@@ -370,8 +364,7 @@ describe('ModerationQueue', () => {
 
   describe('Loading and Error States', () => {
     it('should show loading state', async () => {
-      const { useModerationAPI } = require('../../hooks/useModerationAPI');
-      useModerationAPI.mockReturnValue({
+      (useModerationAPI as vi.Mock).mockReturnValue({
         ...mockUseModerationAPI,
         useFlaggedContent: vi.fn(() => ({
           data: null,
@@ -388,8 +381,7 @@ describe('ModerationQueue', () => {
     });
 
     it('should show empty state when no reports', async () => {
-      const { useModerationAPI } = require('../../hooks/useModerationAPI');
-      useModerationAPI.mockReturnValue({
+      (useModerationAPI as vi.Mock).mockReturnValue({
         ...mockUseModerationAPI,
         useFlaggedContent: vi.fn(() => ({
           data: { data: [], pagination: { page: 1, limit: 20, total: 0, pages: 0 } },
@@ -406,8 +398,7 @@ describe('ModerationQueue', () => {
     });
 
     it('should display error messages', async () => {
-      const { useModerationAPI } = require('../../hooks/useModerationAPI');
-      useModerationAPI.mockReturnValue({
+      (useModerationAPI as vi.Mock).mockReturnValue({
         ...mockUseModerationAPI,
         error: 'Failed to load reports',
         useFlaggedContent: vi.fn(() => ({

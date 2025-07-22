@@ -74,7 +74,7 @@ describe('Auth Page', () => {
     renderWithProviders(<Auth />);
     
     expect(screen.getByText('Welcome back')).toBeInTheDocument();
-    expect(screen.getByText('Sign in')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sign in' })).toBeInTheDocument();
     expect(screen.getByLabelText('Email or Username')).toBeInTheDocument();
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
     expect(screen.getByText('Forgot your password?')).toBeInTheDocument();
@@ -84,7 +84,7 @@ describe('Auth Page', () => {
     const user = userEvent.setup();
     renderWithProviders(<Auth />);
     
-    const signUpLink = screen.getByText('Sign up');
+    const signUpLink = screen.getByRole('button', { name: 'Sign up' });
     await user.click(signUpLink);
     
     expect(screen.getByText('Create your account')).toBeInTheDocument();
@@ -113,7 +113,7 @@ describe('Auth Page', () => {
     
     const emailInput = screen.getByLabelText('Email or Username');
     const passwordInput = screen.getByLabelText('Password');
-    const submitButton = screen.getByText('Sign in');
+    const submitButton = screen.getByRole('button', { name: 'Sign in' });
     
     await user.type(emailInput, 'test@example.com');
     await user.type(passwordInput, 'password123');
@@ -131,14 +131,14 @@ describe('Auth Page', () => {
     renderWithProviders(<Auth />);
     
     // Switch to sign up mode
-    const signUpLink = screen.getByText('Sign up');
+    const signUpLink = screen.getByRole('button', { name: 'Sign up' });
     await user.click(signUpLink);
     
     const emailInput = screen.getByLabelText('Email address');
     const usernameInput = screen.getByLabelText('Username');
     const passwordInput = screen.getByLabelText('Password');
     const confirmPasswordInput = screen.getByLabelText('Confirm Password');
-    const submitButton = screen.getByText('Sign up');
+    const submitButton = screen.getByRole('button', { name: 'Sign up' });
     
     await user.type(emailInput, 'test@example.com');
     await user.type(usernameInput, 'testuser');
@@ -162,7 +162,7 @@ describe('Auth Page', () => {
     await user.click(forgotPasswordLink);
     
     const emailInput = screen.getByLabelText('Email address');
-    const submitButton = screen.getByText('Send Reset Email');
+    const submitButton = screen.getByRole('button', { name: 'Send Reset Email' });
     
     await user.type(emailInput, 'test@example.com');
     await user.click(submitButton);
@@ -176,7 +176,7 @@ describe('Auth Page', () => {
     const user = userEvent.setup();
     renderWithProviders(<Auth />);
     
-    const submitButton = screen.getByText('Sign in');
+    const submitButton = screen.getByRole('button', { name: 'Sign in' });
     await user.click(submitButton);
     
     expect(screen.getByText('Please fill in all required fields')).toBeInTheDocument();
@@ -187,14 +187,14 @@ describe('Auth Page', () => {
     renderWithProviders(<Auth />);
     
     // Switch to sign up mode
-    const signUpLink = screen.getByText('Sign up');
+    const signUpLink = screen.getByRole('button', { name: 'Sign up' });
     await user.click(signUpLink);
     
     const emailInput = screen.getByLabelText('Email address');
     const usernameInput = screen.getByLabelText('Username');
     const passwordInput = screen.getByLabelText('Password');
     const confirmPasswordInput = screen.getByLabelText('Confirm Password');
-    const submitButton = screen.getByText('Sign up');
+    const submitButton = screen.getByRole('button', { name: 'Sign up' });
     
     await user.type(emailInput, 'test@example.com');
     await user.type(usernameInput, 'testuser');
@@ -210,7 +210,7 @@ describe('Auth Page', () => {
     renderWithProviders(<Auth />);
     
     const passwordInput = screen.getByLabelText('Password') as HTMLInputElement;
-    const toggleButton = screen.getByRole('button', { name: '' }); // Eye icon button
+    const toggleButton = screen.getByRole('button', { name: /show password|hide password/i }); // Eye icon button
     
     expect(passwordInput.type).toBe('password');
     
@@ -229,7 +229,7 @@ describe('Auth Page', () => {
     
     const emailInput = screen.getByLabelText('Email or Username');
     const passwordInput = screen.getByLabelText('Password');
-    const submitButton = screen.getByText('Sign in');
+    const submitButton = screen.getByRole('button', { name: 'Sign in' });
     
     await user.type(emailInput, 'test@example.com');
     await user.type(passwordInput, 'wrongpassword');
@@ -245,7 +245,7 @@ describe('Auth Page', () => {
     renderWithProviders(<Auth />);
     
     // First trigger an error
-    const submitButton = screen.getByText('Sign in');
+    const submitButton = screen.getByRole('button', { name: 'Sign in' });
     await user.click(submitButton);
     
     expect(screen.getByText('Please fill in all required fields')).toBeInTheDocument();
@@ -254,7 +254,9 @@ describe('Auth Page', () => {
     const emailInput = screen.getByLabelText('Email or Username');
     await user.type(emailInput, 'test');
     
-    expect(screen.queryByText('Please fill in all required fields')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('Please fill in all required fields')).not.toBeInTheDocument();
+    });
   });
 
   it('should render OAuth buttons in sign in and sign up modes', () => {
@@ -264,6 +266,7 @@ describe('Auth Page', () => {
     expect(screen.getByText('Continue with Google')).toBeInTheDocument();
     expect(screen.getByText('Continue with GitHub')).toBeInTheDocument();
     expect(screen.getByText('Or continue with email')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Login as Demo User' })).toBeInTheDocument();
   });
 
   it('should render OAuth buttons in sign up mode', async () => {
@@ -271,13 +274,14 @@ describe('Auth Page', () => {
     renderWithProviders(<Auth />);
     
     // Switch to sign up mode
-    const signUpLink = screen.getByText('Sign up');
+    const signUpLink = screen.getByRole('button', { name: 'Sign up' });
     await user.click(signUpLink);
     
     // Should show OAuth buttons in sign up mode
     expect(screen.getByText('Continue with Google')).toBeInTheDocument();
     expect(screen.getByText('Continue with GitHub')).toBeInTheDocument();
     expect(screen.getByText('Or continue with email')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Login as Demo User' })).toBeInTheDocument();
   });
 
   it('should not render OAuth buttons in forgot password mode', async () => {
@@ -292,6 +296,7 @@ describe('Auth Page', () => {
     expect(screen.queryByText('Continue with Google')).not.toBeInTheDocument();
     expect(screen.queryByText('Continue with GitHub')).not.toBeInTheDocument();
     expect(screen.queryByText('Or continue with email')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Login as Demo User' })).not.toBeInTheDocument();
   });
 
   it('should handle Google OAuth button click', async () => {
@@ -319,6 +324,20 @@ describe('Auth Page', () => {
     
     await waitFor(() => {
       expect(mockSignInWithGitHub).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('should handle demo sign in', async () => {
+    const user = userEvent.setup();
+    mockSignIn.mockResolvedValueOnce({ error: null });
+    
+    renderWithProviders(<Auth />);
+    
+    const demoButton = screen.getByRole('button', { name: 'Login as Demo User' });
+    await user.click(demoButton);
+    
+    await waitFor(() => {
+      expect(mockSignIn).toHaveBeenCalledWith('demo@gocarbontracker.net', 'demodemo');
     });
   });
 
@@ -365,11 +384,13 @@ describe('Auth Page', () => {
     
     const googleButton = screen.getByText('Continue with Google');
     const githubButton = screen.getByText('Continue with GitHub');
+    const demoButton = screen.getByRole('button', { name: 'Login as Demo User' });
     
     await user.click(googleButton);
     
     // Buttons should be disabled during loading
     expect(googleButton).toBeDisabled();
     expect(githubButton).toBeDisabled();
+    expect(demoButton).toBeDisabled();
   });
 });

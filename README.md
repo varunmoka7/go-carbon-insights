@@ -67,6 +67,13 @@ GoCarbonTracker is a comprehensive corporate climate intelligence platform that 
 - 🔄 [Update Process](./docs/UPDATE_PROCESS.md)
 - 🤝 [Contributing Guidelines](./.github/CONTRIBUTING.md)
 
+### 🚀 Investor Demo Account
+To provide a frictionless way to explore the platform, a pre-configured demo account is available:
+- **Email**: `demo@gocarbontracker.net`
+- **Password**: `demodemo`
+
+A "Login as Demo" button is available on the login page for quick access. Please note that this is a read-only environment with sample data.
+
 ### Epic Status (Updated January 2025)
 - ✅ **Epic 1**: Foundational Backend & User Authentication (Complete)
 - ✅ **Epic 2**: Carbon Tracking & Public Platform + Real Data Integration (90% Complete)

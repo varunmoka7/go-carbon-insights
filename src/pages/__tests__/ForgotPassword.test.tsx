@@ -107,7 +107,7 @@ describe('ForgotPassword', () => {
 
     // Should show success state
     expect(screen.getByRole('heading', { name: /check your email/i })).toBeInTheDocument();
-    expect(screen.getByText(/email sent!/i)).toBeInTheDocument();
+    expect(screen.getByText('Email Sent!')).toBeInTheDocument();
   });
 
   it('shows error for invalid email format', async () => {
@@ -126,7 +126,7 @@ describe('ForgotPassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/please enter a valid email address/i)).toBeInTheDocument();
+      expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument();
     });
 
     expect(mockSendPasswordResetEmail).not.toHaveBeenCalled();
@@ -146,7 +146,7 @@ describe('ForgotPassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/please enter your email address/i)).toBeInTheDocument();
+      expect(screen.getByText('Please enter your email address')).toBeInTheDocument();
     });
 
     expect(mockSendPasswordResetEmail).not.toHaveBeenCalled();
@@ -238,7 +238,7 @@ describe('ForgotPassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/email sent!/i)).toBeInTheDocument();
+      expect(screen.getByText('Email Sent!')).toBeInTheDocument();
     });
 
     // Click try again button
@@ -267,14 +267,14 @@ describe('ForgotPassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/please enter your email address/i)).toBeInTheDocument();
+      expect(screen.getByText('Please enter your email address')).toBeInTheDocument();
     });
 
     // Start typing to clear error
     await user.type(emailInput, 't');
 
     await waitFor(() => {
-      expect(screen.queryByText(/please enter your email address/i)).not.toBeInTheDocument();
+      expect(screen.queryByText('Please enter your email address')).not.toBeInTheDocument();
     });
   });
 
