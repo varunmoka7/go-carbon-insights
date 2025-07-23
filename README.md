@@ -57,7 +57,7 @@ GoCarbonTracker is a comprehensive corporate climate intelligence platform that 
 
 ## 📚 Documentation
 
-**For comprehensive project documentation, see [PROJECT_KNOWLEDGE.md](./PROJECT_KNOWLEDGE.md)**
+**For comprehensive project documentation, see [PROJECT_KNOWLEDGE.md](./project-docs/PROJECT_KNOWLEDGE.md)**
 
 ### Quick Links
 - 🚀 [**Quick Start Guide**](./docs/guides/QUICK_START.md) - Get running in 5 minutes
