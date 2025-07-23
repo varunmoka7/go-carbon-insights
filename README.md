@@ -60,25 +60,31 @@ GoCarbonTracker is a comprehensive corporate climate intelligence platform that 
 **For comprehensive project documentation, see [PROJECT_KNOWLEDGE.md](./PROJECT_KNOWLEDGE.md)**
 
 ### Quick Links
-- 🚀 [**Quick Start Guide**](./docs/QUICK_START.md) - Get running in 5 minutes
-- 📊 [**Dashboard Tutorial**](./docs/user-guides/dashboard-tutorial.md) - Learn the platform
-- 🤝 [**Contributing Quick Guide**](./docs/CONTRIBUTING_QUICK.md) - Start contributing
-- ❓ [**FAQ**](./docs/FAQ.md) - Common questions answered
+- 🚀 [**Quick Start Guide**](./docs/guides/QUICK_START.md) - Get running in 5 minutes
+- 📊 [**Dashboard Tutorial**](./docs/guides/user-guides/dashboard-tutorial.md) - Learn the platform
+- 🤝 [**Contributing Quick Guide**](./docs/development/CONTRIBUTING_QUICK.md) - Start contributing
+- ❓ [**FAQ**](./docs/guides/FAQ.md) - Common questions answered
 
 ### Documentation
-- 📚 [**User Guides**](./docs/user-guides/README.md) - Complete user documentation
+- 📚 [**User Guides**](./docs/guides/) - Complete user documentation
+- 🛠️ [**Development Docs**](./docs/development/) - Developer setup and guidelines
+- 🚀 [**Deployment Guide**](./docs/deployment/) - Production deployment options
+- 🔧 [**Operations**](./docs/operations/) - Monitoring and maintenance
+- 📖 [**Reference**](./docs/reference/) - Technical specifications
+
+### Integration & APIs
 - 🔌 [**API Examples**](./docs/api-examples/README.md) - JavaScript & Python integration
-- 🚀 [**Deployment Guide**](./docs/DEPLOYMENT_GUIDE.md) - Production deployment
-- ⚙️ [**Advanced Configuration**](./docs/ADVANCED_CONFIGURATION.md) - Deep customization
+- 📋 [**API Documentation**](./docs/reference/API_DOCUMENTATION.md) - Complete API reference
+- ⚙️ [**Advanced Configuration**](./docs/reference/ADVANCED_CONFIGURATION.md) - Deep customization
 
 ### Architecture & Design
-- 🏗️ [**System Architecture**](./docs/SYSTEM_ARCHITECTURE.md) - Technical architecture diagrams
-- 🗺️ [**User Journeys**](./docs/USER_JOURNEYS.md) - User experience flowcharts
+- 🏗️ [**System Architecture**](./docs/reference/SYSTEM_ARCHITECTURE.md) - Technical architecture diagrams
+- 🗺️ [**User Journeys**](./docs/reference/USER_JOURNEYS.md) - User experience flowcharts
 - 📸 [**Visual Assets**](./docs/assets/README.md) - Screenshots and diagrams guide
-- 🎨 [**Visual Documentation Guide**](./docs/VISUAL_DOCUMENTATION_GUIDE.md) - Screenshot capture & implementation
 
 ### Project Resources
-- 📖 [Full Project Knowledge Base](./PROJECT_KNOWLEDGE.md)
+- 📋 [**Project Documentation**](./project-docs/) - Project knowledge base and summaries
+- 🔧 [**Backend Services**](./backend-services/) - Backend architecture and services
 - 🗺️ [Complete Epic Roadmap](./docs/EPIC_ROADMAP.md)
 - 📥 [Data Import Templates](./data-templates/)
 
@@ -103,7 +109,7 @@ A "Login as Demo" button is available on the login page for quick access. Please
 
 ## 🚀 Quick Start
 
-**Get started in 5 minutes** → [**Quick Start Guide**](./docs/QUICK_START.md)
+**Get started in 5 minutes** → [**Quick Start Guide**](./docs/guides/QUICK_START.md)
 
 ```bash
 git clone <YOUR_GIT_URL> && cd go-carbon-insights
@@ -118,7 +124,7 @@ npm install && npm run dev
 
 **Prerequisites**: Node.js & npm ([install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
 
-For detailed setup instructions, see our [**Environment Setup Guide**](./docs/ENVIRONMENT_SETUP.md).
+For detailed setup instructions, see our [**Environment Setup Guide**](./docs/development/ENVIRONMENT_SETUP.md).
 
 ### 📥 Data Import System
 
