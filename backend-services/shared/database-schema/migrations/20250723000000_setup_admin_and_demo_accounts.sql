@@ -1,66 +1,32 @@
--- Setup Admin Accounts and Professional Demo Account
+-- Setup Admin Accounts and Professional Demo Account (DEPRECATED)
 -- Created: 2025-01-23
+-- NOTE: This migration is deprecated. Use 20250723000001_lovable_compatible_demo_setup.sql instead
 
--- 1. Upgrade existing user accounts to admin roles
-UPDATE user_profiles 
+-- 1. Upgrade existing user accounts to admin roles (safe operations only)
+UPDATE public.user_profiles 
 SET 
   role = 'super_admin',
   full_name = COALESCE(full_name, 'Varun Moka - Platform Admin'),
   is_active = true,
   updated_at = now()
-WHERE email = 'varunmoka7@gmail.com';
+WHERE email = 'varunmoka7@gmail.com' 
+AND EXISTS (SELECT 1 FROM public.user_profiles WHERE email = 'varunmoka7@gmail.com');
 
-UPDATE user_profiles
+UPDATE public.user_profiles
 SET 
   role = 'super_admin', 
   full_name = COALESCE(full_name, 'Varun Moka - Secondary Admin'),
   is_active = true,
   updated_at = now()
-WHERE email = 'varunmoka28@gmail.com';
+WHERE email = 'varunmoka28@gmail.com'
+AND EXISTS (SELECT 1 FROM public.user_profiles WHERE email = 'varunmoka28@gmail.com');
 
--- 2. Create professional demo user in auth.users (if not exists)
-INSERT INTO auth.users (
-  instance_id, 
-  id, 
-  aud, 
-  role, 
-  email, 
-  encrypted_password, 
-  email_confirmed_at, 
-  recovery_token, 
-  recovery_sent_at, 
-  last_sign_in_at, 
-  raw_app_meta_data, 
-  raw_user_meta_data, 
-  created_at, 
-  updated_at, 
-  confirmation_token, 
-  email_change, 
-  email_change_sent_at, 
-  confirmed_at
-)
-SELECT 
-  COALESCE(current_setting('app.instance_id', true)::uuid, '00000000-0000-0000-0000-000000000000'::uuid),
-  gen_random_uuid(),
-  'authenticated',
-  'authenticated', 
-  'demo@gocarbontracker.com',
-  crypt('DemoAccess2024', gen_salt('bf')),
-  now(),
-  '',
-  now(),
-  now(),
-  '{"provider":"email","providers":["email"]}',
-  '{"role":"analyst","is_demo":true}',
-  now(),
-  now(),
-  '',
-  '',
-  now(),
-  now()
-WHERE NOT EXISTS (
-  SELECT 1 FROM auth.users WHERE email = 'demo@gocarbontracker.com'
-);
+-- 2. DEPRECATED: Demo user creation moved to separate approach
+-- Direct auth.users manipulation not allowed in managed environments like Lovable
+-- Use the create-demo-user.js script or Supabase Auth API instead
+
+-- Placeholder comment: Demo user creation requires Supabase Auth API
+SELECT 'Demo user creation requires Supabase Auth API or admin functions' as notice;
 
 -- 3. Create user profile for demo account
 INSERT INTO user_profiles (
