@@ -284,7 +284,7 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = await signIn('demo@gocarbontracker.com', 'DemoAccess2024');
+      const { error } = await signIn('demo@gocarbontracker.net', 'demodemo');
 
       if (error) {
         setError(error.message || 'Failed to sign in as demo user. Please try again.');
