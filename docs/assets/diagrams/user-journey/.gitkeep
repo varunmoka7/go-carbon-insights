@@ -1,0 +1,10 @@
+# User Journey Diagrams
+
+This directory contains user experience flow diagrams:
+
+- onboarding_flow.svg - New user onboarding process
+- analysis_workflow.svg - Data analysis workflow
+- corporate_user_journey.svg - Corporate user experience
+- academic_research_flow.svg - Academic researcher workflow
+
+Show decision points, user actions, and system responses.

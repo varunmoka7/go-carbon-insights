@@ -60,12 +60,27 @@ GoCarbonTracker is a comprehensive corporate climate intelligence platform that 
 **For comprehensive project documentation, see [PROJECT_KNOWLEDGE.md](./PROJECT_KNOWLEDGE.md)**
 
 ### Quick Links
+- 🚀 [**Quick Start Guide**](./docs/QUICK_START.md) - Get running in 5 minutes
+- 📊 [**Dashboard Tutorial**](./docs/user-guides/dashboard-tutorial.md) - Learn the platform
+- 🤝 [**Contributing Quick Guide**](./docs/CONTRIBUTING_QUICK.md) - Start contributing
+- ❓ [**FAQ**](./docs/FAQ.md) - Common questions answered
+
+### Documentation
+- 📚 [**User Guides**](./docs/user-guides/README.md) - Complete user documentation
+- 🔌 [**API Examples**](./docs/api-examples/README.md) - JavaScript & Python integration
+- 🚀 [**Deployment Guide**](./docs/DEPLOYMENT_GUIDE.md) - Production deployment
+- ⚙️ [**Advanced Configuration**](./docs/ADVANCED_CONFIGURATION.md) - Deep customization
+
+### Architecture & Design
+- 🏗️ [**System Architecture**](./docs/SYSTEM_ARCHITECTURE.md) - Technical architecture diagrams
+- 🗺️ [**User Journeys**](./docs/USER_JOURNEYS.md) - User experience flowcharts
+- 📸 [**Visual Assets**](./docs/assets/README.md) - Screenshots and diagrams guide
+- 🎨 [**Visual Documentation Guide**](./docs/VISUAL_DOCUMENTATION_GUIDE.md) - Screenshot capture & implementation
+
+### Project Resources
 - 📖 [Full Project Knowledge Base](./PROJECT_KNOWLEDGE.md)
 - 🗺️ [Complete Epic Roadmap](./docs/EPIC_ROADMAP.md)
-- 📁 [Documentation Directory](./docs/)
 - 📥 [Data Import Templates](./data-templates/)
-- 🔄 [Update Process](./docs/UPDATE_PROCESS.md)
-- 🤝 [Contributing Guidelines](./.github/CONTRIBUTING.md)
 
 ### 🚀 Investor Demo Account
 To provide a frictionless way to explore the platform, a pre-configured demo account is available:
@@ -86,23 +101,24 @@ A "Login as Demo" button is available on the login page for quick access. Please
 - **Phase 2 (Q2-Q3 2025)**: Epics 6-8 - Data & Intelligence
 - **Phase 3 (Q4 2025-Q1 2026)**: Epics 9-12 - Enterprise & Scale
 
+## 🚀 Quick Start
+
+**Get started in 5 minutes** → [**Quick Start Guide**](./docs/QUICK_START.md)
+
+```bash
+git clone <YOUR_GIT_URL> && cd go-carbon-insights
+npm install && npm run dev
+```
+
+**Try the demo**: Login with `demo@gocarbontracker.net` / `demodemo`
+
 ## 🛠️ Development & Data Import
 
 ### Local Development Setup
 
 **Prerequisites**: Node.js & npm ([install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
 
-```bash
-# Clone the repository
-git clone <YOUR_GIT_URL>
-cd <YOUR_PROJECT_NAME>
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
+For detailed setup instructions, see our [**Environment Setup Guide**](./docs/ENVIRONMENT_SETUP.md).
 
 ### 📥 Data Import System
 

@@ -1,0 +1,11 @@
+# UI Component Screenshots
+
+This directory contains screenshots of user interface elements:
+
+- ui_navigation_sidebar.png - Main sidebar navigation
+- ui_search_global.png - Global search interface
+- ui_filters_advanced.png - Advanced filtering options
+- ui_export_data.png - Data export functionality
+- ui_theme_dark.png - Dark theme demonstration
+
+Focus on reusable UI components and interactions.

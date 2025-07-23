@@ -1,0 +1,10 @@
+# System Architecture Diagrams
+
+This directory contains high-level system architecture diagrams:
+
+- system_architecture.svg - Complete system overview
+- data_flow_architecture.svg - Data flow between components
+- security_architecture.svg - Security layers and controls
+- performance_architecture.svg - Performance optimization layers
+
+Use SVG format for scalability. Include both light and dark theme versions.
