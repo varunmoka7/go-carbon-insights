@@ -88,12 +88,12 @@ GoCarbonTracker is a comprehensive corporate climate intelligence platform that 
 - 🗺️ [Complete Epic Roadmap](./docs/EPIC_ROADMAP.md)
 - 📥 [Data Import Templates](./data-templates/)
 
-### 🚀 Investor Demo Account
-To provide a frictionless way to explore the platform, a pre-configured demo account is available:
-- **Email**: `demo@gocarbontracker.net`
-- **Password**: `demodemo`
+### 🚀 Professional Demo Account
+To provide a frictionless way to explore the platform, a professional demo account is available:
+- **Email**: `demo@gocarbontracker.com`
+- **Password**: `DemoAccess2024`
 
-A "Login as Demo" button is available on the login page for quick access. Please note that this is a read-only environment with sample data.
+A "Login as Demo User" button is available on the login page for quick access. This account provides full platform navigation capabilities with sample data for potential clients, investors, and partners.
 
 ### Epic Status (Updated January 2025)
 - ✅ **Epic 1**: Foundational Backend & User Authentication (Complete)
@@ -116,7 +116,7 @@ git clone <YOUR_GIT_URL> && cd go-carbon-insights
 npm install && npm run dev
 ```
 
-**Try the demo**: Login with `demo@gocarbontracker.net` / `demodemo`
+**Try the demo**: Login with `demo@gocarbontracker.com` / `DemoAccess2024`
 
 ## 🛠️ Development & Data Import
 

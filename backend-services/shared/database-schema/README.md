@@ -20,6 +20,12 @@ database-schema/
 - **Format**: SQL migration files with timestamps
 - **Usage**: Applied via Supabase CLI or service migration scripts
 
+### **Latest Migration** (`20250723000000_setup_admin_and_demo_accounts.sql`)
+- **Admin Setup**: Upgrades varunmoka7@gmail.com and varunmoka28@gmail.com to super_admin role
+- **Demo Account**: Creates professional demo account at demo@gocarbontracker.com
+- **Access Control**: Sets up proper RLS policies for demo account access
+- **Usage**: Run to establish admin accounts and professional demo access
+
 ### **Key Migration Categories**
 - **Authentication**: User management and security
 - **Community Forum**: Forum schema (topics, replies, users)
