@@ -25,10 +25,10 @@ vi.mock('@/components/ui/Logo', () => ({
 }));
 
 // Mock security validation utilities
+const emailRegex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$/;
 vi.mock('@/utils/securityValidation', () => ({
   sanitizeInput: vi.fn((input: string) => input),
   validateEmail: vi.fn((email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }),
 }));

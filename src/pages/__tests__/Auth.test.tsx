@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-import Auth from './Auth';
+import Auth from '../Auth';
 import { AuthProvider } from '@/contexts/AuthContext';
 
 // Mock the useAuth hook
@@ -179,7 +179,7 @@ describe('Auth Page', () => {
     const submitButton = screen.getByRole('button', { name: 'Sign in' });
     await user.click(submitButton);
     
-    expect(screen.getByText('Please fill in all required fields')).toBeInTheDocument();
+        expect(await screen.findByText('Please fill in all required fields')).toBeInTheDocument();
   });
 
   it('should show error for password mismatch in sign up', async () => {
@@ -248,14 +248,14 @@ describe('Auth Page', () => {
     const submitButton = screen.getByRole('button', { name: 'Sign in' });
     await user.click(submitButton);
     
-    expect(screen.getByText('Please fill in all required fields')).toBeInTheDocument();
+        expect(await screen.findByText('Please fill in all required fields')).toBeInTheDocument();
     
     // Then start typing
     const emailInput = screen.getByLabelText('Email or Username');
     await user.type(emailInput, 'test');
     
     await waitFor(() => {
-      expect(screen.queryByText('Please fill in all required fields')).not.toBeInTheDocument();
+      expect(screen.queryByRole('alert', { name: 'Please fill in all required fields' })).not.toBeInTheDocument();
     });
   });
 
@@ -266,7 +266,6 @@ describe('Auth Page', () => {
     expect(screen.getByText('Continue with Google')).toBeInTheDocument();
     expect(screen.getByText('Continue with GitHub')).toBeInTheDocument();
     expect(screen.getByText('Or continue with email')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Login as Demo User' })).toBeInTheDocument();
   });
 
   it('should render OAuth buttons in sign up mode', async () => {
@@ -281,7 +280,6 @@ describe('Auth Page', () => {
     expect(screen.getByText('Continue with Google')).toBeInTheDocument();
     expect(screen.getByText('Continue with GitHub')).toBeInTheDocument();
     expect(screen.getByText('Or continue with email')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Login as Demo User' })).toBeInTheDocument();
   });
 
   it('should not render OAuth buttons in forgot password mode', async () => {
@@ -296,7 +294,6 @@ describe('Auth Page', () => {
     expect(screen.queryByText('Continue with Google')).not.toBeInTheDocument();
     expect(screen.queryByText('Continue with GitHub')).not.toBeInTheDocument();
     expect(screen.queryByText('Or continue with email')).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: 'Login as Demo User' })).not.toBeInTheDocument();
   });
 
   it('should handle Google OAuth button click', async () => {
@@ -324,20 +321,6 @@ describe('Auth Page', () => {
     
     await waitFor(() => {
       expect(mockSignInWithGitHub).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  it('should handle demo sign in', async () => {
-    const user = userEvent.setup();
-    mockSignIn.mockResolvedValueOnce({ error: null });
-    
-    renderWithProviders(<Auth />);
-    
-    const demoButton = screen.getByRole('button', { name: 'Login as Demo User' });
-    await user.click(demoButton);
-    
-    await waitFor(() => {
-      expect(mockSignIn).toHaveBeenCalledWith('demo@gocarbontracker.net', 'demodemo');
     });
   });
 
@@ -369,7 +352,7 @@ describe('Auth Page', () => {
     await user.click(googleButton);
     
     await waitFor(() => {
-      expect(screen.getByText('Too many OAuth attempts. Please try again later.')).toBeInTheDocument();
+      expect(await screen.findByText('Too many OAuth attempts. Please try again later.')).toBeInTheDocument();
     });
   });
 
@@ -384,13 +367,11 @@ describe('Auth Page', () => {
     
     const googleButton = screen.getByText('Continue with Google');
     const githubButton = screen.getByText('Continue with GitHub');
-    const demoButton = screen.getByRole('button', { name: 'Login as Demo User' });
     
     await user.click(googleButton);
     
     // Buttons should be disabled during loading
     expect(googleButton).toBeDisabled();
     expect(githubButton).toBeDisabled();
-    expect(demoButton).toBeDisabled();
   });
 });

@@ -7,7 +7,6 @@
 ### ✅ **Database Migration Failures**
 - Missing table creation (user_profiles, community_users, companies)
 - Invalid role constraints preventing super_admin assignment
-- Failed demo account creation
 
 ### ✅ **Row Level Security (RLS) Issues**  
 - 30 security violations resolved
@@ -15,7 +14,6 @@
 - Comprehensive security policies implemented
 
 ### ✅ **Authentication Issues**
-- Demo account creation via proper Supabase Auth API
 - Admin role assignments with proper constraints
 - Secure function implementations
 
@@ -42,50 +40,6 @@ backend-services/shared/database-schema/migrations/20250723000002_complete_migra
 - ✅ Sets up demo company data
 - ✅ Fixes admin account roles (if accounts exist in auth.users)
 
-### **Step 2: Create Demo User Account**
-
-After the migration succeeds, run this in Lovable console:
-
-```javascript
-// Load the setup script
-const script = document.createElement('script');
-script.src = '/scripts/lovable-demo-user-setup.js';
-document.head.appendChild(script);
-
-// Wait for script to load, then run
-setTimeout(async () => {
-  // Check migration status first
-  const status = await checkMigrationStatus();
-  console.log('Migration Status:', status);
-  
-  // If all OK, create demo user
-  if (status.success) {
-    const result = await setupDemoUser();
-    console.log('Demo User Setup Result:', result);
-  }
-}, 1000);
-```
-
-**Or use the simpler approach:**
-```javascript
-// Direct demo user creation
-const { data, error } = await supabase.auth.admin.createUser({
-  email: 'demo@gocarbontracker.com',
-  password: 'DemoAccess2024',
-  email_confirm: true,
-  user_metadata: {
-    role: 'analyst',
-    is_demo: true,
-    full_name: 'Demo User - Platform Access'
-  }
-});
-
-// Then setup profile
-if (!error) {
-  await supabase.rpc('setup_demo_user', { demo_user_id: data.user.id });
-}
-```
-
 ## 📋 Verification Checklist
 
 After running the fixes, verify these work:
@@ -95,11 +49,6 @@ After running the fixes, verify these work:
 SELECT * FROM public.migration_status;
 ```
 All components should show "OK" status.
-
-### **✅ Demo Login Test**
-- Go to login page
-- Click "Login as Demo User" button
-- Should successfully log in with `demo@gocarbontracker.com`
 
 ### **✅ Admin Account Test**
 - Login with `varunmoka7@gmail.com` or `varunmoka28@gmail.com`
@@ -122,14 +71,12 @@ AND tablename IN ('user_profiles', 'companies', 'community_users');
 
 ### **Before Fix:**
 - ❌ 30 RLS security violations
-- ❌ Demo login fails with "Invalid credentials"
 - ❌ Admin accounts have `user` role instead of `super_admin`
 - ❌ Missing table constraints
 - ❌ RLS disabled on critical tables
 
 ### **After Fix:**
 - ✅ Zero security violations
-- ✅ Demo login works: `demo@gocarbontracker.com` / `DemoAccess2024`
 - ✅ Admin accounts have `super_admin` role
 - ✅ All tables have proper constraints
 - ✅ RLS enabled with comprehensive policies
@@ -137,10 +84,9 @@ AND tablename IN ('user_profiles', 'companies', 'community_users');
 
 ## 🚨 Important Notes
 
-1. **Run migration first** - The complete repair migration must be executed before demo user creation
+1. **Run migration first** - The complete repair migration must be executed.
 2. **Check migration status** - Use the migration_status view to verify all components are "OK"
-3. **Demo user creation** - Must be done via Supabase Auth API, not direct SQL
-4. **Admin accounts** - Will be automatically upgraded if they exist in auth.users
+3. **Admin accounts** - Will be automatically upgraded if they exist in auth.users
 
 ## 🔍 Troubleshooting
 
@@ -148,11 +94,6 @@ AND tablename IN ('user_profiles', 'companies', 'community_users');
 - Check Supabase logs for specific error details
 - Ensure you have proper permissions to create tables and functions
 - Try running sections of the migration individually
-
-### **If demo user creation fails:**
-- Verify the migration completed successfully first
-- Check if user already exists: `SELECT * FROM auth.users WHERE email = 'demo@gocarbontracker.com'`
-- Use the setup script with proper error handling
 
 ### **If admin roles don't update:**
 - Check if admin accounts exist in auth.users

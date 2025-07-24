@@ -6,7 +6,135 @@ This document serves as the detailed technical blueprint for implementing the fe
 ## 2. Database Schema Design
 *This schema will be implemented in Supabase (PostgreSQL).*
 
-#### **Community Forum – Professional Community Platform Schema (Epic 4)**
+### **Epic 2: Carbon Tracking & Public Platform + Real Data Integration Schema**
+```sql
+-- Core company and emissions data schema for 100k+ companies
+CREATE TABLE companies (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    name TEXT NOT NULL,
+    ticker_symbol TEXT,
+    isin TEXT,
+    sector_id UUID REFERENCES sectors(id),
+    industry_id UUID REFERENCES industries(id),
+    country TEXT,
+    market_cap BIGINT,
+    employee_count INTEGER,
+    founded_year INTEGER,
+    website TEXT,
+    description TEXT,
+    is_active BOOLEAN DEFAULT true
+);
+
+CREATE TABLE sectors (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL UNIQUE,
+    code TEXT UNIQUE,
+    description TEXT
+);
+
+CREATE TABLE industries (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    sector_id UUID REFERENCES sectors(id),
+    name TEXT NOT NULL,
+    code TEXT UNIQUE,
+    description TEXT
+);
+
+CREATE TABLE emissions_data (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    company_id UUID NOT NULL REFERENCES companies(id),
+    reporting_period DATE NOT NULL,
+    scope_1_emissions DECIMAL(15,2),
+    scope_2_emissions DECIMAL(15,2),
+    scope_3_emissions DECIMAL(15,2),
+    total_emissions DECIMAL(15,2),
+    emissions_intensity DECIMAL(15,2),
+    data_source_id UUID REFERENCES data_sources(id),
+    quality_score DECIMAL(3,2),
+    verification_status TEXT CHECK (verification_status IN ('verified', 'reported', 'estimated')),
+    currency TEXT DEFAULT 'USD',
+    revenue DECIMAL(15,2),
+    units TEXT DEFAULT 'tCO2e'
+);
+
+CREATE TABLE data_sources (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    type TEXT CHECK (type IN ('api', 'csv', 'manual', 'partnership')),
+    endpoint_url TEXT,
+    api_key_hash TEXT,
+    last_sync TIMESTAMPTZ,
+    is_active BOOLEAN DEFAULT true,
+    priority INTEGER DEFAULT 0,
+    credibility_score DECIMAL(3,2)
+);
+
+CREATE TABLE esg_metrics (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    company_id UUID NOT NULL REFERENCES companies(id),
+    reporting_period DATE NOT NULL,
+    metric_type TEXT NOT NULL,
+    metric_value DECIMAL(15,2),
+    metric_unit TEXT,
+    data_source_id UUID REFERENCES data_sources(id),
+    quality_score DECIMAL(3,2)
+);
+
+-- Performance optimization indexes
+CREATE INDEX idx_companies_sector_industry ON companies(sector_id, industry_id);
+CREATE INDEX idx_emissions_company_period ON emissions_data(company_id, reporting_period);
+CREATE INDEX idx_emissions_total_desc ON emissions_data(total_emissions DESC);
+CREATE INDEX idx_esg_metrics_company_type ON esg_metrics(company_id, metric_type);
+
+-- Materialized views for performance
+CREATE MATERIALIZED VIEW industry_benchmarks AS
+SELECT 
+    i.id as industry_id,
+    i.name as industry_name,
+    s.name as sector_name,
+    COUNT(DISTINCT e.company_id) as company_count,
+    AVG(e.total_emissions) as avg_emissions,
+    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY e.total_emissions) as median_emissions,
+    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY e.total_emissions) as q1_emissions,
+    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY e.total_emissions) as q3_emissions
+FROM industries i
+JOIN sectors s ON i.sector_id = s.id
+JOIN companies c ON c.industry_id = i.id
+JOIN emissions_data e ON e.company_id = c.id
+WHERE e.reporting_period >= DATE_TRUNC('year', NOW() - INTERVAL '2 years')
+GROUP BY i.id, i.name, s.name;
+
+-- Data import and quality monitoring tables
+CREATE TABLE import_jobs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    data_source_id UUID REFERENCES data_sources(id),
+    status TEXT CHECK (status IN ('pending', 'processing', 'completed', 'failed')),
+    total_records INTEGER,
+    processed_records INTEGER DEFAULT 0,
+    failed_records INTEGER DEFAULT 0,
+    error_log JSONB,
+    started_at TIMESTAMPTZ,
+    completed_at TIMESTAMPTZ
+);
+
+CREATE TABLE data_quality_metrics (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    data_source_id UUID REFERENCES data_sources(id),
+    completeness_score DECIMAL(3,2),
+    accuracy_score DECIMAL(3,2),
+    freshness_score DECIMAL(3,2),
+    consistency_score DECIMAL(3,2),
+    overall_score DECIMAL(3,2),
+    anomaly_count INTEGER DEFAULT 0,
+    records_validated INTEGER
+);
+```
+
+### **Epic 4: Community Forum – Professional Community Platform Schema**
 ```sql
 CREATE TABLE forum_topics (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -34,7 +162,48 @@ CREATE TABLE forum_upvotes (
 );
 ```
 
-## 3. Epic 4: Community Forum – Professional Community Platform Advanced Features Architecture
+## 3. Epic 2: Carbon Tracking Platform Advanced Features Architecture
+
+### **Enterprise Data Management (Stories 2.9-2.12)**
+**Backend Strategy:**
+- **Import Pipeline**: ETL system with validation, transformation, and batch processing
+- **Quality Monitoring**: Real-time data quality metrics with automated anomaly detection
+- **Source Management**: Unified API connector framework for enterprise data providers
+- **Lineage Tracking**: Complete data provenance with audit trails and compliance features
+
+**Frontend Strategy:**
+- **Admin Dashboard**: Enterprise-scale data management interface with progress tracking
+- **Quality Monitoring**: Real-time dashboards with alerts and performance metrics
+- **Source Configuration**: Visual interface for API connections and data source management
+- **Transparency UI**: User-facing data attribution with source credibility indicators
+
+### **Performance & Scalability Architecture**
+**Database Optimization:**
+- **Partitioning**: Time-based partitioning for emissions_data and esg_metrics tables
+- **Materialized Views**: Pre-aggregated industry benchmarks and sector statistics
+- **Connection Pooling**: Supabase connection optimization for 100k+ company queries
+- **Caching Strategy**: Redis integration for frequently accessed aggregations
+
+**API Performance:**
+- **GraphQL**: Complex queries with DataLoader for N+1 prevention
+- **Rate Limiting**: Enterprise-grade throttling with tiered access levels
+- **Pagination**: Cursor-based pagination for large datasets
+- **Real-time Updates**: WebSocket/SSE for dashboard auto-refresh
+
+### **Data Integration & API Ecosystem**
+**Enterprise API Framework:**
+- **RESTful Design**: Consistent endpoint patterns with comprehensive OpenAPI documentation
+- **Authentication**: Enterprise SSO integration with role-based access control
+- **Webhook System**: Event-driven updates for external system integration
+- **SDK Generation**: Auto-generated SDKs for popular programming languages
+
+**External Integrations:**
+- **Bloomberg ESG**: API connector for financial and ESG data
+- **Refinitiv**: Market data and sustainability metrics integration
+- **MSCI**: ESG ratings and climate risk data
+- **Government APIs**: EPA, EU Taxonomy, and regulatory data sources
+
+## 4. Epic 4: Community Forum Advanced Features Architecture
 
 ### **Story 4.6: Advanced Search & Discovery**
 **Backend Strategy:**
@@ -119,21 +288,48 @@ CREATE TABLE forum_upvotes (
 - **High Contrast Mode**: Alternative color schemes for visual accessibility
 - **Reduced Motion**: Respect prefers-reduced-motion for animations
 
-## 4. Technical Implementation Strategy
+## 5. Technical Implementation Strategy
 
-### **Database Performance Optimization**
+### **Epic 2: Carbon Platform Implementation**
+
+#### **Data Architecture Strategy**
+- **Schema Design**: Hierarchical company → industry → sector structure for optimal query performance
+- **Data Validation**: Multi-stage validation pipeline with quality scoring and anomaly detection
+- **Import Framework**: Pluggable ETL system supporting CSV, API, and real-time data sources
+- **Performance Monitoring**: Continuous query optimization with automated index management
+
+#### **Frontend Architecture Strategy**
+- **Component Hierarchy**: Reusable ESG visualization components with consistent design system
+- **State Management**: Zustand for admin state, React Query for data fetching and caching
+- **Real-time Updates**: WebSocket integration with optimistic UI updates
+- **Performance**: Virtualization for large datasets, lazy loading for dashboard components
+
+#### **Security & Compliance Framework**
+- **Data Protection**: Row-level security with enterprise data isolation
+- **API Security**: OAuth 2.0 with scope-based permissions and rate limiting
+- **Audit Logging**: Comprehensive activity tracking for compliance requirements
+- **Data Lineage**: Complete provenance tracking for regulatory reporting
+
+## 6. Epic 4: Forum Implementation Strategy
+
+### **Carbon Platform Performance Optimization**
+- **Database Strategy**: Partitioned tables, materialized views, composite indexes for 100k+ companies
+- **Caching Architecture**: Multi-layer caching with Redis for aggregations and Supabase connection pooling
+- **API Optimization**: GraphQL with DataLoader, cursor-based pagination, response compression
+
+### **Forum Performance Optimization**
 - **Indexing Strategy**: Composite indexes for search queries, user activity, and content discovery
-- **Caching Layer**: Redis integration for frequently accessed data
+- **Caching Layer**: Redis integration for frequently accessed forum data
 - **Database Partitioning**: Time-based partitioning for analytics tables
 
-### **API Design Patterns**
-- **RESTful Endpoints**: Consistent naming and HTTP method usage
-- **GraphQL Integration**: Consider for complex data fetching scenarios
-- **Rate Limiting**: User-based and endpoint-specific limits
+### **Unified API Design Patterns**
+- **RESTful Endpoints**: Consistent naming and HTTP method usage across carbon and forum APIs
+- **GraphQL Integration**: Complex data fetching for carbon analytics and forum relationships
+- **Rate Limiting**: Tiered limits for enterprise carbon data access and forum usage
 - **API Versioning**: Header-based versioning for backward compatibility
 
-### **Frontend Architecture**
-- **Component Library**: Reusable UI components with Storybook documentation
-- **State Management**: Zustand for global state, React Query for server state
-- **Code Splitting**: Route-based and component-based lazy loading
+### **Integrated Frontend Architecture**
+- **Component Library**: Shared UI components for carbon visualizations and forum interface
+- **State Management**: Zustand for global state, React Query for carbon data and forum content
+- **Code Splitting**: Route-based lazy loading for carbon dashboards and forum features
 - **Testing Strategy**: Unit tests (Jest), integration tests (Testing Library), E2E (Playwright)

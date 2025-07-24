@@ -57,85 +57,135 @@ This document outlines the requirements for enhancing the GoCarbonTracker platfo
         3.  Tables for `public_company_profiles`, `public_emissions_data`, and `industry_benchmarks` are created.
         4.  All necessary relationships, foreign keys, and initial RLS policies are configured.
 
-### Epic 2: Carbon Tracker
-*Goal: To implement a unified Tracker Page with two distinct modes: a "Private Tracking" view for personal data management and a "Public Data" view for open-access exploration.*
+### Epic 2: Carbon Tracking & Public Platform + Real Data Integration
+*Goal: To build a comprehensive enterprise-scale carbon data platform with 100k company support, admin-controlled data management, and real-time user dashboard experience.*
 
-* **Story 2.1: Implement Dual-View Tracker Page**
-    * As a user, I want a unified Tracker Page with a clear way to switch between a "Public Data" view and my "Private Tracking" view, so that I can explore all data and also manage my own.
+#### **Foundation Stories (2.1-2.8) - Public Platform Infrastructure**
+
+* **Story 2.1: Core Carbon Data Schema & Database Setup**
+    * As a Platform Developer, I want a comprehensive database schema for carbon emissions and ESG data with proper indexing and relationships, so that the platform can efficiently store, query, and analyze emissions data for 100k+ companies while maintaining data integrity and performance.
     * **AC:**
-        1.  The Tracker Page has a UI control (tabs/toggle) to select "Public Data" or "Private Tracking".
-        2.  The "Public Data" view is the default.
-        3.  Components displayed change dynamically based on the selected view.
+        1.  Complete database schema supporting 100k+ companies with Company → Industry → Sector hierarchy.
+        2.  Scope 1, 2, 3 emissions tables with time-series data and data source attribution.
+        3.  Performance optimization with partitioned tables, materialized views, and optimized indexes.
+        4.  Security implementation with RLS policies and data encryption.
 
-* **Story 2.2: Manage Private Emission Records**
-    * As a logged-in user, I want a table in my "Private Tracking" view to see, add, edit, and delete my own emission records, so that I can manage my data accurately.
+* **Story 2.2: Public Carbon Dashboard Interface**
+    * As a user, I want an intuitive dashboard to explore global carbon emissions data with real-time updates, so that I can monitor climate progress and company performance.
     * **AC:**
-        1.  The "Private Tracking" view contains a data table displaying only the records associated with the user.
-        2.  An "Add New Record" feature is available.
-        3.  Each record has "Edit" and "Delete" actions.
-        4.  The backend logic is updated to support a secure delete function.
+        1.  Global emissions overview with real-time counters and trend visualizations.
+        2.  Interactive filtering by industry, geography, company size, and time period.
+        3.  Mobile-responsive design with accessibility compliance (WCAG 2.1 AA).
+        4.  Integration with existing React + TypeScript architecture.
 
-* **Story 2.3: Explore Public Emission Records**
-    * As a user, I want to see a filterable table of all public emission records in the "Public Data" view, so that I can analyze the entire dataset.
+* **Story 2.3: Company Search & Discovery System**
+    * As a user, I want to easily find and discover companies through advanced search and intelligent recommendations, so that I can quickly access relevant climate data.
     * **AC:**
-        1.  The "Public Data" view displays a table of all publicly available emission records.
-        2.  The table is filterable by company, date, and emission scope.
+        1.  Advanced search with autocomplete, fuzzy matching, and real-time suggestions.
+        2.  Multi-faceted filtering by industry, location, ESG performance, and company attributes.
+        3.  AI-powered discovery features with "companies like this" recommendations.
+        4.  Search analytics and performance optimization for enterprise scale.
 
-* **Story 2.4: Visualize Emission Trends (for Both Views)**
-    * As a user, I want to see charts that visualize the emission data, so that I can identify trends in both the public dataset and my own private data.
+* **Story 2.4: Industry & Sector Aggregation Views**
+    * As a user, I want to explore emissions data through industry and sector groupings with benchmarking capabilities, so that I can understand relative performance and industry trends.
     * **AC:**
-        1.  Charts update dynamically based on the selected view (Public/Private).
-        2.  Charts show aggregated data for the selected view.
-        3.  Charts respect any active filters applied to the data tables.
+        1.  Hierarchical navigation supporting GICS, NAICS, and custom sector classifications.
+        2.  Real-time aggregation engine with statistical analysis and confidence intervals.
+        3.  Benchmarking tools with peer group analysis and trend identification.
+        4.  Export functionality for reports and presentations.
 
-* **Story 2.5: Bulk Import Private Emission Records via CSV**
-    * As a logged-in user, I want to upload a CSV file in my "Private Tracking" view, so that I can efficiently import my own emission records.
+* **Story 2.5: Basic ESG Metrics Visualization**
+    * As a user, I want comprehensive ESG data visualization tools to analyze environmental, social, and governance metrics, so that I can make informed decisions based on multiple sustainability indicators.
     * **AC:**
-        1.  The "Private Tracking" view includes a "Bulk Import" feature.
-        2.  A downloadable CSV template is provided.
-        3.  The UI parses and validates the CSV, providing clear error feedback.
-        4.  Valid records are sent to the backend for secure insertion.
+        1.  Interactive charts using Recharts with drill-down capabilities.
+        2.  ESG correlation analysis with financial performance metrics.
+        3.  Progress tracking for science-based targets and climate commitments.
+        4.  Data quality integration with visual indicators and confidence scores.
 
-* **Story 2.6: Display Targets and Progress**
-    * As a user, I want to see climate targets and progress against them, so that I can assess performance in both the Public and Private views.
+* **Story 2.6: Benchmarking & Comparison Tools**
+    * As a user, I want to compare multiple companies and analyze peer groups, so that I can benchmark performance and identify best practices.
     * **AC:**
-        1.  The UI includes a component for displaying targets and progress.
-        2.  The component shows data relevant to the active view (public company or private user).
-        3.  Progress bars or charts are used to visualize progress.
+        1.  Multi-company comparison interface supporting up to 10 companies simultaneously.
+        2.  Intelligent peer group generation with statistical significance testing.
+        3.  Advanced analytics including risk-adjusted metrics and correlation analysis.
+        4.  Collaboration features with sharing, export, and presentation tools.
 
-* **Story 2.7: Display Data Quality and Validation Status**
-    * As a user, I want to see the quality score and validation status for emission records, so that I can assess the reliability of the data.
+* **Story 2.7: Real-time Dashboard Auto-refresh System**
+    * As a user, I want the dashboard to automatically update with the latest data, so that I always have access to current information without manual refresh.
     * **AC:**
-        1.  Data tables in both views include a "Data Quality Score" column.
-        2.  Filtering by quality score is supported.
-        3.  Record details show validation status and data source.
+        1.  WebSocket and Server-Sent Events implementation for real-time updates.
+        2.  Intelligent change detection with incremental loading and performance optimization.
+        3.  Offline mode support with connection status indicators.
+        4.  Administrative controls for update frequency and system monitoring.
 
-### Epic 3: Public Platform & Company Benchmarking
-*Goal: To build the public-facing "Platform Page," focusing on company profiles, comparative data, and industry benchmarks.*
-
-* **Story 3.1: Display Company Profiles List**
-    * As a user, I want to see a searchable and filterable list of all company profiles, so that I can discover and select companies for detailed analysis.
+* **Story 2.8: Public API Foundation for Data Access**
+    * As a developer/enterprise user, I want comprehensive API access to carbon and ESG data, so that I can integrate climate data into external systems and applications.
     * **AC:**
-        1.  A "Platform" page displays all companies in a grid/list.
-        2.  Each item shows Company Name, Industry, and Location.
-        3.  The page includes search and filter controls.
-        4.  Clicking a company navigates to its detailed dashboard.
+        1.  RESTful API with comprehensive endpoint coverage and consistent design patterns.
+        2.  GraphQL integration with real-time subscriptions and complex query support.
+        3.  Authentication, rate limiting, and tiered access with enterprise features.
+        4.  Interactive documentation, SDK generation, and performance optimization.
 
-* **Story 3.2: View Detailed Company Dashboard**
-    * As a user, I want to view a detailed dashboard for a specific company, so that I can analyze its emissions data, targets, and compliance status in one place.
-    * **AC:**
-        1.  A dedicated page displays a single company's profile.
-        2.  The page shows detailed emissions data, climate targets, and compliance badges.
-        3.  Relevant financial/operational data is included for context.
-        4.  All data is fetched from Supabase.
+#### **Enterprise Management Stories (2.9-2.12) - Admin Data Platform**
 
-* **Story 3.3: Benchmark Company Performance Against Industry Averages**
-    * As a user, I want to compare a company's emissions data against industry benchmarks, so that I can understand its performance relative to its peers.
+* **Story 2.9: Enterprise Data Import Management System**
+    * As an admin, I want to efficiently import large-scale carbon emissions and ESG datasets into the platform, so that users can access comprehensive, up-to-date insights.
     * **AC:**
-        1.  The company dashboard includes a "Benchmarking" section.
-        2.  Charts compare the company's key metrics against its industry average.
-        3.  "Best-in-class" metrics are displayed as a performance target.
-        4.  Benchmark data is fetched from the `industry_benchmarks` table.
+        1.  Admin-only interface for enterprise-scale data management (millions of records).
+        2.  Multiple data source support (CSV uploads, API integrations, data partnerships).
+        3.  Batch processing with progress tracking, validation pipelines, and error handling.
+        4.  Security framework with audit trails and data governance controls.
+
+* **Story 2.10: Real-time Data Quality & Monitoring Dashboard**
+    * As an admin, I want to monitor data quality, import status, and system health, so that users always have access to reliable carbon/ESG insights.
+    * **AC:**
+        1.  Real-time monitoring of data pipelines with enterprise quality metrics.
+        2.  Alert system for data anomalies, failed imports, and quality threshold breaches.
+        3.  Performance metrics dashboard with query optimization and system health indicators.
+        4.  Compliance reporting with data accuracy and completeness tracking.
+
+* **Story 2.11: Unified Data Source Management Interface**
+    * As an admin, I want to manage all data sources from a single interface, so that the platform remains scalable and maintainable.
+    * **AC:**
+        1.  API connection management for enterprise data providers (Bloomberg, Refinitiv, MSCI).
+        2.  Scheduling and automation for regular data updates with conflict resolution.
+        3.  Data source prioritization with integration to forum and benchmarking features.
+        4.  Health monitoring and performance optimization for all data connections.
+
+* **Story 2.12: Comprehensive Data Attribution & Lineage System**
+    * As a user, I want to understand the source and reliability of carbon/ESG data, so that I can make informed decisions based on transparent information.
+    * **AC:**
+        1.  Enterprise-grade data lineage tracking with complete audit trails.
+        2.  Source attribution visible in all dashboard insights with credibility scoring.
+        3.  Data freshness indicators and integration with forum discussions.
+        4.  Regulatory compliance features for ESG reporting requirements.
+
+### Epic 3: Personal Carbon Management 🔄 **FUTURE PLAN**
+*Goal: Private carbon tracking capabilities for individual users and organizations (moved from Epic 2 focus)*
+
+* **Story 3.1: Private Data Management Interface**
+    * As a logged-in user, I want to manage my organization's private carbon data, so that I can track internal progress while benefiting from public benchmarking.
+    * **AC:**
+        1.  Secure private data storage with user isolation and organization-level access.
+        2.  Unified interface combining private data management with public insights.
+        3.  Data privacy controls with granular permission management.
+        4.  Integration with public benchmarking for contextual analysis.
+
+* **Story 3.2: Dual-View Tracker Interface (Public/Private)**
+    * As a user, I want seamless switching between public platform data and private organizational data, so that I can leverage both datasets effectively.
+    * **AC:**
+        1.  Toggle interface between public platform and private tracking modes.
+        2.  Consistent user experience across both data views.
+        3.  Context-aware features that respect data privacy boundaries.
+        4.  Unified search and filtering across appropriate data scopes.
+
+* **Story 3.3: Private Analytics and Reporting**
+    * As an organization user, I want comprehensive analytics on private data with public context, so that I can generate insights for internal and external reporting.
+    * **AC:**
+        1.  Private analytics dashboard with organization-specific metrics.
+        2.  Custom reporting capabilities with white-label options.
+        3.  Data export functionality for compliance and external reporting.
+        4.  Integration with public benchmarking for competitive analysis.
 
 ### Epic 4: Community Forum – Reddit-style Discussion Forum ✅ COMPLETE
 *Goal: Successfully refactored the existing community platform into a simpler, Reddit-style discussion forum focused on core MVP functionality and user engagement.*

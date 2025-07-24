@@ -250,20 +250,8 @@ describe('Auth Component', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Continue with GitHub/i }));
 
-    await waitFor(() => {
+    """    await waitFor(() => {
       expect(mockSignInWithGitHub).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  // Test Case 13: Handles Demo Sign In
-  test('handles Demo Sign In', async () => {
-    mockSignIn.mockResolvedValueOnce({ error: null });
-    renderAuthComponent();
-
-    fireEvent.click(screen.getByRole('button', { name: /Login as Demo User/i }));
-
-    await waitFor(() => {
-      expect(mockSignIn).toHaveBeenCalledWith('demo@gocarbontracker.net', 'demodemo');
     });
   });
 
@@ -282,7 +270,7 @@ describe('Auth Component', () => {
     );
 
     expect(screen.getByText(message)).toBeInTheDocument();
-  });
+  });"""
 
   // Test Case 15: Displays email verification success toast
   test('displays email verification success toast', async () => {

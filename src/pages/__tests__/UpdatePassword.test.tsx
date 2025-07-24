@@ -157,7 +157,7 @@ describe('UpdatePassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/please fill in all required fields/i)).toBeInTheDocument();
+      expect(screen.getByText('Please fill in all required fields')).toBeInTheDocument();
     });
 
     expect(mockUpdateUserPassword).not.toHaveBeenCalled();
@@ -183,7 +183,7 @@ describe('UpdatePassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/password must be at least 8 characters/i)).toBeInTheDocument();
+      expect(screen.getByRole('alert')).toHaveTextContent('Password must be at least 8 characters with uppercase, lowercase, number and special character');
     });
 
     expect(mockUpdateUserPassword).not.toHaveBeenCalled();
@@ -208,7 +208,7 @@ describe('UpdatePassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/passwords do not match/i)).toBeInTheDocument();
+      expect(screen.getByRole('alert')).toHaveTextContent('Passwords do not match');
     });
 
     expect(mockUpdateUserPassword).not.toHaveBeenCalled();
@@ -402,7 +402,8 @@ describe('UpdatePassword', () => {
 
     expect(passwordInput).toHaveAttribute('type', 'text');
 
-    await user.click(toggleButton);
+    const hideButton = screen.getByRole('button', { name: 'Hide password' });
+    await user.click(hideButton);
 
     expect(passwordInput).toHaveAttribute('type', 'password');
   });
@@ -438,7 +439,7 @@ describe('UpdatePassword', () => {
     await user.type(confirmPasswordInput, 'DifferentPassword');
 
     await waitFor(() => {
-      expect(screen.getByText(/passwords do not match/i)).toBeInTheDocument();
+      expect(screen.getByRole('alert')).toHaveTextContent('Passwords do not match');
     });
   });
 
@@ -458,14 +459,14 @@ describe('UpdatePassword', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/please fill in all required fields/i)).toBeInTheDocument();
+      expect(screen.getByText('Please fill in all required fields')).toBeInTheDocument();
     });
 
     // Start typing to clear error
     await user.type(passwordInput, 'P');
 
     await waitFor(() => {
-      expect(screen.queryByText(/please fill in all required fields/i)).not.toBeInTheDocument();
+      expect(screen.queryByText('Please fill in all required fields')).not.toBeInTheDocument();
     });
   });
 });
