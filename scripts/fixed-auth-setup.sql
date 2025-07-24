@@ -239,57 +239,57 @@ CREATE TRIGGER update_profiles_updated_at
     BEFORE UPDATE ON public.profiles 
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Step 11: Final verification and status check
-SELECT 'AUTHENTICATION SYSTEM SETUP COMPLETE!' as status;
+-- Step 11: Final verification and status check (These queries should be run separately after the main migration)
+-- SELECT 'AUTHENTICATION SYSTEM SETUP COMPLETE!' as status
 
 -- Detailed system check
-SELECT 
-    'Table Status' as check_type,
-    tablename as name,
-    CASE WHEN rowsecurity THEN 'RLS Enabled' ELSE 'RLS Disabled' END as status
-FROM pg_tables 
-WHERE tablename IN ('profiles', 'companies') 
-AND schemaname = 'public'
+-- SELECT 
+--     'Table Status' as check_type,
+--     tablename as name,
+--     CASE WHEN rowsecurity THEN 'RLS Enabled' ELSE 'RLS Disabled' END as status
+-- FROM pg_tables 
+-- WHERE tablename IN ('profiles', 'companies') 
+-- AND schemaname = 'public'
 
-UNION ALL
+-- UNION ALL
 
--- Check triggers exist and are enabled
-SELECT 
-    'Trigger Status' as check_type,
-    tgname as name,
-    CASE WHEN tgenabled = 'O' THEN 'Enabled' ELSE 'Disabled' END as status
-FROM pg_trigger 
-WHERE tgname IN ('on_auth_user_created', 'on_auth_user_email_verified')
+-- -- Check triggers exist and are enabled
+-- SELECT 
+--     'Trigger Status' as check_type,
+--     tgname as name,
+--     CASE WHEN tgenabled = 'O' THEN 'Enabled' ELSE 'Disabled' END as status
+-- FROM pg_trigger 
+-- WHERE tgname IN ('on_auth_user_created', 'on_auth_user_email_verified')
 
-UNION ALL
+-- UNION ALL
 
--- Check policies exist
-SELECT 
-    'Policy Status' as check_type,
-    policyname as name,
-    'Active' as status
-FROM pg_policies 
-WHERE tablename = 'profiles' 
-AND policyname LIKE '%own profile%'
-LIMIT 3
+-- -- Check policies exist
+-- SELECT 
+--     'Policy Status' as check_type,
+--     policyname as name,
+--     'Active' as status
+-- FROM pg_policies 
+-- WHERE tablename = 'profiles' 
+-- AND policyname LIKE '%own profile%'
+-- LIMIT 3
 
-UNION ALL
+-- UNION ALL
 
--- Check user counts
-SELECT 
-    'User Count' as check_type,
-    'Auth Users' as name,
-    COUNT(*)::text as status
-FROM auth.users
+-- -- Check user counts
+-- SELECT 
+--     'User Count' as check_type,
+--     'Auth Users' as name,
+--     COUNT(*)::text as status
+-- FROM auth.users
 
-UNION ALL
+-- UNION ALL
 
-SELECT 
-    'User Count' as check_type,
-    'Profile Records' as name,
-    COUNT(*)::text as status
-FROM public.profiles;
+-- SELECT 
+--     'User Count' as check_type,
+--     'Profile Records' as name,
+--     COUNT(*)::text as status
+-- FROM public.profiles;
 
--- Final success message
-SELECT 'SUCCESS: Users can now register with email verification!' as final_message;
-SELECT 'Next step: Test the signup flow on your website' as next_step;
+-- -- Final success message
+-- SELECT 'SUCCESS: Users can now register with email verification!' as final_message;
+-- SELECT 'Next step: Test the signup flow on your website' as next_step;
