@@ -170,19 +170,39 @@ const Auth = () => {
     
     try {
       if (isSignUp) {
-        const { error } = await signUp(formData.email, formData.password, formData.username);
+        const result = await signUp(formData.email, formData.password, formData.username);
         
-        if (error) {
-          setError(error.message || 'An error occurred during sign up. Please try again.');
+        if (result.error) {
+          setError(result.error.message || 'An error occurred during sign up. Please try again.');
+        } else if (result.requiresVerification) {
+          // Email verification required
+          toast({
+            title: "Registration Successful!",
+            description: result.message || "Please check your email and click the verification link to complete registration.",
+          });
+          setError(''); // Clear any previous errors
+          // Clear form data
+          setFormData({
+            emailOrUsername: '',
+            email: '',
+            username: '',
+            password: '',
+            confirmPassword: ''
+          });
+          setIsSignUp(false); // Switch to sign-in view
+          
+          // Show success message on the form
+          setError('Registration successful! Please check your email for a verification link.');
         } else {
+          // Immediate success (no verification required)
           const intendedDestination = location.state?.from === '/community' ? 'community' : 'dashboard';
           toast({
             title: "Account Created Successfully",
             description: `Welcome to GoCarbonTracker! Redirecting to ${intendedDestination}...`,
           });
           setError(''); // Clear any previous errors
-          // Display a success message on the form itself
-          setFormData({ // Clear form data
+          // Clear form data
+          setFormData({
             emailOrUsername: '',
             email: '',
             username: '',
@@ -191,7 +211,6 @@ const Auth = () => {
           });
           setIsSignUp(false); // Switch to sign-in view
           // The redirect will happen automatically via the useEffect when user state updates
-          // This covers AC5: automatic login and redirect after successful registration
         }
       } else if (isForgotPassword) {
         const { error } = await resetPassword(formData.email);

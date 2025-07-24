@@ -157,8 +157,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: { message: usernameValidation.message } };
       }
 
-      const redirectUrl = `${window.location.origin}/auth`;
+      // Use the current origin for email redirect
+      const redirectUrl = `${window.location.origin}/auth?verified=true`;
       
+      console.log('Attempting signup with email verification...');
       const { data, error } = await supabase.auth.signUp({
         email: sanitizedEmail,
         password,
@@ -166,7 +168,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           emailRedirectTo: redirectUrl,
           data: {
             username: sanitizedUsername,
-            display_name: sanitizedUsername
+            display_name: sanitizedUsername,
+            full_name: sanitizedUsername
           }
         }
       });
@@ -174,9 +177,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) {
         console.error('Signup error:', error);
         if (error.message.includes('User already registered')) {
-          return { error: { message: 'An account with this email may already exist. Please try signing in instead.' } };
+          return { error: { message: 'An account with this email already exists. Please try signing in instead.' } };
         }
-        return { error: { message: 'Unable to create account. Please try again.' } };
+        if (error.message.includes('email rate limit')) {
+          return { error: { message: 'Too many emails sent. Please wait a few minutes before trying again.' } };
+        }
+        return { error: { message: error.message || 'Unable to create account. Please try again.' } };
+      }
+
+      console.log('Signup response:', { 
+        user: data.user ? 'User created' : 'No user', 
+        session: data.session ? 'Session active' : 'No session',
+        emailConfirmed: data.user?.email_confirmed_at ? 'Email confirmed' : 'Email verification required'
+      });
+
+      // Check if email verification is required
+      if (data.user && !data.user.email_confirmed_at) {
+        console.log('Email verification required for:', sanitizedEmail);
+        return { 
+          error: null, 
+          requiresVerification: true,
+          message: 'Please check your email and click the verification link to complete registration.'
+        };
       }
 
       // If user is immediately confirmed (no email verification required)
@@ -184,12 +206,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('User confirmed immediately, auto-login successful');
         setUser(data.user);
         setSession(data.session);
+        return { error: null, requiresVerification: false };
+      }
+
+      // Handle case where user exists but needs verification
+      if (data.user && !data.session) {
+        return { 
+          error: null, 
+          requiresVerification: true,
+          message: 'Please check your email and click the verification link to complete registration.'
+        };
       }
 
       return { error: null };
     } catch (error) {
       console.error('Unexpected signup error:', error);
-      return { error: { message: 'An unexpected error occurred during signup' } };
+      return { error: { message: 'An unexpected error occurred during signup. Please try again.' } };
     } finally {
       setLoading(false);
     }
@@ -240,7 +272,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       
       const { data: profile, error: lookupError } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .select('email')
         .eq('username', cleanUsername)
         .maybeSingle();
