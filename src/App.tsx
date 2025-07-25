@@ -10,6 +10,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
+import DemoAwareRoute from "./components/DemoAwareRoute";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -95,18 +96,18 @@ const App = () => {
                       </PrivateRoute>
                     } />
                     <Route path="/home" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Home />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/dashboard" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Dashboard />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/tracking" element={
                       <PrivateRoute>
@@ -121,25 +122,25 @@ const App = () => {
                       </PrivateRoute>
                     } />
                     <Route path="/scope1" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Scope1 />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/scope2" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Scope2 />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/scope3" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Scope3 />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/decarbonization" element={
                       <PrivateRoute>
