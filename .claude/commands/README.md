@@ -5,14 +5,14 @@ This directory contains specialized Claude Code sub-agents tailored for the Go C
 ## Agent Organization
 
 ### Carbon Platform Agents (`.claude/commands/`)
-**Namespace:** Human names + role descriptors
+**Namespace:** Alexander the Great's legendary team + role descriptors
 
-- **`/alex-carbon-analyst`** - Alex: Carbon Data Analyst specializing in emissions analysis and ESG metrics
-- **`/maya-forum-moderator`** - Maya: Community Forum Moderator for sustainability discussions
-- **`/sage-sustainability-educator`** - Sage: Sustainability Educator for explaining complex climate concepts
-- **`/zoe-api-specialist`** - Zoe: API & Integration Specialist for technical implementations
-- **`/kai-data-architect`** - Kai: Data Architecture Specialist for scalable carbon tracking systems
-- **`/luna-compliance-advisor`** - Luna: Compliance & Standards Advisor for regulatory requirements
+- **`/aristotle-carbon-analyst`** - Aristotle: Alexander's brilliant philosopher and carbon data analyst
+- **`/hephaestion-forum-moderator`** - Hephaestion: Alexander's trusted friend and community moderator
+- **`/ptolemy-sustainability-educator`** - Ptolemy: Alexander's bodyguard and sustainability educator
+- **`/cleitus-api-specialist`** - Cleitus: Alexander's engineer and API integration specialist
+- **`/parmenion-data-architect`** - Parmenion: Alexander's master strategist and data architect
+- **`/cassander-compliance-advisor`** - Cassander: Alexander's administrator and compliance advisor
 
 ### BMAD Agents (via npm package)
 **Namespace:** `/bmad-*` 
@@ -29,13 +29,13 @@ This directory contains specialized Claude Code sub-agents tailored for the Go C
 
 ### Activate Carbon-Specific Agents
 ```
-/alex-carbon-analyst Help me analyze the Scope 3 emissions data for the manufacturing sector
+/aristotle-carbon-analyst Help me analyze the Scope 3 emissions data for the manufacturing sector
 
-/sage-sustainability-educator Explain the difference between market-based and location-based Scope 2 calculations
+/ptolemy-sustainability-educator Explain the difference between market-based and location-based Scope 2 calculations
 
-/luna-compliance-advisor What TCFD requirements apply to our carbon disclosure data?
+/cassander-compliance-advisor What TCFD requirements apply to our carbon disclosure data?
 
-/zoe-api-specialist How do I set up webhooks for real-time emissions data updates?
+/cleitus-api-specialist How do I set up webhooks for real-time emissions data updates?
 ```
 
 ### Continue Using BMAD Agents

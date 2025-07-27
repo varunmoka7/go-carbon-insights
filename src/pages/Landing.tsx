@@ -18,7 +18,9 @@ const Landing = () => {
 
 
   const handleViewEmissions = () => {
-    navigate('/auth');
+    // Enable demo mode and navigate to home page
+    localStorage.setItem('demoMode', 'true');
+    navigate('/home?demo=true');
   };
 
   const features = [
