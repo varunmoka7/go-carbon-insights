@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { useCompanies } from '@/hooks/useCompanies';
 import { useClimateIntelligence } from '@/hooks/useClimateIntelligence';
-import ClimatePerformanceDashboard from '@/components/ClimatePerformanceDashboard';
+import SimplifiedClimatePerformanceDashboard from '@/components/SimplifiedClimatePerformanceDashboard';
 import { Leaf, Target, TrendingUp, AlertCircle } from 'lucide-react';
 
 const Dashboard = () => {
@@ -114,7 +114,7 @@ const Dashboard = () => {
       </div>
 
       {/* Climate Performance Dashboard */}
-      <ClimatePerformanceDashboard 
+      <SimplifiedClimatePerformanceDashboard 
         climateMetrics={climateData.climateMetrics}
         carbonProjects={climateData.carbonProjects}
         priorityActions={climateData.priorityActions || []}
