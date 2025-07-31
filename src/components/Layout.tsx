@@ -27,7 +27,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSidebar } from '@/contexts/SidebarContext';
-import useViewMode from '@/hooks/useViewMode';
+import { useViewModeContext } from '@/contexts/ViewModeContext';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -36,7 +36,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isMobile, isCollapsed } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
-  const { currentMode, setViewMode, canAccessPrivateMode } = useViewMode();
+  const { viewMode, setViewMode, canAccessPrivateMode } = useViewModeContext();
 
   // Check if we should show sidebar (exclude landing and auth pages)
   const showSidebar = !['/'].includes(location.pathname);
@@ -148,16 +148,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <GlobalSearch />
               
               {/* View Mode Toggle - Only show on dashboard and tracking pages */}
-              {showSidebar && (
-                <ViewModeToggle
-                  currentMode={currentMode}
-                  onModeChange={setViewMode}
-                  showPrivateMode={canAccessPrivateMode}
-                />
-              )}
+              {showSidebar && <ViewModeToggle />}
               
               {/* View Mode Indicator */}
-              <ViewModeIndicator currentMode={currentMode} />
+              <ViewModeIndicator currentMode={viewMode} />
               
               <Button variant="outline" size="icon" className="relative h-8 w-8 md:h-10 md:w-10">
                 <Bell className="h-4 w-4" />

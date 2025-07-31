@@ -1,136 +1,166 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Globe, Lock, Eye } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { 
+  Globe, 
+  Lock, 
+  Layers, 
+  ChevronDown 
+} from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
+import { useViewModeContext } from '@/contexts/ViewModeContext';
 
-interface ViewModeToggleProps {
-  currentMode: 'public' | 'private' | 'combined';
-  onModeChange: (mode: 'public' | 'private' | 'combined') => void;
-  showPrivateMode?: boolean;
-}
+const ViewModeToggle: React.FC = () => {
+  const { 
+    viewMode, 
+    setViewMode, 
+    canAccessPrivateMode, 
+    canAccessCombinedMode 
+  } = useViewModeContext();
 
-const ViewModeToggle: React.FC<ViewModeToggleProps> = ({
-  currentMode,
-  onModeChange,
-  showPrivateMode = false
-}) => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-
-  const handlePrivateModeClick = () => {
-    if (!user) {
-      navigate('/auth?redirect=/private');
-      return;
-    }
-    onModeChange('private');
-  };
-
-  const getModeConfig = (mode: 'public' | 'private' | 'combined') => {
+  const getModeIcon = (mode: string) => {
     switch (mode) {
       case 'public':
-        return {
-          icon: Globe,
-          label: 'Public',
-          description: 'Explore public data',
-          variant: 'outline' as const,
-          className: 'border-blue-200 text-blue-700 hover:bg-blue-50'
-        };
+        return <Globe className="h-4 w-4" />;
       case 'private':
-        return {
-          icon: Lock,
-          label: 'Private',
-          description: 'Your organization data',
-          variant: 'default' as const,
-          className: 'bg-teal-600 text-white hover:bg-teal-700'
-        };
+        return <Lock className="h-4 w-4" />;
       case 'combined':
-        return {
-          icon: Eye,
-          label: 'Combined',
-          description: 'Public + Private insights',
-          variant: 'outline' as const,
-          className: 'border-purple-200 text-purple-700 hover:bg-purple-50'
-        };
+        return <Layers className="h-4 w-4" />;
+      default:
+        return <Globe className="h-4 w-4" />;
     }
   };
 
-  const currentConfig = getModeConfig(currentMode);
+  const getModeLabel = (mode: string) => {
+    switch (mode) {
+      case 'public':
+        return 'Public';
+      case 'private':
+        return 'Private';
+      case 'combined':
+        return 'Combined';
+      default:
+        return 'Public';
+    }
+  };
+
+  const getModeDescription = (mode: string) => {
+    switch (mode) {
+      case 'public':
+        return 'Explore public ESG data';
+      case 'private':
+        return 'Manage your organization data';
+      case 'combined':
+        return 'View public and private data together';
+      default:
+        return 'Explore public ESG data';
+    }
+  };
 
   return (
-    <div className="flex items-center gap-2">
-      {/* Public Mode Button */}
-      <Button
-        variant={currentMode === 'public' ? 'default' : 'outline'}
-        size="sm"
-        onClick={() => onModeChange('public')}
-        className={`flex items-center gap-2 ${
-          currentMode === 'public' 
-            ? 'bg-blue-600 text-white hover:bg-blue-700' 
-            : 'border-blue-200 text-blue-700 hover:bg-blue-50'
-        }`}
-      >
-        <Globe className="h-4 w-4" />
-        <span className="hidden sm:inline">Public</span>
-      </Button>
-
-      {/* Private Mode Button - Only show if user is authenticated */}
-      {showPrivateMode && user && (
-        <Button
-          variant={currentMode === 'private' ? 'default' : 'outline'}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button 
+          variant="outline" 
           size="sm"
-          onClick={() => onModeChange('private')}
-          className={`flex items-center gap-2 ${
-            currentMode === 'private' 
-              ? 'bg-teal-600 text-white hover:bg-teal-700' 
-              : 'border-teal-200 text-teal-700 hover:bg-teal-50'
-          }`}
+          className="flex items-center gap-2 h-9 px-3"
         >
-          <Lock className="h-4 w-4" />
-          <span className="hidden sm:inline">Private</span>
+          {getModeIcon(viewMode)}
+          <span className="hidden sm:inline">{getModeLabel(viewMode)}</span>
+          <ChevronDown className="h-3 w-3" />
         </Button>
-      )}
-
-      {/* Combined Mode Button - Only show if user is authenticated */}
-      {showPrivateMode && user && (
-        <Button
-          variant={currentMode === 'combined' ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => onModeChange('combined')}
-          className={`flex items-center gap-2 ${
-            currentMode === 'combined' 
-              ? 'bg-purple-600 text-white hover:bg-purple-700' 
-              : 'border-purple-200 text-purple-700 hover:bg-purple-50'
-          }`}
+      </DropdownMenuTrigger>
+      
+      <DropdownMenuContent align="end" className="w-56">
+        {/* Public Mode Button */}
+        <DropdownMenuItem 
+          onClick={() => setViewMode('public')}
+          className="flex items-center gap-3 p-3"
         >
-          <Eye className="h-4 w-4" />
-          <span className="hidden sm:inline">Combined</span>
-        </Button>
-      )}
+          <div className="flex items-center gap-2">
+            <Globe className="h-4 w-4" />
+            <div>
+              <div className="font-medium">Public</div>
+              <div className="text-xs text-muted-foreground">
+                Explore public ESG data
+              </div>
+            </div>
+          </div>
+          {viewMode === 'public' && (
+            <Badge variant="default" className="ml-auto">Current</Badge>
+          )}
+        </DropdownMenuItem>
 
-      {/* Private Mode Access Button - Show for non-authenticated users */}
-      {showPrivateMode && !user && (
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handlePrivateModeClick}
-          className="flex items-center gap-2 border-teal-200 text-teal-700 hover:bg-teal-50"
-        >
-          <Lock className="h-4 w-4" />
-          <span className="hidden sm:inline">Private Mode</span>
-          <Badge variant="secondary" className="ml-1 text-xs">
-            Login
-          </Badge>
-        </Button>
-      )}
+        <DropdownMenuSeparator />
 
-      {/* Current Mode Indicator */}
-      <div className="hidden md:flex items-center gap-2 ml-2 text-sm text-gray-600 dark:text-gray-400">
-        <currentConfig.icon className="h-4 w-4" />
-        <span>{currentConfig.description}</span>
-      </div>
-    </div>
+        {/* Private Mode Button - Only show if user can access private mode */}
+        {canAccessPrivateMode && (
+          <DropdownMenuItem 
+            onClick={() => setViewMode('private')}
+            className="flex items-center gap-3 p-3"
+          >
+            <div className="flex items-center gap-2">
+              <Lock className="h-4 w-4" />
+              <div>
+                <div className="font-medium">Private</div>
+                <div className="text-xs text-muted-foreground">
+                  Manage your organization data
+                </div>
+              </div>
+            </div>
+            {viewMode === 'private' && (
+              <Badge variant="default" className="ml-auto">Current</Badge>
+            )}
+          </DropdownMenuItem>
+        )}
+
+        {/* Combined Mode Button - Only show if user can access combined mode */}
+        {canAccessCombinedMode && (
+          <DropdownMenuItem 
+            onClick={() => setViewMode('combined')}
+            className="flex items-center gap-3 p-3"
+          >
+            <div className="flex items-center gap-2">
+              <Layers className="h-4 w-4" />
+              <div>
+                <div className="font-medium">Combined</div>
+                <div className="text-xs text-muted-foreground">
+                  View public and private data together
+                </div>
+              </div>
+            </div>
+            {viewMode === 'combined' && (
+              <Badge variant="default" className="ml-auto">Current</Badge>
+            )}
+          </DropdownMenuItem>
+        )}
+
+        {/* Private Mode Access Button - Show for non-authenticated users */}
+        {!canAccessPrivateMode && (
+          <DropdownMenuItem 
+            onClick={() => setViewMode('private')}
+            className="flex items-center gap-3 p-3"
+          >
+            <div className="flex items-center gap-2">
+              <Lock className="h-4 w-4" />
+              <div>
+                <div className="font-medium">Private Mode</div>
+                <div className="text-xs text-muted-foreground">
+                  Sign in to access private features
+                </div>
+              </div>
+            </div>
+            <Badge variant="outline" className="ml-auto">Sign In</Badge>
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

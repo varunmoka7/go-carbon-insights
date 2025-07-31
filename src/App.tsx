@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SidebarProvider } from "./contexts/SidebarContext";
+import { ViewModeProvider } from "./contexts/ViewModeContext";
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
 import DemoAwareRoute from "./components/DemoAwareRoute";
@@ -60,6 +61,7 @@ const App = () => {
       <ThemeProvider>
         <AuthProvider>
           <SidebarProvider>
+            <ViewModeProvider>
               <TooltipProvider>
                 <Toaster />
                 <Sonner />
@@ -225,7 +227,8 @@ const App = () => {
                   </ErrorBoundary>
                 </BrowserRouter>
               </TooltipProvider>
-            </SidebarProvider>
+            </ViewModeProvider>
+          </SidebarProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
