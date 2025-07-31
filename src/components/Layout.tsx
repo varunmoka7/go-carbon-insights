@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Logo from '@/components/ui/Logo';
 import GlobalSearch from './GlobalSearch';
+import ViewModeToggle from './ViewModeToggle';
+import ViewModeIndicator from './ViewModeIndicator';
 import Breadcrumb from './Breadcrumb';
 import BackButton from './BackButton';
 import LogoutButton from './LogoutButton';
@@ -25,6 +27,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSidebar } from '@/contexts/SidebarContext';
+import useViewMode from '@/hooks/useViewMode';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -33,6 +36,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isMobile, isCollapsed } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
+  const { currentMode, setViewMode, canAccessPrivateMode } = useViewMode();
 
   // Check if we should show sidebar (exclude landing and auth pages)
   const showSidebar = !['/'].includes(location.pathname);
@@ -142,6 +146,18 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
             <div className="flex items-center gap-2 md:gap-4">
               <GlobalSearch />
+              
+              {/* View Mode Toggle - Only show on dashboard and tracking pages */}
+              {showSidebar && (
+                <ViewModeToggle
+                  currentMode={currentMode}
+                  onModeChange={setViewMode}
+                  showPrivateMode={canAccessPrivateMode}
+                />
+              )}
+              
+              {/* View Mode Indicator */}
+              <ViewModeIndicator currentMode={currentMode} />
               
               <Button variant="outline" size="icon" className="relative h-8 w-8 md:h-10 md:w-10">
                 <Bell className="h-4 w-4" />

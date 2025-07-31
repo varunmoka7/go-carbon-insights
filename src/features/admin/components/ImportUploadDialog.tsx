@@ -43,7 +43,7 @@ interface ValidationSummary {
   }>;
 }
 
-export const ImportUploadDialog: React.FC<ImportUploadDialogProps> = ({
+const ImportUploadDialog: React.FC<ImportUploadDialogProps> = ({
   open,
   onOpenChange,
   onSuccess
@@ -591,3 +591,5 @@ export const ImportUploadDialog: React.FC<ImportUploadDialogProps> = ({
     </Dialog>
   );
 };
+
+export default ImportUploadDialog;

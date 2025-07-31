@@ -26,8 +26,8 @@ describe('ImportUploadDialog', () => {
   it('renders upload dialog with form fields', () => {
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -42,8 +42,8 @@ describe('ImportUploadDialog', () => {
   it('handles file selection', async () => {
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -61,8 +61,8 @@ describe('ImportUploadDialog', () => {
   it('validates required fields before submission', async () => {
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -84,8 +84,8 @@ describe('ImportUploadDialog', () => {
 
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -136,8 +136,8 @@ describe('ImportUploadDialog', () => {
 
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -174,8 +174,8 @@ describe('ImportUploadDialog', () => {
 
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -189,8 +189,8 @@ describe('ImportUploadDialog', () => {
 
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -201,8 +201,8 @@ describe('ImportUploadDialog', () => {
   it('closes dialog when cancel button is clicked', () => {
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );
@@ -216,8 +216,8 @@ describe('ImportUploadDialog', () => {
   it('supports drag and drop file upload', async () => {
     render(
       <ImportUploadDialog
-        isOpen={true}
-        onClose={mockOnClose}
+        open={true}
+        onOpenChange={mockOnClose}
         onSuccess={mockOnSuccess}
       />
     );

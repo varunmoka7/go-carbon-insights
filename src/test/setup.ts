@@ -66,14 +66,14 @@ vi.mock('@supabase/supabase-js', () => ({
   }))
 }))
 
-// Mock React Router
+// Mock React Router - only mock hooks, keep components for testing
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
     useNavigate: vi.fn(() => vi.fn()),
     useLocation: vi.fn(() => ({
-      pathname: '/',
+      pathname: '/admin',
       search: '',
       hash: '',
       state: null

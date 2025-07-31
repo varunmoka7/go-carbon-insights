@@ -24,7 +24,7 @@ import { ImportStatistics } from '../components/ImportStatistics';
 import { ImportConfigurations } from '../components/ImportConfigurations';
 import { useDataImportAPI } from '../hooks/useDataImportAPI';
 
-export const DataImportDashboard: React.FC = () => {
+const DataImportDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [showUploadDialog, setShowUploadDialog] = useState(false);
   const {
@@ -45,14 +45,14 @@ export const DataImportDashboard: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'success';
+        return 'default';
       case 'failed':
         return 'destructive';
       case 'processing':
       case 'validating':
-        return 'default';
-      case 'pending':
         return 'secondary';
+      case 'pending':
+        return 'outline';
       case 'cancelled':
         return 'outline';
       default:
@@ -276,3 +276,5 @@ export const DataImportDashboard: React.FC = () => {
     </AdminLayout>
   );
 };
+
+export default DataImportDashboard;
