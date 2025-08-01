@@ -51,7 +51,7 @@ export const TopicsList: React.FC<TopicsListProps> = ({ categoryId }) => {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as Topic[];
+      return data as unknown as Topic[];
     }
   });
 

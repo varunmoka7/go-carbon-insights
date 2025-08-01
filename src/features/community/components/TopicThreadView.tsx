@@ -189,7 +189,7 @@ export const TopicThreadView: React.FC<TopicThreadViewProps> = ({ topicId }) => 
     return (
       <EditTopicForm
         topic={topic}
-        onSave={editTopic}
+        onSave={async (updates) => { await editTopic(updates); }}
         onCancel={cancelEditing}
         isLoading={isSaving}
         error={editError}

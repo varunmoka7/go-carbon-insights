@@ -236,7 +236,7 @@ export const ImportHistoryTable: React.FC<ImportHistoryTableProps> = ({
                     
                     <TableCell>
                       <Badge 
-                        variant={getStatusColor(importItem.status)}
+                        variant={getStatusColor(importItem.status) as "outline" | "default" | "secondary" | "destructive"}
                         className="flex items-center gap-1 w-fit"
                       >
                         {getStatusIcon(importItem.status)}

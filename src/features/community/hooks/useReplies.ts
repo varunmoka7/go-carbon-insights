@@ -28,7 +28,7 @@ export const useReplies = (topicId: string) => {
         .order('thread_path', { ascending: true });
 
       if (error) throw error;
-      return data as Reply[];
+      return data as unknown as Reply[];
     },
     enabled: !!topicId
   });
@@ -58,7 +58,7 @@ export const useReplies = (topicId: string) => {
         .single();
 
       if (error) throw error;
-      return data as Reply;
+      return data as unknown as Reply;
     },
     onSuccess: (updatedReply) => {
       // Update the replies in cache
@@ -94,7 +94,7 @@ export const useReplies = (topicId: string) => {
         .single();
 
       if (error) throw error;
-      return data as Reply;
+      return data as unknown as Reply;
     },
     onSuccess: (newReply) => {
       // Add the new reply to cache
@@ -137,7 +137,7 @@ export const useReplies = (topicId: string) => {
         .single();
 
       if (error) throw error;
-      return data as Reply;
+      return data as unknown as Reply;
     },
     onSuccess: (deletedReply) => {
       // Update the reply in cache to show as deleted

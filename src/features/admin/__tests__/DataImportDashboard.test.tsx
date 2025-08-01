@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { vi } from 'vitest';
+import { vi, describe, beforeEach, it, expect } from 'vitest';
 import { renderWithRouter as render } from '../../../test/test-utils';
 import DataImportDashboard from '../pages/DataImportDashboard';
 

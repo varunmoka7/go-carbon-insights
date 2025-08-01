@@ -49,7 +49,7 @@ export class CommunityModeratorAgent extends BaseAgent {
     Always prioritize community well-being and productive dialogue about climate solutions.`;
   }
 
-  public async processMessage(message: String, context: AgentContext): Promise<AgentResponse> {
+  public async processMessage(message: string, context: AgentContext): Promise<AgentResponse> {
     const messageText = message.toLowerCase();
     const confidence = this.calculateConfidence(messageText);
     

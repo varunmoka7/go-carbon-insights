@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { vi, beforeEach, describe, it, expect } from 'vitest';
+import { vi, beforeEach, describe, it, expect, type Mock } from 'vitest';
 import { ModerationQueue } from '../ModerationQueue';
 import { useModerationAPI } from '../../hooks/useModerationAPI';
 
@@ -116,7 +116,7 @@ describe('ModerationQueue', () => {
     vi.clearAllMocks();
     
     // Reset mock implementation
-    (useModerationAPI as vi.Mock).mockReturnValue({
+    (useModerationAPI as Mock).mockReturnValue({
       ...mockUseModerationAPI,
       useFlaggedContent: vi.fn(() => ({
         data: mockFlaggedData,
@@ -197,7 +197,7 @@ describe('ModerationQueue', () => {
         error: null,
       }));
 
-      (useModerationAPI as vi.Mock).mockReturnValue({
+      (useModerationAPI as Mock).mockReturnValue({
         ...mockUseModerationAPI,
         useFlaggedContent: mockUseFlaggedContent,
       });
@@ -227,7 +227,7 @@ describe('ModerationQueue', () => {
       const mockHideContent = vi.fn();
       const mockResolveReport = vi.fn();
 
-      (useModerationAPI as vi.Mock).mockReturnValue({
+      (useModerationAPI as Mock).mockReturnValue({
         ...mockUseModerationAPI,
         hideContent: mockHideContent,
         resolveReport: mockResolveReport,
@@ -264,7 +264,7 @@ describe('ModerationQueue', () => {
     it('should call resolveReport when dismiss button is clicked', async () => {
       const mockResolveReport = vi.fn();
 
-      (useModerationAPI as vi.Mock).mockReturnValue({
+      (useModerationAPI as Mock).mockReturnValue({
         ...mockUseModerationAPI,
         resolveReport: mockResolveReport,
         useFlaggedContent: vi.fn(() => ({
@@ -330,7 +330,7 @@ describe('ModerationQueue', () => {
       const mockBulkModerate = vi.fn();
       const mockResolveReport = vi.fn();
 
-      (useModerationAPI as vi.Mock).mockReturnValue({
+      (useModerationAPI as Mock).mockReturnValue({
         ...mockUseModerationAPI,
         bulkModerate: mockBulkModerate,
         resolveReport: mockResolveReport,
@@ -364,7 +364,7 @@ describe('ModerationQueue', () => {
 
   describe('Loading and Error States', () => {
     it('should show loading state', async () => {
-      (useModerationAPI as vi.Mock).mockReturnValue({
+      (useModerationAPI as Mock).mockReturnValue({
         ...mockUseModerationAPI,
         useFlaggedContent: vi.fn(() => ({
           data: null,
@@ -381,7 +381,7 @@ describe('ModerationQueue', () => {
     });
 
     it('should show empty state when no reports', async () => {
-      (useModerationAPI as vi.Mock).mockReturnValue({
+      (useModerationAPI as Mock).mockReturnValue({
         ...mockUseModerationAPI,
         useFlaggedContent: vi.fn(() => ({
           data: { data: [], pagination: { page: 1, limit: 20, total: 0, pages: 0 } },
@@ -398,7 +398,7 @@ describe('ModerationQueue', () => {
     });
 
     it('should display error messages', async () => {
-      (useModerationAPI as vi.Mock).mockReturnValue({
+      (useModerationAPI as Mock).mockReturnValue({
         ...mockUseModerationAPI,
         error: 'Failed to load reports',
         useFlaggedContent: vi.fn(() => ({

@@ -18,7 +18,7 @@ import {
   Settings
 } from 'lucide-react';
 import { AdminLayout } from '../components/AdminLayout';
-import { ImportUploadDialog } from '../components/ImportUploadDialog';
+import ImportUploadDialog from '../components/ImportUploadDialog';
 import { ImportHistoryTable } from '../components/ImportHistoryTable';
 import { ImportStatistics } from '../components/ImportStatistics';
 import { ImportConfigurations } from '../components/ImportConfigurations';

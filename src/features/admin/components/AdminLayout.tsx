@@ -21,7 +21,11 @@ const navigation = [
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
-export const AdminLayout: React.FC = () => {
+interface AdminLayoutProps {
+  children?: React.ReactNode;
+}
+
+export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const location = useLocation();
 
   return (
@@ -86,7 +90,7 @@ export const AdminLayout: React.FC = () => {
         </div>
 
         <main className="p-6">
-          <Outlet />
+          {children || <Outlet />}
         </main>
       </div>
     </div>
