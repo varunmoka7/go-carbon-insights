@@ -12,7 +12,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   // Demo mode: Allow access without authentication
   // Remove this condition when moving to production
-  const isDemoMode = true;
+  const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
 
   if (loading) {
     return (

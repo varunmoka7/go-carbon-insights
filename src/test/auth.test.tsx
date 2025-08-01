@@ -250,7 +250,7 @@ describe('Auth Component', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Continue with GitHub/i }));
 
-    """    await waitFor(() => {
+    await waitFor(() => {
       expect(mockSignInWithGitHub).toHaveBeenCalledTimes(1);
     });
   });
@@ -270,7 +270,7 @@ describe('Auth Component', () => {
     );
 
     expect(screen.getByText(message)).toBeInTheDocument();
-  });"""
+  });
 
   // Test Case 15: Displays email verification success toast
   test('displays email verification success toast', async () => {
@@ -308,3 +308,5 @@ describe('Auth Component', () => {
       }));
     });
   });
+
+});

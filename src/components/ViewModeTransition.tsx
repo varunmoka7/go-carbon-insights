@@ -23,20 +23,17 @@ export const ViewModeTransition: React.FC<ViewModeTransitionProps> = ({
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        duration: 0.3,
-        ease: 'easeOut',
-      },
     },
     exit: {
       opacity: 0,
       y: -20,
       scale: 0.95,
-      transition: {
-        duration: 0.2,
-        ease: 'easeIn',
-      },
     },
+  };
+
+  const transitionConfig = {
+    duration: 0.3,
+    ease: [0.4, 0, 0.2, 1] as const,
   };
 
   return (
@@ -47,6 +44,7 @@ export const ViewModeTransition: React.FC<ViewModeTransitionProps> = ({
         initial="initial"
         animate="animate"
         exit="exit"
+        transition={transitionConfig}
         className={`view-mode-transition ${className}`}
       >
         {children}
