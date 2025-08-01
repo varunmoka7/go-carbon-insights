@@ -61,11 +61,11 @@ const App = () => {
       <ThemeProvider>
         <AuthProvider>
           <SidebarProvider>
-            <ViewModeProvider>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ViewModeProvider>
                   <ErrorBoundary>
                     <NavigationDebugger />
                     <NavigationLoader />
@@ -225,9 +225,9 @@ const App = () => {
                     <AccessibilityPanel />
                     <FloatingActionButton />
                   </ErrorBoundary>
-                </BrowserRouter>
-              </TooltipProvider>
-            </ViewModeProvider>
+                </ViewModeProvider>
+              </BrowserRouter>
+            </TooltipProvider>
           </SidebarProvider>
         </AuthProvider>
       </ThemeProvider>
