@@ -1,0 +1,74 @@
+{
+  "transformationStats": {
+    "totalRecords": 19903,
+    "processedRecords": 19903,
+    "skippedRecords": 0,
+    "duplicateCompanies": 19050,
+    "mappingErrors": 4461,
+    "dataQualityIssues": 264
+  },
+  "dataQuality": {
+    "totalCompanies": 589,
+    "totalEmissionsRecords": 19639,
+    "averageMappingConfidence": null,
+    "scopeCoverage": {
+      "scope1": 3348,
+      "scope2": 4454,
+      "scope3": 11837
+    },
+    "temporalCoverage": {
+      "minYear": 1990,
+      "maxYear": 2024,
+      "uniqueYears": 22
+    },
+    "geographicCoverage": {
+      "Germany": 84,
+      "Sweden": 44,
+      "France": 57,
+      "Switzerland": 54,
+      "Italy": 33,
+      "Belgium": 12,
+      "Turkey": 29,
+      "United Kingdom": 99,
+      "Norway": 17,
+      "Denmark": 30,
+      "Finland": 41,
+      "Cyprus": 1,
+      "Luxembourg": 10,
+      "Ireland": 14,
+      "Monaco": 1,
+      "Hungary": 1,
+      "Austria": 12,
+      "Netherlands": 19,
+      "Czechia": 1,
+      "Greece": 8,
+      "Spain": 18,
+      "Portugal": 4
+    }
+  },
+  "mappingBreakdown": {
+    "industryMappingTypes": {
+      "unmapped": 159,
+      "extend": 182,
+      "direct": 160,
+      "map": 19,
+      "merge": 69
+    },
+    "archetypeDistribution": {
+      "Unknown": 159,
+      "Scope 2-heavy": 52,
+      "Operational Emitter": 188,
+      "Lifecycle-dependent": 68,
+      "Use-phase Dominant": 37,
+      "Upstream-heavy": 85
+    },
+    "sectorDistribution": {
+      "Manufacturing": 311,
+      "Consumer Goods": 194,
+      "Energy": 84
+    }
+  },
+  "recommendations": [
+    "High mapping error rate - review industry mapping completeness"
+  ]
+}

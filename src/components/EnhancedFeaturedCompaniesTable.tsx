@@ -8,6 +8,7 @@ import { useSupabaseCompanies } from '@/hooks/useSupabaseCompanies';
 import { useSupabaseSectors } from '@/hooks/useSupabaseIndustries';
 import { Search, Filter, Star, TrendingDown, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Company } from '@/types/company';
+import CompanyIdentifiers from '@/components/CompanyIdentifiers';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -25,7 +26,10 @@ const EnhancedFeaturedCompaniesTable = () => {
     
     return companies.filter((company: Company) => {
       const matchesSearch = company.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           company.industry?.toLowerCase().includes(searchTerm.toLowerCase());
+                           company.industry?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           company.ticker?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           company.lei?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           company.exchange?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesSector = selectedSector === 'all' || company.sector === selectedSector;
       
       return matchesSearch && matchesSector;
@@ -125,7 +129,7 @@ const EnhancedFeaturedCompaniesTable = () => {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
-              placeholder="Search companies or industries..."
+              placeholder="Search companies, industries, tickers, or identifiers..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="pl-10"
@@ -184,6 +188,9 @@ const EnhancedFeaturedCompaniesTable = () => {
                           </span>
                         </div>
                       )}
+                      
+                      {/* Company Identifiers */}
+                      <CompanyIdentifiers company={company} variant="compact" />
                       
                       {company.description && (
                         <div className="text-xs text-gray-500 max-w-md truncate">

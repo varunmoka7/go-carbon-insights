@@ -8,6 +8,23 @@
 
 GoCarbonTracker is a comprehensive corporate climate intelligence platform that provides real-time insights into company carbon emissions, science-based targets, and decarbonization strategies. Our platform helps organizations, investors, and policymakers make informed decisions based on standardized, verified climate data.
 
+## 🔄 Auto-Sync Development
+
+This project includes an **enhanced auto-sync feature** that provides true two-way synchronization between your local development environment and GitHub. It automatically commits and pushes your local changes to GitHub, and also pulls changes from GitHub to your local environment.
+
+**Quick Setup:**
+```bash
+npm run auto-sync  # Start enhanced auto-sync watcher
+```
+
+**Features:**
+- ✅ **Auto-push**: Local changes → GitHub → Lovable
+- ✅ **Auto-pull**: Lovable changes → GitHub → Local  
+- ✅ **Conflict Resolution**: Smart handling of merge conflicts
+- ✅ **Error Recovery**: Automatic recovery from common git issues
+
+**See [Enhanced Auto-Sync Guide](./docs/AUTO_SYNC_GUIDE.md) for complete setup and usage instructions.**
+
 ### 🎯 Core Features
 
 #### **Multi-Scope Emissions Tracking**

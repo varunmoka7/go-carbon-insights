@@ -1,0 +1,590 @@
+company_id,company_name,sector,industry,emissions_archetype,country,employees,lei,ticker,exchange,mapping_confidence,mapping_type
+00415345-dbb6-4d3c-8f4f-3c02bd65aee2,Hamburger Hafen und Logistik AG,Manufacturing,Marine Shipping,Unknown,Germany,6930,52990003RXKZ9J9ERW70,HHFA,XETRA,0,unmapped
+00af8de9-72b8-40e0-8d45-6277389c57a8,Cewe Stiftung & Co KGaA,Consumer Goods,Personal Care Services,Scope 2-heavy,Germany,4000,529900IDFHN9MQ3WUD64,CWC,XETRA,0.8,extend
+00f15137-c39f-4260-a8d8-c01bb274de83,Alleima AB,Manufacturing,Steel Production,Operational Emitter,Sweden,6309,529900EBHTYGLA6PGP77,ALLEI,NASDAQ STOCKHOLM AB,1.0,direct
+01133fe5-4172-44d0-8d1b-4af3388d95d7,Alstom SA,Manufacturing,Railroads,Unknown,France,78684,96950032TUYMW11FB530,ALO,EURONEXT,0,unmapped
+012f8a95-4bec-4b13-b50c-5e5a78a10269,Nexans SA,Manufacturing,Electronics Manufacturing,Scope 2-heavy,France,28498,96950015FU78G84UIV14,NEX,EURONEXT,0.85,map
+01b472d4-7fed-489e-9a99-494e4b1e0b80,Arbonia AG,Manufacturing,Construction Materials,Lifecycle-dependent,Switzerland,2763,52990053OCTMTW77M139,ARBN,SIX SWISS EXCHANGE,0.8,merge
+020eb713-3e7f-4a63-8b0a-b73a309b4984,Carrefour SA,Consumer Goods,Traditional Retail,Scope 2-heavy,France,324750,549300B8P6MUJ1YWTS08,CA,EURONEXT,0.9,direct
+022409dd-daa4-4228-86b1-4f0fd1df27e7,Brunello Cucinelli SpA,Consumer Goods,Consumer Electronics,Use-phase Dominant,Italy,3101,5493003CX2RZ0FOBH256,BC,EURONEXT MILAN,0.7,map
+032222b1-4841-4e1b-9ea2-2b9c61b0665b,Rheinmetall AG,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Germany,28539,5299001OU9CSE29O6S05,RHM,XETRA,0.9,extend
+034da4e8-bd6e-498c-bd09-13992aa9685a,Bilfinger SE,Manufacturing,Construction Services,Upstream-heavy,Germany,31478,529900H0HULEN2BZ4604,GBF,XETRA,0.9,extend
+03bf460e-be5d-49f4-8486-96d2f85bf785,Colruyt Group NV,Consumer Goods,Traditional Retail,Scope 2-heavy,Belgium,33000,5493000O0NZ1BCXO8K39,COLR,EURONEXT,0.9,direct
+040a278d-8555-4345-8cd8-80c45f60b606,Systemair AB,Manufacturing,Construction Materials,Lifecycle-dependent,Sweden,6638,529900RK1R6HF8KKOI20,SYSR,NASDAQ STOCKHOLM AB,0.8,merge
+045634a9-8575-4f54-b4a6-f0c5d95143cb,Aselsan Elektronik Sanayi ve Ticaret AS,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Turkey,12014,7890008XT4M710MU8714,ASELS.E,BORSA ISTANBUL,0.9,extend
+04d97bfb-cb53-4c12-aa76-c761d225ead7,Nibe Industrier AB,Manufacturing,Construction Materials,Lifecycle-dependent,Sweden,20600,549300ZQH0FIF1P0MX67,NIBE B,NASDAQ STOCKHOLM AB,0.8,merge
+04f30607-36f4-45eb-89c7-dd6c109adce9,BayWa AG,Manufacturing,Diversified Manufacturing,Upstream-heavy,Germany,23144,529900SM0FDLLYATXU36,BYW6,XETRA,0.6,extend
+050e0d18-60a5-487f-bf17-fdab30dfe96b,H&K AG,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Germany,1156,529900PURWE5WMRCH576,MLHK,EURONEXT ACCESS PARIS,0.9,extend
+0547585e-8625-4495-8506-4515b456fbbf,Ashtead Group PLC,Manufacturing,Rental & Leasing Services,Unknown,United Kingdom,25164,2138007UTBN8X9K1A235,AHT,LONDON STOCK EXCHANGE,0,unmapped
+05b704b0-33e7-4cf4-bc6a-1bcb941af31b,Elkem ASA,Manufacturing,Chemical Manufacturing,Operational Emitter,Norway,7134,549300CVBE06T0SH6T76,ELK,OSLO BORS,1.0,direct
+05f2ff60-53dc-4c11-9f69-b60dee893558,Tivoli A/S,Consumer Goods,Leisure,Unknown,Denmark,858,213800U8GOU4PCQKDX03,TIV,NASDAQ COPENHAGEN A/S,0,unmapped
+062cbc73-ee6f-4e92-a4df-afb190a49db8,Domino's Pizza Group PLC,Consumer Goods,Food Service,Scope 2-heavy,United Kingdom,2058,213800Q6ZKHAOV48JL75,DOM,LONDON STOCK EXCHANGE,0.9,extend
+0634543f-eb04-4d27-9e7a-3ffa17fa59f1,Konecranes Abp,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,16178,549300EF0CDEQZBMA096,KCR,NASDAQ HELSINKI LTD,0.8,merge
+065f29fa-eb7b-4960-85bd-5a65f7dbbe11,Pernod Ricard SA,Consumer Goods,Beverages - Wineries & Distilleries,Unknown,France,19557,52990097YFPX9J0H5D87,RI,EURONEXT,0,unmapped
+07c238e7-8870-40a4-b7cb-21ad90eb2472,Poste Italiane SpA,Manufacturing,Diversified Manufacturing,Upstream-heavy,Italy,113345,815600354DEDBD0BA991,PST,EURONEXT MILAN,0.6,extend
+07ed0b5e-3b82-4195-9caa-4bfc56273089,Suedzucker AG,Consumer Goods,Food & Beverage,Use-phase Dominant,Germany,19853,529900S8QNB101D40S72,SZU,XETRA,0.95,direct
+082ede72-cf58-4746-bce1-645d4d22f28d,Accor SA,Consumer Goods,Lodging,Unknown,France,19423,969500QZC2Q0TK11NV07,AC,EURONEXT,0,unmapped
+083e8394-ecf3-47db-8434-946728712950,Enento Group Oyj,Manufacturing,Professional Services,Scope 2-heavy,Finland,364,743700EPLUWXE25HGM03,ENENTO,NASDAQ HELSINKI LTD,0.8,merge
+08541cfa-b28b-4272-a4f7-6e1d532b6139,Frontline Plc,Energy,Oil & Gas Midstream,Unknown,Cyprus,88,5493004BCIKYU1YL3H63,FRO,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+087440b8-6ce5-4ddb-92de-4d8c1a7c26e4,Corporacion America Airports SA,Manufacturing,Airports & Air Services,Unknown,Luxembourg,6100,959800AWF26KMY2SXF71,CAAP,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+08eba286-ad3f-4fbc-9c35-af1660972db7,Accelleron Industries AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,2343,254900KS0MD2PAARXD14,ACLN,SIX SWISS EXCHANGE,0.95,extend
+0934846c-4e18-442f-8c13-9f1b9eea5d3f,Sandvik AB,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Sweden,36295,5299008ZUAXN43LVZF54,SAND,NASDAQ STOCKHOLM AB,0.95,extend
+0947ef4a-3e39-49df-bd15-9f91fbeaec05,Marks and Spencer Group PLC,Consumer Goods,Department Stores,Unknown,United Kingdom,64000,213800EJP14A79ZG1X44,MKS,LONDON STOCK EXCHANGE,0,unmapped
+09a1db94-9e65-4211-afbb-0139054ceec7,Arcadium Lithium PLC,Manufacturing,Chemical Manufacturing,Operational Emitter,Ireland,2604,5299008YH4W6QL5DPN51,ALTM,"NEW YORK STOCK EXCHANGE, INC.",1.0,direct
+09bcefff-d0a5-40da-9178-a38056166a6c,Elis SA,Manufacturing,Professional Services,Scope 2-heavy,France,56757,969500UX71LCE8MAY492,ELIS,EURONEXT,0.75,extend
+0a03ac18-ce1e-47a2-9099-a1d467ee2fc3,Traton SE,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,105541,529900UIMQRKPFN6SV80,8TRA,XETRA,0.8,merge
+0a435b30-abae-4cb0-8fd5-6334eb9a330a,Ardagh Metal Packaging SA,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,Luxembourg,6330,5493009WKQTU4FN9G032,AMBP,"NEW YORK STOCK EXCHANGE, INC.",0.95,extend
+0a5de577-e029-403c-98af-36b05075bc88,Scorpio Tankers Inc,Energy,Oil & Gas Midstream,Unknown,Monaco,24,549300NVJUH16NXG8K87,STNG,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+0a85f0ea-c3bc-40cf-b4ad-5a03a1716397,Swatch Group AG,Consumer Goods,Consumer Electronics,Use-phase Dominant,Switzerland,32477,529900NTES2LEON1JZ55,UHR,SIX SWISS EXCHANGE,0.7,map
+0a99b8f8-f3b5-4c0f-89a5-43e7e020bb4a,MVV Energie AG,Energy,Electric Utilities,Operational Emitter,Germany,6672,529900ISR2VNZV1C0T93,MVV1,XETRA,0.95,direct
+0a9e0ca0-05d8-4a06-9d67-c3c6e7d34668,MOL Magyar Olaj es Gazipari Nyrt,Energy,Oil & Gas Refining,Operational Emitter,Hungary,25480,213800R83KX5FQFGXS67,MOL,BUDAPEST STOCK EXCHANGE,0.95,extend
+0aca1407-8b30-419c-87a2-49c327ee4541,ERG SpA,Energy,Renewable Energy,Lifecycle-dependent,Italy,659,8156004604684CA44A90,ERG,EURONEXT MILAN,1.0,direct
+0ad7555f-5652-49ac-b40d-e83ea81509b0,Spirax Group PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,10000,213800WFVZQMHOZP2W17,SPX,LONDON STOCK EXCHANGE,0.95,extend
+0adc8528-8fd8-48b4-a008-6e0d85368ac0,National Grid PLC,Energy,Electric Utilities,Operational Emitter,United Kingdom,31425,8R95QZMKZLJX5Q2XR704,NG.,LONDON STOCK EXCHANGE,0.95,merge
+0b324924-c279-4a48-b499-9d0f6d1051fc,Games Workshop Group PLC,Consumer Goods,Leisure,Unknown,United Kingdom,2950,213800RP9QJQYGWHNT41,GAW,LONDON STOCK EXCHANGE,0,unmapped
+0b5351a9-ac55-4654-ab89-6e9cb5fa7b07,Vallourec SA,Manufacturing,Steel Production,Operational Emitter,France,14000,969500P2Q1B47H4MCJ34,VK,EURONEXT,1.0,direct
+0b708750-acba-4188-9fb4-5caa2e2f592a,EDAG Engineering Group AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Switzerland,9119,529900LQ2ZJ7F5Z4KN18,ED4,XETRA,0.85,merge
+0b827d49-56be-450f-b12e-a891dbb700d5,Avolta AG,Consumer Goods,Traditional Retail,Scope 2-heavy,Switzerland,57679,549300X53WDBVW7TIF57,AVOL,SIX SWISS EXCHANGE,0.85,merge
+0bb87a53-5d41-4d33-abd6-68ff3e930d4a,SGL Carbon SE,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,4277,52990038IB31TYK07X63,SGL,XETRA,1.0,direct
+0bc8fa2f-2051-4560-a23c-19b81f8e0c15,Norsk Hydro ASA,Manufacturing,Aluminum,Unknown,Norway,32614,549300N1SDN71ZZ8BO45,NHY,OSLO BORS,0,unmapped
+0c4f6ee8-bfdf-403c-95ff-1943c4fb40d9,Coca-Cola Icecek AS,Consumer Goods,Food & Beverage,Use-phase Dominant,Turkey,10365,789000WT80VVLUWJDK41,CCOLA.E,BORSA ISTANBUL,0.9,merge
+0c8bd77e-ac6a-4b98-b822-3f880f7ae537,Leroy Seafood Group ASA,Consumer Goods,Food & Beverage,Use-phase Dominant,Norway,6000,5967007LIEEXZXJ2JK50,LSG,OSLO BORS,0.95,direct
+0cd6414f-50db-4812-a185-1d858e88d018,Stadler Rail AG,Manufacturing,Railroads,Unknown,Switzerland,14276,506700781XDET0A89669,SRAIL,SIX SWISS EXCHANGE,0,unmapped
+0d742738-7275-40c7-a2a7-1b6ae9546814,Mycronic AB (publ),Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Sweden,2158,549300S5CCFESE4C6Y07,MYCR,NASDAQ STOCKHOLM AB,0.95,extend
+0dab51ff-4410-4441-9f72-f00e8bb5514b,Dormakaba Holding AG,Manufacturing,Construction Materials,Lifecycle-dependent,Switzerland,15427,529900QMU5ZH99KMQK13,DOKA,SIX SWISS EXCHANGE,0.8,merge
+0ed6ac82-99bc-4dcc-beac-2f9491d01af6,Danieli & C Officine Meccaniche SpA,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Italy,10128,815600B4B8C6A353E566,DAN,EURONEXT MILAN,0.95,extend
+1030cd93-5aab-44a7-9b32-f4674d743096,Easyjet PLC,Manufacturing,Airlines,Operational Emitter,United Kingdom,17797,2138001S47XKWIB7TH90,EZJ,LONDON STOCK EXCHANGE,1.0,direct
+1049604a-505c-4906-8bc7-abbb6f195490,E.ON SE,Energy,Electric Utilities,Operational Emitter,Germany,69668,Q9MAIUP40P25UFBFG033,EOAN,XETRA,0.95,direct
+10c9e6ea-0edc-42bf-9bd0-56cfdf9240a9,Dr Ing hc F Porsche AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,39463,529900EWEX125AULXI58,P911,XETRA,1.0,direct
+10e542b5-bd09-4516-9dcf-841d2a404e4c,Intertek Group PLC,Manufacturing,Professional Services,Scope 2-heavy,United Kingdom,45000,2138003GAT25WW1RN369,ITRK,LONDON STOCK EXCHANGE,0.75,extend
+113cefa2-c8b6-4afe-b40c-dd46bbf3388c,Equinor ASA,Energy,Oil & Gas Extraction,Operational Emitter,Norway,24126,OW6OFBNCKXC4US5C7523,EQNR,OSLO BORS,1.0,direct
+11a9602f-3efa-4047-ba1c-7a2c5f7d2259,Verbund AG,Energy,Renewable Energy,Lifecycle-dependent,Austria,4117,5299006UDSEJCTTEJS30,VER,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),1.0,direct
+11c2e25b-7284-4344-81c6-9b9a45f9ab97,L'Air Liquide Societe Anonyme pour l'Etude et l'Exploitation des Procedes Georges Claude SA,Manufacturing,Chemical Manufacturing,Operational Emitter,France,64124,969500MMPQVHK671GT54,AI,EURONEXT,1.0,direct
+11d65b69-d04b-4944-bb97-9d451dee96c3,Eregli Demir ve Celik Fabrikalari TAS,Manufacturing,Steel Production,Operational Emitter,Turkey,12366,789000VYQF5IDGG49908,EREGL.E,BORSA ISTANBUL,1.0,direct
+12c0508a-f86a-4aeb-963a-801833eb65d1,Glanbia PLC,Consumer Goods,Food & Beverage,Use-phase Dominant,Ireland,5791,635400SRMCBHVMSKJS84,GL9,IRISH STOCK EXCHANGE,0.95,direct
+12c80bf2-d106-4735-9e8a-165eec860f13,Melrose Industries PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,13492,213800RGNXXZY2M7TR85,MRO,LONDON STOCK EXCHANGE,0.95,extend
+1303a3c0-91a3-4f41-b8da-39b2d6be68a2,Nordex SE,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,10006,529900HVDYCUWVD0OE76,NDX1,XETRA,0.95,extend
+13083c14-9629-4a2d-8b0a-f39463cd4b80,Mitchells & Butlers PLC,Consumer Goods,Food Service,Scope 2-heavy,United Kingdom,50000,213800JHYNDNB1NS2W10,MAB,LONDON STOCK EXCHANGE,0.9,extend
+13eef763-5bf5-4e39-9144-3bbdc565cee7,Stellantis NV,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Netherlands,248243,549300LKT9PW7ZIBDF31,STLAM,EURONEXT MILAN,1.0,direct
+13f0688c-cb1d-4dc0-b176-c1278abc481a,Arriver Holdco Inc,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Sweden,6033,54930082R4LTC7PERT23,VNE,"NEW YORK STOCK EXCHANGE, INC.",0.85,merge
+144a3aa7-c900-4495-a964-7002527501bc,Coats Group PLC,Consumer Goods,Textile Manufacturing,Unknown,United Kingdom,16042,2138003SPYWGAITNFY17,COA,LONDON STOCK EXCHANGE,0,unmapped
+15a32d5d-d40b-4bdd-a91a-c99fadd603e6,Constellium SE,Manufacturing,Aluminum,Unknown,France,12000,724500KRJEMC79KAAU28,CSTM,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+15c15ba7-864e-4263-a945-dd1c0dcf0f45,Cargotec Corp,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,3995,5493002B0GOVF42KWX33,CGCBV,NASDAQ HELSINKI LTD,0.8,merge
+15f8bd4a-9f24-414e-ad6e-73a3f42a65c2,Renault SA,Consumer Goods,Automotive Manufacturing,Upstream-heavy,France,98636,969500F7JLTX36OUI695,RNO,EURONEXT,1.0,direct
+165fe776-a0c0-4db9-bacb-1181ff29ed1c,OC Oerlikon Corporation AG Pfaeffikon,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,12064,529900I8VLAZR2FJ0M10,OERL,SIX SWISS EXCHANGE,0.95,extend
+16bfb44a-ecf6-48f5-8f2a-1afb3b94ab31,Stef SA,Manufacturing,Shipping & Logistics,Operational Emitter,France,23682,9695008BIKG0E486UL47,STF,EURONEXT,0.95,direct
+1713968d-4d55-42ea-be1b-f137a3c22726,Burckhardt Compression Holding AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,3305,5067004N56DLX7GY3E95,BCHN,SIX SWISS EXCHANGE,0.95,extend
+17289878-c39d-4b94-952b-44146f4b3f6f,Safran SA,Manufacturing,Aerospace Manufacturing,Upstream-heavy,France,96390,969500UIC89GT3UL7L24,SAF,EURONEXT,0.9,extend
+17a90809-f671-4ccc-b4e9-7345a2cad785,Siemens AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,313000,W38RGI023J3WT1HWRP32,SIE,XETRA,0.95,extend
+1809a71b-d829-4f45-9aa2-11bccd28e631,SOL SpA,Manufacturing,Chemical Manufacturing,Operational Emitter,Italy,7015,81560096A9AEBBBD4B25,SOL,EURONEXT MILAN,1.0,direct
+677588f3-855d-4d25-8baa-479541a90912,Orion SA,Manufacturing,Chemical Manufacturing,Operational Emitter,Luxembourg,1658,0,OEC,"NEW YORK STOCK EXCHANGE, INC.",1.0,direct
+187b5b19-4977-4928-aea3-e38fb38478e1,Telecom Plus PLC,Energy,Electric Utilities,Operational Emitter,United Kingdom,2493,549300QGHDX5UKE58G86,TEP,LONDON STOCK EXCHANGE,0.95,direct
+189620bc-55a3-47b6-895b-de8cdc48b2b6,SASA Polyester Sanayi AS,Consumer Goods,Textile Manufacturing,Unknown,Turkey,3804,789000PXBZOJWTDSXE13,SASA.E,BORSA ISTANBUL,0,unmapped
+18c7f385-2102-4d3d-9da5-48c27c3dc516,ISS A/S,Manufacturing,Professional Services,Scope 2-heavy,Denmark,257922,213800LEZA58SZNCBN19,ISS,NASDAQ COPENHAGEN A/S,0.75,extend
+18e892e1-ba1e-4bba-82a3-5963df869e67,Stora Enso Oyj,Manufacturing,Paper Manufacturing,Lifecycle-dependent,Finland,16000,7437000ZP669LKUTZ738,STERV,NASDAQ HELSINKI LTD,0.9,extend
+19840c58-259b-431a-9532-6a1da4c8c0a4,Balfour Beatty PLC,Manufacturing,Construction Services,Upstream-heavy,United Kingdom,26140,CT4UIJ3TUKGYYHMENQ17,BBY,LONDON STOCK EXCHANGE,0.9,extend
+198a7322-644b-482d-b5e7-dd220380b218,Drax Group PLC,Energy,Renewable Energy,Lifecycle-dependent,United Kingdom,3551,549300YPSNTXR4ZHSR98,DRX,LONDON STOCK EXCHANGE,1.0,direct
+19cbc61c-d063-492a-9db6-c0cec25de4b4,Moncler SpA,Consumer Goods,Apparel Manufacturing,Unknown,Italy,7354,815600EBD7FB00525B20,MONC,EURONEXT MILAN,0,unmapped
+1a76fb4e-7a64-4901-86df-5a054ff9fe6a,Edison SpA,Energy,Oil & Gas Extraction,Operational Emitter,Italy,5957,529900WS2E20BA5J4L49,EDNR,EURONEXT MILAN,1.0,direct
+1afe0a63-d830-4625-8738-3ca2791686b4,TAV Havalimanlari Holding AS,Manufacturing,Airports & Air Services,Unknown,Turkey,20185,789000PBM9TT5D88M597,TAVHL.E,BORSA ISTANBUL,0,unmapped
+1b15b809-daf4-4a4e-8c37-f75c0d468eab,Halma PLC,Manufacturing,Diversified Manufacturing,Upstream-heavy,United Kingdom,8000,2138007FRGLUR9KGBT40,HLMA,LONDON STOCK EXCHANGE,0.6,extend
+1bd742f1-0b4f-49be-ac1b-0d3343ef4c90,HORNBACH Holding AG & Co KgaA,Consumer Goods,Home Improvement Retail,Unknown,Germany,25357,529900EGQZ79V21LBL44,HBH,XETRA,0,unmapped
+1c979493-bc04-49ad-be6c-b9f3ceaa9cb0,Bureau Veritas SA,Manufacturing,Professional Services,Scope 2-heavy,France,83000,969500TPU5T3HA5D1F11,BVI,EURONEXT,0.8,merge
+1d31292a-91a8-4611-a8ca-afb4b3cb1acd,Hexpol AB,Manufacturing,Chemical Manufacturing,Operational Emitter,Sweden,4961,549300MN30TBRLYN3465,HPOL B,NASDAQ STOCKHOLM AB,1.0,direct
+1d33abb2-4c14-46c0-ba64-4dbae8338542,Morgan Sindall Group PLC,Manufacturing,Construction Services,Upstream-heavy,United Kingdom,8097,2138008339ULDGZRB345,MGNS,LONDON STOCK EXCHANGE,0.9,extend
+1d4329b9-7aa4-42b0-ba7c-a23d880a4b27,STRABAG SE,Manufacturing,Construction Services,Upstream-heavy,Austria,77337,529900TYYSRJH2VJSP60,STR,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0.9,extend
+1e13e8d4-b71e-4092-9459-272095354423,Bayerische Motoren Werke AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,159104,YEH5ZCD6E441RHVHD759,BMW,XETRA,1.0,direct
+201761a1-61b9-4744-a3c1-92822eaf8c21,Geberit AG,Manufacturing,Construction Materials,Lifecycle-dependent,Switzerland,10493,52990093Z5OHD6T7BS47,GEBN,SIX SWISS EXCHANGE,0.8,merge
+208fb558-1ba3-452b-a77a-5f9e6f3157d4,Schaeffler AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,83990,549300Q7E782X7GC1P43,SHA0,XETRA,0.85,merge
+212cc48b-0ee4-4719-b09c-984635a858a5,ArcelorMittal SA,Manufacturing,Steel Production,Operational Emitter,Luxembourg,125416,2EULGUTUI56JI9SAL165,MT,EURONEXT,1.0,direct
+218845dd-f357-41cf-a971-ad07905a0366,CEZ as,Energy,Electric Utilities,Operational Emitter,Czechia,31521,529900S5R9YHJHYKKG94,CEZ,PRAGUE STOCK EXCHANGE,0.95,merge
+21a13889-f4b1-4134-949c-8b2d496042e6,Suominen Oyj,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,Finland,722,743700Z1BNFYR9PRDF52,SUY1V,NASDAQ HELSINKI LTD,0.9,direct
+222029cb-c88a-43f1-b1aa-96b5d633dda3,Verallia SA,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,France,11000,5299007YZU978DE0ZY32,VRLA,EURONEXT,0.95,extend
+22896bc1-9e95-43b1-b4d5-18d9ed36806f,Athens Water Supply and Sewerage Company SA,Energy,Utilities - Regulated Water,Unknown,Greece,2273,213800SA1M6NZ4YSQU91,EYDAP,ATHENS EXCHANGE S.A. CASH MARKET,0,unmapped
+22a4ef67-a5ef-4435-8ef6-2870d4df07ef,SRV Yhtiot Oyj,Manufacturing,Construction Services,Upstream-heavy,Finland,759,743700GB29FXC0VXF414,SRV1V,NASDAQ HELSINKI LTD,0.9,extend
+23af516e-2272-41b9-9be4-d3a6a1abf79a,Fortum Oyj,Energy,Renewable Energy,Lifecycle-dependent,Finland,4369,635400IUIZZIUJSAMF76,FORTUM,NASDAQ HELSINKI LTD,1.0,direct
+240aef74-19c1-45d2-ad3c-31977beaa966,Mundys SpA,Manufacturing,Infrastructure Operations,Unknown,Italy,18252,8156008DEC771409C487,ATL,EURONEXT MILAN,0,unmapped
+24247408-581c-4a31-a225-9dc77cc143fc,Volvo AB,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Sweden,89680,549300HGV012CNC8JD22,VOLV B,NASDAQ STOCKHOLM AB,0.8,merge
+247926d1-3a3b-44e1-97a6-c0127df8f719,Randstad NV,Manufacturing,Staffing & Employment Services,Unknown,Netherlands,41650,7245009EAAUUQJ0U4T57,RAND,EURONEXT,0,unmapped
+26e1f4e3-d455-4b69-8453-505e6507e332,HELLA GmbH & Co KGaA,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,38485,529900PLX4ADJFWIY024,HLE,XETRA,0.85,merge
+27302833-5c7c-420a-b846-e8e685cebf44,Andritz AG,Manufacturing,Industrial Distribution,Unknown,Austria,30003,549300VZKC61IR5U8G96,ANDR,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0,unmapped
+2780324b-cc6c-43eb-97ce-3ca835d2c2eb,Arkema SA,Manufacturing,Chemical Manufacturing,Operational Emitter,France,21082,9695000EHMS84KKP2785,AKE,EURONEXT,1.0,direct
+28680978-6c22-4c5c-a4ce-75d3eae8831a,Antofagasta PLC,Manufacturing,Copper,Unknown,United Kingdom,8095,213800MY6QVH4FVLD628,ANTO,LONDON STOCK EXCHANGE,0,unmapped
+28e3f6a7-ae4f-448e-b99d-eff95bb6063b,Daetwyler Holding AG,Manufacturing,Industrial Distribution,Unknown,Switzerland,8030,52990096G2IJ89SWI669,DAE,SIX SWISS EXCHANGE,0,unmapped
+29042a95-5e5f-4aa3-9fc0-94f13804b369,Getlink SE,Manufacturing,Railroads,Unknown,France,3457,9695007ZEQ7M0OE74G82,GET,EURONEXT,0,unmapped
+2984ec78-c3b6-499d-94cf-4ba758a9e4b0,Scandic Hotels Group AB,Consumer Goods,Lodging,Unknown,Sweden,10097,529900JY9ZBGUXGRKQ86,SHOT,NASDAQ STOCKHOLM AB,0,unmapped
+298bfad9-40d2-4665-acee-a1e0c5d86d83,Iveco Group NV,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Italy,36046,549300ZWF2ZJDD9EOR96,IVG,EURONEXT MILAN,0.8,merge
+299fb3ab-30f0-465c-a127-93b6a456feaa,Varta AG,Manufacturing,Electronics Manufacturing,Scope 2-heavy,Germany,4049,529900E7KB95KOXBWP63,VAR1,XETRA,0.85,map
+2a4ca294-102a-4a5e-8d33-b984d150bb39,Playa Hotels & Resorts NV,Consumer Goods,Resorts & Casinos,Unknown,Netherlands,13000,529900BUP3KWPCJNLS49,PLYA,NASDAQ/NGS (GLOBAL SELECT MARKET),0,unmapped
+2a547edb-413b-4bfe-8928-73e60132fc02,Atlantica Sustainable Infrastructure Ltd,Energy,Renewable Energy,Lifecycle-dependent,United Kingdom,1366,549300ITBBGKJ651R879,AY,NASDAQ/NGS (GLOBAL SELECT MARKET),1.0,direct
+2a648400-22e6-46c6-a454-d5a941cedd93,Kingfisher PLC,Consumer Goods,Home Improvement Retail,Unknown,United Kingdom,74525,213800KBMEV7I92FY281,KGF,LONDON STOCK EXCHANGE,0,unmapped
+2a7ef541-d17a-4a43-ba20-c29486aa8bbb,Peab AB,Manufacturing,Construction Services,Upstream-heavy,Sweden,13000,549300FQS4VD3153I854,PEAB B,NASDAQ STOCKHOLM AB,0.9,extend
+2ae58430-8b4a-4378-8735-c8d906a65433,Barry Callebaut AG,Consumer Goods,Confectioners,Unknown,Switzerland,13423,213800Y5RWKLDPUTT265,BARN,SIX SWISS EXCHANGE,0,unmapped
+2aef02f7-401e-4dce-b72c-a873e0f4e1c3,Munters Group AB,Manufacturing,Pollution & Treatment Controls,Unknown,Sweden,5412,549300KYCB37YAVUV523,MTRS,NASDAQ STOCKHOLM AB,0,unmapped
+2b896716-7e4f-47a9-8972-c3983474a122,Harboes Bryggeri A/S,Consumer Goods,Beverages - Brewers,Unknown,Denmark,560,529900HHQ61RRUM90490,HARB B,NASDAQ COPENHAGEN A/S,0,unmapped
+2ca2be5b-b4d6-4e95-83e4-360b7d5bc231,Securitas AB,Manufacturing,Security & Protection Services,Unknown,Sweden,336000,635400TTYKE8EIWDS617,SECU B,NASDAQ STOCKHOLM AB,0,unmapped
+2cc4f156-b54b-4004-a5d6-3e1ccf5af8be,Thule Group AB,Consumer Goods,Leisure,Unknown,Sweden,2808,549300XHHOGBOERKU333,THULE,NASDAQ STOCKHOLM AB,0,unmapped
+2ce40804-f556-449c-a2fc-c7b88ae170f0,JDE Peets NV,Consumer Goods,Food & Beverage,Use-phase Dominant,Netherlands,21000,724500EHG519SE5ZRT89,JDEP,EURONEXT,0.95,direct
+2d86d967-a412-4466-a91e-880fd8cb1d6a,Turk Traktor ve Ziraat Makineleri AS,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Turkey,2521,7890002G98SY237S0Y70,TTRAK.E,BORSA ISTANBUL,0.8,merge
+2dfc838f-1c72-44e7-8108-698a6df6de20,Persimmon PLC,Consumer Goods,Residential Construction,Unknown,United Kingdom,4731,213800XI72Y57UWN6F31,PSN,LONDON STOCK EXCHANGE,0,unmapped
+2e4148f0-1a56-4e56-9d7d-96be508dc089,Terna Rete Elettrica Nazionale SpA,Energy,Electric Utilities,Operational Emitter,Italy,6196,8156009E94ED54DE7C31,TRN,EURONEXT MILAN,0.95,merge
+2e50fbb1-d51d-4a38-a097-6e2ea7f603fa,Anheuser-Busch Inbev SA,Consumer Goods,Beverages - Brewers,Unknown,Belgium,143885,5493008H3828EMEXB082,ABI,EURONEXT,0,unmapped
+2ed7823d-697c-44c4-ae05-21eda6181983,Componenta Oyj,Manufacturing,Metal Fabrication,Unknown,Finland,689,5493000SDCOXVGZDWK18,CTH1V,NASDAQ HELSINKI LTD,0,unmapped
+2ee0b3aa-c7bb-4473-a22d-49d27fe69e59,Orkla ASA,Consumer Goods,Food & Beverage,Use-phase Dominant,Norway,19670,549300PZS8G8RG6RVZ52,ORK,OSLO BORS,0.95,direct
+2f6acb20-342a-47b9-9330-4dbe1bd21c05,Salzgitter AG,Manufacturing,Steel Production,Operational Emitter,Germany,23868,529900E12Z6HXIMHFA15,SZG,XETRA,1.0,direct
+2f7e0fc6-1a0d-4d59-ba3a-fb576dbdfdff,Howden Joinery Group PLC,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,United Kingdom,12000,213800KC1LJOJTY3JP45,HWDN,LONDON STOCK EXCHANGE,0,unmapped
+2f99b172-5978-42d9-a99f-5f7e931cda66,TGS ASA,Energy,Oil & Gas Services,Operational Emitter,Norway,1841,549300NUPLAXPB0WYH90,TGS,OSLO BORS,0.95,extend
+2ffb6eca-3450-463a-9f5a-e354a9d30818,Valeo SE,Consumer Goods,Automotive Manufacturing,Upstream-heavy,France,106100,5493006IH2N2WMIBB742,FR,EURONEXT,0.85,merge
+301e2c08-b900-43c3-b58e-1124ea14c710,Experian PLC,Manufacturing,Professional Services,Scope 2-heavy,Ireland,22500,635400RXXHHYT1JTSZ26,EXPN,LONDON STOCK EXCHANGE,0.8,merge
+302e3bbf-61d9-4ffb-b851-61f1fcfc0b63,Nomad Foods Ltd,Consumer Goods,Food & Beverage,Use-phase Dominant,United Kingdom,6864,5493000ZZ1837DS2SI43,NOMD,"NEW YORK STOCK EXCHANGE, INC.",0.95,direct
+3067b290-9efa-43e5-97e4-e5b3abdc7910,Borregaard ASA,Manufacturing,Chemical Manufacturing,Operational Emitter,Norway,1174,5967007LIEEXZXGYXC05,BRG,OSLO BORS,1.0,direct
+306c728d-c4fd-4e67-8364-0f3544cbad77,SIG Group AG,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,Switzerland,8142,5493004Z6P7TSVB1L042,SIGN,SIX SWISS EXCHANGE,0.95,extend
+99a51187-ed40-4407-8cd7-3d3d841c9782,Acerinox SA,Manufacturing,Steel Production,Operational Emitter,Spain,9311,9.6E+19,ACX,BOLSA DE MADRID,1.0,direct
+314470bd-0c22-4694-a282-3d07b0f8eb81,Aena SME SA,Manufacturing,Airports & Air Services,Unknown,Spain,9511,959800R7QMXKF0NFMT29,AENA,BOLSA DE MADRID,0,unmapped
+3180986c-bcb9-423d-8b55-78a4ffacf2a7,Enel SpA,Energy,Electric Utilities,Operational Emitter,Italy,60359,WOCMU6HCI0OJWNPRZS33,ENEL,EURONEXT MILAN,0.95,direct
+31ac28cc-973c-4ae6-a9b8-0022ae7da1ac,Lassila & Tikanoja Oyj,Manufacturing,Waste Management Services,Operational Emitter,Finland,6828,743700Z9Z54VGHZA0028,LAT1V,NASDAQ HELSINKI LTD,0.9,extend
+31c755f4-38ac-4294-8b92-a47ab1d9ec2c,Hill & Smith PLC,Manufacturing,Construction Services,Upstream-heavy,United Kingdom,4500,2138003A3ISGQZBOWI83,HILS,LONDON STOCK EXCHANGE,0.9,extend
+31d4f8fa-d519-4dc3-8e27-962de5c33afb,Kuehne und Nagel International AG,Manufacturing,Shipping & Logistics,Operational Emitter,Switzerland,75241,529900Q0YED3805QXQ66,KNIN,SIX SWISS EXCHANGE,0.95,direct
+3277af3d-5c9a-45c8-a5dc-22b757c670f8,Viking Line Abp,Manufacturing,Marine Shipping,Unknown,Finland,2403,743700CUWGW42AGIDN49,VIK1V,NASDAQ HELSINKI LTD,0,unmapped
+32c8d405-6684-45eb-815d-140484eb490e,Koenig & Bauer AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,5673,529900IQ90WSXBWSTD78,SKB,XETRA,0.95,extend
+32ca8de8-3dd5-42cf-b7c9-d0b22bfc8c0b,Dunelm Group PLC,Consumer Goods,Traditional Retail,Scope 2-heavy,United Kingdom,12000,213800WCOWEI3T5DUV19,DNLM,LONDON STOCK EXCHANGE,0.85,merge
+33207632-e2a9-44bb-8a9f-5e57db79064d,Koc Holding AS,Manufacturing,Diversified Manufacturing,Upstream-heavy,Turkey,130760,7890005U0H950VH19H45,KCHOL.E,BORSA ISTANBUL,0.6,extend
+33b3b23a-afea-4ab2-a5a8-e6e62d651dd2,Vestas Wind Systems A/S,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Denmark,35100,549300DYMC8BGZZC8844,VWS,NASDAQ COPENHAGEN A/S,0.95,extend
+33b5b9b9-8cb4-4839-ae0c-166e63e83edf,Tenaris SA,Energy,Oil & Gas Services,Operational Emitter,Luxembourg,29134,549300Y7C05BKC4HZB40,TEN,EURONEXT MILAN,0.95,extend
+34a393c6-d5fc-42b9-8aed-3c036bdf81cb,SKF AB,Manufacturing,Industrial Equipment Manufacturing,Scope 2-heavy,Sweden,37861,549300B6HWYEE57O8J84,SKF B,NASDAQ STOCKHOLM AB,0.75,merge
+34fe0a7e-3abb-4b58-8784-a7a371f667d2,Martela Oyj,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Finland,360,743700M4EIEVD61PNN55,MARAS,NASDAQ HELSINKI LTD,0,unmapped
+356cb85c-290a-47e3-aa9a-73045323189a,Takkt AG,Manufacturing,Business Equipment & Supplies,Unknown,Germany,2165,549300AZ0JTVTW3IZY37,TTK,XETRA,0,unmapped
+35f3252e-dd84-4fac-bc41-e45d5ed157c8,Titan Cement International SA,Manufacturing,Construction Materials,Lifecycle-dependent,Belgium,5700,213800H2CDP9I374WH83,TITC,EURONEXT,0.9,extend
+3618e3c4-f4b0-403c-aab8-98c6135aeb0d,Acea SpA,Energy,Electric Utilities,Operational Emitter,Italy,9372,549300Q3448N041CTH56,ACE,EURONEXT MILAN,0.95,direct
+3675a2fb-5820-4e3a-9a51-03b4584a2069,Wacker Neuson SE,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,6019,529900RJL86244E1I652,WAC,XETRA,0.8,merge
+36ab972f-70d4-49f6-8149-215e5ed3728b,Hapag-Lloyd AG,Manufacturing,Marine Shipping,Unknown,Germany,14608,HD52L5PJVBXJUUX8I539,HLAG,XETRA,0,unmapped
+36c4f3ff-0897-4156-b74e-7ae0222a808f,Tofas Turk Otomobil Fabrikasi AS,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Turkey,4502,789000YSTNETKLRWHT29,TOASO.E,BORSA ISTANBUL,1.0,direct
+36c77921-a7d0-41b1-a7c2-d248600c6b99,LPKF Laser & Electronics SE,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,736,529900BCQXUJL7J96G45,LPK,XETRA,0.95,extend
+36f4eff4-df0f-43b8-aa36-25a68adf15d8,Husqvarna AB,Manufacturing,Industrial Equipment Manufacturing,Scope 2-heavy,Sweden,13353,549300GYQIIJ3UXB7655,HUSQ B,NASDAQ STOCKHOLM AB,0.75,merge
+373ed641-4741-4982-958b-2073c4b3dc20,QinetiQ Group PLC,Manufacturing,Aerospace Manufacturing,Upstream-heavy,United Kingdom,8500,213800S8OBDOZMCMUW34,QQ.,LONDON STOCK EXCHANGE,0.9,extend
+385bc7ca-48e3-425e-b637-2fc5260dfd7a,Billerud AB (publ),Manufacturing,Paper Manufacturing,Lifecycle-dependent,Sweden,5756,549300YJUYJ9A24RXL71,BILL,NASDAQ STOCKHOLM AB,0.9,extend
+38cc849d-4aa9-4748-b2c5-80dab73a542b,Brembo NV,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Italy,14348,549300BLWVJN2BAT0A44,BRE,EURONEXT MILAN,0.85,merge
+3918ac48-ec79-467e-9bf1-da46919697e5,CECONOMY AG,Consumer Goods,Traditional Retail,Scope 2-heavy,Germany,40990,5299001X9L42HXEBCZ51,CEC,XETRA,0.85,merge
+3bc836da-8c13-47f9-b3e9-7406617ac19a,RS Group PLC,Manufacturing,Industrial Distribution,Unknown,United Kingdom,9000,549300KVXDURRKVW7R37,RS1,LONDON STOCK EXCHANGE,0,unmapped
+3be816b7-213b-46bc-a3e4-7ee6f1faa16b,SEB SA,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,France,32000,969500WP61NBK098AC47,SK,EURONEXT,0,unmapped
+3c5d2666-7f81-4f15-98b8-4fe8b9d97c62,British American Tobacco plc,Consumer Goods,Tobacco Products,Use-phase Dominant,United Kingdom,48989,213800FKA5MF17RJKT63,BATS,LONDON STOCK EXCHANGE,0.95,extend
+3cb80018-056a-4493-8c4f-fbbd32266f54,Dogan Sirketler Grubu Holding AS,Manufacturing,Diversified Manufacturing,Upstream-heavy,Turkey,7498,789000J24Q4JM3H6UX22,DOHOL.E,BORSA ISTANBUL,0.6,extend
+3da4a5ac-c523-4fc0-8ff8-b3d4d26c4050,Norma Group SE,Manufacturing,Metal Fabrication,Unknown,Germany,6063,5299000LM9HC76W5XD46,NOEJ,XETRA,0,unmapped
+3e37fc20-6da1-4c94-88c6-d594d0318b78,Pfeiffer Vacuum Technology AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,3975,8945004AW6QK8JHNQP69,PFV,XETRA,0.95,extend
+3ef5040d-9b53-48bf-b24e-957dbf00ff60,Syensqo NV,Manufacturing,Chemical Manufacturing,Operational Emitter,Belgium,12686,549300060XNJ90PLNS10,SYENS,EURONEXT,1.0,direct
+3f1e6228-63e4-47d1-8e88-0d3a60a5b656,Daimler Truck Holding AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,104919,529900PW78JIYOUBSR24,DTG,XETRA,0.8,merge
+3f271f12-9932-42db-ae1c-5f6094b174f9,EVN AG,Energy,Electric Utilities,Operational Emitter,Austria,7695,529900P4JZBFEVNEAE60,EVN,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0.95,direct
+3fc6d100-3091-47c5-a5ff-9a45242110d5,Central Asia Metals PLC,Manufacturing,Copper,Unknown,United Kingdom,1000,213800EYQBJZIT64NH43,CAML,LONDON STOCK EXCHANGE,0,unmapped
+3fdd9fb5-d204-414e-a724-fab9741b1863,Sodexo SA,Manufacturing,Professional Services,Scope 2-heavy,France,317177,969500LCBOG12HXPYM84,SW,EURONEXT,0.75,extend
+402a95d0-bb23-4e10-aaea-b4b41ea9ac09,Pegasus Hava Tasimaciligi AS,Manufacturing,Airlines,Operational Emitter,Turkey,8459,789000B1MW5PQ58A8T03,PGSUS.E,BORSA ISTANBUL,1.0,direct
+415051b9-0f85-41b3-8f57-e8049e403e8e,Ryanair Holdings PLC,Manufacturing,Airlines,Operational Emitter,Ireland,27000,635400BR2ROC1FVEBQ56,RYA,IRISH STOCK EXCHANGE,1.0,direct
+41bc75ae-b5d8-4f6a-891b-1c629693c3c3,Aluflexpack AG,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,Switzerland,1604,529900ZK9QIQWWPU5T64,AFP,SIX SWISS EXCHANGE,0.95,extend
+41d451f3-fc8e-4d5c-8eee-a86accde936b,OCI NV,Manufacturing,Chemical Manufacturing,Operational Emitter,Netherlands,1018,549300NCMRGIBJYUOE57,OCI,EURONEXT,1.0,direct
+41dececd-42cd-4286-a9b9-af64ab395f28,Hugo Boss AG,Consumer Goods,Apparel Manufacturing,Unknown,Germany,18623,529900LFVU534EBRXD13,BOSS,XETRA,0,unmapped
+42338ca8-27ff-4a4f-ad87-bd72a42b0a45,GEA Group AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,18347,549300PHUU0ZZWO8EO07,G1A,XETRA,0.95,extend
+425d3357-f9ae-423f-bc0c-8acfd091c2dd,Iskenderun Demir ve Celik AS,Manufacturing,Steel Production,Operational Emitter,Turkey,5148,789000W8HVAZCXF6O806,ISDMR.E,BORSA ISTANBUL,1.0,direct
+42a854ca-89d2-4f26-a8fb-3f3e671ed372,Fuchs Se,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,6781,529900SNF9E1P5ZO4P98,FPE3,XETRA,1.0,direct
+43b55ab7-6641-4cf2-b6b0-83ee29d6fce4,Deutsche Lufthansa AG,Manufacturing,Airlines,Operational Emitter,Germany,66111,529900PH63HYJ86ASW55,LHA,XETRA,1.0,direct
+43ff4277-2f66-4c85-823b-4e29feb56793,Buzzi SpA,Manufacturing,Construction Materials,Lifecycle-dependent,Italy,9843,5299003DX5YLKSVJ6K59,BZU,EURONEXT MILAN,0.9,extend
+4580ae0b-efcd-41a8-b9db-14dd1eb98261,Rational AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,2690,529900K139N6UFJ1A758,RAA,XETRA,0.95,extend
+46cba022-925d-4f02-96a6-3fe89852a7d0,Bucher Industries AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,12830,52990014AQ91A29HPB27,BUCN,SIX SWISS EXCHANGE,0.95,extend
+47d5bbcb-3cba-491b-8623-642b6a7295a4,Burkhalter Holding AG,Manufacturing,Construction Services,Upstream-heavy,Switzerland,5185,3912002Q7RGEIHPQ0J90,BRKN,SIX SWISS EXCHANGE,0.9,extend
+4807e252-165d-42ce-8fd0-2f60511665a7,Deutsche Post AG,Manufacturing,Shipping & Logistics,Operational Emitter,Germany,482638,8ER8GIG7CSMVD8VUFE78,DHL,XETRA,0.95,direct
+491704c6-1a75-486d-886d-dae67c2a9c06,Oersted A/S,Energy,Renewable Energy,Lifecycle-dependent,Denmark,8278,W9NG6WMZIYEU8VEDOG48,ORSTED,NASDAQ COPENHAGEN A/S,1.0,direct
+492eb9c0-d468-4998-95ef-cb396a0ad562,Sacyr SA,Manufacturing,Construction Services,Upstream-heavy,Spain,15121,959800XKAB9VNAVN9425,SCYR,BOLSA DE MADRID,0.9,extend
+4932dc31-3b29-478c-ada6-cae2d422babe,Turk Hava Yollari AO,Manufacturing,Airlines,Operational Emitter,Turkey,63455,789000EV8M3BL7ZPFB03,THYAO.E,BORSA ISTANBUL,1.0,direct
+49bed3d6-e45f-4569-809e-4f1bd256ed81,Givaudan SA,Manufacturing,Chemical Manufacturing,Operational Emitter,Switzerland,16942,213800SVRMQA1TD91D41,GIVN,SIX SWISS EXCHANGE,1.0,direct
+49c9b2c1-3b21-4ccb-800f-bc6cb67f426d,InPost SA,Manufacturing,Professional Services,Scope 2-heavy,Luxembourg,6950,2221003M23QLERR89585,INPST,EURONEXT,0.75,extend
+4a67b98b-1c22-4b06-bcf3-b80a59d69004,Rieter Holding AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,4785,529900SNR4JQCSACBN29,RIEN,SIX SWISS EXCHANGE,0.95,extend
+4ab25d85-84f3-493f-bcd5-3b6b22bada61,Cimsa Cimento Sanayi ve Ticaret AS,Manufacturing,Construction Materials,Lifecycle-dependent,Turkey,2012,789000AZR4YMJIHZ1145,CIMSA.E,BORSA ISTANBUL,0.9,extend
+4abcd2a6-43a9-462d-947a-6aaa4fe098f2,Danone SA,Consumer Goods,Food & Beverage,Use-phase Dominant,France,89528,969500KMUQ2B6CBAF162,BN,EURONEXT,0.95,direct
+4b54ce23-9442-4963-a0e4-6a8e0c981e62,voestalpine AG,Manufacturing,Steel Production,Operational Emitter,Austria,50670,529900ZAXBMQDIWPNB72,VOE,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),1.0,direct
+4bacf8e8-4dbb-48b5-ad20-a1525bed05cc,Rotork PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,3493,213800AH5RZIHGWRJ718,ROR,LONDON STOCK EXCHANGE,0.95,extend
+4bae8f66-8ca6-497c-a896-3aac26a8ea9c,Flugger group A/S,Manufacturing,Chemical Manufacturing,Operational Emitter,Denmark,1696,5493008AHEOXL9ETQO38,FLUG B,NASDAQ COPENHAGEN A/S,1.0,direct
+4c714335-6ca7-42c7-a0fe-9a18c671c57d,Schindler Holding AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,69326,5299007DRLI319H7Q933,SCHP,SIX SWISS EXCHANGE,0.95,extend
+4caed0f1-e3dd-4be1-ba6c-53acb85bb40a,Hexagon Composites ASA,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,Norway,1149,5967007LIEEXZXJWMW49,HEX,OSLO BORS,0.95,extend
+4d339fd0-8271-45a4-8a84-9ae755db55ab,Sitowise Group Oyj,Manufacturing,Construction Services,Upstream-heavy,Finland,2038,743700HOHMOHAANHFF73,SITOWS,NASDAQ HELSINKI LTD,0.9,extend
+4d4a30cf-e298-4b2c-b7f6-20a225797c30,Vistry Group PLC,Consumer Goods,Residential Construction,Unknown,United Kingdom,4517,2138001KOWN7CG9SLK53,VTY,LONDON STOCK EXCHANGE,0,unmapped
+4d80a17f-57fe-46d9-9cab-03c1496cf429,Galp Energia SGPS SA,Energy,Oil & Gas Extraction,Operational Emitter,Portugal,7054,2138003319Y7NM75FG53,GALP,EURONEXT,1.0,direct
+4e05dd9e-7286-4d52-aeb8-84e33099220e,Eaton Corporation PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Ireland,94443,549300VDIGTMXUNT7H71,ETN,"NEW YORK STOCK EXCHANGE, INC.",0.95,extend
+4e3f31a4-583d-4a8d-93c4-cc7a14bb715e,Industria de Diseno Textil SA,Consumer Goods,Apparel Retail,Unknown,Spain,67195,549300TTCXZOGZM2EY83,ITX,BOLSA DE MADRID,0,unmapped
+4eaa1737-1e85-49ec-8b3a-d49124ff72f1,Weir Group PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,12391,549300KDR56WHY9I3D10,WEIR,LONDON STOCK EXCHANGE,0.95,extend
+4edd84fa-28ae-4609-95c4-6ff987ca94b2,Ocado Group PLC,Consumer Goods,Traditional Retail,Scope 2-heavy,United Kingdom,20261,213800LO8F61YB8MBC74,OCDO,LONDON STOCK EXCHANGE,0.9,direct
+4f0987eb-3dcc-483f-bb7c-6c4744eca7f2,Georg Fischer AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,19023,529900CMRQYW4U1W2456,GF,SIX SWISS EXCHANGE,0.95,extend
+4f8e814e-4aa6-4901-9e40-aa1bb3396932,H & M Hennes & Mauritz AB,Consumer Goods,Apparel Manufacturing,Unknown,Sweden,96457,529900O5RR7R39FRDM42,HM B,NASDAQ STOCKHOLM AB,0,unmapped
+4fa60217-8024-4ae7-b95b-7a4f5ec1ac7f,Aquaporin A/S,Energy,Utilities - Regulated Water,Unknown,Denmark,76,894500AW5ZWMYUZN1V70,AQP,NASDAQ COPENHAGEN A/S,0,unmapped
+4fb3cb8e-7ff2-4361-a215-27d0d7d8c0d1,Symrise AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,12659,529900D82I6R9601CF26,SY1,XETRA,1.0,direct
+4fc198aa-d153-4afb-9465-8cd6b59e2115,Knorr Bremse AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,29051,5299001GRRO0Z25YZT52,KBX,XETRA,0.85,merge
+508509b6-d81e-42e0-bf4a-35313124c16e,Terna Energy SA,Energy,Renewable Energy,Lifecycle-dependent,Greece,293,5493006164JBW2E60O73,TENERGY,ATHENS EXCHANGE S.A. CASH MARKET,1.0,direct
+50c7b291-83f2-40b6-be44-32b19390090d,Flughafen Zuerich AG,Manufacturing,Airports & Air Services,Unknown,Switzerland,1764,529900PFO97GCN5SYB55,FHZN,SIX SWISS EXCHANGE,0,unmapped
+54d0845d-8b40-4855-bbb4-bb371f82288d,Schoeller-Bleckmann Oilfield Equipment AG,Energy,Oil & Gas Services,Operational Emitter,Austria,1596,549300ZD9ED8GSG3JW36,SBO,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0.95,extend
+55362943-8ba8-432f-99a3-9ca721f8cdb9,Glaston Oyj Abp,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,817,743700V3I7CLI3DJ8L62,GLA1V,NASDAQ HELSINKI LTD,0.95,extend
+55e08590-3ad8-45e4-a870-e66825438b1e,Enagas SA,Energy,Gas Utilities,Operational Emitter,Spain,1395,213800OU3FQKGM4M2U23,ENG,BOLSA DE MADRID,0.9,extend
+562cd299-8132-4ce2-9562-84a29b47d875,DSM-Firmenich AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Switzerland,28214,506700G44V67MPM4BI12,DSFIR,EURONEXT,1.0,direct
+5789fd98-e249-48ca-b140-11172ec71e3f,Kering SA,Consumer Goods,Consumer Electronics,Use-phase Dominant,France,44627,549300VGEJKB7SVUZR78,KER,EURONEXT,0.7,map
+57adaa6a-b60e-457f-bb67-37493270164c,Diageo PLC,Consumer Goods,Beverages - Wineries & Distilleries,Unknown,United Kingdom,30092,213800ZVIELEA55JMJ32,DGE,LONDON STOCK EXCHANGE,0,unmapped
+588fa927-137c-40bd-a779-fa0d13df4d09,Christian Dior SE,Consumer Goods,Consumer Electronics,Use-phase Dominant,France,215000,969500WESYQMQ1F2C272,CDI,EURONEXT,0.7,map
+58bf1ed4-2ce9-4f8b-ad01-aa4432d98f21,Metall Zug AG,Manufacturing,Diversified Manufacturing,Upstream-heavy,Switzerland,983,529900X7CXUI05DN7K64,METN,SIX SWISS EXCHANGE,0.6,extend
+58dd11da-d90c-4901-9db7-4a6f1964c2b3,JD Sports Fashion PLC,Consumer Goods,Apparel Retail,Unknown,United Kingdom,79717,213800HROV6Y9MUU8375,JD.,LONDON STOCK EXCHANGE,0,unmapped
+597db694-be0b-4219-aa15-f884b4aedf6a,Investment AB Latour,Manufacturing,Diversified Manufacturing,Upstream-heavy,Sweden,9000,5493006GFBLNB3Y0Y789,LATO B,NASDAQ STOCKHOLM AB,0.6,extend
+5a225468-cfa2-4e77-af1c-2c3552d1833e,THG PLC,Consumer Goods,Internet Retail,Unknown,United Kingdom,7291,21380066N3SV9O8IDP37,THG,LONDON STOCK EXCHANGE,0,unmapped
+5a2db263-d4f6-4423-ac6f-ae7dfc136d9a,Atlas Copco AB,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Sweden,55267,213800T8PC8Q4FYJZR07,ATCO A,NASDAQ STOCKHOLM AB,0.95,extend
+5a833868-bc42-4b1f-a8ff-8bc67afda821,Heineken NV,Consumer Goods,Beverages - Brewers,Unknown,Netherlands,89264,724500K5PTPSST86UQ23,HEIA,EURONEXT,0,unmapped
+5aea9c04-b0fd-4df7-81f4-cbf43263bd2c,Nkt A/S,Manufacturing,Electronics Manufacturing,Scope 2-heavy,Denmark,5673,529900197LKWCEQ0NL18,NKT,NASDAQ COPENHAGEN A/S,0.85,map
+5b876831-071c-4ed7-b810-f40f2785444e,Bunzl plc,Consumer Goods,Food Distribution,Unknown,United Kingdom,26978,213800Q1Q9DV4L78UM09,BNZL,LONDON STOCK EXCHANGE,0,unmapped
+5ce5feb8-1229-42a5-9b77-7bd4a6392cd8,Puig Brands SA,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,Spain,10685,549300OVHNSX30L1AQ94,PUIG,BOLSA DE MADRID,0.9,direct
+5ebe04dd-ee32-409f-834a-9b3ef85bd93e,Evolution AB (publ),Consumer Goods,Gambling,Unknown,Sweden,15381,549300SUH6ZR1RF6TA88,EVO,NASDAQ STOCKHOLM AB,0,unmapped
+5ecb63d0-7b3d-4675-9217-101d8941989d,Implenia AG,Manufacturing,Construction Services,Upstream-heavy,Switzerland,9046,52990006TKCUQQJ79B11,IMPN,SIX SWISS EXCHANGE,0.9,extend
+5f155b3c-db59-4b7c-8979-1a55758c3b94,Chocoladefabriken Lindt & Spruengli AG,Consumer Goods,Confectioners,Unknown,Switzerland,14973,529900JYJNNOKKAGK736,LISN,SIX SWISS EXCHANGE,0,unmapped
+5fd60cf9-ac10-4f66-900a-72506820b371,DCC PLC,Energy,Oil & Gas Refining,Operational Emitter,Ireland,16700,213800UPS1QEE4TD3T45,DCC,LONDON STOCK EXCHANGE,0.95,extend
+609e8673-8dff-40d1-bae8-13b4a51bc885,Just Eat Takeaway.com NV,Consumer Goods,Internet Retail,Unknown,Netherlands,20000,724500FVZIBSSQ7SHI95,TKWY,EURONEXT,0,unmapped
+60f6f823-3747-46a6-a917-6f798b866a12,Sulzer AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,13455,529900NZ6MAST5IJF669,SUN,SIX SWISS EXCHANGE,0.95,extend
+619fecb3-4313-466e-8116-74a902454e6b,BIM Birlesik Magazalar AS,Consumer Goods,Traditional Retail,Scope 2-heavy,Turkey,95630,7890001GCDJQD8DJKE29,BIMAS.E,BORSA ISTANBUL,0.9,direct
+627d3630-aed4-44e8-93a1-e33035d7a4eb,Skanska AB,Manufacturing,Construction Services,Upstream-heavy,Sweden,25922,549300UINV5RINHGMG07,SKA B,NASDAQ STOCKHOLM AB,0.9,extend
+62a2624b-2b93-43c9-b4c1-acd9b4d58f00,Trane Technologies PLC,Manufacturing,Construction Materials,Lifecycle-dependent,Ireland,45000,549300BURLR9SLYY2705,TT,"NEW YORK STOCK EXCHANGE, INC.",0.8,merge
+63593639-20dc-4014-91b7-70dde7636170,Interparfums SA,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,France,346,969500SARWF33OPQED48,ITP,EURONEXT,0.9,direct
+640e7eb3-6788-4d03-8a0e-50bf44609bdb,Diploma PLC,Manufacturing,Industrial Distribution,Unknown,United Kingdom,3597,2138008OGI7VYG8FGR19,DPLM,LONDON STOCK EXCHANGE,0,unmapped
+648293de-424f-4fc4-a2c4-9fde45b932d4,Navigator Company SA,Manufacturing,Paper Manufacturing,Lifecycle-dependent,Portugal,3957,549300UNIB7M2AXUXS35,NVG,EURONEXT,0.9,extend
+64cb4b11-312d-4c3d-9675-1d0c4ad4beda,Ebro Foods SA,Consumer Goods,Food & Beverage,Use-phase Dominant,Spain,5182,959800NW6DLQT89M3240,EBRO,BOLSA DE MADRID,0.95,direct
+65f687e5-75a2-4d79-a3e9-8323b57907c9,Raute Oyj,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,783,743700G00629V99PE435,RAUTE,NASDAQ HELSINKI LTD,0.95,extend
+66b037e8-aa98-4e12-9853-b9ab3c973f29,Polestar Automotive Holding UK PLC,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Sweden,2515,894500HDA1DJKHYN4D83,PSNY,NASDAQ/NMS (GLOBAL MARKET),1.0,direct
+66b70057-54a3-41b9-bacd-3fb7c87f3f8a,Henkel AG & Co KGaA,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,Germany,47150,549300VZCL1HTH4O4Y49,HEN3,XETRA,0.9,direct
+66e40678-f8fc-42d2-89b7-090a19fac2d7,DEME Group NV,Manufacturing,Construction Services,Upstream-heavy,Belgium,5822,549300FPFPQPKI3PJV37,DEME,EURONEXT,0.9,extend
+6739aaf5-d615-4b49-93d2-f82f76e3f10a,GreenMobility A/S,Manufacturing,Rental & Leasing Services,Unknown,Denmark,17,213800PLNNPY2L2GUV16,GREENM,NASDAQ COPENHAGEN A/S,0,unmapped
+67a0f6c4-4a63-40b8-a14a-aac3decb4301,Endesa SA,Energy,Electric Utilities,Operational Emitter,Spain,8914,549300LHK07F2CHV4X31,ELE,BOLSA DE MADRID,0.95,merge
+67d3d788-cb2e-4b0a-a007-02409a8b1949,Azelis Group NV,Manufacturing,Chemical Manufacturing,Operational Emitter,Belgium,4321,699400M9RRMTV264FM70,AZE,EURONEXT,1.0,direct
+68670228-8098-4681-a0b4-802c3371422c,Kesko Oyj,Consumer Goods,Traditional Retail,Scope 2-heavy,Finland,18309,743700OX6HSVMCAHPB95,KESKOB,NASDAQ HELSINKI LTD,0.9,direct
+68d3e46d-8a15-45d3-8423-630d8594efd3,BASF SE,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,109717,529900PM64WH8AF1E917,BAS,XETRA,1.0,direct
+68db0b89-2cc0-48bd-a1fc-c96ef4ca6b53,Yara International ASA,Manufacturing,Agricultural Inputs,Unknown,Norway,16624,213800WKOUWXWFJ5Z514,YAR,OSLO BORS,0,unmapped
+6979c5dd-4628-4e6c-955a-7bd3997bd4f0,Kemira Oyj,Manufacturing,Chemical Manufacturing,Operational Emitter,Finland,4618,74370031Y7RK5H88CQ48,KEMIRA,NASDAQ HELSINKI LTD,1.0,direct
+698fff4c-31d1-4fd0-ab72-cccc9ad58070,Sweco AB (publ),Manufacturing,Construction Services,Upstream-heavy,Sweden,21000,549300Q4Y55VICYV6U90,SWEC B,NASDAQ STOCKHOLM AB,0.9,extend
+6a19ee8e-b32a-4e97-b181-8b02fce7687c,AerCap Holdings NV,Manufacturing,Rental & Leasing Services,Unknown,Ireland,698,549300SZYINBBLJQU475,AER,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+6a1e78b9-6d6d-4a59-95bb-b481ed8e41ea,Ems Chemie Holding AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Switzerland,2771,529900G1XFTGSE0DIX60,EMSN,SIX SWISS EXCHANGE,1.0,direct
+6bf0e683-d1f0-4e02-816f-d30e5958f345,Lanxess AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,12338,529900PTLRE72EMYIJ77,LXS,XETRA,1.0,direct
+6bf67be9-8839-4b2c-8424-e5f032f9a824,International Distribution Services PLC,Manufacturing,Shipping & Logistics,Operational Emitter,United Kingdom,163255,213800TCZZU84G8Z2M70,IDS,LONDON STOCK EXCHANGE,0.95,direct
+6c61298d-ef23-4121-8b3d-fdaed2a2398b,Puuilo Oyj,Consumer Goods,Department Stores,Unknown,Finland,953,743700UJUT6FWHBXPR69,PUUILO,NASDAQ HELSINKI LTD,0,unmapped
+6c7c411a-6515-485b-9e57-0912b1dc0676,Oesterreichische Post AG,Manufacturing,Shipping & Logistics,Operational Emitter,Austria,27802,529900MVUWACNUTK8467,POST,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0.95,direct
+6c85ee62-1a68-4d4f-a1ba-9da6d155502c,GEK Terna SA,Manufacturing,Construction Services,Upstream-heavy,Greece,3928,2138003TO2MTRHWVP686,GEKTERNA,ATHENS EXCHANGE S.A. CASH MARKET,0.9,extend
+6cb189f4-191c-40b6-bd5f-ec9fb1f780f8,RWE AG,Energy,Electric Utilities,Operational Emitter,Germany,20985,529900GB7KCA94ACC940,RWE,XETRA,0.95,direct
+6d01ebd2-efeb-49ed-96a0-1f41d90b7fd6,Aksa Akrilik Kimya Sanayii AS,Consumer Goods,Textile Manufacturing,Unknown,Turkey,1418,789000OKY3ICX0Y2NY41,AKSA.E,BORSA ISTANBUL,0,unmapped
+6d14ba80-4e29-4bba-96bf-79c7c949bc9f,thyssenkrupp AG,Manufacturing,Diversified Manufacturing,Upstream-heavy,Germany,97360,549300UDG16DOYUPR330,TKA,XETRA,0.6,extend
+6d6cba36-c218-4845-b379-3b478ea4f1a0,Iberdrola SA,Energy,Electric Utilities,Operational Emitter,Spain,41000,5QK37QC7NWOJ8D7WVQ45,IBE,BOLSA DE MADRID,0.95,direct
+6dbe9435-274e-4424-bd9d-bcbcc13efe88,Outokumpu Oyj,Manufacturing,Steel Production,Operational Emitter,Finland,7671,5493009YRUJJDCFF0R80,OUT1V,NASDAQ HELSINKI LTD,1.0,direct
+6de91c7d-19d0-412d-ab12-75795da9ef45,Corporacion Acciona Energias Renovables SA,Energy,Renewable Energy,Lifecycle-dependent,Spain,3224,254900UPX0OEHTKB9Y44,ANE,BOLSA DE MADRID,1.0,direct
+6f762783-0f18-4b77-ac73-ec61fa005cf8,Johnson Matthey PLC,Manufacturing,Chemical Manufacturing,Operational Emitter,United Kingdom,11685,2138001AVBSD1HSC6Z10,JMAT,LONDON STOCK EXCHANGE,1.0,direct
+6f7ed367-1f65-4fb3-a1e2-808c85196d4f,Barratt Redrow PLC,Consumer Goods,Residential Construction,Unknown,United Kingdom,6270,2138006R85VEOF5YNK29,BTRW,LONDON STOCK EXCHANGE,0,unmapped
+6f922ce0-2b48-487e-87e2-e6f05f528a39,Smiths Group PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,15750,213800MJL6IPZS3ASA11,SMIN,LONDON STOCK EXCHANGE,0.95,extend
+70144a29-fb0b-436d-929a-78c033e3f735,Vicat SA,Manufacturing,Construction Materials,Lifecycle-dependent,France,9840,9695009YI1863TOVDP79,VCT,EURONEXT,0.9,extend
+7040b726-ba4f-4f8a-b255-f1fe60664606,Scandinavian Tobacco Group A/S,Consumer Goods,Tobacco Products,Use-phase Dominant,Denmark,9353,5299003KG4JS99TRML67,STG,NASDAQ COPENHAGEN A/S,0.95,extend
+7044686e-cefd-4f7e-a194-003c533ad7e9,Delivery Hero SE,Consumer Goods,Internet Retail,Unknown,Germany,43292,529900C3EX1FZGE48X78,DHER,XETRA,0,unmapped
+7060ec29-cd05-476e-97b8-32aefd2b7fbb,Dottikon Es Holding AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Switzerland,770,50670064H782SV8G2Z44,DESN,SIX SWISS EXCHANGE,1.0,direct
+710ab6a4-f614-407e-b277-4c86cc805ba9,Compass Group PLC,Consumer Goods,Food Service,Scope 2-heavy,United Kingdom,580000,2138008M6MH9OZ6U2T68,CPG,LONDON STOCK EXCHANGE,0.9,extend
+71618347-3ed4-4f52-a86d-388df781b46b,FLSmidth & Co A/S,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Denmark,7739,213800MXXDGQ3ITPXI41,FLS,NASDAQ COPENHAGEN A/S,0.95,extend
+718f1655-166d-41d0-8bde-9ef7a59021ce,Linde PLC,Manufacturing,Chemical Manufacturing,Operational Emitter,United Kingdom,65289,5299003QR1WT0EF88V51,LIN,NASDAQ/NGS (GLOBAL SELECT MARKET),1.0,direct
+721567fa-25e7-4ca2-b91b-6d0e43fba03c,Neoen SA,Energy,Renewable Energy,Lifecycle-dependent,France,186,969500C0AIAGQWZGJO13,NEOEN,EURONEXT,1.0,direct
+725b3284-898e-4b72-9aca-d8cc7e0f8031,Ferrari NV,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Italy,5435,549300RIVY5EX8RCON76,RACE,EURONEXT MILAN,1.0,direct
+72981bb3-1d70-4f5b-b5e7-5ec9e3277f7b,Prada SpA,Consumer Goods,Consumer Electronics,Use-phase Dominant,Italy,14876,8156000FE0A2DC5B7852,1913,HONG KONG EXCHANGES AND CLEARING LTD,0.7,map
+72bad0c6-1bc3-4dd8-a3e1-1209d8d7cf3c,Jeronimo Martins SGPS SA,Consumer Goods,Food Distribution,Unknown,Portugal,114054,259400A8SZP10GB5IB19,JMT,EURONEXT,0,unmapped
+72be2cff-b984-4407-b65b-e217b539dfc4,Epiroc AB,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Sweden,18655,5493004Q73OEYW1SPE91,EPI A,NASDAQ STOCKHOLM AB,0.8,merge
+73a2c330-e9e9-4e76-a871-54a69cc8ef37,Deliveroo PLC,Consumer Goods,Internet Retail,Unknown,United Kingdom,3839,984500F6537F74DDEE77,ROO,LONDON STOCK EXCHANGE,0,unmapped
+7414849d-5e30-40ba-8e78-8ef3bdcb79f7,Metlen Energy & Metals AE,Energy,Electric Utilities,Operational Emitter,Greece,4769,213800KT8MEUJEJ2KW41,MYTIL,ATHENS EXCHANGE S.A. CASH MARKET,0.95,direct
+743b93d9-198f-4da4-845b-8103c8266690,Airbus SE,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Netherlands,156921,MINO79WLOO247M1IL051,AIR,EURONEXT,0.9,extend
+744b17b5-b3bc-4d06-9a8f-f339c14ff174,Panostaja Oyj,Manufacturing,Professional Services,Scope 2-heavy,Finland,1081,743700ZGH7GD27UOQO12,PNA1V,NASDAQ HELSINKI LTD,0.75,extend
+749374d4-b628-48c5-84ab-83e7960b8f94,Kuka AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,14762,529900VPRFDDIN7BE119,KU2,XETRA,0.95,extend
+74a149ba-be9d-4d59-a903-d49423092413,Frasers Group PLC,Consumer Goods,Traditional Retail,Scope 2-heavy,United Kingdom,32000,213800JEGHHEAXIJDX34,FRAS,LONDON STOCK EXCHANGE,0.85,merge
+7518152d-ad28-4447-8daa-f31491b7a7c6,Olvi Oyj,Consumer Goods,Beverages - Brewers,Unknown,Finland,2380,7437003NX7WWVRT6AJ55,OLVAS,NASDAQ HELSINKI LTD,0,unmapped
+754f1af9-0731-44a8-aca2-e090fb9dadd5,Lifco AB (publ),Manufacturing,Diversified Manufacturing,Upstream-heavy,Sweden,6780,549300RTLL4VDQRCTW41,LIFCO B,NASDAQ STOCKHOLM AB,0.6,extend
+75c76e35-ae4b-4909-b9fa-b4a3afe18b08,Autoneum Holding AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Switzerland,15349,549300FL07XZC5MNXS47,AUTN,SIX SWISS EXCHANGE,0.85,merge
+76000c5e-062d-4f65-b38d-b74ecc8adb22,Rubis SCA,Energy,Oil & Gas Refining,Operational Emitter,France,4594,969500MGFIKUGLTC9742,RUI,EURONEXT,0.95,extend
+760b83e8-c0f6-4f3a-8a91-67b1e2edea4e,Oyak Cimento Fabrikalari AS,Manufacturing,Construction Materials,Lifecycle-dependent,Turkey,3083,789000RZ63UR4V4JZH98,OYAKC.E,BORSA ISTANBUL,0.9,extend
+763624e2-7694-48fc-b1e0-c6c53edbc34c,Boliden AB,Manufacturing,Other Industrial Metals & Mining,Unknown,Sweden,5993,21380059QU7IM1ONDJ56,BOL,NASDAQ STOCKHOLM AB,0,unmapped
+770c4933-1358-4189-97ca-ee647c0f5dd9,Hensoldt AG,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Germany,6907,894500686FYLLZD3M624,HAG,XETRA,0.9,extend
+78cbc2fa-88c0-475b-962a-3563edf87168,BAE Systems PLC,Manufacturing,Aerospace Manufacturing,Upstream-heavy,United Kingdom,107400,8SVCSVKSGDWMW2QHOH83,BA.,LONDON STOCK EXCHANGE,0.9,extend
+7964ba46-8707-49d3-8de1-9d186df05450,Imerys SA,Manufacturing,Construction Materials,Lifecycle-dependent,France,15060,54930075MZSSIB2TGC64,NK,EURONEXT,0.9,extend
+798f922d-81c7-40bc-9400-47075e5c91cd,Volkswagen AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,679472,529900NNUPAGGOMPXZ31,VOW,XETRA,1.0,direct
+79da42ca-87bd-4637-8f45-0a3bf652a61a,Adient PLC,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Ireland,70000,5493002QLDY8O75RTR78,ADNT,"NEW YORK STOCK EXCHANGE, INC.",0.85,merge
+7a126f88-27d6-459f-89f2-0f3063ac3d62,Burberry Group PLC,Consumer Goods,Consumer Electronics,Use-phase Dominant,United Kingdom,9336,213800PE1KEFCNFR1R50,BRBY,LONDON STOCK EXCHANGE,0.7,map
+7a1533de-9c98-48ac-9855-2fd9fa5cd3bc,Emmi AG,Consumer Goods,Food & Beverage,Use-phase Dominant,Switzerland,8821,529900Q53RBYJIVCMA08,EMMN,SIX SWISS EXCHANGE,0.95,direct
+7af40059-3e09-416e-9dfc-9798b12a3f85,SSAB AB,Manufacturing,Steel Production,Operational Emitter,Sweden,14811,529900329VS14ZIML164,SSAB A,NASDAQ STOCKHOLM AB,1.0,direct
+7aff31e9-3d74-40d1-8479-0d47cfb780ff,A2A SpA,Energy,Electric Utilities,Operational Emitter,Italy,14777,81560076E3944316DB24,A2A,EURONEXT MILAN,0.95,direct
+7b244865-786f-40ea-ad3c-36809c80b454,Reckitt Benckiser Group PLC,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,United Kingdom,37900,5493003JFSMOJG48V108,RKT,LONDON STOCK EXCHANGE,0.9,direct
+7c26d96b-cce6-4ddb-9f43-340598af9e5f,Amcor PLC,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,United Kingdom,41000,549300GSODGFCDQ3DI89,AMCR,"NEW YORK STOCK EXCHANGE, INC.",0.95,extend
+7c391795-03a1-4b56-aefa-63be3b5533b9,Compagnie Financiere Richemont SA,Consumer Goods,Consumer Electronics,Use-phase Dominant,Switzerland,37117,549300YIPGJ6UX2QPS51,CFR,SIX SWISS EXCHANGE,0.7,map
+7c5535df-20e0-4eb1-be11-f17f0fe1f3e4,Inchcape PLC,Consumer Goods,Auto & Truck Dealerships,Unknown,United Kingdom,17588,213800RGEH1MPPNM2T57,INCH,LONDON STOCK EXCHANGE,0,unmapped
+7e19c960-7873-4a5b-82c9-fc30cba554e8,Lagardere SA,Consumer Goods,Traditional Retail,Scope 2-heavy,France,33000,969500VX2NV2AQQ65G45,MMB,EURONEXT,0.85,merge
+7ec5dfea-3582-4671-b51e-7b858180beac,Arcadis NV,Manufacturing,Construction Services,Upstream-heavy,Netherlands,32059,7245000UZH70GO047N03,ARCAD,EURONEXT,0.9,extend
+7f0b9d0e-94a0-4984-a5e3-ed4e9d4ab32c,Wartsila Oyj Abp,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,17166,743700G7A9J1PHM3X223,WRT1V,NASDAQ HELSINKI LTD,0.95,extend
+7f1a648a-c27f-4fb8-bbe8-5f310879f881,Vetropack Holding SA,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,Switzerland,3585,894500HGD08C8B6GS128,VETN,SIX SWISS EXCHANGE,0.95,extend
+7f4f15da-5ea2-4770-aacc-b5f1015e7459,Greencoat UK Wind PLC,Energy,Renewable Energy,Lifecycle-dependent,United Kingdom,0,213800ZPBBK8H51RX165,UKW,LONDON STOCK EXCHANGE,1.0,direct
+8013abc2-01b7-4f57-a34a-aa1353de43ca,Alfa Laval AB,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Sweden,22323,549300UCKT2UK88AG251,ALFA,NASDAQ STOCKHOLM AB,0.95,extend
+8042ad84-7b00-44b9-b4ef-4a0234f2204b,Gaztransport et Technigaz SA,Energy,Oil & Gas Services,Operational Emitter,France,736,969500BVOHVZUUFWDT54,GTT,EURONEXT,0.95,extend
+806a729f-7317-4162-9e7c-370d57032747,Taylor Wimpey PLC,Consumer Goods,Residential Construction,Unknown,United Kingdom,4458,21380089BTRXTD8S3R66,TW.,LONDON STOCK EXCHANGE,0,unmapped
+80a09406-f443-47ab-8be2-13051d0955ec,Wienerberger AG,Manufacturing,Construction Materials,Lifecycle-dependent,Austria,20462,529900VXIFBHO0SW2I31,WIE,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0.9,extend
+814002a3-1e72-4830-808a-cb6f90fee5d8,Unilever PLC,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,United Kingdom,115964,549300MKFYEKVRWML317,ULVR,LONDON STOCK EXCHANGE,0.9,direct
+82263015-5fc5-48ec-a92a-ea2757a201c4,Dr Martens PLC,Consumer Goods,Footwear & Accessories,Unknown,United Kingdom,2630,213800QPT8YM6NQZPH28,DOCS,LONDON STOCK EXCHANGE,0,unmapped
+823b3b52-a88e-4472-87f0-7ff0107891d4,Mowi ASA,Consumer Goods,Farm Products,Unknown,Norway,11473,549300W1OGQF5LZIH349,MOWI,OSLO BORS,0,unmapped
+82b0d2c5-3c6b-417d-98e6-7cd8a65a1cd5,EDP SA,Energy,Electric Utilities,Operational Emitter,Portugal,12591,529900CLC3WDMGI9VH80,EDP,EURONEXT,0.95,direct
+83237d8e-a4f4-49e3-b54c-02b3758053e9,Greggs PLC,Consumer Goods,Food Service,Scope 2-heavy,United Kingdom,33000,213800I71QMUFJ64IW20,GRG,LONDON STOCK EXCHANGE,0.9,extend
+8438ac69-e415-4fcc-b828-ceab38e22838,Aker ASA,Manufacturing,Diversified Manufacturing,Upstream-heavy,Norway,3171,5967007LIEEXZXJ10071,AKER,OSLO BORS,0.6,extend
+843e3512-9af1-4555-be2a-360ec0fb2ac3,Electrolux AB,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Sweden,41000,549300Y3HHZB1ZGFPJ93,ELUX B,NASDAQ STOCKHOLM AB,0,unmapped
+87255c36-69ed-4538-b60b-f2dc0dd9cf15,Gurit Holding AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Switzerland,2291,529900VOD3V5IBEW8G44,GURN,SIX SWISS EXCHANGE,1.0,direct
+8787d1ce-0c5d-4c95-92ea-841a129cc834,Nilfisk Holding A/S,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Denmark,4406,529900FSU45YYVLKB451,NLFSK,NASDAQ COPENHAGEN A/S,0.95,extend
+87c514a3-1d19-4ee1-9f60-ed6e3f2cd8f5,SFS Group AG,Manufacturing,Industrial Equipment Manufacturing,Scope 2-heavy,Switzerland,13689,391200RQ38WAM4BJBO16,SFSN,SIX SWISS EXCHANGE,0.75,merge
+885ce4fd-8d06-4800-a43c-05ab7ea51fc1,Holmen AB,Manufacturing,Paper Manufacturing,Lifecycle-dependent,Sweden,3500,52990080SH3454F0QE68,HOLM B,NASDAQ STOCKHOLM AB,0.9,extend
+88952333-bc75-4cad-b423-b1b20f361a4f,Ferguson (Jersey) Ltd,Manufacturing,Industrial Distribution,Unknown,United Kingdom,35000,213800DU1LGY3R2S2X42,FERG,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+8ada320e-0ba3-4849-9c4d-18e054c01054,Hera SpA,Energy,Electric Utilities,Operational Emitter,Italy,9965,8156009414FD99443B48,HER,EURONEXT MILAN,0.95,direct
+8b2cf838-96ea-47cf-9863-2b31bc304441,Glencore PLC,Manufacturing,Other Industrial Metals & Mining,Unknown,Switzerland,84146,2138002658CPO9NBH955,GLEN,LONDON STOCK EXCHANGE,0,unmapped
+8b4f605d-274e-4307-864a-d6fbacd343f0,Prysmian SpA,Manufacturing,Electronics Manufacturing,Scope 2-heavy,Italy,31857,529900X0H1IO3RS1A464,PRY,EURONEXT MILAN,0.85,map
+8bc2b976-87be-4ff7-b3e6-494359967fd3,Forvia SE,Consumer Goods,Automotive Manufacturing,Upstream-heavy,France,149691,969500F0VMZLK2IULV85,FRVIA,EURONEXT,0.85,merge
+8c1ed472-dd3d-4ca5-88ba-616c0006413b,Duerr AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,19894,5299003APZ54EDTSRO20,DUE,XETRA,0.95,extend
+8c20b958-64cf-47e3-aea0-c1578f920322,Huhtamaki Oyj,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,Finland,17416,5493007050SJVMXN6L29,HUH1V,NASDAQ HELSINKI LTD,0.95,extend
+8cc86e9e-888f-40fe-81ca-67d3b854f35d,DKSH Holding AG,Manufacturing,Professional Services,Scope 2-heavy,Switzerland,26167,549300HUUUNHO6FJUS42,DKSH,SIX SWISS EXCHANGE,0.8,merge
+8cd8cddc-bb90-4a84-b71a-26b6ee415883,Kloeckner & Co SE,Manufacturing,Steel Production,Operational Emitter,Germany,6507,529900CQ31CN6GV5LL52,KCO,XETRA,1.0,direct
+8d9d9e3a-3ad6-4059-a720-65aee590599c,Babcock International Group PLC,Manufacturing,Construction Services,Upstream-heavy,United Kingdom,28343,213800TSKOLX4EU6L377,BAB,LONDON STOCK EXCHANGE,0.9,extend
+8e36e664-bf8d-451e-a714-da98369f10bb,Teleperformance SE,Manufacturing,Professional Services,Scope 2-heavy,France,446052,9695004GI61FHFFNRG61,TEP,EURONEXT,0.75,extend
+8e40daac-be11-40ca-9845-7fb24b72d852,Autoliv Inc,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Sweden,59332,A23RUXWKASG834LTMK28,ALV,"NEW YORK STOCK EXCHANGE, INC.",0.85,merge
+8f271191-d944-46fd-b54c-14b3c34d4a12,Aygaz AS,Energy,Gas Utilities,Operational Emitter,Turkey,1256,7890000PALXE0100Q814,AYGAZ.E,BORSA ISTANBUL,0.9,extend
+8f7a4640-de17-4bc0-a2b4-aa7f66f03dc6,NTG Nordic Transport Group AS,Manufacturing,Shipping & Logistics,Operational Emitter,Denmark,2723,529900PZWXV8JX89K947,NTG,NASDAQ COPENHAGEN A/S,0.95,direct
+8f968f30-1f12-4885-bc83-b95d41dc71a0,Neste Oyj,Energy,Oil & Gas Refining,Operational Emitter,Finland,5381,5493009GY1X8GQ66AM14,NESTE,NASDAQ HELSINKI LTD,0.95,extend
+8ffbdbf1-8b40-4975-94d8-e4f627d8399f,Tomra Systems ASA,Manufacturing,Waste Management Services,Operational Emitter,Norway,5303,549300J726JCFJU3VT89,TOM,OSLO BORS,0.9,extend
+90844a47-bd35-4c80-beb5-7534acbac36e,Sanoma Oyj,Consumer Goods,Education & Training Services,Unknown,Finland,4648,743700XJC24THUPK0S03,SANOMA,NASDAQ HELSINKI LTD,0,unmapped
+90a7da0f-c17a-433f-997d-9d977034794c,Pirelli & C SpA,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Italy,31358,815600A0C9AFC1F2A709,PIRC,EURONEXT MILAN,0.85,merge
+910b1a94-2429-4abb-9c40-f8a4ab26b2b4,Tesco PLC,Consumer Goods,Traditional Retail,Scope 2-heavy,United Kingdom,330000,2138002P5RNKC5W2JZ46,TSCO,LONDON STOCK EXCHANGE,0.9,direct
+9163e825-7fe7-484e-8307-ad7a9e8508ec,Addtech AB,Manufacturing,Industrial Distribution,Unknown,Sweden,4430,549300QZ5U2IDRHPWL60,ADDT B,NASDAQ STOCKHOLM AB,0,unmapped
+916c9185-fb76-4018-ae34-5abc011653cd,Snam SpA,Energy,Gas Utilities,Operational Emitter,Italy,3847,8156002278562044AF79,SRG,EURONEXT MILAN,0.9,extend
+92222b67-2db3-4bef-b01e-4192efce1d9e,HusCompagniet A/S,Consumer Goods,Residential Construction,Unknown,Denmark,434,894500SWECYCFZ58R246,HUSCO,NASDAQ COPENHAGEN A/S,0,unmapped
+934cbb67-f707-4fa6-8ca1-f6f9af327269,Indus Holding AG,Manufacturing,Diversified Manufacturing,Upstream-heavy,Germany,8750,529900GE4O7ZOMRWR939,INH,XETRA,0.6,extend
+943a0915-c927-4c25-991e-e2cda46fb116,Unibel SA,Consumer Goods,Food & Beverage,Use-phase Dominant,France,11800,969500DCGMF1DNOXFH76,UNBL,EURONEXT,0.95,direct
+94557ea4-4dba-41f2-90f2-c4f8cfa1fc87,Zalando SE,Consumer Goods,Internet Retail,Unknown,Germany,15309,529900YRFFGH5AXU4S86,ZAL,XETRA,0,unmapped
+946b688e-2db8-4928-af69-c51130680cbd,Naturgy Energy Group SA,Energy,Gas Utilities,Operational Emitter,Spain,6594,TL2N6M87CW970S5SV098,NTGY,BOLSA DE MADRID,0.9,extend
+953f2a49-4611-463b-bb6d-bc3af624aa74,Indutrade AB,Manufacturing,Industrial Distribution,Unknown,Sweden,9699,549300FISLQ6CEFP1867,INDT,NASDAQ STOCKHOLM AB,0,unmapped
+9581cb5b-ce48-4c2a-823a-cc4c8c4b5759,Tate & Lyle PLC,Consumer Goods,Food & Beverage,Use-phase Dominant,United Kingdom,3318,2138008K14474WPKZ244,TATE,LONDON STOCK EXCHANGE,0.95,direct
+95bc9c42-6b02-4e86-8172-d52b2f3a689a,Logista Integral SA,Manufacturing,Shipping & Logistics,Operational Emitter,Spain,6651,9598000ANNAL42UJ7X28,LOG,BOLSA DE MADRID,0.95,direct
+96813eeb-08c3-4cb5-86d6-1c25c9456983,Landis+Gyr Group AG,Manufacturing,Electronics Manufacturing,Scope 2-heavy,Switzerland,6700,529900PZYVAKCYSLFL19,LAND,SIX SWISS EXCHANGE,0.85,map
+96c88982-aa41-4188-8843-58fc04454168,Beiersdorf AG,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,Germany,22791,L47NHHI0Z9X22DV46U41,BEI,XETRA,0.9,direct
+96ea9acd-2b27-4adf-b9d7-2cf9232ee4d0,James Hardie Industries PLC,Manufacturing,Construction Materials,Lifecycle-dependent,Ireland,5679,635400NSGXKTVOO7JU45,JHX,ASX,0.9,extend
+9706f93f-8050-40b5-8b4f-5824fc9788aa,EnBW Energie Baden Wuerttemberg AG,Energy,Electric Utilities,Operational Emitter,Germany,27696,529900JSFZ4TS59HKD79,EBK,XETRA,0.95,direct
+97b1204f-4874-4adb-947c-eda8a708afc7,DEUTZ AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,5053,5299005DETTV58V2PP63,DEZ,XETRA,0.95,extend
+97c55be4-b384-4f16-977f-76b6df5249de,Subsea 7 SA,Energy,Oil & Gas Services,Operational Emitter,United Kingdom,15072,222100AIF0CBCY80AH62,SUBC,OSLO BORS,0.95,extend
+9843a48a-1896-4c83-ba88-47ecc89380f1,Evonik Industries AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,30669,41GUOJQTALQHLF39XJ34,EVK,XETRA,1.0,direct
+98f7210f-5a24-42f7-a8c2-0bfa67caeef5,Vinci SA,Manufacturing,Construction Services,Upstream-heavy,France,282481,213800WFQ334R8UXUG83,DG,EURONEXT,0.9,extend
+98f7c81a-6c4e-4157-b2c9-928ee40e7b5d,Iren SpA,Energy,Electric Utilities,Operational Emitter,Italy,11000,8156001EBD33FD474E60,IRE,EURONEXT MILAN,0.95,direct
+98ff1939-cb1c-4fd3-ba4f-83c41e8c6664,Enerjisa Enerji AS,Energy,Electric Utilities,Operational Emitter,Turkey,10384,789000D0QULW3EE31N02,ENJSA.E,BORSA ISTANBUL,0.95,merge
+990c73b3-0c8c-4088-9f57-19586b8a54c1,Pluxee NV,Manufacturing,Professional Services,Scope 2-heavy,France,5368,213800RQNIQT48SEEO85,PLX,EURONEXT,0.75,extend
+99577c8b-5192-4bee-8fb9-2a06b8258a01,Acciona SA,Manufacturing,Construction Services,Upstream-heavy,Spain,66021,54930002KP75TLLLNO21,ANA,BOLSA DE MADRID,0.9,extend
+998ae5ee-906f-4c97-98be-2432b66b9978,Rio Tinto PLC,Manufacturing,Other Industrial Metals & Mining,Unknown,United Kingdom,60000,213800YOEO5OQ72G2R82,RIO,LONDON STOCK EXCHANGE,0,unmapped
+99b68da4-7602-4d70-acd7-b6c17e190797,Swiss Steel Holding AG,Manufacturing,Steel Production,Operational Emitter,Switzerland,7450,529900PTQ0Z1J44SHZ08,STLN,SIX SWISS EXCHANGE,1.0,direct
+99cbf089-a518-4031-bfa8-11264109120b,Interpump Group SpA,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Italy,9310,815600C79D0F31F4D395,IP,EURONEXT MILAN,0.95,extend
+99ed3a95-41c6-4ebf-b172-a011bf373507,Lenzing AG,Consumer Goods,Textile Manufacturing,Unknown,Austria,7690,529900BKFJBI0QRDJH63,LNZ,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0,unmapped
+9a0059bb-b486-4ab6-be92-87fb6edb73f0,Hermes International SCA,Consumer Goods,Consumer Electronics,Use-phase Dominant,France,25185,969500Y4IJGHJE2MTJ13,RMS,EURONEXT,0.7,map
+9a8eee0f-5fa5-4647-a57e-aca850d9651a,Solvay SA,Manufacturing,Chemical Manufacturing,Operational Emitter,Belgium,9000,549300MMVL80RTBP3O28,SOLB,EURONEXT,1.0,direct
+9afbea67-be42-4869-b914-74b51e25dd0c,ENKA Insaat ve Sanayi AS,Manufacturing,Construction Services,Upstream-heavy,Turkey,25680,789000EE9HXTYDRH9O46,ENKAI.E,BORSA ISTANBUL,0.9,extend
+9ba7a5e4-087d-4712-ad82-52836bfee077,Kone Oyj,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,64663,2138001CNF45JP5XZK38,KNEBV,NASDAQ HELSINKI LTD,0.95,extend
+9bdaf756-1a78-45d7-a5f6-7c09d6e4a76b,LyondellBasell Industries NV,Manufacturing,Chemical Manufacturing,Operational Emitter,United Kingdom,20000,BN6WCCZ8OVP3ITUUVN49,LYB,"NEW YORK STOCK EXCHANGE, INC.",1.0,direct
+9be114c5-efe6-46f8-9852-05e82ddfdb6f,Saf-Holland Se,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,4935,222100QJQLUJHWREL058,SFQ,XETRA,0.85,merge
+9c6c7353-3d21-4773-bc06-313b9e7def34,Kingspan Group PLC,Manufacturing,Construction Materials,Lifecycle-dependent,Ireland,24802,635400HM7V74SUB9OG75,KRX,IRISH STOCK EXCHANGE,0.8,merge
+9e7469ca-09d2-484b-a095-ea2c232a02a5,D'Ieteren Group SA,Consumer Goods,Auto & Truck Dealerships,Unknown,Belgium,2468,549300DV5KJ23OKVTW34,DIE,EURONEXT,0,unmapped
+9eb600ec-6b0a-4d50-939d-ba1e718649d6,Siemens Energy AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,100000,5299005CHJZ14D4FDJ62,ENR,XETRA,0.95,extend
+9f6ed156-6ddc-4130-82c6-74a61ba703d0,Umicore SA,Manufacturing,Waste Management Services,Operational Emitter,Belgium,11251,529900F3AIQECS8ZSV61,UMI,EURONEXT,0.9,extend
+9f95231c-9ddc-46a6-beb2-6c9b6c232794,Bouygues SA,Manufacturing,Construction Services,Upstream-heavy,France,200862,969500MOCLNQFNZN0D63,EN,EURONEXT,0.9,extend
+a0449b8c-4e35-49e6-8a83-f78857983f69,Wallenius Wilhelmsen ASA,Manufacturing,Marine Shipping,Unknown,Norway,8626,549300NBN0URT3RA3Y54,WAWI,OSLO BORS,0,unmapped
+a0dc50da-6228-4b48-890f-c781d2d27ec3,Lotus Bakeries NV,Consumer Goods,Food & Beverage,Use-phase Dominant,Belgium,3360,5493004C0K34IFI67I03,LOTB,EURONEXT,0.95,direct
+a1cbe83e-6868-40b7-9d57-57afe635b768,FDJ United,Consumer Goods,Gambling,Unknown,France,0,969500R4CLSQFTYYI535,FDJU,EURONEXT,0,unmapped
+a31fd2e5-a62b-43e8-b345-5caf873b4877,Broedrene A & O Johansen A/S,Manufacturing,Industrial Distribution,Unknown,Denmark,981,5299004B6ZEGVCR9ZR75,AOJ B,NASDAQ COPENHAGEN A/S,0,unmapped
+a3ce1711-7acf-46cb-bb75-c33f6a75ecdc,Ferrovial SE,Manufacturing,Infrastructure Operations,Unknown,Netherlands,25264,72450022R2ZFL41Y6I04,FER,BOLSA DE MADRID,0,unmapped
+a443efee-5c08-49e2-a2c1-6221fd1b1acb,Mondi PLC,Manufacturing,Paper Manufacturing,Lifecycle-dependent,United Kingdom,22473,213800LOZA69QFDC9N34,MNDI,LONDON STOCK EXCHANGE,0.9,extend
+a47075ab-447e-45bb-a193-348d5e5508c3,Elia Group SA,Energy,Electric Utilities,Operational Emitter,Belgium,3677,549300S1MP1NFDIKT460,ELI,EURONEXT,0.95,merge
+a4b6fa46-aa19-490d-b194-86a865752029,Vestel Elektronik Sanayi ve Ticaret AS,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Turkey,19509,789000X20ITI3ANQEL70,VESTL.E,BORSA ISTANBUL,0,unmapped
+a563ec0d-2745-4368-9bf3-b375b8c411e5,Holcim AG,Manufacturing,Construction Materials,Lifecycle-dependent,Switzerland,62391,529900EHPFPYHV6IQO98,HOLN,SIX SWISS EXCHANGE,0.9,extend
+a6b6bf31-e09a-4b3e-83d3-d1d76263d318,Turkiye Sise ve Cam Fabrikalari AS,Manufacturing,Diversified Manufacturing,Upstream-heavy,Turkey,22651,789000KWOK751Q6R8875,SISE.E,BORSA ISTANBUL,0.6,extend
+a732cee4-561c-42de-bf7b-f406f3f3ddaa,J Sainsbury PLC,Consumer Goods,Traditional Retail,Scope 2-heavy,United Kingdom,148498,213800VGZAAJIKJ9Y484,SBRY,LONDON STOCK EXCHANGE,0.9,direct
+a737b29d-5d99-4f6c-a0b0-22706b9652f0,B&M European Value Retail SA,Consumer Goods,Discount Stores,Unknown,Luxembourg,40383,213800UK7ZRLY2K1X530,BME,LONDON STOCK EXCHANGE,0,unmapped
+a7918359-7b08-489e-a628-59f667ec2682,Feintool International Holding AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,3194,529900AUNJ8C37482692,FTON,SIX SWISS EXCHANGE,0.95,extend
+a7f5e53b-df87-4e59-81f4-ea6bc73765a2,Aker BP ASA,Energy,Oil & Gas E&P,Unknown,Norway,2727,549300NFTY73920OYK69,AKRBP,OSLO BORS,0,unmapped
+aab6fd21-71d0-44a6-ae36-305c43cd17d9,Svenska Cellulosa Aktiebolaget SCA,Manufacturing,Lumber & Wood Production,Unknown,Sweden,3333,549300FW5JDRV1IJ0M67,SCA B,NASDAQ STOCKHOLM AB,0,unmapped
+ab490b03-87f9-4334-833d-a0dd3e0465a1,Harvia Oyj,Consumer Goods,Leisure,Unknown,Finland,696,7437002ULTBOWQQOXL69,HARVIA,NASDAQ HELSINKI LTD,0,unmapped
+ac312dc9-9c64-4c40-8ce8-7ee113c8feb3,Hellofresh SE,Consumer Goods,Food Service,Scope 2-heavy,Germany,21783,391200ZAF4V6XD2M9G57,HFG,XETRA,0.9,extend
+ac34253d-186e-4898-9651-06c90a6aad94,Verkkokauppa.com Oyj,Consumer Goods,Internet Retail,Unknown,Finland,466,743700QZE6B52SHHTV75,VERK,NASDAQ HELSINKI LTD,0,unmapped
+acde17bd-29d5-43a8-9529-6c1789c52b8d,Gelsenwasser AG,Energy,Electric Utilities,Operational Emitter,Germany,1779,529900JGEOQMCDYOK785,WWG,DEUTSCHE BOERSE AG,0.95,direct
+ae1a0791-bb86-4851-8288-2c0d9f54a515,International Consolidated Airlines Group SA,Manufacturing,Airlines,Operational Emitter,United Kingdom,52762,959800TZHQRUSH1ESL13,IAG,LONDON STOCK EXCHANGE,1.0,direct
+ae24f019-198b-4f13-8bb1-ead7784e2b10,Clariant AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Switzerland,10465,529900VSEKBY7TMPP349,CLN,SIX SWISS EXCHANGE,1.0,direct
+ae59c0d0-acdd-4355-8f93-d199e5c3e72d,Remy Cointreau SA,Consumer Goods,Beverages - Wineries & Distilleries,Unknown,France,1943,5493004V6A3Z027YT216,RCO,EURONEXT,0,unmapped
+af245725-23da-4698-849e-3f01799b7635,IMI PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,10000,2138002W9Q21PF751R30,IMI,LONDON STOCK EXCHANGE,0.95,extend
+af82320a-3530-479b-919f-1775cc40200f,TotalEnergies SE,Energy,Oil & Gas Extraction,Operational Emitter,France,102579,529900S21EQ1BO4ESM68,TTE,EURONEXT,1.0,direct
+b0937701-0c89-47dc-aa63-04273f342a9f,Italgas SpA,Energy,Gas Utilities,Operational Emitter,Italy,4295,815600F25FF44EF1FA76,IG,EURONEXT MILAN,0.9,extend
+b0e76119-9e98-49ee-a771-fb5b6c4dd45e,Transocean Ltd,Energy,Oil & Gas Drilling,Unknown,Switzerland,5470,529900QO4W5DQGBGEF32,RIG,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+b123fc01-784a-4c8d-b99f-31e95d60ff28,Royal Unibrew A/S,Consumer Goods,Beverages - Brewers,Unknown,Denmark,4365,529900D69KFL8IAP8Q63,RBREW,NASDAQ COPENHAGEN A/S,0,unmapped
+b14f90d0-0dc2-4367-8057-ef9c7fdce81e,Cranswick PLC,Consumer Goods,Food & Beverage,Use-phase Dominant,United Kingdom,15000,549300LDZLPU51XOSK43,CWK,LONDON STOCK EXCHANGE,0.95,direct
+b3174d58-c2cb-453c-9555-078819cdfbb7,BKW AG,Energy,Renewable Energy,Lifecycle-dependent,Switzerland,12139,549300IE30SKTUO98Q38,BKW,SIX SWISS EXCHANGE,1.0,direct
+b345ead6-eaad-45c4-8678-919d00deeef4,Harbour Energy PLC,Energy,Oil & Gas E&P,Unknown,United Kingdom,3019,213800YPC42DYBKVPF97,HBR,LONDON STOCK EXCHANGE,0,unmapped
+b4d839f5-1cb7-4c45-9f77-090bd8faf7b2,Bystronic AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,3268,529900OG85OX10GRW920,BYS,SIX SWISS EXCHANGE,0.95,extend
+b5ddffe9-7b63-46ce-8088-bb2547f61a22,TUI AG,Consumer Goods,Travel Services,Unknown,Germany,53959,529900SL2WSPV293B552,TUI1,XETRA,0,unmapped
+b5e0b5c0-6462-493f-ab51-efb4ad2be0e0,Axfood AB,Consumer Goods,Traditional Retail,Scope 2-heavy,Sweden,18472,549300QIXCZWZLHE8L05,AXFO,NASDAQ STOCKHOLM AB,0.9,direct
+b65ca193-6040-421b-ada4-4001d8a65cb3,Vossloh AG,Manufacturing,Railroads,Unknown,Germany,4267,5299003HAEOUVX3HWX43,VOS,XETRA,0,unmapped
+b73742b4-fb35-4683-9b14-2018c1da1e44,Anora Group Oyj,Consumer Goods,Beverages - Wineries & Distilleries,Unknown,Finland,1211,52990007AXNSS4PNX352,ANORA,NASDAQ HELSINKI LTD,0,unmapped
+b85b8029-b9c9-47c3-9b91-15c3f88c245d,Krones AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,19788,529900NY2GSZWWUBW049,KRN,XETRA,0.95,extend
+b860f6d8-ca80-44b6-a8a5-31894b3a4c79,Schneider Electric SE,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,France,155822,969500A1YF1XUYYXS284,SU,EURONEXT,0.95,extend
+b8b6c5b3-d773-4e69-8566-54236cae7597,Arcelik AS,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Turkey,51443,789000748KTQCUMJ0R25,ARCLK.E,BORSA ISTANBUL,0,unmapped
+b8f2290d-77d7-4c67-aa38-48c7871ea534,DS Smith Ltd,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,United Kingdom,29495,39RSBE4RCI4M15BLWH36,SMDS,LONDON STOCK EXCHANGE,0.95,extend
+b906d257-eaad-42f4-b12a-9e2ee44c4881,Otokar Otomotiv ve Savunma Sanayi AS,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Turkey,3709,5493000NBAE8C7SELC90,OTKAR.E,BORSA ISTANBUL,1.0,direct
+b921b2b5-0e72-4015-9015-c5c64b9d17a0,Bell Food Group AG,Consumer Goods,Food & Beverage,Use-phase Dominant,Switzerland,13496,50670090YSFJ2732TD58,BELL,SIX SWISS EXCHANGE,0.95,direct
+b925a04e-bd36-4986-8f2a-00401e453196,SP Group A/S,Manufacturing,Chemical Manufacturing,Operational Emitter,Denmark,2404,549300WCUCPUNXAFH710,SPG,NASDAQ COPENHAGEN A/S,1.0,direct
+b9ef9885-94ae-4dd9-9837-89b7d7776f8a,Marimekko Oyj,Consumer Goods,Apparel Manufacturing,Unknown,Finland,480,74370053IOY42B9YJ350,MEKKO,NASDAQ HELSINKI LTD,0,unmapped
+bac22705-59c1-4664-8383-569d3c4da4e1,Jumbo SA,Consumer Goods,Traditional Retail,Scope 2-heavy,Greece,5931,549300TGIVUUMY40MZ05,BELA,ATHENS EXCHANGE S.A. CASH MARKET,0.85,merge
+bc118dc7-2a2a-4122-900a-7fd00701ac8a,Melia Hotels International SA,Consumer Goods,Lodging,Unknown,Spain,18362,959800JRKSZ6YZD4EL80,MEL,BOLSA DE MADRID,0,unmapped
+bc12fd72-078c-47c0-bd5e-da8681145320,BP PLC,Energy,Oil & Gas Extraction,Operational Emitter,United Kingdom,100500,213800LH1BZH3DI6G760,BP.,LONDON STOCK EXCHANGE,1.0,direct
+bc6c00d6-c8f4-4309-959e-0c84ebd0b752,Saab AB,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Sweden,24481,549300ZHO4JCQQI13M69,SAAB B,NASDAQ STOCKHOLM AB,0.9,extend
+bc864345-890b-44b8-82cb-eadcca6116cb,Dassault Aviation SA,Manufacturing,Aerospace Manufacturing,Upstream-heavy,France,14589,969500CVFTUT88V8QN95,AM,EURONEXT,0.9,extend
+bcb4b549-29b0-431d-ab3f-fdecd04c29a8,Samsonite Group SA,Consumer Goods,Footwear & Accessories,Unknown,Luxembourg,12100,549300UULS5HYFJSEL12,1910,HONG KONG EXCHANGES AND CLEARING LTD,0,unmapped
+bd1069ed-dcfd-41c2-b623-0fa84c06837f,Lottomatica Group SpA,Consumer Goods,Gambling,Unknown,Italy,2700,549300R72LKEGT4EX026,LTMC,EURONEXT MILAN,0,unmapped
+bd13ee54-dcfd-4555-8440-4af83a2b37e1,Raisio Oyj,Consumer Goods,Food & Beverage,Use-phase Dominant,Finland,348,74370083282NHIP4QD02,RAIVV,NASDAQ HELSINKI LTD,0.95,direct
+bd23dfb2-a6d5-4e0f-81c0-38791a1ead8f,Mayr-Melnhof Karton AG,Consumer Goods,Packaging Manufacturing,Lifecycle-dependent,Austria,14865,5299001AMHDLKUM80611,MMK,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0.95,extend
+be1625c8-d3ad-4f56-9be9-e4e6dc65dbf0,DO & CO AG,Manufacturing,Airports & Air Services,Unknown,Austria,15538,5299002NFQKOBT1E8569,DOC,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),0,unmapped
+bf3a5461-01c7-4167-b30c-52a9835406f5,Adidas AG,Consumer Goods,Footwear & Accessories,Unknown,Germany,46045,549300JSX0Z4CW0V5023,ADS,XETRA,0,unmapped
+bf5b534a-fe03-4257-996a-d7e0327482d1,Var Energi ASA,Energy,Oil & Gas E&P,Unknown,Norway,1400,549300LIVN3FFOJN2K47,VAR,OSLO BORS,0,unmapped
+bfaa6e3a-6a6c-44a1-b0b0-6825a8313496,Shell PLC,Energy,Oil & Gas Extraction,Operational Emitter,United Kingdom,96000,21380068P1DRHMJ8KU70,SHEL,LONDON STOCK EXCHANGE,1.0,direct
+c038e45a-4b65-4582-ba1e-2f895bd5cd2a,Uniper SE,Energy,Utilities - Independent Power Producers,Unknown,Germany,6844,549300UXRTWGIBZQ4J67,UN0,XETRA,0,unmapped
+c0d4c139-c403-4784-8c34-9643c58f1f28,Essity AB (publ),Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,Sweden,36000,549300G8E6YUVJ1DA153,ESSITY B,NASDAQ STOCKHOLM AB,0.9,direct
+c11422bf-d455-462c-9913-1b7c6ddb720b,Fraport Frankfurt Airport Services Worldwide AG,Manufacturing,Airports & Air Services,Unknown,Germany,19211,5299001ERX0K10IZUL40,FRA,XETRA,0,unmapped
+c1174ec5-e5f6-4ab4-91c2-cf6bc16ee676,Rias A/S,Manufacturing,Construction Materials,Lifecycle-dependent,Denmark,105,549300XVCPVNRHSJS805,RIAS B,NASDAQ COPENHAGEN A/S,0.9,extend
+c13e1df6-9b67-4e7c-99f0-47553f06dd24,Bellway PLC,Consumer Goods,Residential Construction,Unknown,United Kingdom,2659,213800CY4L3HST4FGZ98,BWY,LONDON STOCK EXCHANGE,0,unmapped
+c1969a99-5dfd-4ba8-bc92-171a148967b9,SGS SA,Manufacturing,Professional Services,Scope 2-heavy,Switzerland,95244,2138007JNS19JHNA2336,SGSN,SIX SWISS EXCHANGE,0.8,merge
+c2181407-8420-4663-85a8-3ab40a427b1e,Public Power Corporation SA,Energy,Renewable Energy,Lifecycle-dependent,Greece,16495,213800T9Y5XCOVRZ4Y57,PPC,ATHENS EXCHANGE S.A. CASH MARKET,1.0,direct
+c2b65b4b-ed6c-42ed-9908-7af640e69786,AP Moeller - Maersk A/S,Manufacturing,Marine Shipping,Unknown,Denmark,87906,549300D2K6PKKKXVNN73,MAERSK B,NASDAQ COPENHAGEN A/S,0,unmapped
+c2e0ba89-1771-44f5-a596-b9c1e025ff9c,Akzo Nobel NV,Manufacturing,Chemical Manufacturing,Operational Emitter,Netherlands,33751,724500XYIJUGXAA5QD70,AKZA,EURONEXT,1.0,direct
+c3566a26-a518-4042-b7a9-3f6e3eacc7fe,Amadeus Fire AG,Manufacturing,Staffing & Employment Services,Unknown,Germany,3912,391200TJJ820ZDHNFJ33,AAD,XETRA,0,unmapped
+c3be2903-8ede-496e-9b2c-6b4f8d0ffb49,Hochtief AG,Manufacturing,Construction Services,Upstream-heavy,Germany,50961,529900Y25S8NZIYTT924,HOT,XETRA,0.9,extend
+c3e2a8c8-a6f3-464d-bb36-2719bc7bfd5e,Technip Energies NV,Energy,Oil & Gas Services,Operational Emitter,France,15105,724500FLODI49NSCIP70,TE,EURONEXT,0.95,extend
+c44311bc-32a8-461c-b6ca-de105e8c3b7f,Verbio SE,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,1521,529900W51PINCFFALS96,VBK,XETRA,1.0,direct
+c491e033-1d58-4b59-887b-3e33cb6f8a54,Greek Organisation of Football Prognostics SA,Consumer Goods,Gambling,Unknown,Greece,1949,213800M4NRGFJCI34834,OPAP,ATHENS EXCHANGE S.A. CASH MARKET,0,unmapped
+c525debf-feac-4fb3-ac4c-3ce375232900,Beijer Ref AB (publ),Manufacturing,Industrial Distribution,Unknown,Sweden,6597,549300PZZEUVH08H4G75,BEIJ B,NASDAQ STOCKHOLM AB,0,unmapped
+c6a49e27-bf13-4c48-9d2b-8d899c671764,Anadolu Efes Biracilik ve Malt Sanayii AS,Consumer Goods,Food & Beverage,Use-phase Dominant,Turkey,19907,7890006LGARYVIPOJX03,AEFES.E,BORSA ISTANBUL,0.9,merge
+c79778d3-148d-4ee9-b68b-196fb800edf9,Aksa Enerji Uretim AS,Energy,Utilities - Independent Power Producers,Unknown,Turkey,1327,789000KQC5JTW1S3JG98,AKSEN.E,BORSA ISTANBUL,0,unmapped
+c7c70c2e-b73d-4d5c-a2b7-024d10d396c2,H+H International A/S,Manufacturing,Construction Materials,Lifecycle-dependent,Denmark,1191,213800GJODT6FV8QM841,HH,NASDAQ COPENHAGEN A/S,0.9,extend
+c7fa3fd4-8dad-4991-9122-7a7b56eb9e53,Aalberts NV,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Netherlands,13124,549300EMP9DT6Q35HZ31,AALB,EURONEXT,0.95,extend
+c85f66eb-60d2-4ddc-aff0-a47bd766dfc4,Trelleborg AB,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Sweden,16237,213800XY16PAWG2PAD14,TREL B,NASDAQ STOCKHOLM AB,0.95,extend
+c8dd329d-934b-4435-9208-cf565310ae82,United Utilities Group PLC,Energy,Utilities - Regulated Water,Unknown,United Kingdom,6000,2138002IEYQAOC88ZJ59,UU.,LONDON STOCK EXCHANGE,0,unmapped
+c9aa8f64-a415-41c7-94d3-784b4fb49f5b,MTU Aero Engines AG,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Germany,12170,529900807L67JY81RD65,MTX,XETRA,0.9,extend
+ca186e78-626a-4043-8fd5-24a6a12dc017,Rolls-Royce Holdings PLC,Manufacturing,Aerospace Manufacturing,Upstream-heavy,United Kingdom,42400,213800EC7997ZBLZJH69,RR.,LONDON STOCK EXCHANGE,0.9,extend
+ca95e5d1-7674-44de-a225-b2440d1602f8,Belimo Holding AG,Manufacturing,Construction Materials,Lifecycle-dependent,Switzerland,2071,506700339DLX749VEM23,BEAN,SIX SWISS EXCHANGE,0.8,merge
+cae79a1e-0e69-4612-bc96-2daa5eb230de,X5 Retail Group NV,Consumer Goods,Traditional Retail,Scope 2-heavy,Netherlands,392000,213800J17UJJJDGUVF56,FIVE,MOSCOW EXCHANGE,0.9,direct
+cbfdcffc-0df8-4e68-8639-7c1c35e45fd4,Copenhagen Airports A/S,Manufacturing,Airports & Air Services,Unknown,Denmark,2671,549300Z01GJGM7D3HQ74,KBHL,NASDAQ COPENHAGEN A/S,0,unmapped
+cc98ade3-5448-4963-9bb8-fa4f6b875032,De' Longhi SpA,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Italy,9434,8156000E09A52C4F8A38,DLG,EURONEXT MILAN,0,unmapped
+cd295f58-b8f8-4af9-a841-5f414ad4c612,Pentair PLC,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,9750,549300EVR9D56WPSRP15,PNR,"NEW YORK STOCK EXCHANGE, INC.",0.95,extend
+cd32764b-ffa9-455b-bdde-cf97bb470e4b,Spie SA,Manufacturing,Construction Services,Upstream-heavy,France,52787,969500TJNS5GSFWJ8X85,SPIE,EURONEXT,0.9,extend
+ce016807-e5c1-4390-b32c-808febf341de,Motor Oil Hellas Corinth Refineries SA,Energy,Oil & Gas Refining,Operational Emitter,Greece,3243,213800U3Y9UL7Y4QVM11,MOH,ATHENS EXCHANGE S.A. CASH MARKET,0.95,extend
+ce36fb77-0f24-4bea-82b7-019ac08b8b13,EDP Renovaveis SA,Energy,Renewable Energy,Lifecycle-dependent,Spain,2935,529900MUFAH07Q1TAX06,EDPR,EURONEXT,1.0,direct
+cebc77f9-d944-4e95-be7c-1f2f78be64ee,Aeroports de Paris SA,Manufacturing,Airports & Air Services,Unknown,France,28174,969500PJMBSFHYC37989,ADP,EURONEXT,0,unmapped
+cfa39659-4c46-4605-a148-0958606f3f5c,L E Lundbergforetagen AB (publ),Manufacturing,Diversified Manufacturing,Upstream-heavy,Sweden,4170,529900BPSFZS6O3A9R04,LUND B,NASDAQ STOCKHOLM AB,0.6,extend
+d05a40c2-e1f5-4b2b-8ad8-cb0a8c666eb1,Pandora A/S,Consumer Goods,Consumer Electronics,Use-phase Dominant,Denmark,41326,5299007OWYZ6I1E46843,PNDORA,NASDAQ COPENHAGEN A/S,0.7,map
+d17ece7c-2ecd-4805-a0fb-c7ab4e22af13,Dmg Mori AG,Manufacturing,Industrial Equipment Manufacturing,Scope 2-heavy,Germany,7498,529900HXE4EQIHJY8518,GIL,XETRA,0.75,merge
+d1c3bb86-55a7-420a-a8a0-cb9ba4231666,Petkim Petrokimya Holding AS,Manufacturing,Chemical Manufacturing,Operational Emitter,Turkey,2433,529900XZCVZOEYWNBQ67,PETKM.E,BORSA ISTANBUL,1.0,direct
+d274e358-608e-40b2-a4bd-393088544869,Exel Composites Oyj,Manufacturing,Chemical Manufacturing,Operational Emitter,Finland,637,743700205JAMGM80QD88,EXL1V,NASDAQ HELSINKI LTD,1.0,direct
+d2e1f545-59b7-413f-b721-69c08cfba3e4,Jungheinrich AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,20841,529900PHZORTU6FSXE73,Jun.03,XETRA,0.95,extend
+d4558472-acac-4e2a-ae9b-52dd3f46cac5,InterContinental Hotels Group PLC,Consumer Goods,Lodging,Unknown,United Kingdom,12587,2138007ZFQYRUSLU3J98,IHG,LONDON STOCK EXCHANGE,0,unmapped
+d4bc5690-b568-4241-be5d-138930f94951,Covestro AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,17503,3912005AWHKLQ1CPLV11,1COV,XETRA,1.0,direct
+d4c35e2f-22fe-4a04-b473-47108cb22af4,L'Oreal SA,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,France,94397,529900JI1GG6F7RKVI53,OR,EURONEXT,0.9,direct
+d4c606b3-cfd7-4319-bc8b-948a11635575,Coca Cola HBC AG,Consumer Goods,Food & Beverage,Use-phase Dominant,Switzerland,33000,549300EFP3TNG7JGVE49,CCH,LONDON STOCK EXCHANGE,0.9,merge
+d4d3294c-619a-4e01-9152-72fbafabf1ce,Assa Abloy AB,Manufacturing,Security & Protection Services,Unknown,Sweden,63000,549300YECS8HKCIMMB67,ASSA B,NASDAQ STOCKHOLM AB,0,unmapped
+d58ef953-b311-4574-a66f-b04b701b5e68,Ackermans & Van Haaren NV,Manufacturing,Construction Services,Upstream-heavy,Belgium,24384,5493005E2GHATS0Z6J59,ACKB,EURONEXT,0.9,extend
+d5c2c897-d309-49ac-81d6-776bd723094e,Eiffage SA,Manufacturing,Construction Services,Upstream-heavy,France,78200,969500OQXKE5WDM9M994,FGR,EURONEXT,0.9,extend
+d5d11253-c966-4326-9304-84b4d24bf24b,Kerry Group PLC,Consumer Goods,Food & Beverage,Use-phase Dominant,Ireland,21461,635400TLVVBNXLFHWC59,KRZ,IRISH STOCK EXCHANGE,0.95,direct
+d5fbbeea-53f7-49d1-9703-b90cb620a3a6,Per Aarsleff Holding A/S,Manufacturing,Construction Services,Upstream-heavy,Denmark,8561,5493008HS8STXVZXYZ63,PAAL B,NASDAQ COPENHAGEN A/S,0.9,extend
+d6e63c1d-8223-4491-b13d-2def25af0b57,Trigano SA,Consumer Goods,Recreational Vehicles,Unknown,France,10652,969500KLZPNMO8TUM811,TRI,EURONEXT,0,unmapped
+d8fea69f-b406-4444-b51d-0679b027cef3,Orthex Oyj,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Finland,279,7437008RMK8BSWN39T09,ORTHEX,NASDAQ HELSINKI LTD,0,unmapped
+d9066e9c-2b14-441a-979e-a7cdd7539000,Eramet SA,Manufacturing,Other Industrial Metals & Mining,Unknown,France,8828,549300LUH78PG2MP6N64,ERA,EURONEXT,0,unmapped
+d930d765-728f-41ce-afd1-1a901b4ee795,Matas A/S,Consumer Goods,Traditional Retail,Scope 2-heavy,Denmark,3523,2138004PXX8LWGHGL872,MATAS,NASDAQ COPENHAGEN A/S,0.85,merge
+d9e26982-84d2-46af-830a-e5651d7766a7,Turkiye Petrol Rafinerileri AS,Energy,Oil & Gas Refining,Operational Emitter,Turkey,6236,789000RCNG97UV50EE03,TUPRS.E,BORSA ISTANBUL,0.95,extend
+da92681d-3ecf-4cdf-9d4d-f2e60f9cf53a,Kongsberg Gruppen ASA,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Norway,14629,5967007LIEEXZXJ9HK73,KOG,OSLO BORS,0.9,extend
+db76a333-3daf-4412-9a31-98addd07c466,CRH PLC,Manufacturing,Construction Materials,Lifecycle-dependent,Ireland,79800,549300MIDJNNTH068E74,CRH,"NEW YORK STOCK EXCHANGE, INC.",0.9,extend
+dbe0318a-6518-406e-bf17-0fdc139e4197,Volvo Car AB,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Sweden,40729,5299000EAMGGBEYP7J33,VOLCAR B,NASDAQ STOCKHOLM AB,1.0,direct
+dbfcc051-9811-4608-b723-188681c19a74,SSE PLC,Energy,Electric Utilities,Operational Emitter,United Kingdom,14980,549300KI75VYLLMSK856,SSE,LONDON STOCK EXCHANGE,0.95,direct
+dc20cc19-9767-41e7-9d14-5ea3273afbbf,Electricite De France SA,Energy,Electric Utilities,Operational Emitter,France,165028,549300X3UK4GG3FNMO06,EDF,EURONEXT,0.95,direct
+dca7ba08-2d4f-4c9b-a0be-59e8dc272bde,Veolia Environnement SA,Manufacturing,Waste Management Services,Operational Emitter,France,202332,969500LENY69X51OOT31,VIE,EURONEXT,0.9,extend
+dd31ca5f-00f8-4ee5-8f03-c5aa5afe692f,L'Occitane International SA,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,Luxembourg,9255,549300TLZP9DZV3ROI47,973,HONG KONG EXCHANGES AND CLEARING LTD,0.9,direct
+dd39cc43-fe4f-4a7d-8a82-2c5e59a7e955,Wolters Kluwer NV,Manufacturing,Professional Services,Scope 2-heavy,Netherlands,21200,724500TEM53I0U077B74,WKL,EURONEXT,0.75,extend
+dd7b3f44-5a59-4197-8bbe-7e5f7777cc00,Brenntag SE,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,18122,NNROIXVWJ7CPSR27SV97,BNR,XETRA,1.0,direct
+dd901781-e031-4d1e-a35d-31bdce9cd01b,Koninklijke Vopak NV,Energy,Oil & Gas Midstream,Unknown,Netherlands,4928,724500UL634GFV1KYF10,VPK,EURONEXT,0,unmapped
+ddddb9fc-768f-4572-9337-3d1c92699c81,Rockwool A/S,Manufacturing,Construction Materials,Lifecycle-dependent,Denmark,12306,213800QRC7LNX935OZ09,ROCK B,NASDAQ COPENHAGEN A/S,0.8,merge
+de087247-3c32-4f67-8978-4cdcf26c9f86,Johnson Controls International PLC,Manufacturing,Construction Materials,Lifecycle-dependent,Ireland,94000,549300XQ6S1GYKGBL205,JCI,"NEW YORK STOCK EXCHANGE, INC.",0.8,merge
+de461cf9-a10c-44bd-95fa-f4410ac3267c,TCM Group A/S,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Denmark,481,529900P5DOKT3XLWL480,TCM,NASDAQ COPENHAGEN A/S,0,unmapped
+ded4291b-0546-4afd-b264-ee69ddecceb6,Webuild SpA,Manufacturing,Construction Services,Upstream-heavy,Italy,39666,549300UKR289DF4UXQ47,WBD,EURONEXT MILAN,0.9,extend
+dfb5b34e-51a1-4cbd-aa7b-49a4dadefbb4,Ponsse Oyj,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,2024,7437000IQJS6ZC1FR041,PON1V,NASDAQ HELSINKI LTD,0.8,merge
+e0c57e18-3a06-4fd6-bd71-bbc43288ea50,Eni SpA,Energy,Oil & Gas Extraction,Operational Emitter,Italy,33142,BUCRF72VH5RBN7X3VL35,ENI,EURONEXT MILAN,1.0,direct
+e10c926a-0431-4f61-8f4e-25f448b24490,Imperial Brands PLC,Consumer Goods,Tobacco Products,Use-phase Dominant,United Kingdom,25600,549300DFVPOB67JL3A42,IMB,LONDON STOCK EXCHANGE,0.95,extend
+e1d1df18-f436-47cf-8be6-a41140743dfc,Vesuvius plc,Manufacturing,Steel Production,Operational Emitter,United Kingdom,11302,213800ORZ521W585SY02,VSVS,LONDON STOCK EXCHANGE,1.0,direct
+e1f75c1d-34c0-4d0e-bbd4-ece56f097c66,K+S AG,Manufacturing,Agricultural Inputs,Unknown,Germany,10835,529900YURAYD4IJX2J91,SDF,XETRA,0,unmapped
+e21872ef-68f4-4399-bba2-9fdfb6ea4f78,Heidelberg Materials AG,Manufacturing,Construction Materials,Lifecycle-dependent,Germany,50692,LZ2C6E0W5W7LQMX5ZI37,HEI,XETRA,0.9,extend
+e275c0e2-b836-4c52-8742-54be2cb54553,Ayvens SA,Manufacturing,Rental & Leasing Services,Unknown,France,14500,969500E7V019H9NP7427,AYV,EURONEXT,0,unmapped
+e30fa5f0-9b97-403e-abcb-10ce77a13e41,Carlsberg A/S,Consumer Goods,Beverages - Brewers,Unknown,Denmark,32098,5299001O0WJQYB5GYZ19,CARL B,NASDAQ COPENHAGEN A/S,0,unmapped
+e36da6d8-23f4-45f6-949f-b9e434e26271,DSV A/S,Manufacturing,Shipping & Logistics,Operational Emitter,Denmark,73338,529900X41C0BSLK67H70,DSV,NASDAQ COPENHAGEN A/S,0.95,direct
+e37cad93-fa21-4804-ad8f-693ddd9da91e,Dometic Group AB (publ),Consumer Goods,Leisure,Unknown,Sweden,7000,549300STIPMK5VSA7Y59,DOM,NASDAQ STOCKHOLM AB,0,unmapped
+e4760b73-d6e0-4ece-8040-1af6bd23c581,Davide Campari Milano NV,Consumer Goods,Beverages - Wineries & Distilleries,Unknown,Italy,5182,213800ED5AN2J56N6Z02,CPR,EURONEXT MILAN,0,unmapped
+e4f160cf-4aa9-40f4-b8b6-e56516f5d258,Croda International PLC,Manufacturing,Chemical Manufacturing,Operational Emitter,United Kingdom,6027,2138004WCNBFJEEOXV26,CRDA,LONDON STOCK EXCHANGE,1.0,direct
+e549f47d-4804-49c0-943f-9b2bdf167b25,International Game Technology PLC,Consumer Goods,Gambling,Unknown,United Kingdom,5946,549300UQ6KHRCZDRGZ76,IGT,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+e5541596-470e-4467-a608-4b95e9ffa553,METRO AG,Consumer Goods,Food Distribution,Unknown,Germany,80951,5299006EQ03K3SSUYS12,B4B,XETRA,0,unmapped
+e5e314a8-1ee0-4818-9b2e-531e27ed93aa,Surteco Group SE,Consumer Goods,"Furnishings, Fixtures & Appliances",Unknown,Germany,3724,52990096XE56IELO5P09,SUR,XETRA,0,unmapped
+e64b92cc-89f9-4e16-a726-db365e8d8e91,Next PLC,Consumer Goods,Apparel Retail,Unknown,United Kingdom,31947,213800WQD8ECPZP9PH98,NXT,LONDON STOCK EXCHANGE,0,unmapped
+e66feef5-4006-4ffb-b7d7-4d3e829bdb59,Firstfarms A/S,Consumer Goods,Farm Products,Unknown,Denmark,415,2138007DFVFLUCCSX925,FFARMS,NASDAQ COPENHAGEN A/S,0,unmapped
+e6d167d7-4946-4bcc-9c13-ac8a6ff435a4,Leonardo SpA,Manufacturing,Aerospace Manufacturing,Upstream-heavy,Italy,59083,529900X4EEX1U9LN3U39,LDO,EURONEXT MILAN,0.9,extend
+e6fb3b60-8abe-4397-b810-676946296c27,Redeia Corporacion SA,Energy,Electric Utilities,Operational Emitter,Spain,2482,5493009HMD0C90GUV498,RED,BOLSA DE MADRID,0.95,merge
+e72431eb-3b86-4d7f-8704-1db78f41ca34,Ariston Holding NV,Manufacturing,Construction Materials,Lifecycle-dependent,Italy,10576,815600CC86D25A205563,ARIS,EURONEXT MILAN,0.8,merge
+e727fa6f-5734-49bd-84c0-c40aa74f9100,Ternium SA,Manufacturing,Steel Production,Operational Emitter,Luxembourg,33949,529900QG4KU23TEI2E46,TX,"NEW YORK STOCK EXCHANGE, INC.",1.0,direct
+e73f5ad1-2ff9-4ac0-b2ab-ebc68dafdad6,Thales SA,Manufacturing,Aerospace Manufacturing,Upstream-heavy,France,83206,529900FNDVTQJOVVPZ19,HO,EURONEXT,0.9,extend
+e74ca135-adb2-4377-a339-c7e02e379258,Capri Holdings Ltd,Consumer Goods,Consumer Electronics,Use-phase Dominant,United Kingdom,10200,549300LPG8W0H1OX3A26,CPRI,"NEW YORK STOCK EXCHANGE, INC.",0.7,map
+e7534f35-25d6-4fed-b109-6d62e43cfd41,Ford Otomotiv Sanayi AS,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Turkey,25718,7890006XJG6ZE2H34671,FROTO.E,BORSA ISTANBUL,1.0,direct
+e7601be2-39ec-4d15-97e0-562f0640026c,Schouw & Co A/S,Manufacturing,Diversified Manufacturing,Upstream-heavy,Denmark,15000,213800V2R9WMMZASKK57,SCHO,NASDAQ COPENHAGEN A/S,0.6,extend
+e77516e7-63dd-48d5-ab52-c4e6472f9e5b,Exor NV,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Netherlands,83773,5493002ENHZ6NYET7405,EXO,EURONEXT,0.8,merge
+e7f328d8-73ac-4d5f-b7b9-c214bbe5be5d,Mercedes-Benz Group AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,163132,529900R27DL06UVNT076,MBG,XETRA,1.0,direct
+e8d1af62-538a-44f0-90fb-9087531fc755,Pennon Group PLC,Energy,Utilities - Regulated Water,Unknown,United Kingdom,4000,213800V1CCTS41GWH423,PNN,LONDON STOCK EXCHANGE,0,unmapped
+e8ebb787-da96-425c-8c57-757957412aa7,Endeavour Mining plc,Manufacturing,Gold,Unknown,United Kingdom,5659,529900NI5MXQ91GHXR07,EDV,TORONTO STOCK EXCHANGE,0,unmapped
+e9f4dd24-433e-4247-ae35-070d09b90db4,Nestle SA,Consumer Goods,Food & Beverage,Use-phase Dominant,Switzerland,251786,KY37LUS27QQX7BB93L28,NESN,SIX SWISS EXCHANGE,0.95,direct
+ea51e732-d9cc-4bbb-a0dc-0b8ee314e966,Severn Trent PLC,Energy,Utilities - Regulated Water,Unknown,United Kingdom,7040,213800RPBXRETY4A4C59,SVT,LONDON STOCK EXCHANGE,0,unmapped
+eab6864b-0f84-4358-ac73-8dc70c7691ed,Valmet Oyj,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,18674,213800D9O7FUQDH83V62,VALMT,NASDAQ HELSINKI LTD,0.95,extend
+eb83f0c2-e89c-4207-b3f5-6644c238f52f,Abb Ltd,Manufacturing,Electronics Manufacturing,Scope 2-heavy,Switzerland,109900,5493000LKVGOO9PELI61,ABBN,SIX SWISS EXCHANGE,0.85,map
+ebb92876-ce48-4bd4-9083-aedb0cd74a7f,ElringKlinger AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,9589,529900QDISXXZ2D1Q489,ZIL2,XETRA,0.85,merge
+ec9b22d9-d48c-4d77-ae70-8357c6de664f,KWS SAAT SE & Co KgaA,Manufacturing,Agricultural Inputs,Unknown,Germany,4823,529900FR2K4P9L9XLV21,KWS,XETRA,0,unmapped
+edd5b018-42df-4c2c-9479-f8d93673a228,Entain PLC,Consumer Goods,Gambling,Unknown,United Kingdom,19272,213800GNI3K45LQR8L28,ENT,LONDON STOCK EXCHANGE,0,unmapped
+ee2cbc9d-7318-4385-b5b5-4a3270f6d589,RELX PLC,Manufacturing,Professional Services,Scope 2-heavy,United Kingdom,34580,549300WSX3VBUFFJOO66,REL,LONDON STOCK EXCHANGE,0.75,extend
+ee5d9b6b-9493-46f2-965e-de0260118ae4,Sika AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Switzerland,33511,549300R3N69ECGYPU434,SIKA,SIX SWISS EXCHANGE,1.0,direct
+eea6de5d-e8dc-47b5-a3a8-b75976198214,Consti Oyj,Manufacturing,Construction Services,Upstream-heavy,Finland,1000,743700JMXCC11CRJCS71,CONSTI,NASDAQ HELSINKI LTD,0.9,extend
+ef550c99-eb43-47cc-acd2-e4491c65cc1e,Purmo Group Oyj,Manufacturing,Construction Materials,Lifecycle-dependent,Finland,2769,743700JHE9365SIHRE72,PURMO,NASDAQ HELSINKI LTD,0.8,merge
+efad64d9-50cd-4d2b-91b1-fd9ad1d00aab,Coca-Cola Europacific Partners PLC,Consumer Goods,Food & Beverage,Use-phase Dominant,United Kingdom,41000,549300LTH67W4GWMRF57,CCEP,NASDAQ/NGS (GLOBAL SELECT MARKET),0.9,merge
+efc18d0f-538d-4d8d-9ad0-2b5aa2597b40,Repsol SA,Energy,Oil & Gas Extraction,Operational Emitter,Spain,25136,BSYCX13Y0NOTV14V9N85,REP,BOLSA DE MADRID,1.0,direct
+efc89d2b-d938-4b66-91dd-c5567fd9da03,Whitbread PLC,Consumer Goods,Lodging,Unknown,United Kingdom,36700,21380099VMZKRMN3EX36,WTB,LONDON STOCK EXCHANGE,0,unmapped
+efe48163-89bf-46a6-878f-7edf50c69ee1,Solaria Energia y Medio Ambiente SA,Energy,Renewable Energy,Lifecycle-dependent,Spain,241,959800PM2YJU406K2789,SLR,BOLSA DE MADRID,1.0,direct
+f200a17c-e75d-4b82-8258-0f2ab62dadff,Berkeley Group Holdings PLC,Consumer Goods,Residential Construction,Unknown,United Kingdom,2610,2138009OQSSLVVHQAL78,BKG,LONDON STOCK EXCHANGE,0,unmapped
+f25259a1-9784-4a59-9eef-c06daec70926,Wacker Chemie AG,Manufacturing,Chemical Manufacturing,Operational Emitter,Germany,12825,0NURKC5Q3CJYZPPK5046,WCH,XETRA,1.0,direct
+f2922d7d-511d-41c4-92fe-dc5732db851d,Apetit Oyj,Consumer Goods,Food & Beverage,Use-phase Dominant,Finland,281,743700RSFZUIQYABYT14,APETIT,NASDAQ HELSINKI LTD,0.95,direct
+f3371912-7d76-477c-83e1-51fdab0cb2c9,VAT Group AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Switzerland,3202,529900MVFK7NVALR7Y83,VACN,SIX SWISS EXCHANGE,0.95,extend
+f4104d3e-0794-4ad6-b58b-a8d1a4e862c0,Aurubis AG,Manufacturing,Metal Fabrication,Unknown,Germany,7011,5299005SHIN9ZK7GW242,NDA,XETRA,0,unmapped
+f42b2471-bfc3-4245-b213-4d0b6f58b3c0,LVMH Moet Hennessy Louis Vuitton SE,Consumer Goods,Consumer Electronics,Use-phase Dominant,France,200518,IOG4E947OATN0KJYSD45,MC,EURONEXT,0.7,map
+f4dbe4bc-2dc1-4296-90d2-440b0a91286b,Kion Group AG,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Germany,42719,5299005KY91C4C6U9H17,KGX,XETRA,0.8,merge
+f5363197-c6d5-49ec-9478-a8b015d72538,Societe BIC SA,Consumer Goods,Fast Moving Consumer Goods,Lifecycle-dependent,France,13000,969500UR00DF63I0VH67,BB,EURONEXT,0.9,direct
+f54c5d5b-e241-419d-84bc-55822b4f4ae7,Ermenegildo Zegna NV,Consumer Goods,Apparel Manufacturing,Unknown,Italy,7100,8156003760472AA7E269,ZGN,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+f59ab4ec-f008-4dd2-b77b-d92a992ee8cd,Clarkson PLC,Manufacturing,Marine Shipping,Unknown,United Kingdom,2181,2138007G6BGTEHI3OT22,CKN,LONDON STOCK EXCHANGE,0,unmapped
+f665fb2d-71a0-402b-9029-a98301fa8fe7,Associated British Foods PLC,Consumer Goods,Food & Beverage,Use-phase Dominant,United Kingdom,138000,GBQKSY6W7G0OHCQ8OQ72,ABF,LONDON STOCK EXCHANGE,0.95,direct
+f66ebd77-1a9c-4a94-a6ca-b11af911d9a9,Legrand SA,Manufacturing,Electronics Manufacturing,Scope 2-heavy,France,38306,969500XXRPGD7HCAFA90,LR,EURONEXT,0.85,map
+f6b98cdd-9d4b-448b-93e0-44a9fcf664b8,Adecco Group AG,Manufacturing,Staffing & Employment Services,Unknown,Switzerland,35000,NI14Y5UMU60O7JE9P611,ADEN,SIX SWISS EXCHANGE,0,unmapped
+f6bab800-b9a2-4417-84c1-e734b273ea52,Koninklijke Ahold Delhaize NV,Consumer Goods,Traditional Retail,Scope 2-heavy,Netherlands,134000,724500C9GNBV20UYRX36,AD,EURONEXT,0.9,direct
+f7975de6-0151-4fd5-b4b5-dc15affd37fc,Signify NV,Manufacturing,Electronics Manufacturing,Scope 2-heavy,Netherlands,29459,549300072P3J1X8NZO35,LIGHT,EURONEXT,0.85,map
+f8178ff0-6375-41bb-a225-460ff82818ff,CNH Industrial NV,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,United Kingdom,35850,549300WGC2HZ5J67V817,CNH,"NEW YORK STOCK EXCHANGE, INC.",0.8,merge
+f94609e7-2cf9-4720-984d-a991f6ef5496,Nuh Cimento Sanayi AS,Manufacturing,Construction Materials,Lifecycle-dependent,Turkey,1487,7890004MW0TKBH5J4N45,NUHCM.E,BORSA ISTANBUL,0.9,extend
+f9f996fc-7c6a-4887-ad7e-6105e7a8dee8,Amer Sports Inc,Consumer Goods,Leisure,Unknown,Finland,13400,391200YCSWTRD1J21867,AS,"NEW YORK STOCK EXCHANGE, INC.",0,unmapped
+fa3601d8-5888-4225-af72-0778d3075cad,Puma SE,Consumer Goods,Footwear & Accessories,Unknown,Germany,17303,529900GRZ2BQY5ZM9N49,PUM,XETRA,0,unmapped
+fa7d77b1-df55-4750-ad6c-098b9b56be80,Compagnie de Saint Gobain SA,Manufacturing,Construction Materials,Lifecycle-dependent,France,161482,NFONVGN05Z0FMN5PEC35,SGO,EURONEXT,0.8,merge
+fa7f979a-63b2-47d3-836e-0db70485856b,Ncc AB,Manufacturing,Construction Services,Upstream-heavy,Sweden,11776,213800WRGLW3CY4MHW53,NCC B,NASDAQ STOCKHOLM AB,0.9,extend
+fad53dd0-12aa-4e2f-bc09-df2ae18dee79,Centrica PLC,Energy,Utilities - Independent Power Producers,Unknown,United Kingdom,21038,E26EDV109X6EEPBKVH76,CNA,LONDON STOCK EXCHANGE,0,unmapped
+faf49564-ff30-4f60-9305-8165ee208fb6,Continental AG,Consumer Goods,Automotive Manufacturing,Upstream-heavy,Germany,168761,529900A7YD9C0LLXM621,CON,XETRA,0.85,merge
+fbecfb30-693d-4f4f-a12c-b7e744bbfe28,OMV AG,Energy,Oil & Gas Extraction,Operational Emitter,Austria,23557,549300V62YJ9HTLRI486,OMV,WIENER BOERSE AG AMTLICHER HANDEL (OFFICIAL MARKET),1.0,direct
+fbfd06ca-d777-4618-bb2b-4babf02f5313,SBM Offshore NV,Energy,Oil & Gas Services,Operational Emitter,Netherlands,6301,549300RDGCRYZ5QE6513,SBMO,EURONEXT,0.95,extend
+fc220eb9-3a5f-4c92-9cd1-f18907d94e1d,Enersense International Oyj,Manufacturing,Professional Services,Scope 2-heavy,Finland,1946,743700XSMVPR48XIML56,ESENSE,NASDAQ HELSINKI LTD,0.75,extend
+fc76c8d2-fab8-4707-a2fb-f62273d7d237,Engie SA,Energy,Electric Utilities,Operational Emitter,France,97000,LAXUQCHT4FH58LRZDY46,ENGI,EURONEXT,0.95,direct
+fcfba1d8-78b8-4bc2-89c4-3f589099bc96,Saipem SpA,Energy,Oil & Gas Services,Operational Emitter,Italy,30000,549300PHV8MBDHWB8X12,SPM,EURONEXT MILAN,0.95,extend
+fd59a250-1492-45f2-9132-064b7843e653,Metso Oyj,Manufacturing,Industrial Equipment Manufacturing,Operational Emitter,Finland,16832,549300R0VN9C371W0E07,METSO,NASDAQ HELSINKI LTD,0.8,merge
+fd699962-eeff-4003-a6b9-f8827e97ba51,Energean PLC,Energy,Oil & Gas E&P,Unknown,United Kingdom,590,549300RVMKU0CYUZBB05,ENOG,LONDON STOCK EXCHANGE,0,unmapped
+fe1b030d-794a-4199-8490-88dc81a4a928,TechnipFMC PLC,Energy,Oil & Gas Services,Operational Emitter,United Kingdom,21693,549300D5I93QWCJTCK36,FTI,"NEW YORK STOCK EXCHANGE, INC.",0.95,extend
+fec2820f-3765-409e-af0e-635f1439dbc2,UPM-Kymmene Oyj,Manufacturing,Paper Manufacturing,Lifecycle-dependent,Finland,15352,213800EC6PW5VU4J9U64,UPM,NASDAQ HELSINKI LTD,0.9,extend
+fee7df99-ec44-4d9a-b1bd-d906925ed10c,SalMar ASA,Consumer Goods,Farm Products,Unknown,Norway,2331,5967007LIEEXZXGDBK67,SALM,OSLO BORS,0,unmapped
+fef473ba-b3d8-49db-8357-5f6d75af00da,Rentokil Initial PLC,Manufacturing,Professional Services,Scope 2-heavy,United Kingdom,68485,549300VN4WV7Z6T14K68,RTO,LONDON STOCK EXCHANGE,0.75,extend
+ffb145f1-120c-4bce-8843-a802fdf4c72c,Anglo American PLC,Manufacturing,Other Industrial Metals & Mining,Unknown,United Kingdom,55542,549300S9XF92D1X8ME43,AAL,LONDON STOCK EXCHANGE,0,unmapped

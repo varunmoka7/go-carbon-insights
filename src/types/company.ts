@@ -20,6 +20,17 @@ export interface Company {
   netZeroTarget?: number | null; // target year
   lastUpdated?: string;
   
+  // Epic 5: Company Identifiers (Trancenable Integration)
+  lei?: string; // Legal Entity Identifier
+  ticker?: string; // Stock ticker symbol
+  figi?: string; // Financial Instrument Global Identifier
+  permid?: string; // Refinitiv Permanent Identifier
+  exchange?: string; // Primary stock exchange
+  micCode?: string; // Market Identifier Code
+  trancenableCompanyId?: string; // Trancenable unique identifier
+  dataSourceAttribution?: string; // Source of data attribution
+  identifierConfidenceScore?: number; // Confidence score for identifiers (0-1)
+  
   // Additional properties for enhanced functionality
   topCarbonFootprints?: string[];
   sbtiProgress?: number;
@@ -81,6 +92,18 @@ export function normalizeCompanyData(rawData: any): Company {
     sbtiCommitted: rawData.sbti_committed || rawData.sbtiCommitted,
     netZeroTarget: rawData.net_zero_target || rawData.netZeroTarget,
     lastUpdated: rawData.last_updated || rawData.lastUpdated || rawData.updated_at,
+    
+    // Epic 5: Company Identifiers
+    lei: rawData.lei,
+    ticker: rawData.ticker,
+    figi: rawData.figi,
+    permid: rawData.permid,
+    exchange: rawData.exchange,
+    micCode: rawData.mic_code || rawData.micCode,
+    trancenableCompanyId: rawData.trancenable_company_id || rawData.trancenableCompanyId,
+    dataSourceAttribution: rawData.data_source_attribution || rawData.dataSourceAttribution,
+    identifierConfidenceScore: rawData.identifier_confidence_score || rawData.identifierConfidenceScore,
+    
     topCarbonFootprints: rawData.top_carbon_footprints || rawData.topCarbonFootprints,
     sbtiProgress: rawData.sbti_progress || rawData.sbtiProgress,
     frameworks: rawData.frameworks,
