@@ -18,9 +18,10 @@ const Landing = () => {
 
 
   const handleViewEmissions = () => {
-    // Enable demo mode and navigate to home page
+    // Enable demo mode and navigate to dashboard page for comprehensive demo
     localStorage.setItem('demoMode', 'true');
-    navigate('/home?demo=true');
+    // Navigate to dashboard page with demo parameter for better demo experience
+    navigate('/dashboard?demo=true');
   };
 
   const features = [

@@ -24,6 +24,7 @@ import PageTransition from './PageTransition';
 import Sidebar from './Sidebar';
 import SidebarTrigger from './SidebarTrigger';
 import LanguageSwitcher from './LanguageSwitcher';
+import DemoBanner from './DemoBanner';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSidebar } from '@/contexts/SidebarContext';
@@ -283,6 +284,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           )}
         </div>
       </header>
+
+      {/* Demo Banner - shows when in demo mode */}
+      <DemoBanner />
 
       {/* Main Content with Page Transitions */}
       <main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300 ${getMainContentMargin()}`}>
