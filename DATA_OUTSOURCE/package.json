@@ -1,0 +1,21 @@
+{
+  "name": "trancenable-transformation-pipeline",
+  "version": "1.0.0",
+  "description": "Data transformation pipeline for Trancenable ESG dataset integration",
+  "main": "trancenable-transformation-pipeline.js",
+  "scripts": {
+    "transform": "node trancenable-transformation-pipeline.js",
+    "validate": "node validate-mappings.js",
+    "analyze": "node analyze-output.js"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  },
+  "keywords": ["ESG", "data-transformation", "emissions", "carbon-tracking"],
+  "author": "GoCarbonTracker Team",
+  "license": "MIT"
+}

@@ -1,0 +1,7 @@
+trancenable_sector,your_framework_sector,mapping_type,record_count,percentage,confidence_score,transformation_notes
+Industrials,Manufacturing,direct,7031,35.3,0.95,"Map to Manufacturing - covers machinery, construction, industrial equipment"
+Consumer Cyclical,Consumer Goods,direct,4110,20.6,0.90,"Map to Consumer Goods - discretionary consumer products and services"
+Basic Materials,Manufacturing,merge,2794,14.0,0.85,"Merge with Manufacturing - materials and chemical production"
+Consumer Defensive,Consumer Goods,merge,2187,11.0,0.85,"Merge with Consumer Goods - essential consumer products"
+Utilities,Energy,map,2001,10.1,0.80,"Map to Energy with new Utilities subsector - electricity, gas, water"
+Energy,Energy,direct,989,5.0,1.00,"Direct match - oil, gas, renewable energy"

@@ -1,0 +1,92 @@
+trancenable_industry,trancenable_sector,your_framework_sector,your_framework_industry,mapping_type,emissions_archetype,confidence_score,notes
+Specialty Industrial Machinery,Industrials,Manufacturing,Industrial Equipment Manufacturing,extend,Operational Emitter,0.95,High energy manufacturing processes
+Specialty Chemicals,Industrials,Manufacturing,Chemical Manufacturing,direct,Operational Emitter,1.0,Direct match to existing industry
+Engineering & Construction,Industrials,Manufacturing,Construction Services,extend,Upstream-heavy,0.9,Complex supply chain with materials
+Utilities - Diversified,Utilities,Energy,Electric Utilities,direct,Operational Emitter,0.95,Close match to existing utility classification
+Auto Parts,Industrials,Manufacturing,Automotive Manufacturing,merge,Upstream-heavy,0.85,Merge with Auto Manufacturers
+Auto Manufacturers,Industrials,Manufacturing,Automotive Manufacturing,direct,Upstream-heavy,1.0,Direct match to existing industry
+Utilities - Renewable,Utilities,Energy,Renewable Energy,direct,Lifecycle-dependent,1.0,Perfect match to existing renewable category
+Aerospace & Defense,Industrials,Manufacturing,Aerospace Manufacturing,extend,Upstream-heavy,0.9,High-tech manufacturing with complex supply chains
+Packaged Foods,Consumer Defensive,Consumer Goods,Food & Beverage,direct,Use-phase Dominant,0.95,Food processing and distribution
+Luxury Goods,Consumer Cyclical,Consumer Goods,Consumer Electronics,map,Use-phase Dominant,0.7,Diverse category needing sub-classification
+Household & Personal Products,Consumer Defensive,Consumer Goods,Fast Moving Consumer Goods,direct,Lifecycle-dependent,0.9,FMCG category match
+Oil & Gas Integrated,Energy,Energy,Oil & Gas Extraction,direct,Operational Emitter,1.0,Perfect match to existing category
+Farm & Heavy Construction Machinery,Industrials,Manufacturing,Industrial Equipment Manufacturing,merge,Operational Emitter,0.8,Merge with specialty machinery
+Steel,Basic Materials,Manufacturing,Steel Production,direct,Operational Emitter,1.0,Perfect match to existing steel industry
+Electrical Equipment & Parts,Industrials,Manufacturing,Electronics Manufacturing,map,Scope 2-heavy,0.85,Electronic components and equipment
+Building Materials,Basic Materials,Manufacturing,Construction Materials,extend,Lifecycle-dependent,0.9,Materials for construction industry
+Building Products & Equipment,Basic Materials,Manufacturing,Construction Materials,merge,Lifecycle-dependent,0.8,Merge with building materials
+Grocery Stores,Consumer Defensive,Retail,Traditional Retail,direct,Scope 2-heavy,0.9,Physical retail operations
+Packaging & Containers,Basic Materials,Manufacturing,Packaging Manufacturing,extend,Lifecycle-dependent,0.95,Packaging lifecycle emissions
+Specialty Business Services,Industrials,Financial Services,Professional Services,extend,Scope 2-heavy,0.75,Business service operations
+Conglomerates,Industrials,Manufacturing,Diversified Manufacturing,extend,Upstream-heavy,0.6,Complex multi-industry entities
+Consulting Services,Industrials,Financial Services,Professional Services,merge,Scope 2-heavy,0.8,Knowledge-based services
+Chemicals,Basic Materials,Manufacturing,Chemical Manufacturing,direct,Operational Emitter,1.0,Direct chemical production match
+Furnishings,Consumer Cyclical,Consumer Goods,Home Furnishings,extend,Upstream-heavy,0.85,Furniture and home goods manufacturing
+Utilities - Regulated Electric,Utilities,Energy,Electric Utilities,merge,Operational Emitter,0.95,Traditional electric utility
+Integrated Freight & Logistics,Industrials,Transportation,Shipping & Logistics,direct,Operational Emitter,0.95,Transportation and logistics services
+Utilities - Regulated Gas,Utilities,Energy,Gas Utilities,extend,Operational Emitter,0.9,Natural gas distribution
+Beverages - Non-Alcoholic,Consumer Defensive,Consumer Goods,Food & Beverage,merge,Use-phase Dominant,0.9,Beverage production and distribution
+Tools & Accessories,Industrials,Manufacturing,Industrial Equipment Manufacturing,merge,Scope 2-heavy,0.75,Industrial tools and equipment
+Beverages - Alcoholic,Consumer Defensive,Consumer Goods,Food & Beverage,merge,Use-phase Dominant,0.9,Alcoholic beverage production
+Banks,Financial Services,Financial Services,Commercial Banking,direct,Financed Emissions,1.0,Perfect match to existing banking
+Capital Markets,Financial Services,Financial Services,Investment Management,direct,Financed Emissions,0.95,Investment and trading services
+Diversified Financials,Financial Services,Financial Services,Investment Management,merge,Financed Emissions,0.8,Diverse financial services
+Insurance,Financial Services,Financial Services,Insurance,direct,Financed Emissions,1.0,Perfect insurance match
+Real Estate Management & Development,Real Estate,Real Estate,Commercial Real Estate,direct,Scope 2-heavy,0.95,Property management and development
+Semiconductors & Semiconductor Equipment,Technology,Technology,Semiconductor Manufacturing,direct,Operational Emitter,1.0,Perfect semiconductor match
+Software,Technology,Technology,Software Development,direct,Scope 2-heavy,1.0,Software development and services
+Technology Hardware & Equipment,Technology,Technology,Electronics Manufacturing,direct,Upstream-heavy,0.95,Hardware manufacturing
+Telecommunications Services,Technology,Technology,Telecommunications,direct,Scope 2-heavy,1.0,Perfect telecom match
+Media & Entertainment,Technology,Consumer Goods,Entertainment Services,extend,Scope 2-heavy,0.8,Content and entertainment industry
+Internet & Direct Marketing Retail,Technology,Retail,E-commerce,direct,Scope 3-heavy,0.95,Online retail and digital marketing
+Health Care Equipment & Services,Healthcare,Healthcare,Medical Devices,map,Upstream-heavy,0.85,Medical equipment and healthcare services
+Pharmaceuticals,Healthcare,Healthcare,Pharmaceuticals,direct,Upstream-heavy,1.0,Perfect pharmaceutical match
+Biotechnology,Healthcare,Healthcare,Pharmaceuticals,merge,Upstream-heavy,0.9,Biotech research and development
+Hotels & Resorts,Consumer Cyclical,Consumer Goods,Hospitality Services,extend,Scope 2-heavy,0.85,Tourism and hospitality industry
+Restaurants,Consumer Cyclical,Consumer Goods,Food Service,extend,Scope 2-heavy,0.9,Food service and restaurant operations
+Textiles & Apparel,Consumer Cyclical,Consumer Goods,Apparel & Textiles,direct,Upstream-heavy,1.0,Perfect textile and clothing match
+Personal Services,Consumer Cyclical,Consumer Goods,Personal Care Services,extend,Scope 2-heavy,0.8,Personal and professional services
+Specialty Retail,Consumer Cyclical,Retail,Traditional Retail,merge,Scope 2-heavy,0.85,Specialized retail operations
+Automobiles,Consumer Cyclical,Manufacturing,Automotive Manufacturing,merge,Upstream-heavy,0.9,Vehicle manufacturing
+Auto Components,Consumer Cyclical,Manufacturing,Automotive Manufacturing,merge,Upstream-heavy,0.85,Automotive parts and components
+Household Durables,Consumer Cyclical,Consumer Goods,Consumer Electronics,map,Use-phase Dominant,0.8,Durable household goods
+Leisure Products,Consumer Cyclical,Consumer Goods,Consumer Electronics,map,Use-phase Dominant,0.75,Recreational and leisure products
+Paper & Paper Products,Basic Materials,Manufacturing,Paper Manufacturing,extend,Lifecycle-dependent,0.9,Paper production and processing
+Metals & Mining,Basic Materials,Manufacturing,Mining & Metals,extend,Operational Emitter,0.95,Metal extraction and processing
+Construction Materials,Basic Materials,Manufacturing,Construction Materials,direct,Lifecycle-dependent,0.95,Building and construction materials
+Containers & Packaging,Basic Materials,Manufacturing,Packaging Manufacturing,merge,Lifecycle-dependent,0.9,Container and packaging production
+Air Freight & Logistics,Transportation,Transportation,Airlines,map,Operational Emitter,0.8,Air transportation and logistics
+Airlines,Transportation,Transportation,Airlines,direct,Operational Emitter,1.0,Perfect airline match
+Marine Transportation,Transportation,Transportation,Shipping & Logistics,map,Operational Emitter,0.9,Maritime shipping and transport
+Ground Transportation,Transportation,Transportation,Public Transportation,map,Scope 2-heavy,0.85,Ground-based transportation
+Transportation Infrastructure,Transportation,Transportation,Transportation Infrastructure,extend,Scope 2-heavy,0.9,Transportation infrastructure and support
+Electric Utilities,Utilities,Energy,Electric Utilities,direct,Operational Emitter,1.0,Perfect electric utility match
+Gas Utilities,Utilities,Energy,Gas Utilities,direct,Operational Emitter,1.0,Natural gas utility operations
+Multi-Utilities,Utilities,Energy,Utilities - Diversified,merge,Operational Emitter,0.95,Multiple utility services
+Water Utilities,Utilities,Energy,Water Utilities,extend,Operational Emitter,0.9,Water treatment and distribution
+Independent Power Producers,Utilities,Energy,Independent Power Generation,extend,Operational Emitter,0.9,Independent electricity generation
+Oil & Gas Equipment & Services,Energy,Energy,Oil & Gas Services,extend,Operational Emitter,0.95,Oilfield services and equipment
+Oil & Gas Exploration & Production,Energy,Energy,Oil & Gas Extraction,merge,Operational Emitter,0.95,Upstream oil and gas operations
+Oil & Gas Refining & Marketing,Energy,Energy,Oil & Gas Refining,extend,Operational Emitter,0.95,Downstream oil and gas operations
+Oil & Gas Storage & Transportation,Energy,Energy,Oil & Gas Distribution,extend,Operational Emitter,0.9,Midstream oil and gas operations
+Coal & Consumable Fuels,Energy,Energy,Coal Mining,direct,Operational Emitter,1.0,Perfect coal industry match
+Renewable Energy,Energy,Energy,Renewable Energy,direct,Lifecycle-dependent,1.0,Perfect renewable energy match
+Food & Staples Retailing,Consumer Defensive,Retail,Traditional Retail,merge,Scope 2-heavy,0.9,Food retail operations
+Food Products,Consumer Defensive,Consumer Goods,Food & Beverage,merge,Use-phase Dominant,0.95,Food manufacturing and processing
+Tobacco,Consumer Defensive,Consumer Goods,Tobacco Products,extend,Use-phase Dominant,0.95,Tobacco production and distribution
+Household Products,Consumer Defensive,Consumer Goods,Household & Personal Products,direct,Lifecycle-dependent,0.95,Household cleaning and personal care
+Personal Products,Consumer Defensive,Consumer Goods,Household & Personal Products,merge,Lifecycle-dependent,0.9,Personal care and cosmetics
+Agriculture,Consumer Defensive,Agriculture,Crop Production,direct,Operational Emitter,0.95,Agricultural production
+Forestry,Consumer Defensive,Agriculture,Forestry & Logging,extend,Operational Emitter,0.9,Forest management and logging
+Waste Management,Utilities,Energy,Waste Management Services,extend,Operational Emitter,0.9,Waste treatment and disposal
+Diversified Metals & Mining,Basic Materials,Manufacturing,Mining & Metals,merge,Operational Emitter,0.9,Diversified mining operations
+Industrial Metals & Minerals,Basic Materials,Manufacturing,Mining & Metals,merge,Operational Emitter,0.95,Industrial metal production
+Precious Metals & Minerals,Basic Materials,Manufacturing,Mining & Metals,merge,Operational Emitter,0.9,Precious metal mining
+Trading Companies & Distributors,Industrials,Manufacturing,Distribution Services,extend,Scope 2-heavy,0.8,Trading and distribution services
+Commercial Services & Supplies,Industrials,Financial Services,Professional Services,merge,Scope 2-heavy,0.8,Commercial support services
+Professional Services,Industrials,Financial Services,Professional Services,direct,Scope 2-heavy,0.95,Professional consulting services
+Research & Consulting Services,Industrials,Financial Services,Professional Services,merge,Scope 2-heavy,0.9,Research and advisory services
+Human Resource & Employment Services,Industrials,Financial Services,Professional Services,merge,Scope 2-heavy,0.85,HR and staffing services
+Security & Alarm Services,Industrials,Financial Services,Professional Services,merge,Scope 2-heavy,0.8,Security and protection services
+Environmental & Facilities Services,Industrials,Financial Services,Professional Services,merge,Scope 2-heavy,0.85,Environmental and facility management
