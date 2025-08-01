@@ -51,6 +51,7 @@ const Sidebar: React.FC = () => {
     '/scope1',
     '/scope2', 
     '/scope3',
+    '/decarbonization',
     '/about',
     '/contact',
     '/methodology'

@@ -145,11 +145,11 @@ const App = () => {
                       </DemoAwareRoute>
                     } />
                     <Route path="/decarbonization" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Decarbonization />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/profile" element={
                       <PrivateRoute>
