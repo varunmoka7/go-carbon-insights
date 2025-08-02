@@ -413,42 +413,69 @@ export type Database = {
         Row: {
           carbon_footprint: number
           created_at: string | null
+          data_source_attribution: Json | null
           description: string | null
           energy_consumption: number
+          exchange: string | null
+          figi: string | null
           id: string
+          identifier_confidence_score: number | null
           industry: string | null
+          lei: string | null
+          mic_code: string | null
           name: string
+          permid: string | null
           renewable_energy_percentage: number | null
           sector: string | null
+          ticker: string | null
           top_carbon_footprints: string[] | null
+          trancenable_company_id: string | null
           updated_at: string | null
           waste_generated: number
         }
         Insert: {
           carbon_footprint?: number
           created_at?: string | null
+          data_source_attribution?: Json | null
           description?: string | null
           energy_consumption?: number
+          exchange?: string | null
+          figi?: string | null
           id: string
+          identifier_confidence_score?: number | null
           industry?: string | null
+          lei?: string | null
+          mic_code?: string | null
           name: string
+          permid?: string | null
           renewable_energy_percentage?: number | null
           sector?: string | null
+          ticker?: string | null
           top_carbon_footprints?: string[] | null
+          trancenable_company_id?: string | null
           updated_at?: string | null
           waste_generated?: number
         }
         Update: {
           carbon_footprint?: number
           created_at?: string | null
+          data_source_attribution?: Json | null
           description?: string | null
           energy_consumption?: number
+          exchange?: string | null
+          figi?: string | null
           id?: string
+          identifier_confidence_score?: number | null
           industry?: string | null
+          lei?: string | null
+          mic_code?: string | null
           name?: string
+          permid?: string | null
           renewable_energy_percentage?: number | null
           sector?: string | null
+          ticker?: string | null
           top_carbon_footprints?: string[] | null
+          trancenable_company_id?: string | null
           updated_at?: string | null
           waste_generated?: number
         }
@@ -520,6 +547,63 @@ export type Database = {
           },
         ]
       }
+      company_identifiers: {
+        Row: {
+          company_id: string
+          confidence_score: number | null
+          created_at: string
+          id: string
+          identifier_source: string
+          identifier_type: string
+          identifier_value: string
+          is_primary: boolean | null
+          updated_at: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          company_id: string
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          identifier_source?: string
+          identifier_type: string
+          identifier_value: string
+          is_primary?: boolean | null
+          updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          company_id?: string
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          identifier_source?: string
+          identifier_type?: string
+          identifier_value?: string
+          is_primary?: boolean | null
+          updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_identifiers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_identifiers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_industries: {
         Row: {
           company_id: string
@@ -558,6 +642,57 @@ export type Database = {
           },
         ]
       }
+      emission_sources_detail: {
+        Row: {
+          activity_data: string | null
+          calculation_approach: string | null
+          created_at: string
+          data_quality_rating: number | null
+          emission_factor: string | null
+          emission_scope: number
+          emission_unit: string
+          emission_value: number
+          emissions_data_id: string
+          ghg_protocol_category: string | null
+          id: string
+          source_category: string
+          source_subcategory: string | null
+          uncertainty_range: number | null
+        }
+        Insert: {
+          activity_data?: string | null
+          calculation_approach?: string | null
+          created_at?: string
+          data_quality_rating?: number | null
+          emission_factor?: string | null
+          emission_scope: number
+          emission_unit?: string
+          emission_value: number
+          emissions_data_id: string
+          ghg_protocol_category?: string | null
+          id?: string
+          source_category: string
+          source_subcategory?: string | null
+          uncertainty_range?: number | null
+        }
+        Update: {
+          activity_data?: string | null
+          calculation_approach?: string | null
+          created_at?: string
+          data_quality_rating?: number | null
+          emission_factor?: string | null
+          emission_scope?: number
+          emission_unit?: string
+          emission_value?: number
+          emissions_data_id?: string
+          ghg_protocol_category?: string | null
+          id?: string
+          source_category?: string
+          source_subcategory?: string | null
+          uncertainty_range?: number | null
+        }
+        Relationships: []
+      }
       emissions_archetypes: {
         Row: {
           id: number
@@ -575,30 +710,51 @@ export type Database = {
       }
       emissions_data: {
         Row: {
+          calculation_method: string | null
           company_id: string | null
           created_at: string | null
+          data_lineage: Json | null
+          disclosure_year: number | null
+          emission_sources: Json | null
           id: string
+          incomplete_boundaries: string | null
           scope1: number
           scope2: number
           scope3: number
+          source_urls: Json | null
+          trancenable_document_id: string | null
           year: number
         }
         Insert: {
+          calculation_method?: string | null
           company_id?: string | null
           created_at?: string | null
+          data_lineage?: Json | null
+          disclosure_year?: number | null
+          emission_sources?: Json | null
           id?: string
+          incomplete_boundaries?: string | null
           scope1?: number
           scope2?: number
           scope3?: number
+          source_urls?: Json | null
+          trancenable_document_id?: string | null
           year: number
         }
         Update: {
+          calculation_method?: string | null
           company_id?: string | null
           created_at?: string | null
+          data_lineage?: Json | null
+          disclosure_year?: number | null
+          emission_sources?: Json | null
           id?: string
+          incomplete_boundaries?: string | null
           scope1?: number
           scope2?: number
           scope3?: number
+          source_urls?: Json | null
+          trancenable_document_id?: string | null
           year?: number
         }
         Relationships: [
@@ -662,6 +818,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      industry_mapping_log: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          companies_using_mapping: number | null
+          confidence_score: number
+          created_at: string
+          id: string
+          last_used_at: string | null
+          mapped_industry_id: string
+          mapping_notes: string | null
+          mapping_type: string
+          trancenable_industry: string
+          trancenable_sector: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          companies_using_mapping?: number | null
+          confidence_score: number
+          created_at?: string
+          id?: string
+          last_used_at?: string | null
+          mapped_industry_id: string
+          mapping_notes?: string | null
+          mapping_type: string
+          trancenable_industry: string
+          trancenable_sector: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          companies_using_mapping?: number | null
+          confidence_score?: number
+          created_at?: string
+          id?: string
+          last_used_at?: string | null
+          mapped_industry_id?: string
+          mapping_notes?: string | null
+          mapping_type?: string
+          trancenable_industry?: string
+          trancenable_sector?: string
+        }
+        Relationships: []
       }
       industry_tag_assignments: {
         Row: {
@@ -774,6 +975,60 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      profiles: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          email: string
+          email_verified: boolean | null
+          full_name: string | null
+          id: string
+          is_active: boolean | null
+          role: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          email: string
+          email_verified?: boolean | null
+          full_name?: string | null
+          id: string
+          is_active?: boolean | null
+          role?: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          email?: string
+          email_verified?: boolean | null
+          full_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          role?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "public_company_data"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sbti_pathway_data: {
         Row: {
@@ -1074,6 +1329,66 @@ export type Database = {
           },
         ]
       }
+      trancenable_import_log: {
+        Row: {
+          companies_created: number | null
+          companies_updated: number | null
+          created_at: string
+          created_by: string | null
+          data_completeness_score: number | null
+          emissions_records_created: number | null
+          error_details: Json | null
+          id: string
+          import_batch_id: string
+          import_completed_at: string | null
+          import_started_at: string
+          import_status: string
+          industry_mapping_confidence: number | null
+          lei_match_rate: number | null
+          processing_notes: string | null
+          total_records_processed: number | null
+          validation_errors: number | null
+        }
+        Insert: {
+          companies_created?: number | null
+          companies_updated?: number | null
+          created_at?: string
+          created_by?: string | null
+          data_completeness_score?: number | null
+          emissions_records_created?: number | null
+          error_details?: Json | null
+          id?: string
+          import_batch_id: string
+          import_completed_at?: string | null
+          import_started_at?: string
+          import_status?: string
+          industry_mapping_confidence?: number | null
+          lei_match_rate?: number | null
+          processing_notes?: string | null
+          total_records_processed?: number | null
+          validation_errors?: number | null
+        }
+        Update: {
+          companies_created?: number | null
+          companies_updated?: number | null
+          created_at?: string
+          created_by?: string | null
+          data_completeness_score?: number | null
+          emissions_records_created?: number | null
+          error_details?: Json | null
+          id?: string
+          import_batch_id?: string
+          import_completed_at?: string | null
+          import_started_at?: string
+          import_status?: string
+          industry_mapping_confidence?: number | null
+          lei_match_rate?: number | null
+          processing_notes?: string | null
+          total_records_processed?: number | null
+          validation_errors?: number | null
+        }
+        Relationships: []
+      }
       user_company_access: {
         Row: {
           access_level: string
@@ -1196,6 +1511,14 @@ export type Database = {
       check_rate_limit: {
         Args: { user_uuid: string; operation_type: string }
         Returns: boolean
+      }
+      create_test_demo_account: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      create_test_demo_account_fixed: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
       }
       detect_suspicious_activity: {
         Args: Record<PropertyKey, never>
