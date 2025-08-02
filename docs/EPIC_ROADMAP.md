@@ -2,7 +2,7 @@
 
 **Comprehensive Development Plan for Enterprise Carbon Management Platform**
 
-![Version](https://img.shields.io/badge/version-1.1.0-blue.svg) ![Last Updated](https://img.shields.io/badge/last%20updated-2025--08--01-green.svg) ![Status](https://img.shields.io/badge/status-planning-yellow.svg)
+![Version](https://img.shields.io/badge/version-1.2.0-blue.svg) ![Last Updated](https://img.shields.io/badge/last%20updated-2025--08--01-green.svg) ![Status](https://img.shields.io/badge/status-enhanced-blue.svg)
 
 ## Table of Contents
 
@@ -11,6 +11,7 @@
 * [Epic 1-4.5: Foundation & Core Features](#epic-1-45-foundation--core-features)
 * [Epic 5-8: Data & Intelligence](#epic-5-8-data--intelligence)
 * [Epic 9-12: Enterprise & Scale](#epic-9-12-enterprise--scale)
+* [Epic 13: AI-Powered Intelligence](#epic-13-ai-powered-intelligence)
 * [Implementation Timeline](#implementation-timeline)
 * [Resource Requirements](#resource-requirements)
 * [Success Metrics](#success-metrics)
@@ -25,11 +26,13 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - **Phase 1**: Foundation & Core Features (Epics 1-4) - Public platform with basic functionality
 - **Phase 2**: Data & Intelligence (Epics 5-8) - Real data integration and AI capabilities
 - **Phase 3**: Enterprise & Scale (Epics 9-12) - Full SaaS platform with enterprise features
+- **Phase 4**: AI-Powered Intelligence (Epic 13+) - Intelligent ESG extraction and processing
 
 ### Target Market Evolution
 - **Current**: Public research and benchmarking platform
 - **Phase 2**: Professional carbon management tool
 - **Phase 3**: Enterprise sustainability platform competing with established players
+- **Phase 4**: AI-powered ESG intelligence platform with automated report processing
 
 ***
 
@@ -453,6 +456,80 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - Performance monitoring tools
 - Compliance management system
 
+### Epic 13: ESG Extractor Integration 📋 **PLANNING**
+
+**Goal**: Integrate Gemini API-powered ESG extractor for intelligent processing of sustainability reports with real-time extraction, validation, and benchmarking capabilities
+
+**Planned Stories**:
+- 📋 Story 13.1: ESG Extractor Core Integration (Gemini API + TypeScript)
+- 📋 Story 13.2: Supabase Database Schema Extensions (Extracted data persistence)
+- 📋 Story 13.3: File Upload Interface with Multi-format Support (PDF, TXT, CSV, MD)
+- 📋 Story 13.4: Real-time Extraction Progress & Results Display
+- 📋 Story 13.5: Specialized Industry Extractors Implementation (Banking, Apparel, Waste, Carbon Levers)
+- 📋 Story 13.6: Private ViewMode Integration & Organization Data Management
+- 📋 Story 13.7: Benchmarking Against Trancenable Database
+- 📋 Story 13.8: Advanced Prompt Engineering & Validation
+
+**Key Features**:
+- AI-powered sustainability report processing using Gemini 2.5-flash model
+- Multi-format file support with client-side processing
+- Industry-specific extractors for enhanced accuracy
+- Comprehensive ESG metrics extraction (Scope 1, 2, 3 + financial data)
+- Real-time benchmarking against existing Trancenable ESG database
+- Private organization data management within ViewMode system
+- Advanced prompt engineering with self-correction validation
+- Secure file upload with virus scanning and progress tracking
+
+**Technical Requirements**:
+- Gemini API integration with secure key management
+- React/TypeScript/Vite architecture integration
+- Supabase backend extensions for extracted data persistence
+- Multi-format file processing (PDF parsing, text extraction)
+- Private ViewMode integration for organization data isolation
+- Real-time progress tracking and results display
+- Advanced benchmarking algorithms against existing ESG data
+
+***
+
+## Epic 13: AI-Powered Intelligence
+
+### Epic 13: ESG Extractor Integration 📋 **PLANNING**
+
+**Goal**: Transform GoCarbonTracker into an intelligent ESG data processing platform by integrating a proven Gemini API-powered extractor for comprehensive sustainability report analysis.
+
+**Status**: Planning Phase - Ready for Implementation
+
+**Target Timeline**: Q1 2026 (26 weeks)
+
+**Epic Overview**:
+Epic 13 represents a transformative addition to GoCarbonTracker, integrating advanced AI capabilities for processing sustainability reports. Building on the existing React/TypeScript/Vite architecture and Supabase backend, this epic introduces intelligent document processing with industry-specific extractors, real-time benchmarking, and secure private data management.
+
+**Core Value Proposition**:
+- **Intelligent Processing**: AI-powered extraction of ESG metrics from PDF, TXT, CSV, MD files
+- **Industry Specialization**: Specialized extractors for Banking, Apparel, Waste Management, Carbon Levers
+- **Real-time Benchmarking**: Compare extracted data against Trancenable ESG database
+- **Private Data Management**: Secure organization-specific processing within ViewMode system
+- **Comprehensive Metrics**: Extraction of Scope 1, 2, 3 emissions plus financial/operational data
+
+**Technical Foundation**:
+- Gemini 2.5-flash model integration with advanced prompt engineering
+- Client-side processing with backend persistence via Supabase
+- Multi-format file processing with security scanning
+- Self-correction validation loops for data accuracy
+- Advanced benchmarking algorithms with confidence scoring
+
+**Integration Points**:
+- ✅ **Epic 3 Dependency**: Private ViewMode system for organization data isolation
+- ✅ **Epic 5 Dependency**: Trancenable database for benchmarking capabilities
+- ✅ **Epic 2 Foundation**: Existing database schema and API infrastructure
+- ✅ **Epic 1 Security**: User authentication and access controls
+
+**Success Metrics**:
+- 95%+ extraction accuracy for key ESG metrics
+- <2 minute processing time for typical sustainability reports
+- 70%+ Private ViewMode user adoption
+- 25% increase in premium subscription conversions
+
 ***
 
 ## Implementation Timeline
@@ -484,6 +561,12 @@ This document outlines the complete epic roadmap for GoCarbonTracker, transformi
 - 📋 Epic 10: Advanced Reporting & Compliance (Planning)
 - 📋 Epic 11: Advanced Security & Governance (Planning)
 - 📋 Epic 12: Global Scale & Performance (Planning)
+
+### Phase 4: AI-Powered Intelligence (Epic 13+)
+**Timeline**: Q1 2026 - Q2 2026
+**Status**: Planning
+
+- 📋 Epic 13: ESG Extractor Integration (Planning) - AI-powered sustainability report processing
 
 ***
 

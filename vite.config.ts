@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -9,6 +8,15 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0",
     port: 8080,
+    // ADDED FOR EPIC 13: Proxy API requests to a secure backend endpoint
+    proxy: {
+      '/api/gemini': {
+        target: 'http://localhost:54321/functions/v1/process-report', // Target Supabase Edge Function
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/gemini/, ''),
+        secure: false,
+      },
+    },
   },
   plugins: [
     react(),
