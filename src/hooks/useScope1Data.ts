@@ -4,10 +4,19 @@ import { useCompanies } from './useCompanies';
 
 export const useScope1Data = (companyId: string) => {
   const supabaseQuery = useSupabaseScope1Data(companyId);
-  const { data: companies } = useCompanies();
+  const { data: companies, isLoading: companiesLoading } = useCompanies();
   
   // If Supabase data is loading or there's an error, fallback to mock data
   if (supabaseQuery.isLoading || supabaseQuery.error || !supabaseQuery.data?.trendData?.length) {
+    // Handle companies loading state
+    if (companiesLoading) {
+      return {
+        data: null,
+        isLoading: true,
+        error: null
+      };
+    }
+    
     const company = companies?.find(c => c.id === companyId);
     
     if (!company) {
@@ -144,15 +153,17 @@ export const useScope1Data = (companyId: string) => {
       ];
     }
     
-    // Debug logging
-    console.log('useScope1Data Debug:', {
-      companyId,
-      companyName: company.name,
-      sourceDataByYearKeys: Object.keys(sourceDataByYear),
-      latestYearDataLength: latestYearData.length,
-      latestYearData,
-      scope1Total: emissionsData.find(d => d.year === 2024)?.scope1
-    });
+    // Debug logging (development only)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('useScope1Data Debug:', {
+        companyId,
+        companyName: company.name,
+        sourceDataByYearKeys: Object.keys(sourceDataByYear),
+        latestYearDataLength: latestYearData.length,
+        latestYearData,
+        scope1Total: emissionsData.find(d => d.year === 2024)?.scope1
+      });
+    }
     
     const scope1Data = {
       trendData: emissionsData.map(item => ({

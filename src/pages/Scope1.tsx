@@ -92,14 +92,16 @@ const Scope1 = () => {
     icon: getIconForType(item.iconType)
   }));
 
-  // Debug logging
-  console.log('Scope1 Debug:', {
-    selectedYear,
-    sourceDataByYear: Object.keys(sourceDataByYear),
-    sourceDataLength: sourceData?.length,
-    currentSourceDataLength: currentSourceData.length,
-    currentSourceData
-  });
+  // Debug logging (development only)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Scope1 Debug:', {
+      selectedYear,
+      sourceDataByYear: Object.keys(sourceDataByYear),
+      sourceDataLength: sourceData?.length,
+      currentSourceDataLength: currentSourceData.length,
+      currentSourceData
+    });
+  }
 
   const selectedCompanyData = companies?.find(c => c.id === selectedCompany);
 

@@ -35,11 +35,26 @@ interface EnhancedScope1Data {
 export const useEnhancedScope1Data = (companyId: string) => {
   const { data: scope1Data, isLoading, error } = useScope1Data(companyId);
   const benchmarkData = useIndustryBenchmarking(companyId);
-  const { data: companies } = useCompanies();
+  const { data: companies, isLoading: companiesLoading } = useCompanies();
   const company = companies?.find(c => c.id === companyId);
 
-  if (isLoading || error || !scope1Data || !benchmarkData || !company) {
-    return { data: null, isLoading, error };
+  // Debug logging (can be removed in production)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('useEnhancedScope1Data Debug:', {
+      companyId,
+      isLoading,
+      companiesLoading,
+      error: error?.message,
+      hasScope1Data: !!scope1Data,
+      hasBenchmarkData: !!benchmarkData,
+      hasCompany: !!company,
+      companyName: company?.name,
+      companiesLength: companies?.length
+    });
+  }
+
+  if (isLoading || companiesLoading || error || !scope1Data || !benchmarkData || !company) {
+    return { data: null, isLoading: isLoading || companiesLoading, error };
   }
 
   // Generate industry-specific typical ranges and metrics
