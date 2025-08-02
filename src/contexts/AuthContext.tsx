@@ -99,8 +99,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
             console.log('Email verified and user signed in');
-            // Clear demo mode when user successfully signs in
-            clearDemoMode();
+            
+            // Check if this is the demo user
+            if (session.user.email === 'test@gocarbontracker.net') {
+              console.log('Demo user logged in, enabling demo mode');
+              localStorage.setItem('demoMode', 'true');
+            } else {
+              // Clear demo mode when regular user successfully signs in
+              clearDemoMode();
+            }
           }
         }
       );

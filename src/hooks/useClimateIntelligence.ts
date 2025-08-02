@@ -133,8 +133,18 @@ export const useClimateIntelligence = (companyId: string) => {
           industryBenchmark: realisticData.climateMetrics.industryBenchmark,
           alerts: realisticData.climateMetrics.alerts
         },
-        carbonProjects: realisticData.carbonProjects,
-        priorityActions: realisticData.priorityActions
+        carbonProjects: realisticData.carbonProjects.map(project => ({
+          ...project,
+          impact: project.annualReduction || 0,
+          timeline: '1-2 years'
+        })),
+        priorityActions: realisticData.priorityActions.map(action => ({
+          ...action,
+          action: action.title || action.description,
+          timeline: '6-12 months',
+          investment: 'Medium',
+          roi: '15-25%'
+        }))
       };
     },
     staleTime: 5 * 60 * 1000,

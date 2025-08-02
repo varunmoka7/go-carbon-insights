@@ -13,26 +13,8 @@ describe('processEsgReport Service', () => {
   });
 
   const mockRequest: ApiRequest = {
-    fileContent: 'Test content',
-    fileType: 'txt',
-    extractorType: 'standard',
-    options: {
-      includeScope3: true,
-      extractTargets: true,
-      extractPolicies: true,
-      benchmarkMode: false,
-      confidenceThreshold: 0.8,
-      maxProcessingTime: 120,
-      enableValidation: true,
-      industryAutoDetection: true
-    },
-    metadata: {
-      fileName: 'test.txt',
-      fileSize: 1024,
-      organizationId: 'org-123',
-      userId: 'user-456',
-      timestamp: new Date().toISOString()
-    }
+    documentText: 'Test content',
+    extractionType: 'emissions'
   };
 
   it('should return data successfully when the API call is successful', async () => {

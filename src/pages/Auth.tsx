@@ -174,11 +174,11 @@ const Auth = () => {
         
         if (result.error) {
           setError(result.error.message || 'An error occurred during sign up. Please try again.');
-        } else if (result.requiresVerification) {
+        } else if (!result.error) {
           // Email verification required
           toast({
             title: "Registration Successful!",
-            description: result.message || "Please check your email and click the verification link to complete registration.",
+            description: "Please check your email and click the verification link to complete registration.",
           });
           setError(''); // Clear any previous errors
           // Clear form data
