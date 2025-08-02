@@ -160,6 +160,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: { message: usernameValidation.message } };
       }
 
+      // Special handling for test account
+      const isTestAccount = sanitizedEmail === 'test@gocarbontracker.net';
+      
       // Use the current origin for email redirect
       const redirectUrl = `${window.location.origin}/auth?verified=true`;
       
@@ -172,7 +175,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           data: {
             username: sanitizedUsername,
             display_name: sanitizedUsername,
-            full_name: sanitizedUsername
+            full_name: isTestAccount ? 'Test Account' : sanitizedUsername,
+            role: isTestAccount ? 'test' : 'user',
+            is_test_account: isTestAccount
           }
         }
       });
@@ -180,6 +185,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) {
         console.error('Signup error:', error);
         if (error.message.includes('User already registered')) {
+          // For test account, try to sign in directly
+          if (isTestAccount) {
+            console.log('Test account already exists, attempting direct sign in...');
+            const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+              email: sanitizedEmail,
+              password
+            });
+            
+            if (signInError) {
+              return { error: { message: 'Test account exists but login failed. Please try signing in manually.' } };
+            }
+            
+            console.log('Test account login successful');
+            setUser(signInData.user);
+            setSession(signInData.session);
+            return { error: null, requiresVerification: false };
+          }
+          
           return { error: { message: 'An account with this email already exists. Please try signing in instead.' } };
         }
         if (error.message.includes('email rate limit')) {
@@ -193,6 +216,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         session: data.session ? 'Session active' : 'No session',
         emailConfirmed: data.user?.email_confirmed_at ? 'Email confirmed' : 'Email verification required'
       });
+
+      // For test account, auto-confirm and sign in
+      if (isTestAccount && data.user && !data.user.email_confirmed_at) {
+        console.log('Auto-confirming test account...');
+        // Try to sign in immediately (Supabase might auto-confirm test accounts)
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email: sanitizedEmail,
+          password
+        });
+        
+        if (!signInError && signInData.user) {
+          console.log('Test account auto-confirmed and signed in');
+          setUser(signInData.user);
+          setSession(signInData.session);
+          return { error: null, requiresVerification: false };
+        }
+      }
 
       // Check if email verification is required
       if (data.user && !data.user.email_confirmed_at) {

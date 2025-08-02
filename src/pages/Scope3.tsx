@@ -12,7 +12,7 @@ import { categorizeScope3Data, generateFallbackScope3Distribution, type Upstream
 
 const Scope3 = () => {
   const navigate = useNavigate();
-  const [selectedCompany, setSelectedCompany] = useState('techcorp');
+  const [selectedCompany, setSelectedCompany] = useState('apple');
   const [selectedYear, setSelectedYear] = useState('2024');
   const { data: companies } = useCompanies();
   const { data: scope3Data, isLoading, error } = useScope3Data(selectedCompany);

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test Account - GoCarbonTracker</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a4c2e 0%, #2d5a3d 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4ade80;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4ade80;
+            color: #1a4c2e;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #22c55e;
+        }
+        button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+            color: #4ade80;
+        }
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+        }
+        .credentials {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
+            color: #93c5fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        .credentials h3 {
+            margin-top: 0;
+            color: #60a5fa;
+        }
+        .credentials code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Create Test Account</h1>
+        <p style="text-align: center; margin-bottom: 30px; opacity: 0.9;">
+            Create a test account for GoCarbonTracker platform access
+        </p>
+        
+        <form id="createAccountForm">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" value="test@gocarbontracker.net" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" value="GoCarbon2024!" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" value="test_demo" readonly>
+            </div>
+            
+            <button type="submit" id="createBtn">Create Test Account</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Supabase configuration - replace with your actual values
+        const SUPABASE_URL = 'https://hiplsgbyxbalukmejxaq.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhpcGxzZ2J5eGJhbHVrbWVqeGFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0NDMxNDMsImV4cCI6MjA2NDAxOTE0M30.q6O';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        document.getElementById('createAccountForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const createBtn = document.getElementById('createBtn');
+            const resultDiv = document.getElementById('result');
+            
+            createBtn.disabled = true;
+            createBtn.textContent = 'Creating Account...';
+            resultDiv.innerHTML = '';
+            
+            try {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const username = document.getElementById('username').value;
+                
+                console.log('Creating test account...', { email, username });
+                
+                // Create the user account
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            username: username,
+                            display_name: username,
+                            full_name: 'Test Account',
+                            role: 'test',
+                            is_test_account: true
+                        }
+                    }
+                });
+                
+                if (error) {
+                    if (error.message.includes('already registered')) {
+                        // User already exists, try to sign in
+                        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+                            email: email,
+                            password: password
+                        });
+                        
+                        if (signInError) {
+                            throw new Error(`Account exists but login failed: ${signInError.message}`);
+                        }
+                        
+                        resultDiv.innerHTML = `
+                            <div class="success">
+                                ✅ Test account already exists and login successful!
+                            </div>
+                            <div class="credentials">
+                                <h3>📋 Test Account Credentials</h3>
+                                <p><strong>Email:</strong> <code>${email}</code></p>
+                                <p><strong>Password:</strong> <code>${password}</code></p>
+                                <p><strong>Username:</strong> <code>${username}</code></p>
+                                <p><strong>Platform URL:</strong> <code>https://gocarbontracker.net</code></p>
+                            </div>
+                        `;
+                    } else {
+                        throw error;
+                    }
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Test account created successfully!
+                        </div>
+                        <div class="credentials">
+                            <h3>📋 Test Account Credentials</h3>
+                            <p><strong>Email:</strong> <code>${email}</code></p>
+                            <p><strong>Password:</strong> <code>${password}</code></p>
+                            <p><strong>Username:</strong> <code>${username}</code></p>
+                            <p><strong>Platform URL:</strong> <code>https://gocarbontracker.net</code></p>
+                            <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
+                                ⚠️ Note: You may need to check your email and verify the account before logging in.
+                            </p>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Error creating test account:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        ❌ Error creating test account: ${error.message}
+                    </div>
+                `;
+            } finally {
+                createBtn.disabled = false;
+                createBtn.textContent = 'Create Test Account';
+            }
+        });
+    </script>
+</body>
+</html> 
