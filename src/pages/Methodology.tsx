@@ -1,205 +1,441 @@
 
 import React from 'react';
-import { BookOpen, Calculator, Database, Shield, Target, TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { 
+  Shield, 
+  Database, 
+  Zap, 
+  CheckCircle, 
+  Globe, 
+  Lock, 
+  BarChart3, 
+  Cpu,
+  Network,
+  FileText,
+  Award,
+  TrendingUp
+} from 'lucide-react';
 
 const Methodology = () => {
-  const dataPoints = [
-    {
-      category: 'Direct Emissions (Scope 1)',
-      icon: <Calculator className="h-6 w-6 text-red-600" />,
-      description: 'Emissions from sources that are owned or controlled by your company',
-      examples: ['Natural gas combustion', 'Company vehicle fuel', 'Manufacturing processes', 'Refrigerant leaks'],
-      calculation: 'Activity Data × Emission Factor = CO2 Equivalent Emissions',
-      units: 'Metric tons of CO2 equivalent (tCO2e)'
-    },
-    {
-      category: 'Indirect Energy Emissions (Scope 2)',
-      icon: <TrendingUp className="h-6 w-6 text-orange-600" />,
-      description: 'Emissions from purchased electricity, steam, heating, and cooling',
-      examples: ['Purchased electricity', 'Purchased steam', 'Purchased heating', 'Purchased cooling'],
-      calculation: 'Energy Consumption × Grid Emission Factor = CO2 Equivalent Emissions',
-      units: 'Metric tons of CO2 equivalent (tCO2e)'
-    },
-    {
-      category: 'Other Indirect Emissions (Scope 3)',
-      icon: <Database className="h-6 w-6 text-teal-600" />,
-      description: 'All other indirect emissions that occur in your value chain',
-      examples: ['Supply chain emissions', 'Business travel', 'Employee commuting', 'Waste disposal', 'Product lifecycle'],
-      calculation: 'Various methods including spend-based, activity-based, and hybrid approaches',
-      units: 'Metric tons of CO2 equivalent (tCO2e)'
-    },
-    {
-      category: 'Science-Based Targets',
-      icon: <Target className="h-6 w-6 text-blue-600" />,
-      description: 'Emission reduction targets aligned with climate science',
-      examples: ['Near-term targets (5-10 years)', 'Long-term targets (2050)', 'Net-zero commitments', 'Sector-specific pathways'],
-      calculation: 'Based on global warming scenarios (1.5°C pathway)',
-      units: 'Percentage reduction from baseline year'
-    }
-  ];
-
-  const frameworks = [
-    {
-      name: 'GHG Protocol',
-      description: 'The most widely used international accounting tool for quantifying greenhouse gas emissions',
-      scope: 'Provides standards for corporate and project-level emissions accounting'
-    },
-    {
-      name: 'Science Based Targets Initiative (SBTi)',
-      description: 'Defines and promotes best practice in science-based target setting',
-      scope: 'Provides methods for companies to set emission reduction targets'
-    },
-    {
-      name: 'Corporate Sustainability Reporting Directive (CSRD)',
-      description: 'EU legislation requiring companies to report on sustainability matters',
-      scope: 'Mandatory sustainability reporting for large companies'
-    },
-    {
-      name: 'Carbon Disclosure Project (CDP)',
-      description: 'Global disclosure system for environmental impacts',
-      scope: 'Standardized environmental disclosure framework'
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-6">
-          <div className="flex items-center space-x-3 mb-4">
-            <BookOpen className="h-8 w-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Methodology & Data Sources</h1>
-          </div>
-          <p className="text-gray-600 text-lg">
-            Understanding how we measure, calculate, and track carbon emissions across all business operations
-          </p>
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
+      {/* Header */}
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Methodology & Data Sources
+        </h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          Transparent, science-based carbon accounting methodology built on industry standards 
+          and cutting-edge technology for accurate, verifiable emissions tracking.
+        </p>
+        <div className="flex justify-center gap-2 mt-6">
+          <Badge variant="secondary" className="flex items-center gap-1">
+            <Award className="h-4 w-4" />
+            ISO 14064 Compliant
+          </Badge>
+          <Badge variant="secondary" className="flex items-center gap-1">
+            <Shield className="h-4 w-4" />
+            GHG Protocol
+          </Badge>
+          <Badge variant="secondary" className="flex items-center gap-1">
+            <CheckCircle className="h-4 w-4" />
+            Third-Party Verified
+          </Badge>
         </div>
+      </div>
 
-        {/* Introduction */}
-        <div className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Our Approach</h2>
-          <div className="prose max-w-none text-gray-700">
-            <p className="mb-4">
-              Our carbon tracking methodology follows internationally recognized standards and best practices. 
-              We use the <strong>Greenhouse Gas (GHG) Protocol</strong> as our primary framework, which is the 
-              most widely used international accounting tool for quantifying greenhouse gas emissions.
-            </p>
-            <p className="mb-4">
-              All emission calculations are performed using the latest emission factors from reputable sources 
-              including the EPA, IPCC, and regional grid authorities. We categorize emissions into three scopes 
-              to provide comprehensive coverage of your organization's carbon footprint.
-            </p>
-            <p>
-              Our platform is designed to be transparent, accurate, and accessible to users at all levels of 
-              environmental expertise - from sustainability professionals to students learning about climate action.
-            </p>
-          </div>
-        </div>
-
-        {/* Data Points Explained */}
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Data Points Explained</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {dataPoints.map((point, index) => (
-              <Card key={index} className="backdrop-blur-lg bg-white/70 border-white/20 hover:shadow-xl transition-all duration-300">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    {point.icon}
-                    <CardTitle className="text-xl">{point.category}</CardTitle>
-                  </div>
-                  <CardDescription className="text-base">{point.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Examples Include:</h4>
-                    <ul className="list-disc list-inside text-gray-600 space-y-1">
-                      {point.examples.map((example, idx) => (
-                        <li key={idx}>{example}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-gray-50/70 rounded-lg p-3">
-                    <h4 className="font-semibold text-gray-900 mb-1">Calculation Method:</h4>
-                    <p className="text-gray-700 text-sm">{point.calculation}</p>
-                  </div>
-                  
-                  <div className="bg-blue-50/70 rounded-lg p-3">
-                    <h4 className="font-semibold text-gray-900 mb-1">Units:</h4>
-                    <p className="text-gray-700 text-sm">{point.units}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Standards & Frameworks */}
-        <div className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-6">
-          <div className="flex items-center space-x-3 mb-6">
-            <Shield className="h-6 w-6 text-green-600" />
-            <h2 className="text-2xl font-semibold text-gray-900">Standards & Frameworks</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {frameworks.map((framework, index) => (
-              <div key={index} className="bg-white/50 rounded-lg p-4 hover:bg-white/70 transition-colors">
-                <h3 className="font-semibold text-gray-900 mb-2">{framework.name}</h3>
-                <p className="text-gray-700 text-sm mb-2">{framework.description}</p>
-                <p className="text-gray-600 text-xs">{framework.scope}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Quality Assurance */}
-        <div className="backdrop-blur-lg bg-white/70 rounded-xl shadow-lg border border-white/20 p-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Quality Assurance</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Database className="h-6 w-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Data Validation</h3>
-              <p className="text-gray-600 text-sm">All data inputs are validated against known ranges and industry benchmarks</p>
+      {/* Methodology Overview */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-6 w-6 text-green-600" />
+            Carbon Accounting Methodology
+          </CardTitle>
+          <CardDescription>
+            Our methodology follows international standards and best practices for greenhouse gas accounting
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-lg mb-3">GHG Protocol Compliance</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Scope 1: Direct emissions from owned/controlled sources</li>
+                <li>• Scope 2: Indirect emissions from purchased energy</li>
+                <li>• Scope 3: All other indirect emissions in value chain</li>
+                <li>• Activity-based calculations with emission factors</li>
+                <li>• Uncertainty quantification and confidence intervals</li>
+              </ul>
             </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Calculator className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Calculation Accuracy</h3>
-              <p className="text-gray-600 text-sm">Emission factors are updated annually from authoritative sources</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Shield className="h-6 w-6 text-purple-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Third-Party Verification</h3>
-              <p className="text-gray-600 text-sm">Methodology reviewed by independent climate experts and auditors</p>
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Science-Based Targets</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• SBTi-approved target setting methodology</li>
+                <li>• 1.5°C pathway alignment</li>
+                <li>• Sector-specific decarbonization pathways</li>
+                <li>• Annual target validation and progress tracking</li>
+                <li>• Scenario analysis and modeling</li>
+              </ul>
             </div>
           </div>
-        </div>
+          
+          <Separator />
+          
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Calculation Methodologies</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Energy Consumption</h4>
+                <p className="text-sm text-gray-600">
+                  Grid emission factors, renewable energy certificates, and consumption-based allocation
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Transportation</h4>
+                <p className="text-sm text-gray-600">
+                  Fuel consumption, vehicle efficiency, and distance-based calculations
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Supply Chain</h4>
+                <p className="text-sm text-gray-600">
+                  Spend-based, activity-based, and hybrid approaches with supplier engagement
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Simple Language Explanation */}
-        <div className="backdrop-blur-lg bg-gradient-to-r from-green-50/70 to-blue-50/70 rounded-xl shadow-lg border border-white/20 p-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">In Simple Terms</h2>
-          <div className="prose max-w-none text-gray-700">
-            <p className="text-lg mb-4">
-              Think of carbon emissions like the exhaust from a car, but for businesses. Just like a car produces 
-              pollution when it burns fuel, companies create carbon dioxide (CO2) when they:
-            </p>
-            <ul className="list-disc list-inside space-y-2 mb-4">
-              <li><strong>Use energy</strong> - Like turning on lights or running machines</li>
-              <li><strong>Transport goods</strong> - Like trucks delivering products</li>
-              <li><strong>Make products</strong> - Like factories producing goods</li>
-              <li><strong>Heat buildings</strong> - Like warming offices in winter</li>
-            </ul>
-            <p className="text-lg">
-              We measure all these different sources of CO2 and add them up to get the total "carbon footprint" 
-              of a company. This helps businesses understand their impact on the climate and find ways to reduce it.
+      {/* Data Sources */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Database className="h-6 w-6 text-blue-600" />
+            Data Sources & Collection
+          </CardTitle>
+          <CardDescription>
+            Multi-source data collection with real-time integration and quality assurance
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Primary Data Collection</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Direct meter readings and IoT sensors</li>
+                <li>• Utility bills and energy consumption data</li>
+                <li>• Fuel consumption and vehicle telematics</li>
+                <li>• Waste management and disposal records</li>
+                <li>• Employee travel and commuting data</li>
+                <li>• Procurement and spend data</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Secondary Data Sources</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• EPA emission factors database</li>
+                <li>• IPCC guidelines and methodologies</li>
+                <li>• Industry-specific emission factors</li>
+                <li>• Regional grid emission factors</li>
+                <li>• Supplier sustainability reports</li>
+                <li>• Public environmental databases</li>
+              </ul>
+            </div>
+          </div>
+          
+          <Separator />
+          
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Third-Party Data Providers</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Environmental Data</h4>
+                <p className="text-sm text-gray-600">
+                  Integration with leading environmental data providers for comprehensive coverage
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Financial Data</h4>
+                <p className="text-sm text-gray-600">
+                  Spend-based calculations using financial data from ERP systems
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Market Intelligence</h4>
+                <p className="text-sm text-gray-600">
+                  Industry benchmarks and peer comparison data for context
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Technical Implementation */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Cpu className="h-6 w-6 text-purple-600" />
+            Technical Implementation
+          </CardTitle>
+          <CardDescription>
+            Advanced technology stack ensuring data integrity, security, and real-time processing
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-lg mb-3">API Integrations</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• RESTful APIs for real-time data ingestion</li>
+                <li>• Webhook support for automated updates</li>
+                <li>• OAuth 2.0 authentication and security</li>
+                <li>• Rate limiting and data validation</li>
+                <li>• Error handling and retry mechanisms</li>
+                <li>• Data transformation and normalization</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-3">AI & Machine Learning</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Anomaly detection in emission data</li>
+                <li>• Predictive modeling for emissions forecasting</li>
+                <li>• Natural language processing for data extraction</li>
+                <li>• Automated categorization and classification</li>
+                <li>• Pattern recognition for optimization opportunities</li>
+                <li>• Continuous learning and model improvement</li>
+              </ul>
+            </div>
+          </div>
+          
+          <Separator />
+          
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="p-4 border rounded-lg">
+              <h4 className="font-medium mb-2 flex items-center gap-2">
+                <Network className="h-4 w-4" />
+                Blockchain Transparency
+              </h4>
+              <p className="text-sm text-gray-600">
+                Immutable audit trails and data provenance using distributed ledger technology
+              </p>
+            </div>
+            <div className="p-4 border rounded-lg">
+              <h4 className="font-medium mb-2 flex items-center gap-2">
+                <Globe className="h-4 w-4" />
+                Cloud Infrastructure
+              </h4>
+              <p className="text-sm text-gray-600">
+                Scalable, secure cloud architecture with global data centers and redundancy
+              </p>
+            </div>
+            <div className="p-4 border rounded-lg">
+              <h4 className="font-medium mb-2 flex items-center gap-2">
+                <Lock className="h-4 w-4" />
+                Security & Privacy
+              </h4>
+              <p className="text-sm text-gray-600">
+                SOC 2 Type II compliance, GDPR adherence, and enterprise-grade security
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quality Assurance */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle className="h-6 w-6 text-green-600" />
+            Quality Assurance & Verification
+          </CardTitle>
+          <CardDescription>
+            Multi-layered quality assurance processes ensuring data accuracy and reliability
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Data Quality Assurance</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Automated data validation and consistency checks</li>
+                <li>• Outlier detection and anomaly flagging</li>
+                <li>• Data completeness and accuracy verification</li>
+                <li>• Cross-reference validation with multiple sources</li>
+                <li>• Real-time quality scoring and monitoring</li>
+                <li>• Automated data correction and enhancement</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Third-Party Verification</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Annual third-party audits by certified verifiers</li>
+                <li>• ISO 14064-3 compliant verification process</li>
+                <li>• Independent data quality assessments</li>
+                <li>• Methodology review and validation</li>
+                <li>• Stakeholder assurance and confidence building</li>
+                <li>• Public verification statements and reports</li>
+              </ul>
+            </div>
+          </div>
+          
+          <Separator />
+          
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Audit Trails & Data Lineage</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Data Lineage</h4>
+                <p className="text-sm text-gray-600">
+                  Complete traceability from source to final calculation with version control
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Change Tracking</h4>
+                <p className="text-sm text-gray-600">
+                  Immutable audit logs of all data modifications and calculation changes
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Compliance Reporting</h4>
+                <p className="text-sm text-gray-600">
+                  Automated generation of compliance reports and audit documentation
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Compliance & Standards */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Award className="h-6 w-6 text-gold-600" />
+            Compliance & Standards
+          </CardTitle>
+          <CardDescription>
+            Adherence to international standards and regulatory requirements
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Regulatory Compliance</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• SEC climate disclosure requirements</li>
+                <li>• EU Taxonomy and CSRD compliance</li>
+                <li>• TCFD framework implementation</li>
+                <li>• California SB 253 and SB 261</li>
+                <li>• International sustainability standards</li>
+                <li>• Regional carbon reporting requirements</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Industry Standards</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• ISO 14064-1:2018 greenhouse gas accounting</li>
+                <li>• GHG Protocol Corporate Standard</li>
+                <li>• Science Based Targets initiative (SBTi)</li>
+                <li>• CDP reporting framework</li>
+                <li>• GRI sustainability reporting standards</li>
+                <li>• SASB industry-specific standards</li>
+              </ul>
+            </div>
+          </div>
+          
+          <Separator />
+          
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Certifications & Validations</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">ISO Certifications</h4>
+                <p className="text-sm text-gray-600">
+                  ISO 14064, ISO 14001, and ISO 27001 certifications for quality and security
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Third-Party Validations</h4>
+                <p className="text-sm text-gray-600">
+                  Independent validation by recognized environmental verification bodies
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-medium mb-2">Industry Recognition</h4>
+                <p className="text-sm text-gray-600">
+                  Awards and recognition from sustainability and technology organizations
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Continuous Improvement */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="h-6 w-6 text-blue-600" />
+            Continuous Improvement & Updates
+          </CardTitle>
+          <CardDescription>
+            Ongoing methodology refinement and technology advancement
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Methodology Updates</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Quarterly methodology reviews and updates</li>
+                <li>• Integration of latest scientific research</li>
+                <li>• Adoption of new emission factors and standards</li>
+                <li>• Stakeholder feedback incorporation</li>
+                <li>• Industry best practice adoption</li>
+                <li>• Regulatory change monitoring and implementation</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Technology Enhancement</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Continuous AI/ML model improvement</li>
+                <li>• New data source integration</li>
+                <li>• Enhanced security and privacy features</li>
+                <li>• Performance optimization and scalability</li>
+                <li>• User experience improvements</li>
+                <li>• API enhancements and new integrations</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="bg-blue-50 p-6 rounded-lg">
+            <h3 className="font-semibold text-lg mb-3">Transparency Commitment</h3>
+            <p className="text-gray-700">
+              We are committed to full transparency in our methodology and data sources. 
+              All calculations, emission factors, and data sources are documented and 
+              available for review. We welcome feedback and collaboration to continuously 
+              improve our carbon accounting capabilities and contribute to global climate action.
             </p>
           </div>
-        </div>
+        </CardContent>
+      </Card>
+
+      {/* Footer */}
+      <div className="mt-12 text-center text-gray-600">
+        <p className="mb-2">
+          <strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
+        </p>
+        <p className="text-sm">
+          For questions about our methodology or data sources, please contact our technical team.
+        </p>
       </div>
     </div>
   );
