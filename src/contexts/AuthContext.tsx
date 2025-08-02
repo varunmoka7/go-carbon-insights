@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { clearDemoMode } from '@/utils/clearDemoMode';
 import { 
   sanitizeInput, 
   validateEmail, 
@@ -98,6 +99,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
             console.log('Email verified and user signed in');
+            // Clear demo mode when user successfully signs in
+            clearDemoMode();
           }
         }
       );

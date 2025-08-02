@@ -44,6 +44,7 @@ import NavigationLoader from "./components/NavigationLoader";
 import EmissionTracking from "./pages/EmissionTracking";
 import ErrorBoundary from "./components/ErrorBoundary";
 import LoadingFallback from "./components/LoadingFallback";
+import DemoModeClearer from "./components/DemoModeClearer";
 
 // Admin components
 import { AdminLayout } from "./features/admin/components/AdminLayout";
@@ -145,11 +146,11 @@ const App = () => {
                       </DemoAwareRoute>
                     } />
                     <Route path="/decarbonization" element={
-                      <DemoAwareRoute>
+                      <PrivateRoute>
                         <Layout>
                           <Decarbonization />
                         </Layout>
-                      </DemoAwareRoute>
+                      </PrivateRoute>
                     } />
                     <Route path="/profile" element={
                       <PrivateRoute>
@@ -224,6 +225,7 @@ const App = () => {
                     </Suspense>
                     <AccessibilityPanel />
                     <FloatingActionButton />
+                    <DemoModeClearer />
                   </ErrorBoundary>
                 </ViewModeProvider>
               </BrowserRouter>
