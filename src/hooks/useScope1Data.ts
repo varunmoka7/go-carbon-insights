@@ -18,11 +18,21 @@ export const useScope1Data = (companyId: string) => {
       };
     }
 
+    // Create emissionsData if it doesn't exist (fallback for companies from useCompanies hook)
+    const emissionsData = (company as any).emissionsData || [
+      { year: 2019, scope1: company.scope1_emissions || 1000, scope2: company.scope2_emissions || 800, scope3: company.scope3_emissions || 2000 },
+      { year: 2020, scope1: Math.round((company.scope1_emissions || 1000) * 0.95), scope2: Math.round((company.scope2_emissions || 800) * 0.95), scope3: Math.round((company.scope3_emissions || 2000) * 0.95) },
+      { year: 2021, scope1: Math.round((company.scope1_emissions || 1000) * 0.90), scope2: Math.round((company.scope2_emissions || 800) * 0.90), scope3: Math.round((company.scope3_emissions || 2000) * 0.90) },
+      { year: 2022, scope1: Math.round((company.scope1_emissions || 1000) * 0.85), scope2: Math.round((company.scope2_emissions || 800) * 0.85), scope3: Math.round((company.scope3_emissions || 2000) * 0.85) },
+      { year: 2023, scope1: Math.round((company.scope1_emissions || 1000) * 0.80), scope2: Math.round((company.scope2_emissions || 800) * 0.80), scope3: Math.round((company.scope3_emissions || 2000) * 0.80) },
+      { year: 2024, scope1: company.scope1_emissions || 1000, scope2: company.scope2_emissions || 800, scope3: company.scope3_emissions || 2000 }
+    ];
+
     // Generate year-specific source data based on company characteristics
     const generateSourceDataByYear = () => {
       const sourceDataByYear: Record<string, any[]> = {};
       
-      company.emissionsData.forEach(yearData => {
+      emissionsData.forEach(yearData => {
         const year = yearData.year.toString();
         const totalScope1 = yearData.scope1;
         
@@ -133,7 +143,7 @@ export const useScope1Data = (companyId: string) => {
     });
     
     const scope1Data = {
-      trendData: company.emissionsData.map(item => ({
+      trendData: emissionsData.map(item => ({
         year: item.year,
         emissions: item.scope1
       })),
