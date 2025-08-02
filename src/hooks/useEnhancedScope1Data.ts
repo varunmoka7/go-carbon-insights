@@ -46,35 +46,39 @@ export const useEnhancedScope1Data = (companyId: string) => {
   const getSourceMetrics = (source: string, emissions: number, total: number) => {
     const percentage = (emissions / total) * 100;
     
+    // Create fallback values for missing company properties
+    const estimatedRevenue = (company as any).revenue || (company.total_emissions * 0.01);
+    const estimatedEmployees = (company as any).employees || Math.round(company.total_emissions * 0.5);
+    
     const sourceRanges: Record<string, any> = {
       // Technology sources
       'Data Center Cooling': {
         typical: { min: 30, max: 50 },
-        efficiency: emissions / (company.revenue * 0.8),
+        efficiency: emissions / (estimatedRevenue * 0.8),
         costPerTonne: 45 + Math.random() * 15,
         iconType: 'zap'
       },
       'Emergency Generators': {
         typical: { min: 15, max: 30 },
-        efficiency: emissions / (company.employees * 0.1),
+        efficiency: emissions / (estimatedEmployees * 0.1),
         costPerTonne: 55 + Math.random() * 20,
         iconType: 'fuel'
       },
       'Company Vehicles': {
         typical: { min: 10, max: 25 },
-        efficiency: emissions / (company.employees * 0.05),
+        efficiency: emissions / (estimatedEmployees * 0.05),
         costPerTonne: 65 + Math.random() * 25,
         iconType: 'truck'
       },
       'Refrigerants': {
         typical: { min: 5, max: 15 },
-        efficiency: emissions / (company.revenue * 0.2),
+        efficiency: emissions / (estimatedRevenue * 0.2),
         costPerTonne: 85 + Math.random() * 35,
         iconType: 'zap'
       },
       'Process Heating': {
         typical: { min: 8, max: 18 },
-        efficiency: emissions / (company.revenue * 0.3),
+        efficiency: emissions / (estimatedRevenue * 0.3),
         costPerTonne: 50 + Math.random() * 20,
         iconType: 'fuel'
       },
@@ -82,31 +86,31 @@ export const useEnhancedScope1Data = (companyId: string) => {
       // E-commerce sources
       'Warehouse Heating': {
         typical: { min: 25, max: 40 },
-        efficiency: emissions / (company.revenue * 0.6),
+        efficiency: emissions / (estimatedRevenue * 0.6),
         costPerTonne: 40 + Math.random() * 15,
         iconType: 'fuel'
       },
       'Fleet Vehicles': {
         typical: { min: 30, max: 50 },
-        efficiency: emissions / (company.employees * 0.2),
+        efficiency: emissions / (estimatedEmployees * 0.2),
         costPerTonne: 60 + Math.random() * 25,
         iconType: 'truck'
       },
       'Backup Generators': {
         typical: { min: 8, max: 20 },
-        efficiency: emissions / (company.revenue * 0.1),
+        efficiency: emissions / (estimatedRevenue * 0.1),
         costPerTonne: 55 + Math.random() * 20,
         iconType: 'fuel'
       },
       'Refrigeration': {
         typical: { min: 12, max: 25 },
-        efficiency: emissions / (company.revenue * 0.4),
+        efficiency: emissions / (estimatedRevenue * 0.4),
         costPerTonne: 75 + Math.random() * 30,
         iconType: 'zap'
       },
       'Material Handling': {
         typical: { min: 5, max: 12 },
-        efficiency: emissions / (company.employees * 0.03),
+        efficiency: emissions / (estimatedEmployees * 0.03),
         costPerTonne: 45 + Math.random() * 15,
         iconType: 'factory'
       },
@@ -114,31 +118,31 @@ export const useEnhancedScope1Data = (companyId: string) => {
       // Automotive sources
       'Manufacturing Furnaces': {
         typical: { min: 35, max: 55 },
-        efficiency: emissions / (company.revenue * 1.2),
+        efficiency: emissions / (estimatedRevenue * 1.2),
         costPerTonne: 40 + Math.random() * 15,
         iconType: 'factory'
       },
       'Paint Booth Operations': {
         typical: { min: 15, max: 25 },
-        efficiency: emissions / (company.employees * 0.08),
+        efficiency: emissions / (estimatedEmployees * 0.08),
         costPerTonne: 50 + Math.random() * 20,
         iconType: 'factory'
       },
       'Test Vehicle Fleet': {
         typical: { min: 10, max: 20 },
-        efficiency: emissions / (company.employees * 0.06),
+        efficiency: emissions / (estimatedEmployees * 0.06),
         costPerTonne: 65 + Math.random() * 25,
         iconType: 'truck'
       },
       'Facility Heating': {
         typical: { min: 8, max: 15 },
-        efficiency: emissions / (company.revenue * 0.2),
+        efficiency: emissions / (estimatedRevenue * 0.2),
         costPerTonne: 42 + Math.random() * 18,
         iconType: 'fuel'
       },
       'Welding & Cutting': {
         typical: { min: 6, max: 12 },
-        efficiency: emissions / (company.employees * 0.04),
+        efficiency: emissions / (estimatedEmployees * 0.04),
         costPerTonne: 38 + Math.random() * 15,
         iconType: 'factory'
       },
@@ -146,31 +150,31 @@ export const useEnhancedScope1Data = (companyId: string) => {
       // Energy sources
       'Processing Equipment': {
         typical: { min: 40, max: 60 },
-        efficiency: emissions / (company.revenue * 2.0),
+        efficiency: emissions / (estimatedRevenue * 2.0),
         costPerTonne: 35 + Math.random() * 12,
         iconType: 'factory'
       },
       'Flaring Operations': {
         typical: { min: 20, max: 35 },
-        efficiency: emissions / (company.employees * 0.5),
+        efficiency: emissions / (estimatedEmployees * 0.5),
         costPerTonne: 30 + Math.random() * 10,
         iconType: 'fuel'
       },
       'Pipeline Compression': {
         typical: { min: 10, max: 20 },
-        efficiency: emissions / (company.revenue * 0.8),
+        efficiency: emissions / (estimatedRevenue * 0.8),
         costPerTonne: 45 + Math.random() * 15,
         iconType: 'fuel'
       },
       'Facility Operations': {
         typical: { min: 8, max: 15 },
-        efficiency: emissions / (company.employees * 0.1),
+        efficiency: emissions / (estimatedEmployees * 0.1),
         costPerTonne: 40 + Math.random() * 15,
         iconType: 'factory'
       },
       'Emergency Systems': {
         typical: { min: 3, max: 8 },
-        efficiency: emissions / (company.revenue * 0.05),
+        efficiency: emissions / (estimatedRevenue * 0.05),
         costPerTonne: 50 + Math.random() * 20,
         iconType: 'fuel'
       },
@@ -178,31 +182,31 @@ export const useEnhancedScope1Data = (companyId: string) => {
       // Consumer Goods sources
       'Manufacturing Heat': {
         typical: { min: 25, max: 45 },
-        efficiency: emissions / (company.revenue * 1.0),
+        efficiency: emissions / (estimatedRevenue * 1.0),
         costPerTonne: 42 + Math.random() * 18,
         iconType: 'fuel'
       },
       'Packaging Processes': {
         typical: { min: 15, max: 30 },
-        efficiency: emissions / (company.employees * 0.12),
+        efficiency: emissions / (estimatedEmployees * 0.12),
         costPerTonne: 48 + Math.random() * 20,
         iconType: 'factory'
       },
       'Distribution Fleet': {
         typical: { min: 18, max: 35 },
-        efficiency: emissions / (company.employees * 0.15),
+        efficiency: emissions / (estimatedEmployees * 0.15),
         costPerTonne: 62 + Math.random() * 25,
         iconType: 'truck'
       },
       'Facility HVAC': {
         typical: { min: 10, max: 20 },
-        efficiency: emissions / (company.revenue * 0.3),
+        efficiency: emissions / (estimatedRevenue * 0.3),
         costPerTonne: 45 + Math.random() * 15,
         iconType: 'fuel'
       },
       'Quality Testing': {
         typical: { min: 3, max: 10 },
-        efficiency: emissions / (company.employees * 0.02),
+        efficiency: emissions / (estimatedEmployees * 0.02),
         costPerTonne: 40 + Math.random() * 15,
         iconType: 'factory'
       },
@@ -210,31 +214,31 @@ export const useEnhancedScope1Data = (companyId: string) => {
       // Food & Beverage sources
       'Production Boilers': {
         typical: { min: 30, max: 50 },
-        efficiency: emissions / (company.revenue * 1.5),
+        efficiency: emissions / (estimatedRevenue * 1.5),
         costPerTonne: 38 + Math.random() * 15,
         iconType: 'fuel'
       },
       'Refrigeration Systems': {
         typical: { min: 20, max: 35 },
-        efficiency: emissions / (company.revenue * 0.8),
+        efficiency: emissions / (estimatedRevenue * 0.8),
         costPerTonne: 70 + Math.random() * 30,
         iconType: 'zap'
       },
       'Delivery Vehicles': {
         typical: { min: 12, max: 25 },
-        efficiency: emissions / (company.employees * 0.1),
+        efficiency: emissions / (estimatedEmployees * 0.1),
         costPerTonne: 60 + Math.random() * 25,
         iconType: 'truck'
       },
       'Food Processing Equipment': {
         typical: { min: 8, max: 18 },
-        efficiency: emissions / (company.revenue * 0.4),
+        efficiency: emissions / (estimatedRevenue * 0.4),
         costPerTonne: 45 + Math.random() * 20,
         iconType: 'factory'
       },
       'Steam Generation': {
         typical: { min: 6, max: 15 },
-        efficiency: emissions / (company.revenue * 0.3),
+        efficiency: emissions / (estimatedRevenue * 0.3),
         costPerTonne: 42 + Math.random() * 18,
         iconType: 'fuel'
       },
@@ -242,31 +246,31 @@ export const useEnhancedScope1Data = (companyId: string) => {
       // Healthcare sources
       'Medical Equipment': {
         typical: { min: 20, max: 40 },
-        efficiency: emissions / (company.revenue * 0.9),
+        efficiency: emissions / (estimatedRevenue * 0.9),
         costPerTonne: 55 + Math.random() * 25,
         iconType: 'zap'
       },
       'HVAC & Sterilization': {
         typical: { min: 18, max: 35 },
-        efficiency: emissions / (company.employees * 0.15),
+        efficiency: emissions / (estimatedEmployees * 0.15),
         costPerTonne: 50 + Math.random() * 20,
         iconType: 'fuel'
       },
       'Healthcare Emergency Generators': {
         typical: { min: 12, max: 25 },
-        efficiency: emissions / (company.revenue * 0.2),
+        efficiency: emissions / (estimatedRevenue * 0.2),
         costPerTonne: 55 + Math.random() * 20,
         iconType: 'fuel'
       },
       'Laboratory Operations': {
         typical: { min: 8, max: 20 },
-        efficiency: emissions / (company.employees * 0.08),
+        efficiency: emissions / (estimatedEmployees * 0.08),
         costPerTonne: 48 + Math.random() * 22,
         iconType: 'factory'
       },
       'Transport Vehicles': {
         typical: { min: 6, max: 15 },
-        efficiency: emissions / (company.employees * 0.05),
+        efficiency: emissions / (estimatedEmployees * 0.05),
         costPerTonne: 62 + Math.random() * 25,
         iconType: 'truck'
       },
@@ -274,31 +278,31 @@ export const useEnhancedScope1Data = (companyId: string) => {
       // Retail sources
       'Store HVAC Systems': {
         typical: { min: 25, max: 45 },
-        efficiency: emissions / (company.revenue * 0.7),
+        efficiency: emissions / (estimatedRevenue * 0.7),
         costPerTonne: 45 + Math.random() * 18,
         iconType: 'fuel'
       },
       'Refrigeration Units': {
         typical: { min: 20, max: 35 },
-        efficiency: emissions / (company.employees * 0.2),
+        efficiency: emissions / (estimatedEmployees * 0.2),
         costPerTonne: 75 + Math.random() * 30,
         iconType: 'zap'
       },
       'Delivery Fleet': {
         typical: { min: 15, max: 30 },
-        efficiency: emissions / (company.employees * 0.12),
+        efficiency: emissions / (estimatedEmployees * 0.12),
         costPerTonne: 60 + Math.random() * 25,
         iconType: 'truck'
       },
       'Store Backup Generators': {
         typical: { min: 8, max: 18 },
-        efficiency: emissions / (company.revenue * 0.1),
+        efficiency: emissions / (estimatedRevenue * 0.1),
         costPerTonne: 52 + Math.random() * 20,
         iconType: 'fuel'
       },
       'Warehouse Operations': {
         typical: { min: 5, max: 12 },
-        efficiency: emissions / (company.employees * 0.03),
+        efficiency: emissions / (estimatedEmployees * 0.03),
         costPerTonne: 40 + Math.random() * 15,
         iconType: 'factory'
       }
@@ -322,7 +326,9 @@ export const useEnhancedScope1Data = (companyId: string) => {
 
   // Enhanced trend data with industry benchmarks
   const enhancedTrendData: BenchmarkTrendData[] = scope1Data.trendData.map(item => {
-    const industryAverage = benchmarkData.emissionsIntensity * company.revenue;
+    // Use total_emissions as a fallback for revenue-based calculation
+    const estimatedRevenue = (company as any).revenue || (company.total_emissions * 0.01); // Rough estimate
+    const industryAverage = benchmarkData.emissionsIntensity * estimatedRevenue;
     const percentileRank = Math.max(10, Math.min(90, 
       50 + (benchmarkData.industryRank / benchmarkData.totalInSector - 0.5) * 80
     ));
@@ -384,7 +390,7 @@ export const useEnhancedScope1Data = (companyId: string) => {
         return {
           performanceVsPeers: [
             ...basePerformance,
-            company.renewable_energy_percentage > 70 ? 
+            (company as any).renewable_energy_percentage || 50 > 70 ? 
               'Leading in renewable energy adoption for data center operations' :
               'Data center energy efficiency lags behind industry leaders by 20-30%'
           ],

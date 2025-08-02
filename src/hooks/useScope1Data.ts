@@ -130,7 +130,19 @@ export const useScope1Data = (companyId: string) => {
     };
 
     const sourceDataByYear = generateSourceDataByYear();
-    const latestYearData = sourceDataByYear['2024'] || sourceDataByYear[Object.keys(sourceDataByYear).sort().pop() || '2024'] || [];
+    let latestYearData = sourceDataByYear['2024'] || sourceDataByYear[Object.keys(sourceDataByYear).sort().pop() || '2024'] || [];
+    
+    // Fallback data generation if no data is available
+    if (!latestYearData || latestYearData.length === 0) {
+      const scope1Total = emissionsData.find(d => d.year === 2024)?.scope1 || 1000;
+      latestYearData = [
+        { source: 'Facility Heating', emissions: Math.round(scope1Total * 0.35) },
+        { source: 'Fleet Vehicles', emissions: Math.round(scope1Total * 0.25) },
+        { source: 'Process Equipment', emissions: Math.round(scope1Total * 0.20) },
+        { source: 'Backup Systems', emissions: Math.round(scope1Total * 0.12) },
+        { source: 'Other Operations', emissions: Math.round(scope1Total * 0.08) }
+      ];
+    }
     
     // Debug logging
     console.log('useScope1Data Debug:', {
@@ -139,7 +151,7 @@ export const useScope1Data = (companyId: string) => {
       sourceDataByYearKeys: Object.keys(sourceDataByYear),
       latestYearDataLength: latestYearData.length,
       latestYearData,
-      scope1Total: company.emissionsData.find(d => d.year === 2024)?.scope1
+      scope1Total: emissionsData.find(d => d.year === 2024)?.scope1
     });
     
     const scope1Data = {

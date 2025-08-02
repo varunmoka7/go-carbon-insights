@@ -1,5 +1,5 @@
 
-import { getCompanyById, getCompaniesBySector } from '@/data/companyMockData';
+import { useCompanies } from './useCompanies';
 
 export interface IndustryBenchmarkData {
   emissionsIntensity: number;
@@ -17,9 +17,10 @@ export interface IndustryBenchmarkData {
 }
 
 export const useIndustryBenchmarking = (companyId: string): IndustryBenchmarkData => {
-  const company = getCompanyById(companyId);
+  const { data: companies } = useCompanies();
+  const company = companies?.find(c => c.id === companyId);
   
-  if (!company) {
+  if (!company || !companies) {
     // Return default benchmark data
     return {
       emissionsIntensity: 50,
@@ -37,7 +38,7 @@ export const useIndustryBenchmarking = (companyId: string): IndustryBenchmarkDat
     };
   }
 
-  const sectorCompanies = getCompaniesBySector(company.sector);
+  const sectorCompanies = companies.filter(c => c.sector === company.sector);
   const latestEmissions = company.emissionsData[company.emissionsData.length - 1];
   const firstEmissions = company.emissionsData[0];
 
