@@ -1,7 +1,7 @@
 // Temporarily disabled organization context due to missing database table
 // This hook was trying to query 'organization_members' table which doesn't exist in the current schema
 
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 
 export interface Organization {
   id: string;
@@ -59,7 +59,7 @@ export const useOrganizationContext = () => {
 };
 
 // Temporary provider that returns disabled state
-export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const OrganizationProvider = ({ children }: { children: React.ReactNode }) => {
   const value: OrganizationContextType = {
     organization: null,
     membership: null,
@@ -79,9 +79,5 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     },
   };
 
-  return (
-    <OrganizationContext.Provider value={value}>
-      {children}
-    </OrganizationContext.Provider>
-  );
+  return OrganizationContext.Provider({ value, children });
 };
