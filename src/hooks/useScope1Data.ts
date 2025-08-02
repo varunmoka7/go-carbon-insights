@@ -1,13 +1,14 @@
 
 import { useSupabaseScope1Data } from './useSupabaseScope1';
-import { getCompanyById } from '@/data/companyMockData';
+import { useCompanies } from './useCompanies';
 
 export const useScope1Data = (companyId: string) => {
   const supabaseQuery = useSupabaseScope1Data(companyId);
+  const { data: companies } = useCompanies();
   
   // If Supabase data is loading or there's an error, fallback to mock data
   if (supabaseQuery.isLoading || supabaseQuery.error || !supabaseQuery.data?.trendData?.length) {
-    const company = getCompanyById(companyId);
+    const company = companies?.find(c => c.id === companyId);
     
     if (!company) {
       return {
@@ -120,6 +121,16 @@ export const useScope1Data = (companyId: string) => {
 
     const sourceDataByYear = generateSourceDataByYear();
     const latestYearData = sourceDataByYear['2024'] || sourceDataByYear[Object.keys(sourceDataByYear).sort().pop() || '2024'] || [];
+    
+    // Debug logging
+    console.log('useScope1Data Debug:', {
+      companyId,
+      companyName: company.name,
+      sourceDataByYearKeys: Object.keys(sourceDataByYear),
+      latestYearDataLength: latestYearData.length,
+      latestYearData,
+      scope1Total: company.emissionsData.find(d => d.year === 2024)?.scope1
+    });
     
     const scope1Data = {
       trendData: company.emissionsData.map(item => ({

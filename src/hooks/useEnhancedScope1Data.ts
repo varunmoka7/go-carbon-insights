@@ -1,7 +1,7 @@
 
 import { useScope1Data } from './useScope1Data';
 import { useIndustryBenchmarking } from './useIndustryBenchmarking';
-import { getCompanyById } from '@/data/companyMockData';
+import { useCompanies } from './useCompanies';
 
 interface EnhancedSourceData {
   source: string;
@@ -35,7 +35,8 @@ interface EnhancedScope1Data {
 export const useEnhancedScope1Data = (companyId: string) => {
   const { data: scope1Data, isLoading, error } = useScope1Data(companyId);
   const benchmarkData = useIndustryBenchmarking(companyId);
-  const company = getCompanyById(companyId);
+  const { data: companies } = useCompanies();
+  const company = companies?.find(c => c.id === companyId);
 
   if (isLoading || error || !scope1Data || !benchmarkData || !company) {
     return { data: null, isLoading, error };

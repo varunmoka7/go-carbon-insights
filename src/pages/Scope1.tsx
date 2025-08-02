@@ -73,15 +73,33 @@ const Scope1 = () => {
 
   const { trendData, sourceData, sourceDataByYear, benchmarkData, insights } = enhancedData;
   
-  // Get year-specific source data
+  // Get year-specific source data with proper fallback
   const getSourceDataForYear = (year: string) => {
-    return sourceDataByYear[year] || sourceData;
+    const yearData = sourceDataByYear[year];
+    if (yearData && Array.isArray(yearData) && yearData.length > 0) {
+      return yearData;
+    }
+    // Fallback to current source data if year-specific data is not available
+    if (sourceData && Array.isArray(sourceData) && sourceData.length > 0) {
+      return sourceData;
+    }
+    // Final fallback - return empty array to prevent errors
+    return [];
   };
 
   const currentSourceData = getSourceDataForYear(selectedYear).map(item => ({
     ...item,
     icon: getIconForType(item.iconType)
   }));
+
+  // Debug logging
+  console.log('Scope1 Debug:', {
+    selectedYear,
+    sourceDataByYear: Object.keys(sourceDataByYear),
+    sourceDataLength: sourceData?.length,
+    currentSourceDataLength: currentSourceData.length,
+    currentSourceData
+  });
 
   const selectedCompanyData = companies?.find(c => c.id === selectedCompany);
 
@@ -251,58 +269,77 @@ const Scope1 = () => {
           </Select>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={currentSourceData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="source" 
-                angle={-45}
-                textAnchor="end"
-                height={100}
-              />
-              <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip 
-                formatter={(value, name, props) => [
-                  `${value} tCO2e (${props.payload.percentage}%)`,
-                  'Emissions'
-                ]}
-                labelFormatter={(label) => `Source: ${label}`}
-              />
-              <Bar dataKey="emissions" fill="#dc2626" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          {currentSourceData.length > 0 ? (
+            <>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={currentSourceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="source" 
+                    angle={-45}
+                    textAnchor="end"
+                    height={100}
+                  />
+                  <YAxis label={{ value: 'Emissions (tCO2e)', angle: -90, position: 'insideLeft' }} />
+                  <Tooltip 
+                    formatter={(value, name, props) => [
+                      `${value} tCO2e (${props.payload.percentage}%)`,
+                      'Emissions'
+                    ]}
+                    labelFormatter={(label) => `Source: ${label}`}
+                  />
+                  <Bar dataKey="emissions" fill="#dc2626" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-64 text-center">
+              <BarChart3 className="h-12 w-12 text-gray-400 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No Data Available</h3>
+              <p className="text-gray-600 mb-4">
+                No emissions data is available for {selectedCompanyData?.name || 'this company'} in {selectedYear}.
+              </p>
+              <div className="space-y-2 text-sm text-gray-500">
+                <p>• Try selecting a different year</p>
+                <p>• Check if the company has Scope 1 emissions data</p>
+                <p>• Contact support if this issue persists</p>
+              </div>
+            </div>
+          )}
           
           {/* Enhanced Source Metrics */}
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {currentSourceData.map((item, index) => (
-              <div key={index} className="p-4 bg-gray-50 rounded-lg">
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                    {item.icon}
+          {currentSourceData.length > 0 && (
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {currentSourceData.map((item, index) => (
+                <div key={index} className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-gray-800">{item.source}</div>
+                      <div className="text-xs text-gray-600">{Math.round(item.emissions)} tCO2e ({item.percentage}%)</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-sm font-semibold text-gray-800">{item.source}</div>
-                    <div className="text-xs text-gray-600">{Math.round(item.emissions)} tCO2e ({item.percentage}%)</div>
+                  
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Industry Range:</span>
+                      <span className="font-medium">{item.industryTypicalRange.min}-{item.industryTypicalRange.max}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Efficiency Metric:</span>
+                      <span className="font-medium">{item.efficiencyMetric}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Cost/tonne:</span>
+                      <span className="font-medium">${item.costPerTonne}</span>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="space-y-2 text-xs">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Industry Range:</span>
-                    <span className="font-medium">{item.industryTypicalRange.min}-{item.industryTypicalRange.max}%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Efficiency Metric:</span>
-                    <span className="font-medium">{item.efficiencyMetric}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Cost/tonne:</span>
-                    <span className="font-medium">${item.costPerTonne}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
 
