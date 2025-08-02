@@ -17,6 +17,9 @@ const DEMO_ALLOWED_PAGES = [
   '/scope2', 
   '/scope3',
   '/decarbonization',
+  '/tracking',
+  '/emission-tracking',
+  '/reports-analytics',
   '/about',
   '/contact',
   '/methodology'

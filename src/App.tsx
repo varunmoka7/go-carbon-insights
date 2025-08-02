@@ -113,16 +113,16 @@ const App = () => {
                       </DemoAwareRoute>
                     } />
                     <Route path="/tracking" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Tracking />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/emission-tracking" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <EmissionTracking />
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/scope1" element={
                       <DemoAwareRoute>
@@ -146,11 +146,11 @@ const App = () => {
                       </DemoAwareRoute>
                     } />
                     <Route path="/decarbonization" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <Decarbonization />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     <Route path="/profile" element={
                       <PrivateRoute>
@@ -160,11 +160,11 @@ const App = () => {
                       </PrivateRoute>
                     } />
                     <Route path="/reports-analytics" element={
-                      <PrivateRoute>
+                      <DemoAwareRoute>
                         <Layout>
                           <ReportsAnalytics />
                         </Layout>
-                      </PrivateRoute>
+                      </DemoAwareRoute>
                     } />
                     
                     {/* Admin routes - require admin/moderator role */}
