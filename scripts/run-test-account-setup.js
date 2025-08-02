@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 /**
- * Runner script to create investor test account
- * Usage: node scripts/run-investor-account-setup.js
+ * Runner script to create test account
+ * Usage: node scripts/run-test-account-setup.js
  */
 
-const { createInvestorTestAccount } = require('./create-investor-test-account.js');
+const { createTestAccount } = require('./create-test-account.js');
 
-console.log('🎯 GoCarbonTracker - Investor Test Account Setup');
-console.log('================================================\n');
+console.log('🎯 GoCarbonTracker - Test Account Setup');
+console.log('=======================================\n');
 
 // Check if we're in the right environment
 if (typeof supabase === 'undefined') {
@@ -19,18 +19,18 @@ if (typeof supabase === 'undefined') {
 }
 
 // Run the account creation
-createInvestorTestAccount()
+createTestAccount()
   .then((result) => {
     if (result.success) {
-      console.log('\n✅ Investor test account setup completed successfully!');
+      console.log('\n✅ Test account setup completed successfully!');
       console.log('\n📋 Credentials Summary:');
-      console.log('   Email: investor@gocarbontracker.net');
+      console.log('   Email: test@gocarbontracker.net');
       console.log('   Password: GoCarbon2024!');
-      console.log('   Username: investor_demo');
+      console.log('   Username: test_demo');
       console.log('\n🔗 Platform URL: https://gocarbontracker.net');
-      console.log('\n💡 Share these credentials with your investors for platform access');
+      console.log('\n💡 Share these credentials for platform access');
     } else {
-      console.log('\n❌ Failed to create investor test account:', result.error);
+      console.log('\n❌ Failed to create test account:', result.error);
       process.exit(1);
     }
   })

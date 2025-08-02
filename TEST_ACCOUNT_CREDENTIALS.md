@@ -1,15 +1,15 @@
-# Investor Test Account Credentials
+# Test Account Credentials
 
 ## 🎯 Purpose
-This document contains the credentials for a professional test account that can be shared with investors to demonstrate the GoCarbonTracker platform.
+This document contains the credentials for a professional test account that can be shared to demonstrate the GoCarbonTracker platform.
 
 ## 📧 Login Credentials
 
-### Primary Investor Test Account
-- **Email:** `investor@gocarbontracker.net`
+### Primary Test Account
+- **Email:** `test@gocarbontracker.net`
 - **Password:** `GoCarbon2024!`
-- **Username:** `investor_demo`
-- **Role:** `investor`
+- **Username:** `test_demo`
+- **Role:** `test`
 
 ### Alternative Demo Account (if needed)
 - **Email:** `demo@gocarbontracker.com`
@@ -34,7 +34,7 @@ This document contains the credentials for a professional test account that can 
 
 ## 📋 Available Features
 
-The investor test account has access to:
+The test account has access to:
 
 ### Core Features
 - ✅ **Dashboard** - Overview of carbon tracking metrics
@@ -54,20 +54,20 @@ The investor test account has access to:
 ## 🛠️ Technical Setup
 
 ### Creating the Account
-The investor test account was created using the script:
+The test account was created using the script:
 ```bash
-scripts/create-investor-test-account.js
+scripts/create-test-account.js
 ```
 
 ### Account Management
 - **Created:** Automatically via Supabase Auth Admin API
-- **Profile:** Complete user profile with investor role
+- **Profile:** Complete user profile with test role
 - **Permissions:** Full platform access for demonstration
 - **Expiration:** No expiration (manual cleanup required)
 
 ## 📞 Support
 
-If investors encounter any issues:
+If users encounter any issues:
 
 1. **Check the URL:** Ensure they're visiting https://gocarbontracker.net
 2. **Clear browser cache:** Sometimes cached data can cause issues
@@ -80,7 +80,7 @@ If investors encounter any issues:
 If the password needs to be updated:
 1. Run the creation script again to reset credentials
 2. Update this document with new credentials
-3. Notify investors of the change
+3. Notify users of the change
 
 ### Account Maintenance
 - Monitor account usage for security
@@ -91,4 +91,4 @@ If the password needs to be updated:
 
 **Last Updated:** $(date)
 **Created By:** GoCarbonTracker Development Team
-**Purpose:** Investor Platform Demonstration 
+**Purpose:** Platform Demonstration 
