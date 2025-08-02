@@ -1,15 +1,15 @@
-import type { GeminiApiRequest, GeminiApiResponse } from " @/types/gemini-api";
+import type { ESGExtractionResponse, ESGExtractionRequest as ApiRequest } from '@/types/gemini-api';
 
 /**
- * Processes a request through our secure backend proxy to the Gemini API.
+ * Calls the secure backend proxy to process an ESG extraction request.
  *
- * @param request - The request payload for the Gemini API.
- * @returns A promise that resolves with the API response.
- * @throws An error if the API call fails.
+ * @param request - The ESG extraction request payload.
+ * @returns A promise that resolves with the structured ESG extraction response.
+ * @throws An error if the API call fails or returns a non-ok status.
  */
-export const callGeminiApi = async (
-  request: GeminiApiRequest
-): Promise<GeminiApiResponse> => {
+export const processEsgReport = async (
+  request: ApiRequest
+): Promise<ESGExtractionResponse> => {
   try {
     const response = await fetch('/api/gemini', {
       method: 'POST',
@@ -20,17 +20,22 @@ export const callGeminiApi = async (
     });
 
     if (!response.ok) {
-      // Try to parse a structured error from the backend, otherwise throw a generic error
-      const errorData = await response.json().catch(() => null);
+      // Attempt to get more detailed error info from the response body
+      const errorBody = await response.json().catch(() => ({
+        message: 'An unknown API error occurred.',
+      }));
+      
+      console.error('API Error:', errorBody);
       throw new Error(
-        `API call failed with status ${response.status}: ${errorData?.error?.message || response.statusText}`
+        `API request failed with status ${response.status}: ${errorBody.message || response.statusText}`
       );
     }
 
-    return (await response.json()) as GeminiApiResponse;
+    return (await response.json()) as ESGExtractionResponse;
+
   } catch (error) {
-    console.error('Error calling Gemini API service:', error);
-    // Re-throw the error to be handled by the calling function (e.g., in a React hook)
+    console.error('Failed to process ESG report:', error);
+    // Re-throw for the UI layer to handle
     throw error;
   }
 };
